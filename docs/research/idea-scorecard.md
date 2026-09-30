@@ -1,6 +1,6 @@
 # Research scorecard, 2026-10-01
 
-The numbers order research tasks. They aren't measurements of demand or probability of winning. The [Sol critical review](../agent-reports/product-review/2026-10-01-critical-synthesis.md) challenged the two independent read-only reports before this recommendation.
+The numbers order research tasks. They aren't measurements of demand or probability of winning. The [three full hypotheses](hypotheses.md) record user, trigger, evidence, alternatives, API role, minimum demo, risks, possible edge and falsifier. The [Sol critical review](../agent-reports/product-review/2026-10-01-critical-synthesis.md) challenged the two independent read-only reports before this recommendation.
 
 ## Event hard gates
 
