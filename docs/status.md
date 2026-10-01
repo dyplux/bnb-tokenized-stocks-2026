@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-01
 **Phase:** research gate and API feasibility
-**Product selected:** no; H1 is a provisional test candidate
+**Product selected:** no; H1 is challenged as a standalone product
 **Application code:** none
 **Deployment:** none
 
@@ -18,14 +18,14 @@
 
 ## Current decision
 
-Three problem hypotheses were compared. H1, a pre-trade decision receipt for bStocks and Ondo, is the first research test at 57/100 on an explicitly subjective scorecard. H2 scored 50/100 and H3 43/100. Those numbers do not validate user demand. H1 has no live Binance quote or observed user task, so no implementation is approved. The `referencePrice` field is derived from token price and cannot be used as an independent TradFi benchmark.
+Three problem hypotheses were compared. H1, a pre-trade decision receipt for bStocks and Ondo, ranked first at 57/100 on a subjective research scorecard. H2 scored 50/100 and H3 43/100. The founder then challenged H1's similarity to Bell and its value for an ordinary buyer. [Decision D-004](decisions/decision-log.md) puts both H1 as a standalone product and the application wording on hold. No live Binance quote or observed user task exists, so no implementation is approved. The `referencePrice` field is derived from token price and cannot be used as an independent TradFi benchmark.
 
 ## Blockers and next work
 
-1. Confirm safe Binance API account scope and quota without exposing credentials. Run only narrow RWA Data and quote probes, with no order or money. Record actual onboarding, payload fields, latency and errors for the Developer Experience Report.
-2. Compare the exact ticker, size, time and task in PancakeSwap and Agentic Wallet. Observe whether a candidate receipt changes the decision. Seek one consented user task if feasible.
-3. Check the founder's eligibility and the private application fields before the founder submits the provisional line. The one-line answer may change with evidence.
-4. Approve or reject H1 against the stop rule. Write a one-page spec only if the research gate passes. Do not start app code, DNS work or deployment now.
+1. Map one ordinary buyer's concrete goal and safe next action. Compare the same ticker, amount and time in PancakeSwap and Agentic Wallet. Seek one consented user task if feasible. Reject a separate product if the receipt only adds reading.
+2. Confirm safe Binance API account scope and quota without exposing credentials. Run only narrow RWA Data and quote probes if they can answer a decision question, with no order or money. Record actual onboarding, payload fields, latency and errors for the Developer Experience Report.
+3. Revise the one-line hacker application answer only when a distinct outcome for the target user is clear. The founder submits it; this repository has not submitted a form.
+4. Approve or reject a product against the event gates. Write a one-page spec only if the research gate passes. Do not start app code, DNS work or deployment now.
 
 ## Resume
 
