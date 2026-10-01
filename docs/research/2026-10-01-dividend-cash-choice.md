@@ -38,6 +38,12 @@ The following is **arithmetic, not a measured dividend or trade**. Suppose a wal
 
 Under those assumptions a 5 USDT sale would require a position of about 6,903 USDT. Binance's [$5 fractional entry description](https://www.binance.com/en/academy/articles/what-are-bstocks-a-guide-to-tokenized-stocks-on-binance) concerns buying on its product; it is **not** a verified Binance Web3 API sell minimum. This calculation challenges a product for casual $100 holders. A useful cash-out may require a larger account, a long accumulation period or a different asset. There is no extra yield from selling: the user converts part of existing equity exposure into USDT.
 
+### Screen for a larger, still unverified increment
+
+At 14:05 UTC on 2026-10-01, a second read of the [public Binance bStock list](https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/rwa/stock/detail/list/ai?type=3) returned 87 BNB Chain rows. SQQQB had the highest listed multiplier, 1.009841016242566331; SOXSB was next at 1.009026219854107205. The [21 September Binance announcement](https://www.binance.bh/en/support/announcement/detail/7ddb0038f14e4fa08f4cbbd7dd29d00f) names both, plus MUUB and TQQQB, for net dividend reinvestment. It sets record snapshots for SOXSB/MUUB at 22 September 00:00 UTC and TQQQB/SQQQB at 23 September 00:00 UTC. These are leveraged and inverse ETF representations, so a larger multiplier does not imply a better investment or a higher net return.
+
+For SQQQB, the same deliberately artificial `M0 = 1` calculation gives about 9.745 USDT on a 1,000 USDT current position and 0.975 USDT on a 100 USDT position, before every execution cost. The current multiplier may aggregate more than one event. No event-specific or holder-specific income has been measured. The eight announced contracts are in the [manual Dune event query](queries/bstock-multiplier-events.sql); its results are pending. This screen slightly improves the cash-out size for a larger position but does not pass the product gate.
+
 ## What exists already
 
 | Existing flow | What it does | Gap that remains to test |

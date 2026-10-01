@@ -35,7 +35,7 @@ The proposed service would need to do more than expose `uiMultiplier()`, which i
 
 ## Next proof, in order
 
-1. Use an indexed or archive source for one real multiplier update. The [BNB Chain RPC guide](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/) says `eth_getLogs` is disabled on its listed public endpoints, which explains the prior failed attempt. Record event transaction, old/new multiplier, effective time and issuer announcement.
+1. Run the [prepared Dune query](queries/bstock-multiplier-events.sql) manually or use an indexed/archive source for one real multiplier update. The query has not been executed. The [BNB Chain RPC guide](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/) says `eth_getLogs` is disabled on its listed public endpoints, which explains the prior failed attempt. Record event transaction, old/new multiplier, effective time and issuer announcement.
 2. With local credentials, make a signed read-only Binance Web3 API request for token context and a sell RFQ at the calculated size. Record the response contract, exact fee and amount fields, time, quote expiry, rejection or minimum. Don't assume the $5 Binance Spot entry minimum applies to the Web3 sell route.
 3. Observe an eligible holder attempting the same cash decision through Binance Spot or Agentic Wallet. Ask for the target amount, preferred timing and reaction to the quoted net proceeds. A documented interview or walkthrough is evidence; a presumed persona isn't.
 4. If the result survives, write the one-page spec and build a single mainnet spot flow. Then decide whether a paid Studio event feed has a buyer. Keep the founder's DX report as a factual account of these sessions.
