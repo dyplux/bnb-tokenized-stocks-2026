@@ -37,3 +37,11 @@ This verifies the deployed read path and ABI decoder for an empty/default accoun
 ## Simulation boundary checked against current official docs
 
 The [PolicyFacet reference](https://docs-v4.venus.io/technical-reference/reference-core-pool/comptroller/diamond/facets/policy-facet) documents `getBorrowingPower(address)` for collateral requirements, `getAccountLiquidity(address)` for liquidation thresholds, and `getHypotheticalAccountLiquidity(address,address,uint256,uint256)` for a hypothetical redemption or borrow. That hypothetical method has no new-supply argument. A wallet holding NVDAB outside Venus cannot be modeled as if it had already deposited that token by calling this method once. The contract's returned liquidity also does not by itself check every market pause, cap or transaction precondition. A future personal comparison needs an account-wide, same-block model and transaction-policy checks, or it must keep the borrow side explicitly hypothetical. The current UI takes the latter route.
+
+## Nonempty account read attempt, 2026-10-01 23:53 UTC
+
+The [BNB Chain RPC documentation](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/) states that `eth_getLogs` is disabled on its listed public mainnet endpoints. A filtered vNVDAB `Transfer` query through the app's official RPC returned no usable result, consistent with that restriction. This isn't evidence that the token had no transfers.
+
+A read-only check used [PublicNode's published BNB Chain endpoint](https://bsc.publicnode.com/) without credentials. It confirmed chain 56. Two recent 5,000-block windows returned zero matching vNVDAB `Transfer` logs; a third returned HTTP 403. The first two windows cover only the latest 10,000 blocks at the time of the check. They don't establish that no supplier exists, and the third window wasn't observed. No address, raw log or account position was retained.
+
+The nonempty `getAssetsIn` response and existing Venus debt path remain unverified. A consenting holder address or an explicitly permitted log-capable data source could support the next read. The current UI must keep personal risk unknown.
