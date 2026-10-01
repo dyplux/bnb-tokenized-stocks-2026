@@ -17,6 +17,8 @@ The [event rules](https://www.bnbchain.org/en/hackathons/tokenized-stocks) requi
 
 The founder's claim that most people can't buy stocks hasn't been verified. Some users are legally ineligible for tokenized securities, and the app can't make them eligible. Others already have small fractional access via Binance or a broker. A first-time onboarding product would need an eligible user, funding route and an observed obstacle. Don't use restricted users as a growth story.
 
+The [Binance Stocks Trading REST API](https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/rest-api/market-data) also documents symbol-specific fractional and extended-session flags, a conventional-equity bid/ask endpoint, and bStock mint/redeem data. This is another incumbent for an eligible Binance user. It needs a separate Binance account API key, so its published availability doesn't show what this project or a BNB wallet can access. It weakens a generic "stocks for people who can't buy stocks" pitch and offers a possible reference price only after access, ticker, unit and timestamp are checked.
+
 ## The three concrete tasks considered at this gate
 
 | User task | Incumbent / counterevidence | What the product would have to prove | State |
