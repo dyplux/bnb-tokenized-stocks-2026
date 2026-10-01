@@ -159,3 +159,13 @@ Do not build a generic price-impact alert from this result. The next gate remain
 The [Venus bStock oracle check](../research/2026-10-01-venus-bstock-oracle-check.md) found about $658,016 of indexed supply across four bStock collateral markets and 101 market supplier records, not necessarily distinct users. Venus documents a Protection Mode that can make borrow-power and liquidation prices differ. At BNB block 125144831, the live configuration enabled bounded pricing for all four, but Protection Mode was inactive and the bounded prices equalled spot. No affected borrower or missed incumbent warning was observed.
 
 Keep the oracle distinction as a possible future state, but do not build a general collateral agent or paid Agent Studio monitor from a dormant state. A build would require an active divergence or a consenting borrower's task, a safe action that changes as a result, and the mandatory Binance Web3 API integration serving that task. This check supplies none of those gates.
+
+## D-016: reject a simple weekend-direction trading claim
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** accepted research filter; no product approved
+
+The [public Spot weekend screen](../research/2026-10-01-weekend-reopen-screen.md) compared eleven ordinary weekends for each of five bStocks between July and September 2026. Of 55 asset-weekend observations, weekend and Monday 13:00-to-14:00 UTC directions matched 28 times, differed 26 times and were flat once. Per-asset Pearson correlations were small and mixed. The five assets share dates, and this CEX sample has no BNB Chain quote, fees or actual fills.
+
+Do not pitch a generic weekend-momentum or weekend-reversal agent as an economic edge. A later event-specific strategy would need a fixed trigger, separate evaluation sample and executable net outcome, plus a reason the existing Binance Spot bots or Agentic Wallet don't provide the same task. The next product gate remains an observed eligible user's action and a signed Web3 API response.
