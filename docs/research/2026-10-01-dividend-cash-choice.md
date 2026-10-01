@@ -46,6 +46,8 @@ At 14:16 UTC, a read-only `eth_call` to SQQQB's `uiMultiplier()` at `0x25e572b46
 
 For SQQQB, the same deliberately artificial `M0 = 1` calculation gives about 9.745 USDT on a 1,000 USDT current position and 0.975 USDT on a 100 USDT position, before every execution cost. The current multiplier may aggregate more than one event. No event-specific or holder-specific income has been measured. The eight announced contracts are in the [manual Dune event query](queries/bstock-multiplier-events.sql); its results are pending. This screen slightly improves the cash-out size for a larger position but does not pass the product gate.
 
+At 14:24 UTC, the separate [Binance Spot exchange-info response](https://api.binance.com/api/v3/exchangeInfo?symbol=SQQQBUSDT) reported `SQQQBUSDT` as `TRADING` with a 5 USDT `NOTIONAL.minNotional` and a 0.01 bStock limit-order quantity step. A sequential [depth response](https://api.binance.com/api/v3/depth?symbol=SQQQBUSDT&limit=5) showed top bid/ask of 34.68/34.70 USDT. The depth response gave an update ID but no server event timestamp. This establishes an incumbent **CEX** constraint at that read, not the minimum, spread or fill on the required BNB Chain Web3 route. Under the artificial `M0 = 1` example, a 500 USDT current position contains about 4.873 USDT of uplift, below that CEX minimum even before fees. A 1,000 USDT position is above it, but its actual on-chain quote remains unknown.
+
 ## What exists already
 
 | Existing flow | What it does | Gap that remains to test |
