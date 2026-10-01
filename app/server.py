@@ -24,6 +24,10 @@ RWA_SEARCH_PATH = "/api/v1/dex/market/rwa/search"
 CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
 USDT = "0x55d398326f99059ff775485246999027b3197955"
+CORE_UNITROLLER = "0xfd36e2c2a6789db23113685031d7f16329158384"
+CORE_GET_ASSETS_IN_SELECTOR = "abfceffc"
+CORE_USER_POOL_ID_SELECTOR = "73769099"
+MAX_CORE_ENTERED_MARKETS = 64
 ZERO = Decimal("0")
 MAX_INPUT = Decimal("1000000000000000")
 MIN_INPUT = Decimal("0.000000000000000001")
@@ -127,6 +131,73 @@ def read_wallet_balance(wallet, units):
         "token_decimals": decimals,
         "rpc_source": RPC_URL,
         "metadata_note": "NVDAB contract code and decimals() were read at this block; decimals reported 18."
+    }
+
+
+def read_venus_core_account_state(wallet):
+    chain_id = rpc("eth_chainId", [])
+    if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
+        raise RuntimeError("RPC endpoint did not confirm BNB Smart Chain mainnet (chain 56).")
+    block_hex = rpc("eth_blockNumber", [])
+    if not isinstance(block_hex, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block_hex):
+        raise RuntimeError("BNB Chain RPC returned an invalid block number.")
+    block_number = int(block_hex, 16)
+    if block_number <= 0 or block_number.bit_length() > 256:
+        raise RuntimeError("BNB Chain RPC returned an invalid block number.")
+    block_tag = hex(block_number)
+    unitroller_code = rpc("eth_getCode", ["0x" + CORE_UNITROLLER[2:], block_tag])
+    if (not isinstance(unitroller_code, str) or not re.fullmatch(r"0x[0-9a-fA-F]*", unitroller_code)
+            or len(unitroller_code) <= 2 or int(unitroller_code[2:] or "0", 16) == 0):
+        raise RuntimeError("Venus Core Unitroller code was unavailable at the recorded block.")
+
+    address_word = wallet[2:].lower().rjust(64, "0")
+    entered_call = "0x" + CORE_GET_ASSETS_IN_SELECTOR + address_word
+    entered_result = rpc("eth_call", [{"to": "0x" + CORE_UNITROLLER[2:], "data": entered_call}, block_tag])
+    if not isinstance(entered_result, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", entered_result):
+        raise RuntimeError("Venus Core entered-market response was malformed.")
+    entered_raw = entered_result[2:]
+    if len(entered_raw) < 128 or len(entered_raw) % 64 != 0:
+        raise RuntimeError("Venus Core entered-market ABI response was malformed.")
+    offset = int(entered_raw[:64], 16)
+    market_count = int(entered_raw[64:128], 16)
+    if offset != 32 or market_count > MAX_CORE_ENTERED_MARKETS or len(entered_raw) != 128 + market_count * 64:
+        raise RuntimeError("Venus Core entered-market array exceeded the validated ABI bounds.")
+    markets = []
+    for index in range(market_count):
+        word = entered_raw[128 + index * 64:192 + index * 64]
+        if len(word) != 64 or word[:24] != "0" * 24 or int(word[24:], 16) == 0:
+            raise RuntimeError("Venus Core entered-market address was malformed.")
+        markets.append(word[24:].lower())
+    if len(set(markets)) != len(markets):
+        raise RuntimeError("Venus Core entered-market response contained duplicates.")
+
+    pool_call = "0x" + CORE_USER_POOL_ID_SELECTOR + address_word
+    pool_result = rpc("eth_call", [{"to": "0x" + CORE_UNITROLLER[2:], "data": pool_call}, block_tag])
+    if not isinstance(pool_result, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", pool_result):
+        raise RuntimeError("Venus Core pool selection response was malformed.")
+    pool_id = int(pool_result[2:], 16)
+    if pool_id >= 2 ** 96:
+        raise RuntimeError("Venus Core pool selection exceeded uint96 ABI bounds.")
+
+    block = rpc("eth_getBlockByNumber", [block_tag, False])
+    if (not isinstance(block, dict) or not isinstance(block.get("timestamp"), str)
+            or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"])):
+        raise RuntimeError("BNB Chain RPC returned no timestamp for the recorded block.")
+    block_timestamp = int(block["timestamp"], 16)
+    if block_timestamp <= 0:
+        raise RuntimeError("BNB Chain RPC returned an invalid block timestamp.")
+    has_configuration = bool(markets) or pool_id != 0
+    return {
+        "chain_id": 56,
+        "block_number": block_number,
+        "block_tag": block_tag,
+        "block_time_utc": datetime.fromtimestamp(block_timestamp, timezone.utc).isoformat(timespec="seconds"),
+        "retrieved_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "entered_core_market_count": market_count,
+        "user_pool_id": pool_id,
+        "configuration_status": "existing_configuration_detected" if has_configuration else "empty_membership_default_pool_observed",
+        "rpc_source": RPC_URL,
+        "scope_note": "Core entered-market membership and selected pool only. Debt, supplied balances, other pools and borrow or liquidation safety are unknown.",
     }
 
 
@@ -498,10 +569,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         endpoint = urlparse(self.path).path
-        if endpoint not in ("/api/balance", "/api/quote"):
+        if endpoint not in ("/api/balance", "/api/quote", "/api/venus-account"):
             self.send_error(404)
             return
-        if endpoint in ("/api/balance", "/api/quote"):
+        if endpoint in ("/api/balance", "/api/quote", "/api/venus-account"):
             host = self.headers.get("Host", "").lower()
             origin = self.headers.get("Origin")
             content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
@@ -524,10 +595,13 @@ class Handler(BaseHTTPRequestHandler):
             wallet = body.get("wallet", "")
             if not isinstance(wallet, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", wallet):
                 raise ScenarioError("wallet", "Enter a valid 0x public address.")
-            units = decimal_input(body.get("units", ""), "units")
             if endpoint == "/api/balance":
+                units = decimal_input(body.get("units", ""), "units")
                 self.send_json(200, read_wallet_balance(wallet, units))
+            elif endpoint == "/api/venus-account":
+                self.send_json(200, read_venus_core_account_state(wallet))
             else:
+                units = decimal_input(body.get("units", ""), "units")
                 self.send_json(200, request_binance_quote(wallet, units))
         except ScenarioError as exc:
             self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
@@ -535,9 +609,12 @@ class Handler(BaseHTTPRequestHandler):
             # Never include the submitted address or raw RPC error in the response.
             if endpoint == "/api/balance":
                 message = "NVDAB balance is unknown. BNB Chain RPC data could not be verified at one block; retry later."
+            elif endpoint == "/api/venus-account":
+                message = "Venus Core account state is unknown. BNB Chain RPC data could not be verified at one block; retry later."
             else:
                 message = "Binance quote status is unknown. No raw response was retained; retry explicitly if needed."
-            self.send_json(502, {"error": {"field": "wallet" if endpoint == "/api/balance" else "quote", "message": message}})
+            error_field = "quote" if endpoint == "/api/quote" else "wallet"
+            self.send_json(502, {"error": {"field": error_field, "message": message}})
 
     def log_message(self, fmt, *args):
         # Keep access logs free of entered query amounts.
