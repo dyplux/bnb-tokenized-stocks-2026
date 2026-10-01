@@ -69,7 +69,7 @@ def decimal_input(value, field):
 
 
 def fetch_markets():
-    request = Request(API_URL, headers={"User-Agent": "Dyplux-Venus-Scenario/0.1 (read-only)"})
+    request = Request(API_URL, headers={"User-Agent": "Dyplux-Venus-Scenario/0.1 (read-only)", "accept-version": "next"})
     with urlopen(request, timeout=12) as response:
         if response.status != 200:
             raise RuntimeError("Venus API returned HTTP %s." % response.status)
