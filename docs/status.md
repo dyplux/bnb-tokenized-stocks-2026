@@ -17,6 +17,7 @@
 - Opened a separate repository on the external SSD. Bell was not changed for this project.
 - Reopened product scouting after the founder's Bell objection. The [dated brainstorm](research/2026-10-01-product-brainstorm.md) checks incumbent flows and public entrant repositories, rejects another generic buy/comparison/collateral interface, and puts a holder's blocked exit first for falsification. Entrant README claims weren't independently run.
 - Reopened the selection after the founder identified the event's cash-market-closure problem as central. The [off-hours reset](research/2026-10-01-off-hours-reset.md) compares three user tasks and gives a cited public event leading to a bounded spot action priority for research. [D-006](decisions/decision-log.md) supersedes D-005's priority. No technical path or demand has been proved.
+- Found one concrete replay source: a Tesla 8-K accepted at 20:38:50 UTC on 2026-09-29, after the regular New York close. A dated CMC metadata extract identifies separate TSLAB and TSLAon BNB Chain contracts. Historical quote availability and execution weren't captured.
 
 ## Current decision
 
@@ -24,7 +25,7 @@ The old H1/H2/H3 scores were a subjective research ordering, not demand evidence
 
 ## Blockers and next work
 
-1. Choose one public after-close company event and verify its source, timestamp and BNB Chain token contract. Compare the full event-to-order task against StockAnalyst, PARALLAX, Portir and Binance Agentic Wallet.
+1. Use the Tesla 2026-09-29 filing replay, confirm its token contracts from issuer or Binance sources, and compare the full event-to-order task against StockAnalyst, PARALLAX, Portir and Binance Agentic Wallet.
 2. Confirm Binance API scope and quota without exposing credentials. Run a read-only RWA lookup and one amount-specific closed-session quote only if permitted. Record redacted fields, latency and errors for the Developer Experience Report. No order or funds at this gate.
 3. Observe a consented eligible user's next action from that event, or compare a faithfully replayed task in incumbent interfaces. Reject the concept if it only adds a news summary or generic quote.
 4. Revise the one-line hacker application answer only when this task has a credible advantage. The founder submits it; no form has been submitted here. Write a one-page spec after the gate passes. No app code, DNS work or deployment now.

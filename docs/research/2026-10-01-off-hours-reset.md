@@ -12,6 +12,12 @@ The [event](https://www.bnbchain.org/en/hackathons/tokenized-stocks) explicitly 
 
 The Binance [RWA Data API](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) can identify the token and market state. The [Trading API](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) documents stock quote routes. Transaction simulation and wallet execution need separate feasibility checks. `referencePrice` in the RWA documentation is calculated from the token price, so it cannot establish a gap to an independent cash-equity quote. A last cash close, if shown, needs its own sourced timestamp and correct unit. No trading edge or Monday outcome is inferred from a gap.
 
+## One real after-close event to replay
+
+The [SEC Tesla submissions record](https://data.sec.gov/submissions/CIK0001318605.json), read with a declared User-Agent on 2026-10-01, lists an 8-K accepted on **2026-09-29 at 20:38:50 UTC**, which was **16:38:50 New York time**, after the regular cash close. The [filing](https://www.sec.gov/Archives/edgar/data/1318605/000162828026063820/tsla-20260929.htm) reports three credit facilities totaling US$30 billion in commitments and says no loans were outstanding under them as of 29 September. The record is a real source and timestamp for a demo replay. It doesn't tell us whether a trader should buy or sell.
+
+The [dated CMC metadata extract](2026-09-30-tsla-contract-map.json) maps the Tesla name to two BNB Chain contracts: TSLAB `0x5b1910eaad6450e50f816082aa078c41f10c292f` and TSLAon `0x2494b603319d4d9f9715c9f4496d9e0364b59d93`. These are distinct issuer representations. The contracts and current trading status require confirmation against issuer or Binance sources before product use. No historical 20:38 spot quote or executed swap was captured, so the candidate replay proves an event, not an available trading opportunity.
+
 ## Three off-hours hypotheses
 
 | Hypothesis | User action and possible demo | Best published substitute | Main disproof |
