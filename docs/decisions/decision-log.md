@@ -41,3 +41,15 @@ The founder asked why a common user would need a â€œpre-trade decision receiptâ€
 The [PancakeSwap stock terminal](https://blog.pancakeswap.finance/articles/pancakeswap-your-go-to-guide-to-trade-rwas) already presents issuer options and a trade path. [Binance Agentic Wallet](https://developers.binance.com/en/docs/products/agentic-wallet/use-cases/trading/stock-trading) documents ticker resolution, quote and confirmation. These published flows strengthen the founder's objection; they don't prove the live UX is complete. The scorecard's 57/100 was a research ordering and didn't measure common-user value.
 
 Hold the [application draft](../submission/form-answer.md). H1 may continue as a falsification test, but it is no longer a recommended standalone consumer product. Resume product selection by observing one ordinary user's actual purchase task and the same task in incumbent flows. If the only added output is a longer explanation, reject H1. Don't rename the idea or add Agent Studio to disguise the overlap.
+
+## D-005: investigate a blocked exit before selecting a product
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** research priority, no build approval
+
+The [dated brainstorm](../research/2026-10-01-product-brainstorm.md) found public hackathon entrants covering issuer comparison and routing ([PARALLAX](https://github.com/rishu4436/parallax), [OneTicker](https://github.com/JemIIahh/oneticker)), consumer buying and selling ([yostocks](https://github.com/yostocks-protocol/yostocks), [Portir](https://github.com/yeheskieltame/portir)), and post-hold/collateral tasks ([Steward](https://github.com/zkasuran/steward-bnb), Portir). Their READMEs establish public claims and some source code, not adoption or independently reproduced outcomes. Another pre-trade receipt is rejected as a standalone direction.
+
+[Ondo's own terms](https://ondo.finance/ondo-stocks) distinguish owning a secondary-market token from eligibility to redeem directly. Its normal direct redemption and secondary trading have different hours and conditions. [yostocks's DX log](https://github.com/yostocks-protocol/yostocks/blob/main/DX_LOG.md) reports an after-hours sell refusal even when a buy quote succeeded, but this has not been reproduced by us. A holder asking whether they can exit a specific position today is a narrower possible job than choosing among wrappers. Research it first. The core dissent is that Ondo, wallets and yostocks may already give the correct next action. A quote failure may also be too rare to warrant an app.
+
+Reject the exit direction if a same-task comparison shows that an incumbent already identifies the cause and action, or if Binance API status and sell quotes cannot support a safe diagnosis. No application answer or build is approved. Keep Agent Studio optional; the extra prize alone isn't a product reason.

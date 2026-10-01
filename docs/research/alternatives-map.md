@@ -1,5 +1,7 @@
 # Alternatives for one stock-token decision
 
+**Update, 2026-10-01:** The [later entrant review](2026-10-01-product-brainstorm.md) adds public projects that directly cover buying, routing, DCA, portfolio and collateral tasks. Read it before treating this first-pass map as complete.
+
 **Checked:** 2026-10-01. These are published capabilities, not a completed hands-on comparison. The same ticker, size, wallet and time still need to be observed across flows.
 
 | Substitute | Published workflow | What it already solves | Question for our test |

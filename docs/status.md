@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-01
 **Phase:** research gate and API feasibility
-**Product selected:** no; H1 is challenged as a standalone product
+**Product selected:** no; the exit/redeem task is the next research test
 **Application code:** none
 **Deployment:** none
 
@@ -15,17 +15,18 @@
 - A [Sol critical review](agent-reports/product-review/2026-10-01-critical-synthesis.md) challenged the early product recommendation. The [problem brief](research/problem-brief.md), [alternative map](research/alternatives-map.md), [scorecard](research/idea-scorecard.md) and [API map](api-map.md) record the narrowed test and counterevidence.
 - Prepared a [one-line draft](submission/form-answer.md) for the founder's hacker application. It is for mentor routing and has not been submitted.
 - Opened a separate repository on the external SSD. Bell was not changed for this project.
+- Reopened product scouting after the founder's Bell objection. The [dated brainstorm](research/2026-10-01-product-brainstorm.md) checks incumbent flows and public entrant repositories, rejects another generic buy/comparison/collateral interface, and puts a holder's blocked exit first for falsification. Entrant README claims weren't independently run.
 
 ## Current decision
 
-Three problem hypotheses were compared. H1, a pre-trade decision receipt for bStocks and Ondo, ranked first at 57/100 on a subjective research scorecard. H2 scored 50/100 and H3 43/100. The founder then challenged H1's similarity to Bell and its value for an ordinary buyer. [Decision D-004](decisions/decision-log.md) puts both H1 as a standalone product and the application wording on hold. No live Binance quote or observed user task exists, so no implementation is approved. The `referencePrice` field is derived from token price and cannot be used as an independent TradFi benchmark.
+The old H1/H2/H3 scores were a subjective research ordering, not demand evidence. The founder challenged H1's similarity to Bell. [Decision D-004](decisions/decision-log.md) put H1 and the application wording on hold. New competitor research shows direct entrants for issuer comparison, buying, DCA, monitoring and collateral protection. [Decision D-005](decisions/decision-log.md) gives one blocked-exit task priority for research only. No live Binance quote or observed user task exists, so no implementation is approved. The `referencePrice` field is derived from token price and cannot be used as an independent TradFi benchmark.
 
 ## Blockers and next work
 
-1. Map one ordinary buyer's concrete goal and safe next action. Compare the same ticker, amount and time in PancakeSwap and Agentic Wallet. Seek one consented user task if feasible. Reject a separate product if the receipt only adds reading.
-2. Confirm safe Binance API account scope and quota without exposing credentials. Run only narrow RWA Data and quote probes if they can answer a decision question, with no order or money. Record actual onboarding, payload fields, latency and errors for the Developer Experience Report.
-3. Revise the one-line hacker application answer only when a distinct outcome for the target user is clear. The founder submits it; this repository has not submitted a form.
-4. Approve or reject a product against the event gates. Write a one-page spec only if the research gate passes. Do not start app code, DNS work or deployment now.
+1. Check a single BNB Chain holder's blocked-exit task against issuer guidance, wallet and swap interfaces. Reject a separate tool if the existing flow gives the same safe action.
+2. Confirm Binance API scope and quota without exposing credentials. Run one read-only sell quote and RWA status probe only if they answer the exit question. Record payload fields, latency and errors for the Developer Experience Report. No order or funds.
+3. Observe a consented eligible user's next action from a real or accurately replayed blocked-exit state. Never infer frequency from a competitor's DX log.
+4. Revise the one-line hacker application answer only when this task has an advantage over the existing flow. The founder submits it; no form has been submitted here. Write a one-page spec only after the product gate passes. No app code, DNS work or deployment now.
 
 ## Resume
 
