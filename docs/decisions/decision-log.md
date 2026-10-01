@@ -77,3 +77,25 @@ The founder wants a product that gives an eligible user a real economic advantag
 The [current Agent Studio quickstart](https://docs.bnbchain.org/developer-kit/bnbchain-studio/quickstart/) supports a paid seller agent and a managed 48-hour testnet trial. The [Binance Trading API](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) binds RWA quotes to the signing wallet and an approximately 30-second quote ID. A paid event-to-quote service is only a technical option until it proves it can return a still-valid quote and improves a task that NightDesk's published seller does not already solve. Do not add Studio for a prize badge. Mainnet spot execution remains a separate product path. No build or application-answer change is approved by this decision.
 
 **Additional counterevidence, checked the same day:** the [Binance Agentic Wallet stock guide](https://developers.binance.com/en/docs/products/agentic-wallet/use-cases/trading/stock-trading) publishes examples of persistent earnings-reaction and news-driven trading rules. It says off-chain data requires an added source or Skill. We have not run these examples, but a plain event-to-order agent would overlap the official product on paper. The same-task review must find a measurable missing input, cost or route outcome before this candidate can enter build.
+
+## D-008: shift the weekend trigger test from SEC filings to BTC-linked equity
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** provisional research priority; supersedes D-006's SEC-weekend trigger
+
+The [SEC operating-hours guide](https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/understand-edgar-its-three-websites) says EDGAR is closed on weekends. That defeats a normal weekend service driven by new SEC filings. The [weekend research note](../research/2026-10-01-weekend-crypto-equity-task.md) measures ten Binance Spot windows: MSTRB and BTC moved in the same direction in eight, with a 0.883 correlation of 48-hour returns. [Strategy's own description](https://www.strategy.com/strategy) makes the economic link intelligible. A public pair index showed substantially more MSTRB/USDT BNB Chain liquidity than COINB/USDT at one timestamp. Neither measure proves a Binance Web3 quote or net edge.
+
+Research priority: test an eligible holder's BTC-move-to-MSTRB action during Friday 20:00 to Sunday 20:00 ET. The user must see what MSTRB has already priced, a fresh amount-specific BNB Chain quote and full costs before a bounded decision. A BTC alert or price chart alone overlaps the Binance Agentic Wallet's documented automation. Reject if the official tool already completes the same job with equivalent clarity, the RFQ is unavailable or too costly, or no eligible user wants separate Strategy equity exposure. Agent Studio remains a conditional paid analysis surface with a real buyer; it cannot be the user's mainnet signing wallet or sell an expiring RFQ as a durable report.
+
+**Frequency check:** the same ten-weekend hourly sample crossed 2% away from Friday's BTC opening price once and 3% zero times. A product predicated on a dramatic weekend BTC shock is therefore a weak standalone bet on current evidence. The task remains a falsification test, not a product selection.
+
+## D-009: test wallet-size execution quality, not a weekend alpha claim
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** provisional research gate; narrows D-008
+
+The [execution research note](../research/2026-10-01-session-aware-execution.md) combines three pieces of counterevidence. [Binance already offers eligible users 24/7 bStocks Spot trading](https://www.binance.com/en/academy/articles/what-are-bstocks-a-guide-to-tokenized-stocks-on-binance) and [Spot bots](https://www.binance.com/en/support/announcement/detail/ae96da838d754f91bced1501de728f03). Our ten-weekend sample finds little one-hour BTC lead over MSTRB. [yostocks source](https://github.com/yostocks-protocol/yostocks/blob/main/apps/agent/yo.mjs) already quotes, selects a route and applies a 1% reference guard. Consequently, generic closed-hours access, BTC-trigger automation and a simple price guard are not sufficient product advantages.
+
+The remaining test is for an **eligible self-custody user with BNB Chain funds**: can a fresh, same-MSTRB, same-side, size-aware comparison expose a materially poor on-chain execution route or a missing-risk state before the user signs? A centralized Spot book is only an indicative benchmark for this user, not an executable BNB alternative. The [Web3 RFQ](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) is wallet-bound and short-lived. The initial public Spot/DEX snapshot doesn't prove a profitable spread or even an amount-specific route. Do not select or build this product until a signed Web3 quote and an incumbent task comparison show a practical difference. Do not describe bypassing bStock location restrictions as onboarding. Agent Studio remains conditional on a separately useful paid analysis job.

@@ -13,4 +13,6 @@ The founder identified a material problem: this sounds like Bell and doesn't yet
 
 **Correction, 2026-10-01:** [D-006](../decisions/decision-log.md) supersedes the blocked-exit priority. The research now tests whether a public company event after regular cash hours can lead to a sourced, amount-specific BNB Chain spot decision with a real quote and a user-set cap. No replacement line is approved until that path and its direct substitutes are checked.
 
+**Latest research, 2026-10-01:** [D-008 and D-009](../decisions/decision-log.md) also supersede that event priority. EDGAR is closed on weekends, MSTRB's observed hourly response to BTC gives no simple lag edge, Binance already trades bStocks 24/7 on Spot, and yostocks already guards wallet quotes. The remaining test is a same-token, wallet-size BNB Chain execution check. It still lacks an authenticated Web3 RFQ and an observed user outcome. Do not send the old line to the mentor form; write a fresh one-line hypothesis only after this gate, or describe the research direction as provisional if the form is due sooner.
+
 The founder's hacker application may expose a UID or private account fields. Do not copy those into this repository. The final build submission has separate requirements in [event rules](../01-event-rules.md).
