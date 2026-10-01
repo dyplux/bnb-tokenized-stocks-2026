@@ -139,3 +139,13 @@ The [official-source audit](../research/2026-10-01-reference-price-source-audit.
 **Status:** accepted research filter; no product approved
 
 The [wallet failure-state audit](../research/2026-10-01-stock-trade-failure-audit.md) found documented remedies for minimum amount, wrong stablecoin, gas, market hours, thin liquidity and pending orders in MetaMask, Phantom and Blockchain.com. Binance's Trading API also publishes specific RWA quote error codes. These are useful for clear recovery states, but the documentation doesn't show an unmet task or an economic improvement from another generic explainer. A gasless first purchase would require a paymaster sponsor and route compatibility that this project doesn't have. Keep these states in a future product only where a real participant and quote reveal a gap. Continue the small-wallet same-task gate from D-011; do not approve an error dashboard as a substitute for it.
+
+## D-014: a liquid-pool size alert is a weak consumer hook
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** accepted research filter; no product approved
+
+The [fixed-block NVDAB pool quote](../research/2026-10-01-nvdab-sized-pool-quote.md) measured 25, 100, 500 and 2,000 USDT inputs against the same PancakeSwap V3 pool at BNB block 125141674. Independent read-only buy and reverse sell quotes differed by 0.499416% to 0.502656% before gas and transaction execution. The pool charges 0.25% per direction; the percentage difference between the smallest and largest cases was only about 0.324 basis points. This one pool doesn't establish a general market result, but it weakens the proposed consumer story that sizing an ordinary NVDAB purchase creates a large hidden execution penalty.
+
+Do not build a generic price-impact alert from this result. The next gate remains a real eligible person's task and a same-time signed Binance Web3 quote, with an incumbent comparison. A smaller pool or another route may behave differently; such a case needs evidence that the user could actually encounter and act on it. The on-chain Quoter call is not the hackathon Web3 integration.
