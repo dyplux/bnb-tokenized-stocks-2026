@@ -131,3 +131,11 @@ Retire dividend cash-out as the active product recommendation. Keep the Dune eve
 **Status:** accepted source correction; does not approve a product
 
 The [official-source audit](../research/2026-10-01-reference-price-source-audit.md) found that Binance's RWA API labels `referencePrice` an underlying reference, while its Wallet Skills guide gives a formula based on token price and share multiplier. The RWA example values don't satisfy that formula. D-003 and several early research notes said the field was definitively derived from the token price; that provenance claim is withdrawn. The reverse claim, that it is a fresh independent share quote, is also unsupported. Until Binance supplies the upstream source and as-of time, product copy may only call it an unverified reference field. No premium, discount or trading-edge calculation may use it as an independent equity benchmark.
+
+## D-013: keep trade-error diagnosis as a product state, not the main idea
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** accepted research filter; no product approved
+
+The [wallet failure-state audit](../research/2026-10-01-stock-trade-failure-audit.md) found documented remedies for minimum amount, wrong stablecoin, gas, market hours, thin liquidity and pending orders in MetaMask, Phantom and Blockchain.com. Binance's Trading API also publishes specific RWA quote error codes. These are useful for clear recovery states, but the documentation doesn't show an unmet task or an economic improvement from another generic explainer. A gasless first purchase would require a paymaster sponsor and route compatibility that this project doesn't have. Keep these states in a future product only where a real participant and quote reveal a gap. Continue the small-wallet same-task gate from D-011; do not approve an error dashboard as a substitute for it.
