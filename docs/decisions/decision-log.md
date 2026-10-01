@@ -53,3 +53,13 @@ The [dated brainstorm](../research/2026-10-01-product-brainstorm.md) found publi
 [Ondo's own terms](https://ondo.finance/ondo-stocks) distinguish owning a secondary-market token from eligibility to redeem directly. Its normal direct redemption and secondary trading have different hours and conditions. [yostocks's DX log](https://github.com/yostocks-protocol/yostocks/blob/main/DX_LOG.md) reports an after-hours sell refusal even when a buy quote succeeded, but this has not been reproduced by us. A holder asking whether they can exit a specific position today is a narrower possible job than choosing among wrappers. Research it first. The core dissent is that Ondo, wallets and yostocks may already give the correct next action. A quote failure may also be too rare to warrant an app.
 
 Reject the exit direction if a same-task comparison shows that an incumbent already identifies the cause and action, or if Binance API status and sell quotes cannot support a safe diagnosis. No application answer or build is approved. Keep Agent Studio optional; the extra prize alone isn't a product reason.
+
+## D-006: make the closed-market interval the product research priority
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** provisional research priority; supersedes D-005's priority
+
+The founder rejected blocked-exit recovery as too remote from the event's opening problem. The [official brief](https://www.bnbchain.org/en/hackathons/tokenized-stocks) asks for useful actions while tokenized stocks trade and the regular US cash market is closed. The [off-hours reset](../research/2026-10-01-off-hours-reset.md) compares three related jobs. Generic weekend monitors and limit-at-reference orders already have public entrants. The first research test is a public company event after the close, linked to a specific tokenized stock, an amount-specific Binance Web3 API spot quote and a capped user decision.
+
+This is a correction to research direction, not evidence of user demand or implementation approval. A cited filing may not be the first public release; a route may be unavailable outside cash hours; the RWA `referencePrice` is not an independent traditional share quote. The product must work honestly through those states. A source summary or a generic quote is insufficient. No autonomous investment decision is authorized. D-005 remains as a documented rejected research priority and may become an error state inside another product if observed.
