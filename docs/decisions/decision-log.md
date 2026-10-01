@@ -149,3 +149,13 @@ The [wallet failure-state audit](../research/2026-10-01-stock-trade-failure-audi
 The [fixed-block NVDAB pool quote](../research/2026-10-01-nvdab-sized-pool-quote.md) measured 25, 100, 500 and 2,000 USDT inputs against the same PancakeSwap V3 pool at BNB block 125141674. Independent read-only buy and reverse sell quotes differed by 0.499416% to 0.502656% before gas and transaction execution. The pool charges 0.25% per direction; the percentage difference between the smallest and largest cases was only about 0.324 basis points. This one pool doesn't establish a general market result, but it weakens the proposed consumer story that sizing an ordinary NVDAB purchase creates a large hidden execution penalty.
 
 Do not build a generic price-impact alert from this result. The next gate remains a real eligible person's task and a same-time signed Binance Web3 quote, with an incumbent comparison. A smaller pool or another route may behave differently; such a case needs evidence that the user could actually encounter and act on it. The on-chain Quoter call is not the hackathon Web3 integration.
+
+## D-015: do not promote Venus collateral monitoring without an observed divergence
+
+**Date:** 2026-10-01
+**Owner:** Dyplux
+**Status:** accepted research filter; no product approved
+
+The [Venus bStock oracle check](../research/2026-10-01-venus-bstock-oracle-check.md) found about $658,016 of indexed supply across four bStock collateral markets and 101 market supplier records, not necessarily distinct users. Venus documents a Protection Mode that can make borrow-power and liquidation prices differ. At BNB block 125144831, the live configuration enabled bounded pricing for all four, but Protection Mode was inactive and the bounded prices equalled spot. No affected borrower or missed incumbent warning was observed.
+
+Keep the oracle distinction as a possible future state, but do not build a general collateral agent or paid Agent Studio monitor from a dormant state. A build would require an active divergence or a consenting borrower's task, a safe action that changes as a result, and the mandatory Binance Web3 API integration serving that task. This check supplies none of those gates.
