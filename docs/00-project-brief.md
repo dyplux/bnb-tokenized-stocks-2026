@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-01
 **Name:** to be decided
-**Stage:** research and selection
+**Stage:** provisional product spec and read-only implementation
 **Owner:** Dyplux
 
 ## Mission
@@ -27,4 +27,4 @@ A reviewer can identify the target user and task in one sentence, run the docume
 3. Does the Binance Web3 API expose enough data and a reproducible quote for the smallest useful flow?
 4. What is the simplest test that would reject the leading hypothesis?
 
-The [status](status.md) and [decision log](decisions/decision-log.md) hold the current answer. No product has been selected for implementation.
+The [status](status.md) and [decision log](decisions/decision-log.md) hold the current answer. [D-017](decisions/decision-log.md) approves one provisional sell-or-borrow slice; it still needs a signed Web3 response and a real user task before any functionality or demand claim.
