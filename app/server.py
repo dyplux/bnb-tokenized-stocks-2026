@@ -3,21 +3,45 @@
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation, getcontext
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
 import json
+import base64
+import hashlib
+import hmac
+import os
 import re
-from urllib.parse import urlparse, parse_qs
+import time
+from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode, urlparse, parse_qs
+from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 getcontext().prec = 36
 API_URL = "https://api.venus.io/markets?chainId=56&limit=100"
 RPC_URL = "https://bsc-dataseed.bnbchain.org"
+BINANCE_BASE = "https://web3.binance.com/build"
+BINANCE_PATH = "/build/api/v1/dex/aggregator/quote"
 CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
 USDT = "0x55d398326f99059ff775485246999027b3197955"
 ZERO = Decimal("0")
 MAX_INPUT = Decimal("1000000000000000")
 MIN_INPUT = Decimal("0.000000000000000001")
+SECRET_NAMES = ("BINANCE_WEB3_API_KEY", "BINANCE_WEB3_SECRET_KEY")
+MAX_QUOTE_RESPONSE_BYTES = 1048576
+BINANCE_ERROR_LABELS = {
+    40001: "invalid_request_parameters", 40101: "invalid_or_disabled_api_key",
+    40102: "signature_mismatch_or_missing", 40103: "timestamp_expired_or_replayed_request",
+    40104: "api_key_permission_missing", 40301: "region_restricted", 40302: "vpn_restricted",
+    40303: "unusual_ip", 40366: "ondo_order_above_vendor_maximum",
+    40365: "ondo_token_pair_not_supported", 40367: "ondo_underlying_market_not_tradable", 40368: "ondo_stablecoin_pair_not_supported",
+    40369: "bstock_underlying_market_not_tradable", 40370: "bstock_pair_not_supported",
+    40374: "rwa_no_vendor_liquidity", 40375: "ondo_order_below_usd_minimum",
+    42900: "rate_limit_exceeded", 50000: "internal_server_error",
+    50001: "service_temporarily_unavailable", 40411: "chain_not_supported",
+    40421: "insufficient_pair_liquidity",
+    40441: "no_valid_vendor_quote",
+    40442: "same_tokens",
+}
 
 
 class ScenarioError(Exception):
@@ -103,6 +127,164 @@ def read_wallet_balance(wallet, units):
         "rpc_source": RPC_URL,
         "metadata_note": "NVDAB contract code and decimals() were read at this block; decimals reported 18."
     }
+
+
+def ignored_env_file(repo_root):
+    try:
+        rules = {line.strip() for line in (repo_root / ".gitignore").read_text(encoding="utf-8").splitlines()
+                 if line.strip() and not line.lstrip().startswith("#")}
+    except OSError:
+        return False
+    return bool({".env", ".env*", "*.env", "**/.env"} & rules)
+
+
+def binance_credentials(repo_root):
+    file_values = {}
+    env_path = repo_root / ".env"
+    if env_path.is_file() and ignored_env_file(repo_root):
+        try:
+            lines = env_path.read_text(encoding="utf-8").splitlines()
+        except OSError:
+            lines = []
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            name, value = line.split("=", 1)
+            name = name.strip().removeprefix("export ").strip()
+            if name not in SECRET_NAMES:
+                continue
+            value = value.strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                value = value[1:-1]
+            file_values[name] = value
+    api_key = os.environ.get(SECRET_NAMES[0]) or file_values.get(SECRET_NAMES[0])
+    secret_key = os.environ.get(SECRET_NAMES[1]) or file_values.get(SECRET_NAMES[1])
+    return (api_key, secret_key) if api_key and secret_key else None
+
+
+def quote_result(status, capture_time, latency_ms=None, **fields):
+    result = {"status": status, "capture_time_utc": capture_time, "latency_ms": latency_ms}
+    result.update(fields)
+    return result
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def request_binance_quote(wallet, units):
+    capture_time = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    repo_root = Path(__file__).resolve().parents[1]
+    credentials = binance_credentials(repo_root)
+    if credentials is None:
+        return quote_result("missing_credentials", capture_time, error_label="missing_credentials")
+    api_key, secret_key = credentials
+    try:
+        chain_id = rpc("eth_chainId", [])
+        if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
+            return quote_result("metadata_unavailable", capture_time, error_label="bsc_rpc_chain_mismatch")
+        block_hex = rpc("eth_blockNumber", [])
+        if not isinstance(block_hex, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block_hex):
+            return quote_result("metadata_unavailable", capture_time, error_label="bsc_rpc_invalid_block")
+        block_number = int(block_hex, 16)
+        block_tag = hex(block_number)
+        code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
+        decimals_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": "0x313ce567"}, block_tag])
+        block = rpc("eth_getBlockByNumber", [block_tag, False])
+        if (not isinstance(code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", code)
+                or int(code[2:] or "0", 16) == 0
+                or not isinstance(decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", decimals_word)
+                or int(decimals_word, 16) != 18
+                or not isinstance(block, dict) or not isinstance(block.get("timestamp"), str)
+                or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"])):
+            return quote_result("metadata_unavailable", capture_time, error_label="nvdab_metadata_unverified")
+        amount_raw = int(units * (Decimal(10) ** 18))
+        if amount_raw <= 0 or len(str(amount_raw)) > 78:
+            return quote_result("invalid_amount", capture_time, error_label="raw_amount_out_of_range")
+        block_time = datetime.fromtimestamp(int(block["timestamp"], 16), timezone.utc).isoformat(timespec="seconds")
+        params = urlencode([
+            ("binanceChainId", "56"),
+            ("fromTokenAddress", "0x" + NVDAB[2:]),
+            ("toTokenAddress", "0x" + USDT[2:]),
+            ("amount", str(amount_raw)),
+            ("userWalletAddress", wallet),
+        ])
+        query_path = "/api/v1/dex/aggregator/quote?" + params
+        timestamp = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+        capture_time = timestamp
+        signed_path = BINANCE_PATH + "?" + params
+        signing_string = timestamp + "GET" + signed_path
+        signature = base64.b64encode(hmac.new(secret_key.encode("utf-8"), signing_string.encode("utf-8"), hashlib.sha256).digest()).decode("ascii")
+        request = Request(BINANCE_BASE + query_path, headers={
+            "X-OC-APIKEY": api_key,
+            "X-OC-TIMESTAMP": timestamp,
+            "X-OC-SIGN": signature,
+            "Accept": "application/json",
+        }, method="GET")
+    except Exception:
+        return quote_result("metadata_unavailable", capture_time, error_label="bsc_rpc_or_amount_error")
+
+    started = time.monotonic()
+    payload = None
+    http_status = None
+    response_body = b""
+    opener = build_opener(NoRedirect())
+    try:
+        with opener.open(request, timeout=15) as response:
+            http_status = response.status
+            response_body = response.read(MAX_QUOTE_RESPONSE_BYTES + 1)
+    except HTTPError as error:
+        http_status = error.code
+        try:
+            response_body = error.read(MAX_QUOTE_RESPONSE_BYTES + 1)
+        except OSError:
+            response_body = b""
+    except Exception:
+        return quote_result("network_error", capture_time, round((time.monotonic() - started) * 1000, 3), error_label="binance_network_error")
+    latency_ms = round((time.monotonic() - started) * 1000, 3)
+    if len(response_body) > MAX_QUOTE_RESPONSE_BYTES:
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="response_too_large", http_status=http_status)
+    try:
+        payload = json.loads(response_body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_payload", http_status=http_status)
+    if not isinstance(payload, dict):
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_payload", http_status=http_status)
+    code = payload.get("code")
+    if not isinstance(code, int) or isinstance(code, bool):
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="missing_business_code", http_status=http_status)
+    if code != 0:
+        status = "no_route" if code in (40374, 40421, 40441) else ("documented_error" if code in BINANCE_ERROR_LABELS else "unmapped_error")
+        return quote_result(status, capture_time, latency_ms, http_status=http_status,
+                            business_code=code, error_label=BINANCE_ERROR_LABELS.get(code, "unmapped_business_error"),
+                            **({"route_count": 0} if code in (40374, 40421, 40441) else {}))
+    if http_status is None or not 200 <= http_status < 300:
+        return quote_result("http_error", capture_time, latency_ms, error_label="unexpected_http_status", http_status=http_status)
+    routes = payload.get("data")
+    if not isinstance(routes, list) or any(not isinstance(route, dict) for route in routes):
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_routes_shape", http_status=http_status, business_code=code)
+    sanitized = []
+    for route in routes:
+        vendor, mode = route.get("vendorName"), route.get("executionMode")
+        if (not isinstance(vendor, str) or not re.fullmatch(r"[A-Za-z0-9_. -]{1,80}", vendor)
+                or mode not in ("SWAP", "RFQ")):
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_fields", http_status=http_status, business_code=code)
+        item = {"vendorName": vendor, "executionMode": mode}
+        for field in ("fromTokenAmount", "toTokenAmount"):
+            amount = route.get(field)
+            if amount is not None:
+                if not isinstance(amount, str) or len(amount) > 78 or not re.fullmatch(r"[0-9]+", amount):
+                    return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_amount", http_status=http_status, business_code=code)
+                item[field] = amount
+        sanitized.append(item)
+    result_status = "route_observed_proceeds_unverified" if routes else "no_route"
+    return quote_result(result_status, capture_time, latency_ms, route_count=len(routes), routes=sanitized,
+                        token_metadata_block=block_number, token_metadata_block_tag=block_tag,
+                        token_metadata_block_time_utc=block_time, request_amount_raw=str(amount_raw),
+                        http_status=http_status, business_code=code,
+                        error_label=None if routes else "no_route")
 
 
 def d(value):
@@ -234,9 +416,23 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(502, {"error": {"field": "service", "message": "Live Venus data is unavailable. No scenario was calculated.", "detail": str(exc)[:180]}})
 
     def do_POST(self):
-        if urlparse(self.path).path != "/api/balance":
+        endpoint = urlparse(self.path).path
+        if endpoint not in ("/api/balance", "/api/quote"):
             self.send_error(404)
             return
+        if endpoint in ("/api/balance", "/api/quote"):
+            host = self.headers.get("Host", "").lower()
+            origin = self.headers.get("Origin")
+            content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+            if host not in ("127.0.0.1:8000", "localhost:8000"):
+                self.send_json(403, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "Local API request rejected for this host."}})
+                return
+            if origin is not None and origin not in ("http://127.0.0.1:8000", "http://localhost:8000"):
+                self.send_json(403, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "Local API request rejected for this origin."}})
+                return
+            if content_type != "application/json":
+                self.send_json(415, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "Local API request requires application/json."}})
+                return
         try:
             length = int(self.headers.get("Content-Length", "0"))
             if length <= 0 or length > 4096:
@@ -248,12 +444,19 @@ class Handler(BaseHTTPRequestHandler):
             if not isinstance(wallet, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", wallet):
                 raise ScenarioError("wallet", "Enter a valid 0x public address.")
             units = decimal_input(body.get("units", ""), "units")
-            self.send_json(200, read_wallet_balance(wallet, units))
+            if endpoint == "/api/balance":
+                self.send_json(200, read_wallet_balance(wallet, units))
+            else:
+                self.send_json(200, request_binance_quote(wallet, units))
         except ScenarioError as exc:
             self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
         except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, UnicodeDecodeError, RuntimeError, ValueError, OSError, OverflowError) as exc:
             # Never include the submitted address or raw RPC error in the response.
-            self.send_json(502, {"error": {"field": "wallet", "message": "NVDAB balance is unknown. BNB Chain RPC data could not be verified at one block; retry later."}})
+            if endpoint == "/api/balance":
+                message = "NVDAB balance is unknown. BNB Chain RPC data could not be verified at one block; retry later."
+            else:
+                message = "Binance quote status is unknown. No raw response was retained; retry explicitly if needed."
+            self.send_json(502, {"error": {"field": "wallet" if endpoint == "/api/balance" else "quote", "message": message}})
 
     def log_message(self, fmt, *args):
         # Keep access logs free of entered query amounts.
