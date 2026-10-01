@@ -18,17 +18,20 @@
 - Reopened product scouting after the founder's Bell objection. The [dated brainstorm](research/2026-10-01-product-brainstorm.md) checks incumbent flows and public entrant repositories, rejects another generic buy/comparison/collateral interface, and puts a holder's blocked exit first for falsification. Entrant README claims weren't independently run.
 - Reopened the selection after the founder identified the event's cash-market-closure problem as central. The [off-hours reset](research/2026-10-01-off-hours-reset.md) compares three user tasks and gives a cited public event leading to a bounded spot action priority for research. [D-006](decisions/decision-log.md) supersedes D-005's priority. No technical path or demand has been proved.
 - Found one concrete replay source: a Tesla 8-K accepted at 20:38:50 UTC on 2026-09-29, after the regular New York close. A dated CMC metadata extract identifies separate TSLAB and TSLAon BNB Chain contracts. Historical quote availability and execution weren't captured. This Tuesday event doesn't prove a unique weekend advantage against a broker that offers eligible stocks during weekday extended hours.
+- Mapped [user access, net economic edge and Agent Studio](research/2026-10-01-economic-edge-and-agent-studio.md). The strongest distinct access interval is Friday 20:00 to Sunday 20:00 New York time for an eligible user with stablecoins, but no live quote, profitable trade or observed user has been recorded. Binance's own research reports much of the Monday gap priced into bStocks during the prior weekend; its figures are not our PnL measurement. D-007 requires real amount-specific quotes and cost accounting before any economic claim. Agent Studio's documented paid seller runtime is an optional service test, not the mainnet trading agent.
 
 ## Current decision
 
 The old H1/H2/H3 scores were a subjective research ordering, not demand evidence. The founder challenged H1's similarity to Bell and then rejected blocked-exit recovery as the main direction. [D-006](decisions/decision-log.md) prioritizes a public event after cash close leading to a bounded, amount-specific BNB Chain spot action. Public entrants already cover weekend price monitors, baskets and basic earnings rules, so the exact workflow must be compared. No live Binance quote or observed user task exists, so no implementation is approved. The `referencePrice` field is derived from token price and cannot be used as an independent TradFi benchmark.
 
+[D-007](decisions/decision-log.md) narrows the possible advantage to a person who is eligible to trade, already has BNB Chain funds and lacks a comparable weekend stock route. Access may be useful even when it produces no trading profit. A price edge must survive actual bid/ask, slippage, fees and a valid exit. The paid Agent Studio idea has a 30-second RFQ-expiry problem and overlap with an existing entrant's seller; it remains optional until tested.
+
 ## Blockers and next work
 
-1. Use the Tesla 2026-09-29 filing replay, confirm its token contracts from issuer or Binance sources, and compare the full event-to-order task against StockAnalyst, PARALLAX, Portir and Binance Agentic Wallet.
-2. Confirm Binance API scope and quota without exposing credentials. Run a read-only RWA lookup and one amount-specific closed-session quote only if permitted. Record redacted fields, latency and errors for the Developer Experience Report. No order or funds at this gate.
-3. Observe a consented eligible user's next action from that event, or compare a faithfully replayed task in incumbent interfaces. Reject the concept if it only adds a news summary or generic quote.
-4. Revise the one-line hacker application answer only when this task has a credible advantage. The founder submits it; no form has been submitted here. Write a one-page spec after the gate passes. No app code, DNS work or deployment now.
+1. Identify an eligible user's current alternative in the Friday 20:00 to Sunday 20:00 ET window; find one genuine weekend public-company event for a BNB-listed token. The Tuesday Tesla filing remains a source-pipeline replay.
+2. Confirm Binance API scope and quota without exposing credentials. Run a read-only RWA lookup and two amount-specific closed-session RFQs only if permitted, then record redacted cost fields, expiry, latency and errors for the Developer Experience Report. No order or funds at this gate.
+3. Compare that exact task against StockAnalyst, NightDesk, PARALLAX, Portir and Binance Agentic Wallet. Reject the concept if it adds only a news summary or generic quote.
+4. Test Agent Studio locally or on testnet only if the event-to-quote job has a distinct buyer and can beat RFQ expiry. Revise the one-line hacker application answer only when the task has a credible advantage. The founder submits it; no form has been submitted here. Write a one-page spec after the gate passes. No app code, DNS work or deployment now.
 
 ## Resume
 

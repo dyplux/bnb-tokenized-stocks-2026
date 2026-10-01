@@ -1,0 +1,87 @@
+# Economic edge, access and Agent Studio
+
+**Checked:** 2026-10-01
+**Decision state:** one off-hours product hypothesis under test; no app build approved
+**Scope:** eligible people, tokenized equities on BNB Smart Chain mainnet, spot only
+
+## The user's actual job
+
+A person with stablecoins wants to act on a named US company while their usual stock venue is unavailable. They want an outcome that can improve their position: buy exposure, reduce it, or decide to wait. A price screen alone gives them no economic edge. The useful question is: *for my amount, can I act on this event now, and what price would I actually receive after all costs?*
+
+This user could be a non-US crypto holder who already uses a BNB Chain wallet, or a current tokenized-stock holder trying to adjust exposure. We have **not** observed either user doing this task. We cannot claim that most people cannot buy US stocks. The [Binance stock-trading FAQ](https://www.binance.com/en/support/faq/detail/a7469c7703524024b5bc2d492b03639d) describes a separate eligible-user stock product with a US$5 minimum, and [Robinhood](https://robinhood.com/us/en/support/articles/investing-on-weekends/) supports selected shares through Friday 20:00 ET. A user who has one of these products may have little reason to adopt another interface on a Tuesday evening.
+
+The narrowest access distinction is Friday 20:00 to Sunday 20:00 New York time, when Robinhood says its stock market is closed. The [Binance bStocks FAQ](https://www.binance.com/en-NG/support/faq/detail/f0c03cd6509a4085b4cce1636f16be38) describes 24/7 secondary trading, subject to product and jurisdiction restrictions. Continuous trading hours do not guarantee a quote, a fill or a better price for a given wallet and amount.
+
+## Which edge could exist?
+
+| Candidate edge | Mechanism | What is supported | What would disprove it |
+|---|---|---|---|
+| Access | An eligible stablecoin holder can trade when their broker is closed or cannot serve them. | [Robinhood's documented weekend closure](https://robinhood.com/us/en/support/articles/investing-on-weekends/) and [Binance's 24/7 bStocks description](https://www.binance.com/en-NG/support/faq/detail/f0c03cd6509a4085b4cce1636f16be38). | The chosen token has no executable BNB quote at the chosen time/size, the user is ineligible, or the user's incumbent can execute the same task. |
+| Timely reaction | The user can change exposure after public company information arrives. This can reduce unwanted exposure as well as open a position. | The [Tesla 8-K](https://www.sec.gov/Archives/edgar/data/1318605/000162828026063820/tsla-20260929.htm) was accepted after the regular close, but on a Tuesday. | Source arrives after the price has moved, route is unavailable, or the user cannot beat the incumbent on speed/cost. |
+| Price advantage | A live executable quote is favorable versus an independent, time-matched alternative for the same economic exposure. | No such comparison has been measured by this project. | Spread, slippage, fees, custody differences or rights differences consume the quoted difference. |
+| Predictive alpha | Trading weekend token prices earns a repeatable net return by the Monday open. | No such strategy has been measured. [Binance Research](https://www.binance.com/en/research/analysis/stock-price-discovery-moves-on-chain) reports that bStocks had already priced a median 92% of the next Monday gap across seven weekends through 2026-07-28. | Out-of-sample returns after bid/ask, size, fees and an executable exit are zero or negative. |
+
+The Binance Research article also reports that 92% of its on-chain bStocks volume in the seven days through 2026-07-28 occurred outside regular US hours. It supports a demand signal for off-hours *activity*, with the caveat that the publisher is involved in the product and the calculation is not independently reproduced here. Its reported average residual deviation of 0.19% at the Monday open makes a simple weekend buy/Monday sell claim particularly weak. These are price-discovery statistics, not proof of a trader's profit.
+
+### Net result, not a headline gap
+
+For a proposed round trip, record `sale proceeds - purchase outlay - entry and exit fees - gas - funding/conversion costs`. Quote both legs for the same size and compatible rights. If the exit is hypothetical, label the whole figure *scenario*, not realized PnL. For a current holder who sells to cut risk, compare the actual execution with the counterfactual of waiting for the next eligible market session; that counterfactual is unknowable at decision time.
+
+An illustration: a 1% displayed move on US$100 is US$1 gross. US$1.20 combined execution costs would make it a US$0.20 loss before any later price change. This is arithmetic, not a measured bStock cost or return. The app must quote costs for the actual order.
+
+Do not use the Binance RWA API's `referencePrice` as an independent share-price benchmark. Its [field definition](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) derives it from the on-chain token price. The [event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks) suggests monitoring an on-chain/reference gap; the field definition creates a concrete documentation question for the Developer Experience Report. A genuine comparison needs an independent share quote, matched unit, timestamp, issuer rights, fees and executable bids/asks.
+
+## Who can actually use it?
+
+| Person | Product value if eligible | Immediate boundary |
+|---|---|---|
+| Existing non-US stablecoin holder with BNB wallet | Can potentially respond or adjust exposure while their stock broker is closed. | Must check jurisdiction, wallet, asset availability, tokenized-security terms and a real amount-specific quote. |
+| Existing bStock holder | Can potentially sell or adjust 24/7 without first moving funds to a broker. | The secondary venue may be thin or paused; a cash-equity or direct-redemption path has different hours and rights. |
+| First-time buyer with only fiat | Could eventually enter through an onramp and self-custody flow. | Binance and other providers already offer buy flows; card/onramp integration and legal eligibility are separate from a Binance Web3 spot quote. Not a credible first slice yet. |
+| Restricted jurisdiction or ineligible account | No trading product should be offered. | [Binance says](https://www.binance.com/en/support/announcement/detail/c16868c76a264a0690d18ac26f637b0c) tokenized securities are only for eligible users in permitted jurisdictions and on a secondary-market basis outside ADGM. The [hackathon](https://www.bnbchain.org/en/hackathons/tokenized-stocks) separately restricts participant jurisdictions. |
+
+The issuer's legal claims matter to the product: bStocks are certificates giving economic exposure, not direct company shares. Different wrappers can have different rights and redemption terms. The interface must identify the exact token and issuer before an order, while keeping the user task about *acting* rather than repeating Bell's wrapper-comparison report. [Binance's terms](https://www.binance.com/en/support/announcement/detail/c16868c76a264a0690d18ac26f637b0c) and [xStocks documentation](https://docs.xstocks.fi/docs/how-xstocks-work) are separate issuer sources.
+
+## Incumbent boundary, checked from public documentation and repos
+
+| Incumbent | Already published | Remaining task worth testing | Evidence limit |
+|---|---|---|---|
+| [Binance Agentic Wallet](https://developers.binance.com/en/docs/products/agentic-wallet/use-cases/trading/stock-trading) | Ticker lookup, quote, confirmation and tracking for tokenized securities. | Cited public event tied to user-owned limits and a closed-session executable route. | Documented flow; no same-task live run here. |
+| [NightDesk](https://github.com/PhiBao/nightdesk) | Weekend/session card, price guard, quote/executability probe, limit and alert, Agent Studio seller. | Event provenance and distinct event-to-action behavior would have to beat this specific flow. | README and source claims; the reported 28/28 pool reverts and fills were not reproduced here. |
+| [PARALLAX](https://github.com/rishu4436/parallax/blob/main/docs/STRATEGIES.md) | Weekend and earnings strategies, queued unsigned intents, portfolio rules. | A live, closed-session order that genuinely executes under a user-set cap. | Strategy document; not an independently run result. |
+| [Portir](https://github.com/yeheskieltame/portir) | Guarded stock purchase, DCA and news checks. | A primary public event with traceable source and actual quote timing. | Public repo description; no same-task live run. |
+| [BNB StockAnalyst demo](https://github.com/bnb-chain/stockanalyst-agent-demo) | Cited stock research sold through an agent-service flow. | Taking a specific user mandate through availability, amount, price limit and actual approval. | Official example, not the proposed trade task. |
+
+This map rejects a generic monitor, news summary, price-gap badge or paid truth-card service as our product. It does not prove that the remaining event-to-action path is original or useful. Company filings and scheduled earnings may also be a poor source of genuinely weekend triggers. A quick check of [Tesla's 2026 investor-relations releases](https://ir.tesla.com/press?view=all) showed weekday releases in the visible recent sample; that is a warning about frequency, not a measurement across all issuers. If no weekend primary event can be found, the event-trigger product fails this particular access thesis. A Tuesday filing shouldn't be relabeled as a weekend edge.
+
+## Agent Studio: a real role and its limit
+
+The [current Agent Studio quickstart](https://docs.bnbchain.org/developer-kit/bnbchain-studio/quickstart/) describes a TypeScript **seller** agent. It runs a `runWork` function, serves A2A/MCP/x402, can register ERC-8004 identity and sells work via ERC-8183 or x402. Its managed `bnb` deployment is a 48-hour **testnet** trial; the operator runs it, so a throwaway wallet is required. The LLM is not given payment pricing or signing authority. The [architecture](https://docs.bnbchain.org/developer-kit/bnbchain-studio/architecture/) documents service request and fulfillment, not a complete unattended investor-order scheduler. The event's special prize asks for identity, autonomous runtime and self-funding via x402; the [event criteria](https://www.bnbchain.org/en/hackathons/tokenized-stocks) do not guarantee a prize for merely installing the framework.
+
+**Potential Studio job, still unproved:** an event service accepts a request from another agent with company/ticker, source policy, freshness bound, quote size and the requesting user's public wallet address. It fetches the primary filing or issuer release, records its timestamp, resolves the BNB token, asks the Binance Web3 API for a short-lived quote, and returns the source-to-quote trace with reason codes. The [Trading API](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) requires a `userWalletAddress` for RWA RFQs, matched to the eventual signer. The quote ID has an approximately 30-second lifetime, so ERC-8183 funding and delivery may make it stale. A buyer agent could pay for this discrete job only if a measured end-to-end response arrives while the quote remains valid. The human app requires explicit user approval to sign a separate spot trade. This service has a plausible benefit only if it saves integration work or delivers a time-sensitive result that other agents cannot get as well from free sources.
+
+**Important restriction:** NightDesk already publishes an Agent Studio seller for a truth feed. Our Studio task would need to center on *source-to-live-action*, with actual source freshness and executable quote evidence, not another price card. Studio identity and x402 payment would be observable service plumbing. Mainnet trading through Agentic Wallet or a user wallet is a separate integration; no documentation reviewed here shows Studio's default seller runtime as a safe, ready-made stock-trading wallet. The [Binance Trading API](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) documents RFQ quote, build, signing, submission and status; the same-wallet and quote-expiry details make remote delayed execution a feasibility risk.
+
+For this hackathon, a Studio component passes only if it (1) runs a real local or testnet job, (2) records ERC-8004 identity and an actual ERC-8183 or x402 exchange, (3) uses real event/quote data, (4) delivers any quote before expiry, (5) clearly separates that testnet service from the mainnet spot user flow, and (6) improves the core task rather than repeating it. Otherwise omit Studio and focus on the main track. The older [Studio demo page](https://docs.bnbchain.org/developer-kit/bnbchain-studio/demo/) still illustrates a Python/two-layer path, while the quickstart currently describes TypeScript/one runtime. Verify the installed version before any code and record this doc divergence if it causes real onboarding friction.
+
+## One candidate workflow to falsify
+
+**Working phrase, not a product name:** weekend event-to-action desk.
+
+1. An eligible user with a BNB wallet and stablecoin selects one supported stock and a US$ amount. They set a maximum all-in buy price or minimum all-in sell proceeds and an expiry.
+2. The service watches a named primary source and records when a new item became public. A model may summarize a filing with a citation; code decides source identity, token contract, units, freshness and arithmetic.
+3. During the user's own venue's closed interval, the app requests a fresh, amount-specific Binance Web3 spot quote. It shows expected quantity, expiry, fees or unknown costs and a `trade now / wait` choice. Missing route is an honest result.
+4. The user approves the actual transaction. A live trade is gated by eligibility and the real wallet path; no model infers a buy/sell direction from sentiment. A receipt shows event, quote and final order state. If signing/fill cannot be demonstrated, the product cannot claim to execute.
+5. Optionally, a Studio seller exposes the same source-to-quote work to other agents. It does not hold the user's funds or decide trades.
+
+This differs from Bell only if the result is an actual timely action or a measured reduction in the time/cost of making one. A report with `investigate` states and no executable order would repeat Bell's core job and fails this gate.
+
+## Next measured gates, in priority order
+
+1. **Access gate:** identify one eligible non-US test user or account and document the exact incumbent they cannot use in the Friday 20:00 to Sunday 20:00 ET interval. No claim about “most people” before this.
+2. **Economic gate:** during a closed session, capture an actual Binance Web3 RFQ for one token at two sizes, including time-to-expiry, effective buy/sell prices and all disclosed costs. Repeat when the traditional session opens. Do not submit an order at this gate. Compare net amount, not last-trade prints.
+3. **Event gate:** locate a public Friday/Saturday/Sunday company event for a BNB-listed token and record first publication time. The Tuesday Tesla filing is only a source-pipeline replay.
+4. **Incumbent gate:** replay the exact user task in Agentic Wallet, NightDesk, PARALLAX and Portir where accessible. Note which steps are live, paper or claimed. If one already completes the task for the same eligible user, reject or narrow our idea.
+5. **Studio gate:** confirm current CLI architecture, run one local testnet service job only after the core event-to-quote task proves useful. Measure what other agents gain from it. x402 is a billing rail, not evidence of a profitable trader strategy.
+
+**Current conclusion:** time and access are plausible advantages for a defined eligible user; predictable monetary profit is unproved. Agent Studio can distribute a narrowly useful event-to-quote service, but it is neither the consumer product nor a substitute for mainnet spot execution. The first build gate remains closed until the quote, event and incumbent checks make this task credible.
