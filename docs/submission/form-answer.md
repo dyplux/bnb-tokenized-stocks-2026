@@ -3,10 +3,10 @@
 **Prepared:** 2026-10-01
 **Use:** one-line mentor-routing answer for the hacker registration, not the final build submission
 
-> We're exploring a BNB Chain tool that helps eligible bStock holders track reinvested corporate actions and decide whether a partial sale for USDT is worth the cost, using Binance Web3 quotes.
+> We're researching how eligible people with stablecoins on BNB Chain can act on tokenized stocks outside cash-market hours, and where real wallet-size execution costs change that decision.
 
-The form says this answer is non-binding. This wording describes the current [D-010 research hypothesis](../decisions/decision-log.md), not a product that already works or an observed demand. An authenticated Web3 quote, a reconstructed multiplier event and a holder walkthrough are still missing. The [status file](../status.md) records the gate. If those checks reject the hypothesis, the product and final submission description must change.
+The form says this answer is non-binding. This wording describes the research question after [D-011](../decisions/decision-log.md), not a product that already works, a verified execution advantage or observed demand. An authenticated Web3 quote and an eligible holder walkthrough are still missing. The [status file](../status.md) records the gate. The founder hasn't submitted this wording.
 
-The earlier pre-trade receipt, blocked-exit, weekend-event and generic quote-guard lines are superseded research directions. They remain in the [decision log](../decisions/decision-log.md) for audit, not as application copy. No Agent Studio or payment claim is included because no paid agent buyer has been identified.
+The earlier pre-trade receipt, blocked-exit, weekend-event, generic quote-guard and dividend cash-out lines are superseded research directions. They remain in the [decision log](../decisions/decision-log.md) for audit. No Agent Studio or payment claim is included because no paid agent buyer has been identified.
 
 The founder submits the form. Keep its UID, account fields and credentials outside this repository.

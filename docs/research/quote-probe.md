@@ -14,7 +14,7 @@ python3 scripts/probe_binance_quote.py \
   --wallet <PUBLIC_EVM_WALLET_ADDRESS>
 ```
 
-Use the exact token contract and holder amount under investigation. The FAQ's multiplied display balance isn't interchangeable with the raw token amount. The [BEP-677 specification](https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP-677.md) and the [mentor question](mentor-questions.md) leave the RFQ unit interpretation to confirm before any holder-specific decision. Don't infer a dividend from a current multiplier alone.
+Use the exact token contract and holder amount under investigation. The command can probe either buy or sell by setting the input and output contracts in the appropriate order. The FAQ's multiplied display balance isn't interchangeable with the raw token amount. The [BEP-677 specification](https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP-677.md) and the [mentor question](mentor-questions.md) leave the RFQ unit interpretation to confirm before any holder-specific decision. Don't infer a dividend from a current multiplier alone.
 
 The sanitized JSON records UTC capture time, latency, HTTP and business codes, route count, and at most three routes with quoted input/output units and fee fields. `toTokenAmount` is an estimate in output-token base units. `tradeFee` is the API's estimated network fee in USD; `estimateGasFee` is a gas estimate in the chain's smallest unit. These fields cannot be subtracted from each other without conversion and confirmation of any other route costs. A successful response wouldn't establish a fill, final net proceeds, investor eligibility or profit. An empty route list or an error is a useful result to record in the workspace Developer Experience worklog, with the private address removed.
 
