@@ -372,16 +372,22 @@ def request_binance_quote(wallet, units):
             return quote_result("metadata_unavailable", None, None, error_label="bsc_rpc_invalid_block", **identity)
         block_number = int(block_hex, 16)
         block_tag = hex(block_number)
-        code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
-        decimals_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": "0x313ce567"}, block_tag])
+        nvdab_code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
+        nvdab_decimals_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": "0x313ce567"}, block_tag])
+        usdt_code = rpc("eth_getCode", ["0x" + USDT[2:], block_tag])
+        usdt_decimals_word = rpc("eth_call", [{"to": "0x" + USDT[2:], "data": "0x313ce567"}, block_tag])
         block = rpc("eth_getBlockByNumber", [block_tag, False])
-        if (not isinstance(code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", code)
-                or int(code[2:] or "0", 16) == 0
-                or not isinstance(decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", decimals_word)
-                or int(decimals_word, 16) != 18
+        if (not isinstance(nvdab_code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", nvdab_code)
+                or int(nvdab_code[2:] or "0", 16) == 0
+                or not isinstance(nvdab_decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", nvdab_decimals_word)
+                or int(nvdab_decimals_word, 16) != 18
+                or not isinstance(usdt_code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", usdt_code)
+                or int(usdt_code[2:] or "0", 16) == 0
+                or not isinstance(usdt_decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", usdt_decimals_word)
+                or int(usdt_decimals_word, 16) != 18
                 or not isinstance(block, dict) or not isinstance(block.get("timestamp"), str)
                 or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"])):
-            return quote_result("metadata_unavailable", None, None, error_label="nvdab_metadata_unverified", **identity)
+            return quote_result("metadata_unavailable", None, None, error_label="token_metadata_unverified", **identity)
         amount_raw = int(units * (Decimal(10) ** 18))
         if amount_raw <= 0 or len(str(amount_raw)) > 78:
             return quote_result("invalid_amount", None, None, error_label="raw_amount_out_of_range", **identity)
@@ -418,20 +424,43 @@ def request_binance_quote(wallet, units):
     if not isinstance(routes, list) or any(not isinstance(route, dict) for route in routes):
         return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_routes_shape", http_status=http_status, business_code=code, **identity)
     sanitized = []
+    review_mode_required = False
     for route in routes:
         vendor, mode = route.get("vendorName"), route.get("executionMode")
         if (not isinstance(vendor, str) or not re.fullmatch(r"[A-Za-z0-9_. -]{1,80}", vendor)
                 or mode not in ("SWAP", "RFQ")):
             return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_fields", http_status=http_status, business_code=code, **identity)
-        item = {"vendorName": vendor, "executionMode": mode}
-        for field in ("fromTokenAmount", "toTokenAmount"):
-            amount = route.get(field)
-            if amount is not None:
-                if not isinstance(amount, str) or len(amount) > 78 or not re.fullmatch(r"[0-9]+", amount):
-                    return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_amount", http_status=http_status, business_code=code, **identity)
-                item[field] = amount
+        if route.get("binanceChainId") != "56":
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="route_chain_mismatch", http_status=http_status, business_code=code, **identity)
+        from_token, to_token = route.get("fromToken"), route.get("toToken")
+        if not isinstance(from_token, dict) or not isinstance(to_token, dict):
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="route_token_metadata_malformed", http_status=http_status, business_code=code, **identity)
+        expected_tokens = ((from_token, NVDAB, "NVDAB"), (to_token, USDT, "USDT"))
+        for token, contract, symbol in expected_tokens:
+            token_contract = token.get("tokenContractAddress")
+            token_symbol = token.get("tokenSymbol")
+            token_decimals = token.get("decimal")
+            if (not isinstance(token_contract, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", token_contract)
+                    or token_contract.lower() != contract or token_symbol != symbol):
+                return quote_result("malformed_response", capture_time, latency_ms, error_label="route_token_identity_mismatch", http_status=http_status, business_code=code, **identity)
+            if token_decimals != "18":
+                return quote_result("malformed_response", capture_time, latency_ms, error_label="route_token_decimals_mismatch", http_status=http_status, business_code=code, **identity)
+        from_amount, to_amount = route.get("fromTokenAmount"), route.get("toTokenAmount")
+        if (not isinstance(from_amount, str) or len(from_amount) > 78 or not re.fullmatch(r"[0-9]+", from_amount)
+                or not isinstance(to_amount, str) or len(to_amount) > 78 or not re.fullmatch(r"[0-9]+", to_amount)):
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_amount", http_status=http_status, business_code=code, **identity)
+        if from_amount != str(amount_raw):
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="route_input_amount_mismatch", http_status=http_status, business_code=code, **identity)
+        if int(to_amount) <= 0:
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="route_output_amount_nonpositive", http_status=http_status, business_code=code, **identity)
+        item = {"vendorName": vendor, "executionMode": mode,
+                "fromTokenAmount": from_amount, "toTokenAmount": to_amount}
+        if mode == "SWAP":
+            review_mode_required = True
         sanitized.append(item)
-    result_status = "route_observed_proceeds_unverified" if routes else "no_route"
+    result_status = "no_route" if not routes else (
+        "route_observed_mode_review_required" if review_mode_required else "route_observed_proceeds_unverified"
+    )
     return quote_result(result_status, capture_time, latency_ms, route_count=len(routes), routes=sanitized,
                         token_metadata_block=block_number, token_metadata_block_tag=block_tag,
                         token_metadata_block_time_utc=block_time, request_amount_raw=str(amount_raw),
