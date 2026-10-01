@@ -1,6 +1,6 @@
 # Binance Web3 sell quote gate
 
-**Prepared:** 2026-10-01. **Runtime status:** the local app contains a read-only quote request path, but no authenticated request has run. The signed RWA identity search in step 2 is still a release gate, not yet implemented in the app. This is a bounded integration plan for the [cash-choice spec](one-page-spec.md), not evidence that a sell route exists.
+**Prepared:** 2026-10-01. **Runtime status:** the local app contains signed read-only RWA search and quote request paths, but neither has run with credentials. The exact identity check in step 2 is implemented as a gate before the quote. This is a bounded integration plan for the [cash-choice spec](one-page-spec.md), not evidence that a sell route exists.
 
 ## Task and inputs
 

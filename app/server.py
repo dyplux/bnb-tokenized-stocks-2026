@@ -20,6 +20,7 @@ API_URL = "https://api.venus.io/markets?chainId=56&limit=100"
 RPC_URL = "https://bsc-dataseed.bnbchain.org"
 BINANCE_BASE = "https://web3.binance.com/build"
 BINANCE_PATH = "/build/api/v1/dex/aggregator/quote"
+RWA_SEARCH_PATH = "/api/v1/dex/market/rwa/search"
 CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
 USDT = "0x55d398326f99059ff775485246999027b3197955"
@@ -174,20 +175,130 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
+def signed_binance_get(path, query_params, api_key, secret_key):
+    timestamp = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    query = urlencode(query_params)
+    url_path = path + "?" + query
+    signature = base64.b64encode(hmac.new(
+        secret_key.encode("utf-8"), (timestamp + "GET" + "/build" + url_path).encode("utf-8"), hashlib.sha256
+    ).digest()).decode("ascii")
+    request = Request(BINANCE_BASE + url_path, headers={
+        "X-OC-APIKEY": api_key, "X-OC-TIMESTAMP": timestamp,
+        "X-OC-SIGN": signature, "Accept": "application/json",
+    }, method="GET")
+    started = time.monotonic()
+    body, http_status = b"", None
+    try:
+        with build_opener(NoRedirect()).open(request, timeout=15) as response:
+            http_status = response.status
+            body = response.read(MAX_QUOTE_RESPONSE_BYTES + 1)
+    except HTTPError as error:
+        http_status = error.code
+        try:
+            body = error.read(MAX_QUOTE_RESPONSE_BYTES + 1)
+        except OSError:
+            body = b""
+    except Exception:
+        return {"state": "network_error", "capture_time_utc": timestamp,
+                "latency_ms": round((time.monotonic() - started) * 1000, 3),
+                "http_status": http_status, "payload": None, "error_label": "binance_network_error"}
+    latency = round((time.monotonic() - started) * 1000, 3)
+    if len(body) > MAX_QUOTE_RESPONSE_BYTES:
+        return {"state": "malformed_response", "capture_time_utc": timestamp, "latency_ms": latency,
+                "http_status": http_status, "payload": None, "error_label": "response_too_large"}
+    try:
+        payload = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {"state": "malformed_response", "capture_time_utc": timestamp, "latency_ms": latency,
+                "http_status": http_status, "payload": None, "error_label": "unexpected_payload"}
+    if not isinstance(payload, dict):
+        return {"state": "malformed_response", "capture_time_utc": timestamp, "latency_ms": latency,
+                "http_status": http_status, "payload": None, "error_label": "unexpected_payload"}
+    code = payload.get("code")
+    business_code = code if isinstance(code, int) and not isinstance(code, bool) else None
+    error_label = None if business_code == 0 else BINANCE_ERROR_LABELS.get(business_code, "unmapped_business_error")
+    return {"state": "response", "capture_time_utc": timestamp, "latency_ms": latency,
+            "http_status": http_status, "business_code": business_code,
+            "payload": payload, "error_label": error_label}
+
+
+def identity_summary(status, result=None, error_label=None):
+    result = result or {}
+    return {
+        "identity_status": status,
+        "identity_capture_time_utc": result.get("capture_time_utc"),
+        "identity_latency_ms": result.get("latency_ms"),
+        "identity_http_status": result.get("http_status"),
+        "identity_business_code": result.get("business_code"),
+        "identity_error_label": error_label or result.get("error_label"),
+    }
+
+
+def verify_rwa_identity(result):
+    if result.get("state") != "response":
+        return result.get("state", "malformed_response"), result.get("error_label", "identity_response_invalid")
+    if result.get("http_status") is None or not 200 <= result["http_status"] < 300:
+        return "http_error", result.get("error_label") or "unexpected_http_status"
+    payload = result.get("payload")
+    code = payload.get("code") if isinstance(payload, dict) else None
+    if not isinstance(code, int) or isinstance(code, bool):
+        return "malformed_response", "missing_business_code"
+    if code != 0:
+        return ("documented_error" if code in BINANCE_ERROR_LABELS else "unmapped_error"), BINANCE_ERROR_LABELS.get(code, "unmapped_business_error")
+    rows = payload.get("data")
+    if not isinstance(rows, list):
+        return "malformed_response", "unexpected_identity_shape"
+    matches = 0
+    for row in rows:
+        if not isinstance(row, dict):
+            return "malformed_response", "unexpected_identity_shape"
+        ticker, assets = row.get("ticker"), row.get("assets")
+        if not isinstance(ticker, str) or not re.fullmatch(r"[A-Za-z0-9.-]{1,24}", ticker) or not isinstance(assets, list):
+            return "malformed_response", "unexpected_identity_shape"
+        for asset in assets:
+            if not isinstance(asset, dict):
+                return "malformed_response", "unexpected_identity_shape"
+            platform = asset.get("platformId")
+            chain = asset.get("binanceChainId")
+            contract = asset.get("tokenContractAddress")
+            symbol = asset.get("tokenSymbol")
+            asset_type = asset.get("assetType")
+            if (not isinstance(platform, str) or not isinstance(chain, str)
+                    or not isinstance(contract, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", contract)
+                    or not isinstance(symbol, str) or not re.fullmatch(r"[A-Za-z0-9.-]{1,24}", symbol)
+                    or not isinstance(asset_type, int) or isinstance(asset_type, bool)):
+                return "malformed_response", "unexpected_identity_asset_shape"
+            if (ticker == "NVDA" and platform == "bstock" and chain == "56"
+                    and contract.lower() == NVDAB and symbol == "NVDAB" and asset_type == 1):
+                matches += 1
+    if matches == 1:
+        return "verified", None
+    if matches > 1:
+        return "ambiguous", "multiple_exact_identity_matches"
+    return "missing", "exact_nvdab_bstock_identity_not_found"
+
+
 def request_binance_quote(wallet, units):
-    capture_time = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
-    repo_root = Path(__file__).resolve().parents[1]
-    credentials = binance_credentials(repo_root)
+    checked_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    credentials = binance_credentials(Path(__file__).resolve().parents[1])
     if credentials is None:
-        return quote_result("missing_credentials", capture_time, error_label="missing_credentials")
+        identity = identity_summary("not_checked", error_label="missing_credentials")
+        return quote_result("missing_credentials", None, None, error_label="missing_credentials", **identity)
     api_key, secret_key = credentials
+
+    identity_result = signed_binance_get(RWA_SEARCH_PATH, [("keyword", "NVDA"), ("platformId", "bstock")], api_key, secret_key)
+    identity_state, identity_error = verify_rwa_identity(identity_result)
+    identity = identity_summary(identity_state, identity_result, identity_error)
+    if identity_state != "verified":
+        return quote_result("identity_failure", None, None, **identity)
+
     try:
         chain_id = rpc("eth_chainId", [])
         if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
-            return quote_result("metadata_unavailable", capture_time, error_label="bsc_rpc_chain_mismatch")
+            return quote_result("metadata_unavailable", None, None, error_label="bsc_rpc_chain_mismatch", **identity)
         block_hex = rpc("eth_blockNumber", [])
         if not isinstance(block_hex, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block_hex):
-            return quote_result("metadata_unavailable", capture_time, error_label="bsc_rpc_invalid_block")
+            return quote_result("metadata_unavailable", None, None, error_label="bsc_rpc_invalid_block", **identity)
         block_number = int(block_hex, 16)
         block_tag = hex(block_number)
         code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
@@ -199,84 +310,54 @@ def request_binance_quote(wallet, units):
                 or int(decimals_word, 16) != 18
                 or not isinstance(block, dict) or not isinstance(block.get("timestamp"), str)
                 or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"])):
-            return quote_result("metadata_unavailable", capture_time, error_label="nvdab_metadata_unverified")
+            return quote_result("metadata_unavailable", None, None, error_label="nvdab_metadata_unverified", **identity)
         amount_raw = int(units * (Decimal(10) ** 18))
         if amount_raw <= 0 or len(str(amount_raw)) > 78:
-            return quote_result("invalid_amount", capture_time, error_label="raw_amount_out_of_range")
+            return quote_result("invalid_amount", None, None, error_label="raw_amount_out_of_range", **identity)
         block_time = datetime.fromtimestamp(int(block["timestamp"], 16), timezone.utc).isoformat(timespec="seconds")
-        params = urlencode([
-            ("binanceChainId", "56"),
-            ("fromTokenAddress", "0x" + NVDAB[2:]),
-            ("toTokenAddress", "0x" + USDT[2:]),
-            ("amount", str(amount_raw)),
-            ("userWalletAddress", wallet),
-        ])
-        query_path = "/api/v1/dex/aggregator/quote?" + params
-        timestamp = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
-        capture_time = timestamp
-        signed_path = BINANCE_PATH + "?" + params
-        signing_string = timestamp + "GET" + signed_path
-        signature = base64.b64encode(hmac.new(secret_key.encode("utf-8"), signing_string.encode("utf-8"), hashlib.sha256).digest()).decode("ascii")
-        request = Request(BINANCE_BASE + query_path, headers={
-            "X-OC-APIKEY": api_key,
-            "X-OC-TIMESTAMP": timestamp,
-            "X-OC-SIGN": signature,
-            "Accept": "application/json",
-        }, method="GET")
     except Exception:
-        return quote_result("metadata_unavailable", capture_time, error_label="bsc_rpc_or_amount_error")
+        return quote_result("metadata_unavailable", None, None, error_label="bsc_rpc_or_amount_error", **identity)
 
-    started = time.monotonic()
-    payload = None
-    http_status = None
-    response_body = b""
-    opener = build_opener(NoRedirect())
-    try:
-        with opener.open(request, timeout=15) as response:
-            http_status = response.status
-            response_body = response.read(MAX_QUOTE_RESPONSE_BYTES + 1)
-    except HTTPError as error:
-        http_status = error.code
-        try:
-            response_body = error.read(MAX_QUOTE_RESPONSE_BYTES + 1)
-        except OSError:
-            response_body = b""
-    except Exception:
-        return quote_result("network_error", capture_time, round((time.monotonic() - started) * 1000, 3), error_label="binance_network_error")
-    latency_ms = round((time.monotonic() - started) * 1000, 3)
-    if len(response_body) > MAX_QUOTE_RESPONSE_BYTES:
-        return quote_result("malformed_response", capture_time, latency_ms, error_label="response_too_large", http_status=http_status)
-    try:
-        payload = json.loads(response_body.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError):
-        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_payload", http_status=http_status)
-    if not isinstance(payload, dict):
-        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_payload", http_status=http_status)
-    code = payload.get("code")
+    params = [
+        ("binanceChainId", "56"),
+        ("fromTokenAddress", "0x" + NVDAB[2:]),
+        ("toTokenAddress", "0x" + USDT[2:]),
+        ("amount", str(amount_raw)),
+        ("userWalletAddress", wallet),
+    ]
+    quote_response = signed_binance_get("/api/v1/dex/aggregator/quote", params, api_key, secret_key)
+    capture_time = quote_response.get("capture_time_utc", checked_at)
+    latency_ms = quote_response.get("latency_ms")
+    if quote_response.get("state") != "response":
+        return quote_result(quote_response.get("state", "network_error"), capture_time, latency_ms,
+                            error_label=quote_response.get("error_label", "binance_network_error"), **identity)
+    http_status = quote_response.get("http_status")
+    payload = quote_response.get("payload")
+    code = payload.get("code") if isinstance(payload, dict) else None
     if not isinstance(code, int) or isinstance(code, bool):
-        return quote_result("malformed_response", capture_time, latency_ms, error_label="missing_business_code", http_status=http_status)
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="missing_business_code", http_status=http_status, **identity)
     if code != 0:
         status = "no_route" if code in (40374, 40421, 40441) else ("documented_error" if code in BINANCE_ERROR_LABELS else "unmapped_error")
         return quote_result(status, capture_time, latency_ms, http_status=http_status,
                             business_code=code, error_label=BINANCE_ERROR_LABELS.get(code, "unmapped_business_error"),
-                            **({"route_count": 0} if code in (40374, 40421, 40441) else {}))
+                            **({"route_count": 0} if code in (40374, 40421, 40441) else {}), **identity)
     if http_status is None or not 200 <= http_status < 300:
-        return quote_result("http_error", capture_time, latency_ms, error_label="unexpected_http_status", http_status=http_status)
+        return quote_result("http_error", capture_time, latency_ms, error_label="unexpected_http_status", http_status=http_status, **identity)
     routes = payload.get("data")
     if not isinstance(routes, list) or any(not isinstance(route, dict) for route in routes):
-        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_routes_shape", http_status=http_status, business_code=code)
+        return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_routes_shape", http_status=http_status, business_code=code, **identity)
     sanitized = []
     for route in routes:
         vendor, mode = route.get("vendorName"), route.get("executionMode")
         if (not isinstance(vendor, str) or not re.fullmatch(r"[A-Za-z0-9_. -]{1,80}", vendor)
                 or mode not in ("SWAP", "RFQ")):
-            return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_fields", http_status=http_status, business_code=code)
+            return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_fields", http_status=http_status, business_code=code, **identity)
         item = {"vendorName": vendor, "executionMode": mode}
         for field in ("fromTokenAmount", "toTokenAmount"):
             amount = route.get(field)
             if amount is not None:
                 if not isinstance(amount, str) or len(amount) > 78 or not re.fullmatch(r"[0-9]+", amount):
-                    return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_amount", http_status=http_status, business_code=code)
+                    return quote_result("malformed_response", capture_time, latency_ms, error_label="unexpected_route_amount", http_status=http_status, business_code=code, **identity)
                 item[field] = amount
         sanitized.append(item)
     result_status = "route_observed_proceeds_unverified" if routes else "no_route"
@@ -284,7 +365,7 @@ def request_binance_quote(wallet, units):
                         token_metadata_block=block_number, token_metadata_block_tag=block_tag,
                         token_metadata_block_time_utc=block_time, request_amount_raw=str(amount_raw),
                         http_status=http_status, business_code=code,
-                        error_label=None if routes else "no_route")
+                        error_label=None if routes else "no_route", **identity)
 
 
 def d(value):
