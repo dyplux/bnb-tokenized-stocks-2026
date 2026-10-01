@@ -29,7 +29,7 @@ For a proposed round trip, record `sale proceeds - purchase outlay - entry and e
 
 An illustration: a 1% displayed move on US$100 is US$1 gross. US$1.20 combined execution costs would make it a US$0.20 loss before any later price change. This is arithmetic, not a measured bStock cost or return. The app must quote costs for the actual order.
 
-Do not use the Binance RWA API's `referencePrice` as an independent share-price benchmark. Its [field definition](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) derives it from the on-chain token price. The [event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks) suggests monitoring an on-chain/reference gap; the field definition creates a concrete documentation question for the Developer Experience Report. A genuine comparison needs an independent share quote, matched unit, timestamp, issuer rights, fees and executable bids/asks.
+Do not use the Binance RWA API's `referencePrice` as an independent share-price benchmark. The [official documentation conflicts](2026-10-01-reference-price-source-audit.md) about whether it is derived from token price, and doesn't identify an upstream quote time. The [event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks) suggests monitoring an on-chain/reference gap; this uncertainty creates a concrete documentation question for the Developer Experience Report. A genuine comparison needs an independent share quote, matched unit, timestamp, issuer rights, fees and executable bids/asks.
 
 ## Who can actually use it?
 

@@ -16,7 +16,7 @@
 
 **Inference:** a generic onboarding checklist, automatic stock basket, pending-order explainer or snapshot quote gate is already covered in a published flow. This doesn't prove every flow is good for every user. It does mean that implementing one without a specific observed failure would spend the remaining build window on a copy.
 
-A possible narrower task is to let a self-custody holder set a maximum **amount-specific execution cost** and learn when the same on-chain route is available within that limit. This is only a research hypothesis. A favorable quote must be compared in the same token units and at the same time; the RWA `referencePrice` isn't an independent stock quote. OneTicker's tape and Binance's own bot are direct counterarguments. The hypothesis fails if a wallet already lets the user set an equivalent limit, if Binance Web3 can't provide repeatable wallet-bound RFQs within quota, or if a participant would just trade immediately or use Binance Spot.
+A possible narrower task is to let a self-custody holder set a maximum **amount-specific execution cost** and learn when the same on-chain route is available within that limit. This is only a research hypothesis. A favorable quote must be compared in the same token units and at the same time; Binance's RWA `referencePrice` has [unresolved provenance](2026-10-01-reference-price-source-audit.md) and cannot yet serve as an independent stock quote. OneTicker's tape and Binance's own bot are direct counterarguments. The hypothesis fails if a wallet already lets the user set an equivalent limit, if Binance Web3 can't provide repeatable wallet-bound RFQs within quota, or if a participant would just trade immediately or use Binance Spot.
 
 ## Next observation
 
