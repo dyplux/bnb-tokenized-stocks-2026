@@ -3,7 +3,7 @@
 **Updated:** 2026-10-01
 **Phase:** provisional spec and one read-only implementation slice
 **Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
-**Application code:** local read-only Venus market scenario in `app/`; Binance sale and wallet state absent
+**Application code:** local indexed Venus scenario and optional BNB Chain NVDAB balance read in `app/`; Binance sale and Venus account state absent
 **Deployment:** none
 
 ## Completed
@@ -48,6 +48,7 @@
 - [D-017](decisions/decision-log.md) approves a provisional [one-page spec](product/one-page-spec.md) for a bStock holder who needs USDT and wants to compare a real Binance Web3 sale with a Venus collateral loan. A read of [Steward Swipe](https://github.com/zkasuran/steward-bnb/blob/a1ae5cf4153e370d16ef9dd1cd85cb116f0412ba/apps/web/app/api/use/swipe/route.ts) and [Portir loans](https://github.com/yeheskieltame/portir/blob/761f0df0e04d9fa46f0007cf69c9558ecd434161/apps/web/app/loans/page.tsx) found adjacent borrowing flows, not a same-cash-goal sale comparison in those inspected paths. A local market-level Venus scenario now exists, but there is no signed Binance quote or wallet-specific result.
 - A [bounded NVDAB cash-choice calculation](research/2026-10-01-sell-or-borrow-feasibility.md) makes the economic question concrete with dated Venus inputs. The $100 borrow illustration is market-level and excludes existing debt, other collateral and execution costs. No Binance sell proceeds or personal health factor has been measured.
 - A first local [read-only Venus scenario](../app/server.py) and [interface](../app/index.html) now accept NVDAB units and a USDT target. They show indexed market-level borrowing assumptions and an explicitly unquoted sale. [Venus's own API documentation](https://github.com/VenusProtocol/venus-protocol-documentation/blob/main/services/api.md) warns that indexed responses can lag chain state and aren't authoritative for transaction safety. The builder's [dated report](agent-reports/builder/2026-10-01-venus-scenario-slice.md) records the implementation limits. No app test or signed Binance request has been run.
+- An optional public-address balance read now uses the [official BNB Chain mainnet RPC](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/) and pins NVDAB `balanceOf`, code, metadata and block timestamp to one recorded block after checking chain 56. The app reports token balance and whether it covers entered units; it makes no wallet ownership, jurisdiction or Venus account-risk claim. The address is sent in a POST body and is not logged by the app. This path has not been exercised in a judge session or test.
 
 ## Current decision
 
@@ -57,7 +58,7 @@ The old H1/H2/H3 scores were a subjective research ordering, not demand evidence
 
 ## Blockers and next work
 
-1. The first [read-only Venus scenario](../app/server.py) now matches NVDAB and USDT to the same pool and converts USD collateral values using the USDT oracle price. Add wallet and chain reads only with clear provenance; keep any wallet-specific liquidation conclusion blocked until the account-wide debt and collateral state is handled. Indexed Venus data is a scenario input, not a safe borrowing instruction.
+1. The first [read-only Venus scenario](../app/server.py) now matches NVDAB and USDT to the same pool and converts USD collateral values using the USDT oracle price. A separate wallet balance path uses a recorded BNB block. Add Venus account reads only with clear provenance; keep any wallet-specific liquidation conclusion blocked until the account-wide debt and collateral state is handled. Indexed Venus data is a scenario input, not a safe borrowing instruction.
 2. Confirm Binance Web3 API scope and quota without exposing credentials. The private repo still has no local `.env` with a complete Web3 key and secret, so no signed request has been made. Run the [RWA search probe](research/rwa-probe.md) once for NVDAB, then use the [quote probe](research/quote-probe.md) for a same-cash-goal sell quote with permitted wallet and raw amount. Record route mode, fee units, latency and redacted errors for the Developer Experience Report. No order or funds at this gate.
 3. Observe an eligible NVDAB holder's cash task and compare the resulting choice with Steward Swipe, Venus and a trading venue. The earlier small-wallet protocol can guide consent, but a simulated scenario doesn't establish demand. Retire the candidate if the combined choice doesn't change a defensible action or if route/risk data can't be made safe before the deadline. Keep the [Dune multiplier query](research/queries/bstock-multiplier-events.sql) as separate research, not a build gate.
 4. Add Agent Studio only if an autonomous job with a distinct buyer or task survives the product check. The [application draft](submission/form-answer.md) remains non-binding and unsubmitted. The [live-form audit](submission/2026-10-01-live-form-audit.md) makes a public repo, DX report and accessible video critical submission work. The local scenario has no deployment or DNS change.

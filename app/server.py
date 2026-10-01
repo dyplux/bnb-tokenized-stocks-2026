@@ -6,10 +6,12 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 import json
+import re
 from urllib.parse import urlparse, parse_qs
 
 getcontext().prec = 36
 API_URL = "https://api.venus.io/markets?chainId=56&limit=100"
+RPC_URL = "https://bsc-dataseed.bnbchain.org"
 CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
 USDT = "0x55d398326f99059ff775485246999027b3197955"
@@ -32,6 +34,8 @@ def decimal_input(value, field):
         raise ScenarioError(field, "Enter an amount greater than zero.")
     if number < MIN_INPUT or number > MAX_INPUT:
         raise ScenarioError(field, "Use an amount from 0.000000000000000001 to 1,000,000,000,000,000.")
+    if number.as_tuple().exponent < -18:
+        raise ScenarioError(field, "Use no more than 18 decimal places.")
     return number
 
 
@@ -41,6 +45,64 @@ def fetch_markets():
         if response.status != 200:
             raise RuntimeError("Venus API returned HTTP %s." % response.status)
         return json.loads(response.read().decode("utf-8"))
+
+
+def rpc(method, params):
+    body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
+    request = Request(RPC_URL, data=body, headers={"Content-Type": "application/json", "User-Agent": "Dyplux-NVDAB-Balance/0.1 (read-only)"})
+    try:
+        with urlopen(request, timeout=12) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as exc:
+        raise RuntimeError("BNB Chain RPC request failed.") from exc
+    if not isinstance(payload, dict) or payload.get("error") or "result" not in payload:
+        raise RuntimeError("BNB Chain RPC returned no usable result.")
+    return payload["result"]
+
+
+def read_wallet_balance(wallet, units):
+    chain_id = rpc("eth_chainId", [])
+    if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
+        raise RuntimeError("RPC endpoint did not confirm BNB Smart Chain mainnet (chain 56).")
+    block_hex = rpc("eth_blockNumber", [])
+    if not isinstance(block_hex, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block_hex):
+        raise RuntimeError("BNB Chain RPC returned an invalid block number.")
+    block_number = int(block_hex, 16)
+    block_tag = hex(block_number)
+    code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
+    if not isinstance(code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", code) or code == "0x" or int(code[2:] or "0", 16) == 0:
+        raise RuntimeError("NVDAB contract code was unavailable at the recorded block.")
+    decimals_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": "0x313ce567"}, block_tag])
+    if not isinstance(decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", decimals_word):
+        raise RuntimeError("NVDAB decimals metadata was unavailable at the recorded block.")
+    decimals = int(decimals_word, 16)
+    if decimals != 18:
+        raise RuntimeError("NVDAB contract metadata did not report 18 decimals.")
+    call_data = "0x70a08231" + wallet[2:].lower().rjust(64, "0")
+    balance_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": call_data}, block_tag])
+    if not isinstance(balance_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", balance_word):
+        raise RuntimeError("NVDAB balance result was unavailable at the recorded block.")
+    block = rpc("eth_getBlockByNumber", [block_tag, False])
+    if not isinstance(block, dict) or not isinstance(block.get("timestamp"), str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"]):
+        raise RuntimeError("BNB Chain RPC returned no timestamp for the recorded block.")
+    balance_raw = int(balance_word, 16)
+    balance_integer, balance_fraction = divmod(balance_raw, 10 ** decimals)
+    balance = str(balance_integer)
+    if balance_fraction:
+        balance += "." + str(balance_fraction).rjust(decimals, "0").rstrip("0")
+    return {
+        "chain_id": 56,
+        "block_number": block_number,
+        "block_tag": block_tag,
+        "block_time_utc": datetime.fromtimestamp(int(block["timestamp"], 16), timezone.utc).isoformat(timespec="seconds"),
+        "retrieved_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "balance_nvdab": balance,
+        "entered_units": str(units),
+        "units_sufficient": balance_raw >= int(units * (Decimal(10) ** decimals)),
+        "token_decimals": decimals,
+        "rpc_source": RPC_URL,
+        "metadata_note": "NVDAB contract code and decimals() were read at this block; decimals reported 18."
+    }
 
 
 def d(value):
@@ -171,10 +233,32 @@ class Handler(BaseHTTPRequestHandler):
         except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, RuntimeError) as exc:
             self.send_json(502, {"error": {"field": "service", "message": "Live Venus data is unavailable. No scenario was calculated.", "detail": str(exc)[:180]}})
 
+    def do_POST(self):
+        if urlparse(self.path).path != "/api/balance":
+            self.send_error(404)
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+            if length <= 0 or length > 4096:
+                raise ScenarioError("wallet", "Enter a valid public wallet address.")
+            body = json.loads(self.rfile.read(length).decode("utf-8"))
+            if not isinstance(body, dict):
+                raise ScenarioError("wallet", "Enter a valid public wallet address.")
+            wallet = body.get("wallet", "")
+            if not isinstance(wallet, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", wallet):
+                raise ScenarioError("wallet", "Enter a valid 0x public address.")
+            units = decimal_input(body.get("units", ""), "units")
+            self.send_json(200, read_wallet_balance(wallet, units))
+        except ScenarioError as exc:
+            self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
+        except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, UnicodeDecodeError, RuntimeError, ValueError, OSError, OverflowError) as exc:
+            # Never include the submitted address or raw RPC error in the response.
+            self.send_json(502, {"error": {"field": "wallet", "message": "NVDAB balance is unknown. BNB Chain RPC data could not be verified at one block; retry later."}})
+
     def log_message(self, fmt, *args):
         # Keep access logs free of entered query amounts.
         if self.path.startswith("/api/"):
-            print("%s - scenario request" % self.address_string())
+            print("%s - read-only API request" % self.address_string())
         else:
             super().log_message(fmt, *args)
 
