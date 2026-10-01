@@ -270,25 +270,26 @@ def signed_binance_get(path, query_params, api_key, secret_key):
         except OSError:
             body = b""
     except Exception:
-        return {"state": "network_error", "capture_time_utc": timestamp,
+        return {"state": "network_error", "capture_time_utc": None,
                 "latency_ms": round((time.monotonic() - started) * 1000, 3),
                 "http_status": http_status, "payload": None, "error_label": "binance_network_error"}
+    capture_time = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
     latency = round((time.monotonic() - started) * 1000, 3)
     if len(body) > MAX_QUOTE_RESPONSE_BYTES:
-        return {"state": "malformed_response", "capture_time_utc": timestamp, "latency_ms": latency,
+        return {"state": "malformed_response", "capture_time_utc": capture_time, "latency_ms": latency,
                 "http_status": http_status, "payload": None, "error_label": "response_too_large"}
     try:
         payload = json.loads(body.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError):
-        return {"state": "malformed_response", "capture_time_utc": timestamp, "latency_ms": latency,
+        return {"state": "malformed_response", "capture_time_utc": capture_time, "latency_ms": latency,
                 "http_status": http_status, "payload": None, "error_label": "unexpected_payload"}
     if not isinstance(payload, dict):
-        return {"state": "malformed_response", "capture_time_utc": timestamp, "latency_ms": latency,
+        return {"state": "malformed_response", "capture_time_utc": capture_time, "latency_ms": latency,
                 "http_status": http_status, "payload": None, "error_label": "unexpected_payload"}
     code = payload.get("code")
     business_code = code if isinstance(code, int) and not isinstance(code, bool) else None
     error_label = None if business_code == 0 else BINANCE_ERROR_LABELS.get(business_code, "unmapped_business_error")
-    return {"state": "response", "capture_time_utc": timestamp, "latency_ms": latency,
+    return {"state": "response", "capture_time_utc": capture_time, "latency_ms": latency,
             "http_status": http_status, "business_code": business_code,
             "payload": payload, "error_label": error_label}
 

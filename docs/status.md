@@ -1,6 +1,6 @@
 # Project status
 
-**Updated:** 2026-10-01
+**Updated:** 2026-10-02
 **Phase:** provisional spec and one read-only implementation slice
 **Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
 **Application code:** local indexed Venus scenario, optional BNB Chain NVDAB balance and narrow Venus Core membership/pool notice, and unverified signed RWA identity and quote paths in `app/`; verified sale proceeds and account-wide Venus risk state absent
@@ -59,6 +59,7 @@
 - A [signing preflight](research/2026-10-01-binance-signing-preflight.md) checked the current Binance authentication and endpoint references and matched the local `/build` URL to its HMAC path with dummy credentials and an in-memory response. It did not authenticate or contact Binance. The current [Venus boundary](research/2026-10-01-venus-account-state-boundary.md) also confirms that its documented hypothetical liquidity method models redemption or borrowing, not a new NVDAB deposit; the personal post-deposit risk result remains unavailable.
 - A [local BNB/Venus runtime check](research/2026-10-01-venus-account-state-boundary.md) used the zero address only as a technical placeholder. Both separate read-only requests observed block 125184465: NVDAB balance 0, Core entered markets 0 and pool ID 0. This checks the empty/default ABI path, not a holder account, populated positions or personal borrowing safety.
 - A [2026-10-02 Binance DeFi documentation check](research/2026-10-02-binance-defi-positions-option.md) found signed address-scoped Venus position coverage on BNB Chain with supply and borrow token groups. This is a possible future account read. No live response or holder was observed, and the documented example doesn't prove a Venus health factor or post-deposit safety.
+- A [Luna quote-flow review](agent-reports/code-review/2026-10-02-quote-capture-time.md) found that the local app labelled the pre-request signing timestamp as response capture time. The code now records receipt time after HTTP response read, shows null for a network failure, and labels it as local receipt in the UI. An in-memory delayed response and network failure check passed; no live Binance call was made.
 
 ## Current decision
 
