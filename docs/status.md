@@ -17,7 +17,7 @@
 - Opened a separate repository on the external SSD. Bell was not changed for this project.
 - Reopened product scouting after the founder's Bell objection. The [dated brainstorm](research/2026-10-01-product-brainstorm.md) checks incumbent flows and public entrant repositories, rejects another generic buy/comparison/collateral interface, and puts a holder's blocked exit first for falsification. Entrant README claims weren't independently run.
 - Reopened the selection after the founder identified the event's cash-market-closure problem as central. The [off-hours reset](research/2026-10-01-off-hours-reset.md) compares three user tasks and gives a cited public event leading to a bounded spot action priority for research. [D-006](decisions/decision-log.md) supersedes D-005's priority. No technical path or demand has been proved.
-- Found one concrete replay source: a Tesla 8-K accepted at 20:38:50 UTC on 2026-09-29, after the regular New York close. A dated CMC metadata extract identifies separate TSLAB and TSLAon BNB Chain contracts. Historical quote availability and execution weren't captured.
+- Found one concrete replay source: a Tesla 8-K accepted at 20:38:50 UTC on 2026-09-29, after the regular New York close. A dated CMC metadata extract identifies separate TSLAB and TSLAon BNB Chain contracts. Historical quote availability and execution weren't captured. This Tuesday event doesn't prove a unique weekend advantage against a broker that offers eligible stocks during weekday extended hours.
 
 ## Current decision
 

@@ -18,6 +18,8 @@ The [SEC Tesla submissions record](https://data.sec.gov/submissions/CIK000131860
 
 The [dated CMC metadata extract](2026-09-30-tsla-contract-map.json) maps the Tesla name to two BNB Chain contracts: TSLAB `0x5b1910eaad6450e50f816082aa078c41f10c292f` and TSLAon `0x2494b603319d4d9f9715c9f4496d9e0364b59d93`. These are distinct issuer representations. The contracts and current trading status require confirmation against issuer or Binance sources before product use. No historical 20:38 spot quote or executed swap was captured, so the candidate replay proves an event, not an available trading opportunity.
 
+This Tesla event occurred on a Tuesday. [Robinhood's 24 Hour Market](https://robinhood.com/us/en/support/articles/24hour-market/) documents trading from Sunday 20:00 to Friday 20:00 New York time for eligible stocks, so a Tuesday after-close use case is not by itself a unique weekend reason to use tokenized stocks. A stricter user-value test is a Friday 20:00 to Sunday 20:00 New York window, or a documented asset or jurisdiction that the user's existing broker cannot serve. The Tuesday filing is a data-pipeline replay, not the product's demand proof.
+
 ## Three off-hours hypotheses
 
 | Hypothesis | User action and possible demo | Best published substitute | Main disproof |
@@ -36,7 +38,7 @@ This first slice doesn't promise card onboarding, profit, real-time SEC first pu
 
 ## Evidence gate before a spec
 
-1. Confirm one company, direct event source, publication timestamp and BNB Chain token contract. Check whether the event reached the source while cash was closed.
+1. Confirm one company, direct event source, publication timestamp and BNB Chain token contract. Check whether the event reached the source while cash was closed. Find a true weekend example or document why the eligible user's broker alternative remains unavailable.
 2. Compare this exact task in StockAnalyst, PARALLAX, Portir and Binance Agentic Wallet. Record which step each actually completes in code or a live demo, separating README claims from observed behavior.
 3. With an authorized Binance API key, take one read-only RWA lookup and one size-specific quote during a closed cash session. Capture redacted payload fields, errors, latency and whether transaction simulation is supported. No trade or funds at this gate.
 4. Show the proposed result to an eligible person or replay the same task against the incumbent products. If this product adds only a longer news summary or a generic quote screen, reject A.
