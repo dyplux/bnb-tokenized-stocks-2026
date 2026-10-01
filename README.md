@@ -10,7 +10,7 @@ Requires Python 3.9 or newer and no installed packages. From the repository root
 python3 app/server.py
 ```
 
-Open `http://127.0.0.1:8000`. Enter NVDAB units and a USDT target, then select **Fetch scenario**. Each request retrieves an indexed snapshot from the public Venus API. The JSON endpoint is `GET /api/scenario?units=1&cash=100`.
+Open `http://127.0.0.1:8000`. Enter NVDAB units and a USDT target, then select **Fetch scenario**. Each request retrieves an indexed snapshot from the public Venus API. The JSON endpoint is `GET /api/scenario?units=1&cash=100`. The request uses `accept-version: next` because the current `stable` response carries a migration warning; the [dated version check](docs/research/2026-10-02-venus-api-version-check.md) records the observed response shapes.
 
 The result appears directly below the amounts. The sell path stays **Unquoted**; the borrow path is a hypothetical market illustration. For the separate sale-route check, enter a public address in the visible **Sale check** panel and select **Request one Binance quote**. Balance and Venus Core reads are under **Optional balance and Venus Core reads**.
 
