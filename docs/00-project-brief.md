@@ -12,7 +12,7 @@ Build one useful, working tokenized-stocks product for [BNB Hack: Tokenized Stoc
 ## Current constraints
 
 - One of bStocks, Ondo or xStocks must be central. Only spot activity on BNB Smart Chain mainnet qualifies under the [track rules](https://www.bnbchain.org/en/hackathons/tokenized-stocks), checked 2026-10-01.
-- A working project, public repository, deployed link or reproducible instructions, and a report about real developer experience are required at submission. A video of up to four minutes is recommended but optional, according to the [official page](https://www.bnbchain.org/en/hackathons/tokenized-stocks), checked 2026-10-01.
+- A working project, public repository, deployed link or reproducible instructions, and a report about real developer experience are required at submission. The [official event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks) calls a video of up to four minutes optional, but the [live submission form](submission/2026-10-01-live-form-audit.md) currently requires a demo video URL.
 - This repository stays private during research. Bell's repository, evidence, credentials and deployment remain separate.
 - No production site or DNS change is authorized for this phase.
 

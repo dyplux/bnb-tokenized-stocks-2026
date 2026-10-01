@@ -1,0 +1,57 @@
+# Developer Experience field log
+
+**Status:** partial; no authenticated Binance Web3 API response yet. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
+
+## Timing and access
+
+| Event | UTC time or state | Evidence | Limit |
+|---|---|---|---|
+| First visit to the Binance Web3 API docs | time not captured | [API map](../api-map.md) | Cannot reconstruct onboarding duration from memory. |
+| Web3 API key created | founder reported creation, time not captured | private founder message | The shared secret was truncated in the conversation. Do not copy the key into this repo. |
+| Complete local API credential available | **no**, checked 2026-10-01 | presence-only check in root and private `.env` | No signed request can run yet. |
+| First successful signed API call | **none** | [status](../status.md) | Do not claim the integration works. |
+
+## Contemporaneous observations before a signed call
+
+| Date | Topic | What happened | Source or artifact | Report placement |
+|---|---|---|---|---|
+| 2026-10-01 | Documentation field meaning | The official RWA Data page labels `referencePrice` as an underlying reference. The official Wallet Skills guide gives a token-price/multiplier formula, and the RWA example values do not match that formula. The source and as-of time are not specified. | [Source audit](../research/2026-10-01-reference-price-source-audit.md) | Documentation issue and data-reconciliation question; **not** a runtime API error. |
+| 2026-10-01 | AI-assisted code drafting | The first local quote-probe draft used the `X-MBX-*` header family and parameter names from a different Binance API. Review against the Web3 authentication and Trading API docs corrected it to `X-OC-*` and documented names before any request. | [Quote probe note](../research/quote-probe.md) and [local probe](../../scripts/probe_binance_quote.py) | AI-agent mistake, if the founder used that draft; not an API outage or failed live call. |
+| 2026-10-01 | Route semantics | The detailed Trading API guide says a bStock quote can include both SWAP and RFQ execution modes. An earlier local map treated all equity routes as RFQ and was corrected. | [API map](../api-map.md), [quote probe note](../research/quote-probe.md) | Documentation interpretation and API design feedback; runtime behavior still unverified. |
+| 2026-10-01 | Submission UX | The public event page calls the video optional while the live submission form marks its URL required. | [Live form audit](../submission/2026-10-01-live-form-audit.md) | Event submission feedback, separate from Binance API reliability. |
+
+The public PancakeSwap Quoter, Venus API and Binance Spot measurements in the research folder used **other surfaces**. They cannot answer the form's Web3 liquidity, slippage, latency or rate-limit questions as if they were Binance Web3 API calls.
+
+## Signed API call log, to fill during development
+
+Record one row immediately after each permitted call. Keep wallet addresses redacted or represented by a local alias in the committed log; store any needed raw evidence in an ignored local path.
+
+| UTC start/end | Endpoint and purpose | Asset/chain/side/size | HTTP and business code | Latency ms | Selected response fields, units and freshness | Error label and recovery | Evidence path or hash |
+|---|---|---|---|---:|---|---|---|
+| pending | | | | | | | |
+
+For a quote, additionally record `executionMode`, route, valid-until time, allowance or gas fields, and whether the result was SWAP or RFQ. Quote output is not an executed fill. A separate consent and authorization record is needed before any order.
+
+## Same-task human observation, to fill when available
+
+| Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |
+|---|---|---|---|---|---|---|
+| pending | | | | | | |
+
+One session shows a concrete task, not demand or adoption. Keep personal jurisdiction and identity out of this committed file; note only that eligibility was checked by the participant.
+
+## DX form answer readiness
+
+| Form section | Current evidence | Missing before honest submission |
+|---|---|---|
+| Submission details | Repo exists but is private; modules documented, none called | public repo URL, final product name, contact and team details |
+| Onboarding | credential absence and docs review recorded | timestamps for successful call, founder's key-creation experience, actual ratings |
+| Documentation | reference-price ambiguity and corrected route semantics | review exact pages again at implementation; runnable example observations |
+| API pitfalls | none observed live | signed calls, code, latency, rate limits, honest absence of failures if none occur |
+| AI stack | local assistant draft and review recorded | which official AI tools were actually used, if any |
+| Tokenized stocks | public market and on-chain research separated | real Web3 quotes/fills or explicit statements that depth/slippage weren't measured; off-hours call |
+| Redesign | candidate suggestions only | rank one change by actual time lost after integration |
+
+## Next entry
+
+Once the complete Web3 key and secret are in the ignored private `.env`, run one authorized read-only RWA Data request, capture UTC latency and redacted response fields, then update this log before making a quote request. Do not backfill unknown timings.

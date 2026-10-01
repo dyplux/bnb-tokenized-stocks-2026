@@ -10,12 +10,12 @@
 | Execution | Spot only on BNB Smart Chain mainnet. Perpetuals are excluded. | Test the actual mainnet path; keep transaction values small. |
 | Integration | The working project must use at least one Binance Web3 API module. | API calls must serve the user task, not decorate the demo. |
 | Main submission | Public repository, deployed link or instructions a judge can follow, and a Developer Experience Report. The repository, demo and deployed link must stay accessible through judging. | The repository is private during research and must be made public for submission. |
-| Video | A demo video of four minutes or less is strongly recommended but optional. | Produce it if the working flow is ready. |
+| Video | The event page calls a demo video of four minutes or less strongly recommended but optional. The [live submission form](submission/2026-10-01-live-form-audit.md), checked 2026-10-01, marks `Demo video URL` **required**. | Prepare a judge-accessible video URL under four minutes; do not rely on the overview's optional wording. |
 | Judging | Technical implementation 30%; creativity and originality 25%; Developer Experience Report 25%; product quality and UX 20%. | Evidence of reliability, a distinct task and real API experience matter. |
 | Special prizes | US$2,000 each for credible Agentic Wallet or Wallet Skills use, and for deep BNB Agent Studio use. Main placement and a special can be combined. | Both stacks are optional. Add them only if they improve the task. |
 | Prize pool | US$20,000 total; main placements are US$6,000, US$4,000, US$3,000, US$2,000 and US$1,000. | Cash prizes do not replace the product evidence gate. |
 
-The page states that vague or AI-generated Developer Experience Reports are not accepted. Capture the team's actual onboarding steps, page-specific documentation issues, errors, latency and tokenized-stock behavior during development. A model may organize those notes, but it cannot invent the experience.
+The page states that vague or AI-generated Developer Experience Reports are not accepted. Capture the team's actual onboarding steps, page-specific documentation issues, errors, latency and tokenized-stock behavior during development. A model may organize those notes, but it cannot invent the experience. The [live DX form audit](submission/2026-10-01-live-form-audit.md) maps 53 current items; [field log](dx/field-log.md) separates observations from missing evidence.
 
 ## Still unknown
 
