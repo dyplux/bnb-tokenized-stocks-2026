@@ -42,6 +42,8 @@ Do not use the Binance RWA API's `referencePrice` as an independent share-price 
 
 The issuer's legal claims matter to the product: bStocks are certificates giving economic exposure, not direct company shares. Different wrappers can have different rights and redemption terms. The interface must identify the exact token and issuer before an order, while keeping the user task about *acting* rather than repeating Bell's wrapper-comparison report. [Binance's terms](https://www.binance.com/en/support/announcement/detail/c16868c76a264a0690d18ac26f637b0c) and [xStocks documentation](https://docs.xstocks.fi/docs/how-xstocks-work) are separate issuer sources.
 
+The [bStocks FAQ](https://www.binance.com/en-NG/support/faq/detail/f0c03cd6509a4085b4cce1636f16be38) says third-party integrators must enforce geographic restrictions and mentions a public country-eligibility REST endpoint. The precise route and response contract were not located in the official pages checked here. That is an integration question, not permission to guess a country list or to treat a wallet address as proof of eligibility.
+
 ## Incumbent boundary, checked from public documentation and repos
 
 | Incumbent | Already published | Remaining task worth testing | Evidence limit |
