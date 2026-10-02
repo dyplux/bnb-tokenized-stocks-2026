@@ -6,6 +6,8 @@
 **Application code:** local indexed Venus scenario with a separate fixed-block Core cap read, optional BNB Chain NVDAB balance and narrow Venus Core membership/pool notice, and unverified signed RWA identity and quote paths in `app/`; verified sale proceeds and account-wide Venus risk state absent
 **Deployment:** none
 
+The short [submission readiness gates](submission/readiness-gates.md) distinguish completed evidence from the remaining credential, holder, DX, video, public-repo and form steps. They do not mark the prototype as submission-ready.
+
 **Track clarification, 2026-10-02:** The founder's supplied "Main Track: Tokenized Stocks Products & Agents" text describes the same BNB Hack: Tokenized Stocks Edition recorded in [the event rules](01-event-rules.md). It isn't a second hackathon or a second team entry. The event permits one entry per team. The current project is that entry in preparation; the one-line application answer and final project submission aren't recorded as sent.
 
 ## Completed
