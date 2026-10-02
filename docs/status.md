@@ -64,6 +64,7 @@
 - A [Venus market API version check](research/2026-10-02-venus-api-version-check.md) observed the current `stable` response's `Warning: 299` migration notice. The documented `next` response had a different top-level shape but kept the NVDAB and Core USDT fields required by the local scenario. The app now requests `accept-version: next`; one post-change public call completed the read-only scenario. This doesn't validate personal risk or Binance integration.
 - A [nonempty Venus account read attempt](research/2026-10-01-venus-account-state-boundary.md) confirmed that the official public BNB Chain RPC can't serve `eth_getLogs`. A separate public RPC returned two empty recent vNVDAB transfer windows, then HTTP 403. No holder or account position was observed; the account-wide risk gate remains open.
 - A [targeted synthetic account test](../tests/test_venus_account_state.py) passed for a two-market response, nonzero pool ID and duplicate-market rejection with RPC patched. It doesn't replace a live holder read or prove personal borrowing safety.
+- A [2026-10-02 Venus source audit](research/2026-10-01-venus-account-state-boundary.md) confirmed that the public hypothetical liquidity function cannot model a new deposit, while actual supply and borrow checks depend on pauses, caps, bounded prices and the user's pool. Personal post-deposit risk remains unknown; the market-level illustration stays labelled as such.
 
 ## Current decision
 
