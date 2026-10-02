@@ -1,6 +1,6 @@
 # Developer Experience field log
 
-**Status:** partial; no authenticated Binance Web3 API response yet. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
+**Status:** partial; the first authenticated Binance Web3 RWA search succeeded on 2026-10-02. No live sale quote or trade has been observed. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
 
 ## Timing and access
 
@@ -8,8 +8,8 @@
 |---|---|---|---|
 | First visit to the Binance Web3 API docs | time not captured | [API map](../api-map.md) | Cannot reconstruct onboarding duration from memory. |
 | Web3 API key created | founder reported creation, time not captured | private founder message | The shared secret was truncated in the conversation. Do not copy the key into this repo. |
-| Complete local API credential available | **no**, checked 2026-10-02 | presence-only check in process environment and project `.env`; empty project file has mode 600 and is Git-ignored | No signed request can run yet. |
-| First successful signed API call | **none** | [status](../status.md) | Do not claim the integration works. |
+| Complete local API credential available | **yes**, checked 2026-10-02 before the call | presence-only check in the Git-ignored project `.env`, mode 600; both fields populated without quotes | The values remain private. This confirms the complete pair works for RWA search only. |
+| First successful signed API call | 2026-10-02 18:27:43.513 UTC | [RWA search probe](../../scripts/probe_binance_rwa.py) and the signed-call row below | No quote, wallet, order or fill was tested. |
 
 ## Contemporaneous observations before a signed call
 
@@ -44,7 +44,7 @@ Record one row immediately after each permitted call. Keep wallet addresses reda
 
 | UTC start/end | Endpoint and purpose | Asset/chain/side/size | HTTP and business code | Latency ms | Selected response fields, units and freshness | Error label and recovery | Evidence path or hash |
 |---|---|---|---|---:|---|---|---|
-| pending | | | | | | | |
+| 2026-10-02 18:27:43.513 UTC, about 1.052 s | Signed RWA search `/api/v1/dex/market/rwa/search`, exact NVDA/bstock identity | NVDA, BNB Chain 56, bstock; no wallet or size | HTTP 200, business code 0 | 1051.8 | One exact NVDA match: `NVDAB`, `assetType=1`, contract `0x02fca66c1d1afb4e2a7884261eb00f63598a7436`; capture time is request time, API asset freshness not supplied in selected fields | None observed; quote scope and route still unknown | [Sanitized probe](../../scripts/probe_binance_rwa.py); no raw response saved |
 
 For a quote, additionally record `executionMode`, route, valid-until time, allowance or gas fields, and whether the result was SWAP or RFQ. Quote output is not an executed fill. A separate consent and authorization record is needed before any order.
 
@@ -70,4 +70,4 @@ One session shows a concrete task, not demand or adoption. Keep personal jurisdi
 
 ## Next entry
 
-Once the complete Web3 key and secret are in the ignored private `.env`, run one authorized read-only RWA Data request, capture UTC latency and redacted response fields, then update this log before making a quote request. Do not backfill unknown timings.
+The first read-only signed RWA search is complete. Next, confirm the permitted quote scope and a suitable consented holder task before requesting an amount-specific sale quote. Record the quote's response and limits separately. Do not backfill unknown timings.
