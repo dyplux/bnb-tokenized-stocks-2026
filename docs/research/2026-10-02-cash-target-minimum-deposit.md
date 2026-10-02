@@ -25,6 +25,8 @@ This is a lower bound at the indexed base factor, with no interest, safety buffe
 
 ## Local observation
 
-At about **02:36 UTC** on 2026-10-02, local Chrome at 375 and 1440 CSS pixels fetched the current Venus market scenario for **25 NVDAB** entered and a **100 USDT** target. The app displayed an exact collateral-only minimum of **0.718945909667247557 NVDAB**. It labelled the entered 25 units above indexed headroom and the smaller minimum within it. Neither viewport had a JavaScript page error or horizontal overflow. The live indexed inputs can change; this observation isn't a fixed-block contract result or a holder test.
+At about **01:36 UTC** on 2026-10-02, local Chrome at 375 and 1440 CSS pixels fetched the current Venus market scenario for **25 NVDAB** entered and a **100 USDT** target. The app displayed an exact collateral-only minimum of **0.718945909667247557 NVDAB**. It labelled the entered 25 units above indexed headroom and the smaller minimum within it. Neither viewport had a JavaScript page error or horizontal overflow. The live indexed inputs can change; this observation isn't a fixed-block contract result or a holder test.
+
+**Clock correction:** the local server log showed 02:36 in Lisbon summer time (WEST, UTC+1). The first report called that value UTC. The time above is the converted UTC observation.
 
 The sale path remained **Unquoted**. A separate, permitted signed Binance Web3 quote and account-wide Venus risk assessment remain gates for an actual sell-or-borrow decision.
