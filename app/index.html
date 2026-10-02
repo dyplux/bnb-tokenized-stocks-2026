@@ -51,7 +51,7 @@
       <div id="quote-result" hidden aria-live="polite">
         <div class="metrics"><div class="metric"><span>RWA identity check</span><strong id="quote-identity">Not checked</strong></div><div class="metric"><span>Local identity response received (UTC)</span><strong id="quote-identity-captured">Unknown</strong></div><div class="metric"><span>Quote status</span><strong id="quote-status"></strong></div><div class="metric"><span>Route count</span><strong id="quote-count">Unknown</strong></div><div class="metric"><span>Local quote response received (UTC)</span><strong id="quote-captured">Unknown</strong></div><div class="metric"><span>Quote request latency</span><strong id="quote-latency">Unknown</strong></div><div class="metric"><span>Raw input amount sent</span><strong id="quote-input-raw">Unknown</strong></div><div class="metric"><span>Token metadata block</span><strong id="quote-block">Unknown</strong></div></div>
         <div id="quote-routes" class="metrics"></div>
-        <div class="notice">The API docs define amount fields as integer values in token base units, but no live NVDAB payload and cost review has been completed. The route's output amount is not shown and no USDT proceeds are calculated. This response is not an execution instruction.</div>
+        <div class="notice">A live technical NVDAB quote returned a SWAP route, while the Binance endpoint reference says RWA routes use RFQ. The route's estimated output is withheld until execution and cost scope are reconciled. No net USDT proceeds or executable sale are established by this check.</div>
       </div>
     </section>
     <details class="optional-tools">
