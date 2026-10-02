@@ -80,6 +80,7 @@ class BinanceQuoteFlowTests(unittest.TestCase):
         self.assertEqual(result["route_count"], 1)
         self.assertEqual(result["request_amount_raw"], AMOUNT_RAW)
         self.assertEqual(result["routes"][0]["toTokenAmount"], "200000000000000000000")
+        self.assertEqual(result["routes"][0]["estimated_output_usdt"], "200")
         self.assertNotIn("quoteId", result["routes"][0])
         self.assertEqual(signed.call_count, 2)
         self.assertEqual(signed.call_args_list[1].args[1][-1], ("userWalletAddress", WALLET))
@@ -93,6 +94,20 @@ class BinanceQuoteFlowTests(unittest.TestCase):
         self.assertEqual(result["identity_status"], "missing")
         signed.assert_called_once()
         rpc.assert_not_called()
+
+    def test_synthetic_swap_route_keeps_output_indicative_and_requires_review(self):
+        response = quote_response()
+        route = response["payload"]["data"][0]
+        route["executionMode"] = "SWAP"
+        route["vendorName"] = "LiquidMesh"
+        route["toTokenAmount"] = "234646962292722258753"
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), response]), \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_binance_quote(WALLET, Decimal("1"))
+        self.assertEqual(result["status"], "route_observed_mode_review_required")
+        self.assertEqual(result["routes"][0]["estimated_output_usdt"], "234.646962292722258753")
+        self.assertNotIn("quoteId", result["routes"][0])
 
     def test_mismatched_route_amount_is_not_shown(self):
         with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \

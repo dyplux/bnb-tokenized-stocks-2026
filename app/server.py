@@ -462,7 +462,8 @@ def request_binance_quote(wallet, units):
         if int(to_amount) <= 0:
             return quote_result("malformed_response", capture_time, latency_ms, error_label="route_output_amount_nonpositive", http_status=http_status, business_code=code, **identity)
         item = {"vendorName": vendor, "executionMode": mode,
-                "fromTokenAmount": from_amount, "toTokenAmount": to_amount}
+                "fromTokenAmount": from_amount, "toTokenAmount": to_amount,
+                "estimated_output_usdt": format(Decimal(to_amount) / (Decimal(10) ** 18), "f")}
         if mode == "SWAP":
             review_mode_required = True
         sanitized.append(item)
