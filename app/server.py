@@ -26,6 +26,7 @@ CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
 USDT = "0x55d398326f99059ff775485246999027b3197955"
 CORE_UNITROLLER = "0xfd36e2c2a6789db23113685031d7f16329158384"
+V_NVDAB = "0xeb8ca841cbe1bc4832a10b15c7dab1081edad371"
 CORE_GET_ASSETS_IN_SELECTOR = "abfceffc"
 CORE_USER_POOL_ID_SELECTOR = "73769099"
 MAX_CORE_ENTERED_MARKETS = 64
@@ -490,6 +491,80 @@ def raw_units_string(raw, decimals):
     return str(whole) + ("." + str(fraction).zfill(decimals).rstrip("0") if fraction else "")
 
 
+def uint256_result(value, label):
+    if not isinstance(value, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", value):
+        raise RuntimeError("Venus %s ABI response was malformed." % label)
+    return int(value, 16)
+
+
+def read_contract_supply_cap(indexed_market, typed_raw, minimum_raw):
+    if not isinstance(indexed_market, str) or indexed_market.lower() != V_NVDAB:
+        raise RuntimeError("Venus indexed NVDAB market does not match the pinned vNVDAB.")
+    chain_id = rpc("eth_chainId", [])
+    if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
+        raise RuntimeError("RPC endpoint did not confirm BNB Smart Chain mainnet (chain 56).")
+    block_hex = rpc("eth_blockNumber", [])
+    if not isinstance(block_hex, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block_hex):
+        raise RuntimeError("BNB Chain RPC returned an invalid block number.")
+    block_number = int(block_hex, 16)
+    if block_number <= 0 or block_number.bit_length() > 256:
+        raise RuntimeError("BNB Chain RPC returned an invalid block number.")
+    block_tag = hex(block_number)
+    core_code = rpc("eth_getCode", [CORE_UNITROLLER, block_tag])
+    vtoken_code = rpc("eth_getCode", [V_NVDAB, block_tag])
+    code_pattern = r"0x[0-9a-fA-F]+"
+    if (not isinstance(core_code, str) or not re.fullmatch(code_pattern, core_code)
+            or core_code == "0x" or int(core_code[2:], 16) == 0
+            or not isinstance(vtoken_code, str) or not re.fullmatch(code_pattern, vtoken_code)
+            or vtoken_code == "0x" or int(vtoken_code[2:], 16) == 0):
+        raise RuntimeError("Venus Core or vNVDAB contract code was unavailable at the recorded block.")
+
+    underlying = rpc("eth_call", [{"to": V_NVDAB, "data": "0x6f307dc3"}, block_tag])
+    if (not isinstance(underlying, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", underlying)
+            or underlying[2:26] != "0" * 24 or underlying[-40:].lower() != NVDAB[2:]):
+        raise RuntimeError("vNVDAB underlying did not match pinned NVDAB.")
+    cap = uint256_result(rpc("eth_call", [{"to": CORE_UNITROLLER, "data": "0x02c3bcbb" + V_NVDAB[2:].rjust(64, "0")}, block_tag]), "supply cap")
+    total_supply = uint256_result(rpc("eth_call", [{"to": V_NVDAB, "data": "0x18160ddd"}, block_tag]), "total supply")
+    exchange_rate = uint256_result(rpc("eth_call", [{"to": V_NVDAB, "data": "0x182df0f5"}, block_tag]), "exchange rate")
+    if exchange_rate == 0:
+        raise RuntimeError("Venus stored exchange rate was zero at the recorded block.")
+    supplied = total_supply * exchange_rate // (10 ** 18)
+    headroom_raw = max(cap - supplied, 0)
+    block = rpc("eth_getBlockByNumber", [block_tag, False])
+    timestamp = block.get("timestamp") if isinstance(block, dict) else None
+    if not isinstance(timestamp, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", timestamp):
+        raise RuntimeError("BNB Chain RPC returned no timestamp for the recorded block.")
+    block_timestamp = int(timestamp, 16)
+    if block_timestamp <= 0:
+        raise RuntimeError("BNB Chain RPC returned an invalid block timestamp.")
+    return {
+        "status": "verified", "headroom": raw_units_string(headroom_raw, 18),
+        "typed_amount_within_headroom": typed_raw <= headroom_raw,
+        "minimum_collateral_within_headroom": minimum_raw <= headroom_raw,
+        "block_number": block_number, "block_time_utc": datetime.fromtimestamp(block_timestamp, timezone.utc).isoformat(timespec="seconds"),
+        "received_at_utc": datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z"),
+    }
+
+
+def attach_contract_supply_cap(scenario):
+    """Add a best-effort chain read without changing the pure indexed scenario."""
+    typed_raw = int(Decimal(scenario["input"]["units"]) * (10 ** 18))
+    minimum_raw = int(Decimal(scenario["borrow"]["minimum_nvdab_for_target"]) * (10 ** 18))
+    try:
+        if (scenario["market"]["pool_comptroller"] or "").lower() != CORE_UNITROLLER:
+            raise RuntimeError("Venus indexed pool does not match pinned Core Unitroller.")
+        scenario["contract_cap"] = read_contract_supply_cap(
+            scenario["market"]["nvdab_market"], typed_raw, minimum_raw)
+    except (RuntimeError, ValueError, OverflowError, OSError):
+        scenario["contract_cap"] = {
+            "status": "unavailable", "headroom": None,
+            "typed_amount_within_headroom": None,
+            "minimum_collateral_within_headroom": None,
+            "block_number": None, "block_time_utc": None, "received_at_utc": None,
+        }
+    return scenario
+
+
 def market_rows(data):
     rows = data.get("result", []) if isinstance(data, dict) else []
     if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
@@ -590,7 +665,7 @@ def build_scenario(units, cash, data, retrieved_at):
                    "interest_30d_usdt": str(cash * borrow_rate * Decimal(30) / Decimal(365)),
                    "interest_90d_usdt": str(cash * borrow_rate * Decimal(90) / Decimal(365)),
                    "interest_note": "Simple interest at the current variable APY, held flat for illustration."},
-        "sale": {"status": "unquoted", "message": "No Binance Web3 sell quote is connected. Proceeds are unknown."}
+        "sale": {"status": "unquoted", "message": "No Binance Web3 sell quote is connected. Proceeds are unknown."},
     }
 
 
@@ -627,6 +702,7 @@ class Handler(BaseHTTPRequestHandler):
             cash = decimal_input(query.get("cash", [""])[0], "cash")
             data = fetch_markets()
             result = build_scenario(units, cash, data, datetime.now(timezone.utc).isoformat(timespec="seconds"))
+            attach_contract_supply_cap(result)
             self.send_json(200, result)
         except ScenarioError as exc:
             self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
