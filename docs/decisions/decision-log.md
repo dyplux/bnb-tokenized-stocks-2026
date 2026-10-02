@@ -255,3 +255,13 @@ The current interface compares a quote for every typed NVDAB unit with a loan fo
 The [target-sized live browser path](../dx/field-log.md) returned a 0.427027364860048582 NVDAB candidate for a 100 USDT target, while the Venus market result puts its isolated collateral-only minimum inside the longer borrow card. A reviewer has to connect those amounts manually. The two readings have separate source times and different risk meanings.
 
 **CEO decision:** show one compact same-target line only when a current Venus scenario and a current Binance candidate quote match the same typed inputs. Call the sell amount an estimate before costs and the borrow amount an isolated minimum without a safety buffer. Hide the line on a shortfall, error, changed input or expired quote. [The spec](../product/same-cash-amounts-spec.md) defines those states. This doesn't change D-017's holder, personal-risk, cost or incumbent gates.
+
+## D-025: show the quoted network fee without inventing net proceeds
+
+**Date:** 2026-10-02 UTC (2026-10-03 Lisbon)
+**Owner:** Dyplux
+**Status:** bounded local display slice completed; no release approval
+
+The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api), checked 2026-10-02 UTC, describes `tradeFee` as an estimated network fee in USD and allows null. The live NVDAB quote had a value, but the app discarded it. Neither that field nor the unsigned build establishes whether an ERC-20 approval or other execution costs are included.
+
+**CEO decision:** retain a validated nonnegative decimal fee estimate from the final target-sized route and display it beside the estimated USDT output. Null or malformed values become Unavailable. Never subtract it from the token output, call the result net proceeds or treat the fee as paid. Clear it on input changes, request errors and expiry. This improves cost visibility without changing the D-017 holder and personal-risk gates. The [Plus Sol checkpoint review](../agent-reports/product-review/2026-10-03-checkpoint-review.md) still finds usefulness unproved.

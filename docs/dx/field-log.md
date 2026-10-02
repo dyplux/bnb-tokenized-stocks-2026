@@ -66,6 +66,10 @@ Record one row immediately after each permitted call. Keep wallet addresses reda
 
 For a quote, additionally record `executionMode`, route, valid-until time, allowance or gas fields, and whether the result was SWAP or RFQ. Quote output is not an executed fill. A separate consent and authorization record is needed before any order.
 
+### Estimated network fee display, local QA
+
+On 2026-10-02 UTC (2026-10-03 Lisbon), the target-sized response began retaining a validated `tradeFee` as `network_fee_usd_estimate`, independent of the estimated USDT output. Synthetic fixtures covered a valid `0.01800319` USD string, null and a malformed negative value. All 35 local tests passed. Headless system Chrome at 320 and 1440 CSS pixels, with `/api/quote` intercepted by a synthetic response, displayed `0.01800319 USD estimated`, cleared it on input edit, and showed no page error or horizontal overflow. The standard Playwright headless binary was absent, so the run used the installed Google Chrome executable. No signed Binance request, holder result or actual fee payment occurred in this QA. The [official Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) labels `tradeFee` an estimated network fee in USD; it doesn't establish approval cost or net proceeds.
+
 ## Same-task human observation, to fill when available
 
 | Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |
