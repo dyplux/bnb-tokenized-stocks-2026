@@ -15,16 +15,17 @@ import hashlib
 import hmac
 import json
 import re
+import secrets
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.request import Request, build_opener
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from app.server import binance_credentials
+from app.server import NoRedirect, binance_credentials
 
 
 API_BASE = "https://web3.binance.com/build"
@@ -176,6 +177,7 @@ def main():
             "X-OC-APIKEY": api_key,
             "X-OC-TIMESTAMP": timestamp,
             "X-OC-SIGN": signature,
+            "X-OC-NONCE": secrets.token_hex(16),
             "Accept": "application/json",
         },
         method="GET",
@@ -186,7 +188,7 @@ def main():
     payload = None
     status = None
     try:
-        with urlopen(request, timeout=15) as response_handle:
+        with build_opener(NoRedirect()).open(request, timeout=15) as response_handle:
             response = response_handle.read()
             status = response_handle.status
     except HTTPError as error:
