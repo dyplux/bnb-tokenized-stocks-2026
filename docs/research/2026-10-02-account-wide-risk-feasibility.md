@@ -2,6 +2,8 @@
 
 **Checked:** 2026-10-02. **Method:** read-only source review of the [Venus Core PolicyFacet v10.3.0](https://github.com/VenusProtocol/venus-protocol/blob/v10.3.0/contracts/Comptroller/Diamond/facets/PolicyFacet.sol), [MarketFacet v10.3.0](https://github.com/VenusProtocol/venus-protocol/blob/v10.3.0/contracts/Comptroller/Diamond/facets/MarketFacet.sol) and [ComptrollerLens v10.3.0](https://github.com/VenusProtocol/venus-protocol/blob/v10.3.0/contracts/Lens/ComptrollerLens.sol). A bounded Sol CLI reviewer inspected those files and the local spec. No new live contract call, holder position or signed Binance response was used. The source version is not proof that every currently deployed selector has the same implementation.
 
+**Later check:** a separate [fixed-block read of the deployed Core proxy](2026-10-02-venus-deployed-risk-read.md) on 2026-10-02 found both risk selectors routed to a facet with code and returning three words for an empty account. It didn't match the deployed bytecode to this source version or validate a nonempty account calculation.
+
 ## What the source establishes
 
 - `PolicyFacet.getBorrowingPower(account)` computes a current aggregate net position using collateral-factor weights. `getAccountLiquidity(account)` computes another using liquidation-threshold weights. Each returns an error code, liquidity and shortfall. The result is a **net cushion**, not gross collateral and debt totals.
