@@ -8,7 +8,7 @@
 |---|---|---|---|
 | First visit to the Binance Web3 API docs | time not captured | [API map](../api-map.md) | Cannot reconstruct onboarding duration from memory. |
 | Web3 API key created | founder reported creation, time not captured | private founder message | The shared secret was truncated in the conversation. Do not copy the key into this repo. |
-| Complete local API credential available | **no**, checked 2026-10-01 | presence-only check in root and private `.env` | No signed request can run yet. |
+| Complete local API credential available | **no**, checked 2026-10-02 | presence-only check in process environment and project `.env`; empty project file has mode 600 and is Git-ignored | No signed request can run yet. |
 | First successful signed API call | **none** | [status](../status.md) | Do not claim the integration works. |
 
 ## Contemporaneous observations before a signed call
