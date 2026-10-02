@@ -19,7 +19,7 @@
   <main>
     <div class="eyebrow">BNB Chain · cash decision</div>
     <div class="heading"><h1>Sell NVDAB or borrow USDT?</h1><div class="stamp">Read-only comparison</div></div>
-    <p class="lede">Check a USDT cash target against a hypothetical Venus borrow. A verified NVDAB sale quote is still needed to compare the two paths.</p>
+    <p class="lede">Check a USDT cash target against a hypothetical Venus borrow. An estimated route can be checked below, while net sale proceeds and personal loan safety remain unverified.</p>
     <section class="panel" aria-label="Scenario inputs">
       <form id="form" novalidate>
         <div class="inputs">
@@ -44,7 +44,7 @@
     </section>
     <section class="decision-panel" id="sale-check" aria-label="Optional Binance quote">
       <h2>Sale check</h2>
-      <p class="hint">Optional wallet-bound Binance route check. The sale stays unquoted, and no USDT proceeds are shown.</p>
+      <p class="hint">Optional wallet-bound Binance route check. An estimated output may appear; net proceeds remain unverified.</p>
       <p class="hint">This same address is available to the optional balance and Venus Core reads below. It does not prove address control or eligibility.</p>
       <div class="field"><label for="wallet">Public wallet address</label><input id="wallet" name="wallet" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x…" aria-describedby="wallet-hint wallet-error"><div class="hint" id="wallet-hint">Used only when you request an NVDAB balance, Venus Core state or Binance route.</div><div class="error" id="wallet-error" role="alert"></div></div>
       <button id="quote-submit" type="button">Request one Binance quote</button>
@@ -85,8 +85,10 @@
     const clearBalance=()=>{document.querySelector('#balance-error').textContent='';document.querySelector('#wallet-balance').textContent='Not read';document.querySelector('#wallet-sufficiency').textContent='Unknown';document.querySelector('#wallet-block').textContent='Unknown';document.querySelector('#wallet-time').textContent='Unknown'};
     const clearAccount=()=>{document.querySelector('#venus-account-error').textContent='';document.querySelector('#venus-account-result').hidden=true;document.querySelector('#venus-account-borrowing-power').textContent='Unknown';document.querySelector('#venus-account-liquidation-threshold').textContent='Unknown';document.querySelector('#venus-account-status').textContent='Unknown';document.querySelector('#venus-account-markets').textContent='Unknown';document.querySelector('#venus-account-pool').textContent='Unknown';document.querySelector('#venus-account-block').textContent='Unknown';document.querySelector('#venus-account-time').textContent='Unknown';document.querySelector('#venus-account-captured').textContent='Unknown';document.querySelector('#venus-account-scope').textContent='A current net cushion is not a post-deposit borrowing or liquidation forecast.'};
     const clearQuote=()=>{const panel=document.querySelector('#quote-result');panel.hidden=true;document.querySelector('#quote-identity').textContent='Not checked';document.querySelector('#quote-identity-captured').textContent='Unknown';document.querySelector('#quote-status').textContent='';document.querySelector('#quote-count').textContent='Unknown';document.querySelector('#quote-captured').textContent='Unknown';document.querySelector('#quote-latency').textContent='Unknown';document.querySelector('#quote-input-raw').textContent='Unknown';document.querySelector('#quote-block').textContent='Unknown';document.querySelector('#quote-routes').replaceChildren()};
+    const sanitizeRawAmount=value=>{const raw=String(value??'').trim();return /^\d+$/.test(raw)?raw.replace(/^0+(?=\d)/,''):null};
+    const cashTargetRaw=value=>{if(!/^\d+(\.\d+)?$/.test(value))return null;const [whole,fraction='']=value.split('.');if(fraction.length>18)return null;const raw=BigInt(whole)*1000000000000000000n+BigInt((fraction+'0'.repeat(18)).slice(0,18));return raw>0n&&raw<=1000000000000000000000000000000000n?raw:null};
     document.querySelector('#units').addEventListener('input',()=>{scenarioGeneration++;balanceGeneration++;quoteGeneration++;setError('units','');clearScenario();clearBalance();clearQuote()});
-    document.querySelector('#cash').addEventListener('input',()=>{scenarioGeneration++;setError('cash','');clearScenario()});
+    document.querySelector('#cash').addEventListener('input',()=>{scenarioGeneration++;quoteGeneration++;setError('cash','');clearScenario();clearQuote()});
     document.querySelector('#wallet').addEventListener('input',()=>{balanceGeneration++;accountGeneration++;quoteGeneration++;setError('wallet','');clearBalance();clearAccount();clearQuote()});
     form.addEventListener('submit',async event=>{
       event.preventDefault();setError('units','');setError('cash','');document.querySelector('#form-error').textContent='';
@@ -161,8 +163,10 @@
       finally{button.disabled=false;button.textContent='Read Venus Core account state'}
     });
     document.querySelector('#quote-submit').addEventListener('click',async()=>{
-      const wallet=document.querySelector('#wallet').value.trim(),units=document.querySelector('#units').value.trim(),button=document.querySelector('#quote-submit'),panel=document.querySelector('#quote-result');
-      setError('wallet','');setError('units','');panel.hidden=true;
+      const wallet=document.querySelector('#wallet').value.trim(),units=document.querySelector('#units').value.trim(),cash=document.querySelector('#cash').value.trim(),button=document.querySelector('#quote-submit'),panel=document.querySelector('#quote-result');
+      setError('wallet','');setError('units','');setError('cash','');panel.hidden=true;
+      const targetRaw=cashTargetRaw(cash);
+      if(targetRaw===null){setError('cash','Enter a USDT target with up to 18 decimals, greater than zero and no more than 1,000,000,000,000,000.');document.querySelector('#cash').focus();return}
       if(!/^0x[0-9a-fA-F]{40}$/.test(wallet)){setError('wallet','Enter a valid 0x public address.');return}
       if(!/^\d+(\.\d+)?$/.test(units)||Number(units)<=0){setError('units','Enter a number greater than zero.');return}
       const request=++quoteGeneration;
@@ -186,12 +190,12 @@
           const details=document.createElement('span');details.textContent=route.vendorName+' · '+route.executionMode+(route.executionMode==='SWAP'?' · Mode review':'');
           const label=document.createElement('strong'),output=Number(route.estimated_output_usdt);
           label.textContent=Number.isFinite(output)&&output>0?(output<0.005?'<0.01':'≈ '+output.toLocaleString('en-US',{maximumFractionDigits:2}))+' USDT estimated':'Estimate unavailable';
-          row.append(details,label);routeList.append(row);
+          const rawOutput=sanitizeRawAmount(route.toTokenAmount);if(rawOutput!==null){const verdict=document.createElement('span');verdict.className='quote-target-verdict';const outputRaw=BigInt(rawOutput);verdict.textContent='Estimated output is '+(outputRaw<targetRaw?'below':outputRaw>targetRaw?'above':'exactly at')+' the target before costs.';details.append(' · ',verdict)}row.append(details,label);routeList.append(row);
         }
         if(routeList.childElementCount)window.setTimeout(()=>{
           if(request!==quoteGeneration||panel.hidden)return;
           document.querySelector('#quote-status').textContent='Quote snapshot expired. Request a new quote.';
-          routeList.querySelectorAll('strong').forEach(label=>{label.textContent='Expired estimate'});
+          routeList.querySelectorAll('strong').forEach(label=>{label.textContent='Expired estimate'});routeList.querySelectorAll('.quote-target-verdict').forEach(verdict=>verdict.remove());
         },20000);
       }catch(_){if(request===quoteGeneration){panel.hidden=false;document.querySelector('#quote-identity').textContent='Unknown';document.querySelector('#quote-identity-captured').textContent='Unknown';document.querySelector('#quote-status').textContent='Local quote request failed';document.querySelector('#quote-count').textContent='Unknown';document.querySelector('#quote-captured').textContent='Unknown';document.querySelector('#quote-latency').textContent='Unknown';document.querySelector('#quote-input-raw').textContent='Not sent';document.querySelector('#quote-block').textContent='Unknown';document.querySelector('#quote-routes').replaceChildren()}}
       finally{button.disabled=false;button.textContent='Request one Binance quote'}
