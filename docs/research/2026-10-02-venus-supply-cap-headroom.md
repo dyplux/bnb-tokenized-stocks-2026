@@ -12,4 +12,16 @@ For the local 100 USDT target, a hypothetical 1 NVDAB deposit fits this indexed 
 
 The local scenario now reports this headroom and compares the entered units with it. It doesn't mark a loan executable when the check passes. The API can lag, the cap can change, and this calculation doesn't inspect protocol pause state, a specific wallet's debt, effective E-Mode factors, market entry, an actual supply transaction or a borrow transaction. A current contract read or simulation would be needed before any action. If the cap check fails, the illustrated borrow path may be unavailable even when the nominal capacity looks large.
 
-This is Venus third-party integration evidence, not a Binance Web3 API result. No authenticated Binance quote or holder task was observed during this check.
+## Fixed-block contract check
+
+At BNB Chain block **125200560** (`2026-10-02T00:59:01Z`), read-only `eth_call` requests through the [official mainnet RPC](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/) returned the following values. Chain ID was 56; the Core Unitroller, vNVDAB and underlying NVDAB addresses all had code at this block. `vNVDAB.underlying()` matched NVDAB, and `NVDAB.decimals()` returned 18.
+
+| Contract call at block 125200560 | Raw result |
+|---|---:|
+| Core `supplyCaps(vNVDAB)` | `1500000000000000000000` |
+| vNVDAB `totalSupply()` | `147996050485` |
+| vNVDAB `exchangeRateStored()` | `10000000018731039135729946976` |
+
+Function selectors were Keccak-256 derived from their canonical ABI signatures: `supplyCaps(address)` = `0x02c3bcbb`, `totalSupply()` = `0x18160ddd`, `exchangeRateStored()` = `0x182df0f5`. The [Venus protocol math guide](https://github.com/venusprotocol/venus-protocol-documentation/blob/main/guides/protocol-math.md) confirms the integer conversion. It yields `floor(147996050485 × 10000000018731039135729946976 / 10^18) = 1479960507622119813567` raw NVDAB supplied, leaving **20039492377880186433** raw NVDAB, or **20.039492377880186433 NVDAB**, beneath the cap. The on-chain fields matched the earlier indexed fields at these two observation times; this doesn't establish that they stay equal.
+
+The app still presents an indexed cap snapshot, because the fixed-block check was a separate research read. A later viewer must recheck current contract state before acting. This is Venus third-party integration evidence, not a Binance Web3 API result. No authenticated Binance quote, transaction simulation, deposit, loan or holder task was observed during this check.
