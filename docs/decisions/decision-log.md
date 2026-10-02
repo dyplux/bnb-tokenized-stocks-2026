@@ -225,3 +225,13 @@ The later [near-time route control](../research/2026-10-02-live-route-control.md
 The [Venus source review](../research/2026-10-02-account-wide-risk-feasibility.md) identified separate current aggregate borrowing-power and liquidation-threshold reads. The [runtime check](../research/2026-10-02-current-core-risk-runtime.md) confirmed the deployed empty/default response and the browser display, but did not observe a consenting holder or populated risk position.
 
 **CEO decision:** expose only current cushion, shortfall or zero labels in the optional Core panel, tied to one BNB block. Do not convert raw values to undocumented USD amounts or imply a health factor, safe deposit, executable borrowing capacity or liquidation price. Keep the market-level scenario and sell estimate separate. The 4 October checkpoint and holder, cost and incumbent gates in D-017 and D-020 remain open.
+
+## D-022: unsigned LiquidMesh transaction build passes one technical path
+
+**Date:** 2026-10-02
+**Owner:** Dyplux
+**Status:** technical construction verified; no holder sale or release approval
+
+The bounded [read-only build](../research/2026-10-02-first-live-swap-build.md) took one fresh 1 NVDAB LiquidMesh `SWAP` quote into `GET /swap`. Both signed GET requests returned HTTP 200/business code 0. The response contained an unsigned `tx` with the temporary sender, nonempty calldata, a 450000 gas limit, a separate gas price and a minimum receive amount. In this route, the quote's `estimateGasFee=450000` matched the built transaction's gas limit; it was not a paid wei fee. The address had no known holdings, allowance or signer, and no simulation or broadcast occurred.
+
+**CEO decision:** mark the SWAP transaction-construction path observed for one technical request. Keep the main sale card Unquoted and the separate quote indicative. A constructed transaction cannot establish net proceeds, a fill, eligibility or the holder's cash choice. The holder task, allowance, execution-cost interpretation, account-wide Venus risk and incumbent comparison remain the release gates. The 4 October D-017 checkpoint stays in force.

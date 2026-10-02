@@ -41,11 +41,11 @@
 
 | Item | Draft answer | State |
 |---|---|---|
-| 25. Reliability rating | Select a first-hand rating. Six successful read-only calls aren't enough to score broad reliability objectively. | FOUNDER |
+| 25. Reliability rating | Select a first-hand rating. Nine successful signed GET calls aren't enough to score broad reliability objectively. | FOUNDER |
 | 26. Edge cases or unexpected behavior | “A bStock quote returned `SWAP` despite the RFQ-only sentence in the endpoint reference. The route carried a short-lived estimate; we kept its mode visible and didn't treat it as an executable order. We observed no nonzero API business code.” | READY |
-| 27. Unclear error messages | “None observed in the seven signed calls. Each returned HTTP 200 and business code 0. The route-mode and decimal issues were documentation inconsistencies, not error messages.” | READY |
-| 28. Slow endpoints, optional | “No endpoint was clearly too slow in this small sample. The two RWA searches took 1051.8 and 651.814 ms. Recorded quote calls took 315.419, 303.133, 847.939 and 833.917 ms; the fourth quote latency wasn't captured.” | READY |
-| 29. Rate limits | Select **No** if no later limit occurs. None was observed in the six recorded calls. | READY at current evidence |
+| 27. Unclear error messages | “None observed in nine signed GET calls. Each returned HTTP 200 and business code 0. The route-mode and decimal issues were documentation inconsistencies, not error messages.” | READY |
+| 28. Slow endpoints, optional | “No endpoint was clearly too slow in this small sample. The two RWA searches took 1051.8 and 651.814 ms. Five of six quote latencies were 315.419, 303.133, 847.939, 833.917 and 771.321 ms; one wasn't captured. The single unsigned SWAP build took 394.610 ms.” | READY |
+| 29. Rate limits | Select **No** if no later limit occurs. None was observed in the nine signed GET calls. | READY at current evidence |
 | 30. Rate-limit detail, optional | Leave blank unless a real limit is observed later. | LATER |
 | 31. Signing difficulties, optional | “The first local draft used the wrong Binance header family. We corrected the `/build` path and `X-OC-*` signature before calling the API. Once the complete pair was present, signed RWA search and quote requests succeeded; no live signature rejection occurred.” | READY |
 | 32. Data not trusted or reconciled, optional | “We didn't use `referencePrice` as an independent share quote because its upstream source and as-of time weren't established. We also withheld net sale proceeds: the quote estimated buy-token units, but final gas and execution costs weren't observed.” | READY |
