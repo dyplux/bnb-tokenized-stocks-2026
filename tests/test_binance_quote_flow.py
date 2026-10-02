@@ -1,9 +1,10 @@
 """Synthetic parser checks only; these fixtures are not live Binance API evidence."""
+from datetime import datetime, timezone
 from decimal import Decimal
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
-from app.server import NVDAB, USDT, request_binance_quote
+from app.server import NVDAB, USDT, request_binance_quote, signed_binance_get
 
 
 WALLET = "0x" + "1" * 40
@@ -50,6 +51,25 @@ def rpc_reply(method, params):
 
 
 class BinanceQuoteFlowTests(unittest.TestCase):
+    def test_identical_same_millisecond_requests_have_distinct_nonces(self):
+        response = MagicMock(status=200)
+        response.read.return_value = b'{"code":0,"data":[]}'
+        opener = MagicMock()
+        opener.open.return_value.__enter__.return_value = response
+        fixed_time = datetime(2026, 10, 2, 2, 0, tzinfo=timezone.utc)
+        with patch("app.server.datetime") as clock, \
+             patch("app.server.secrets.token_hex", side_effect=["a" * 32, "b" * 32]), \
+             patch("app.server.build_opener", return_value=opener):
+            clock.now.return_value = fixed_time
+            first = signed_binance_get("/api/v1/dex/market/rwa/search", [("keyword", "NVDA")], "dummy-key", "dummy-secret")
+            second = signed_binance_get("/api/v1/dex/market/rwa/search", [("keyword", "NVDA")], "dummy-key", "dummy-secret")
+        self.assertEqual(first["state"], "response")
+        self.assertEqual(second["state"], "response")
+        headers = [dict((key.lower(), value) for key, value in call.args[0].header_items())
+                   for call in opener.open.call_args_list]
+        self.assertEqual(headers[0]["x-oc-sign"], headers[1]["x-oc-sign"])
+        self.assertEqual([item["x-oc-nonce"] for item in headers], ["a" * 32, "b" * 32])
+
     def test_synthetic_exact_identity_and_rfq_route_are_sanitized(self):
         with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
              patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response()]) as signed, \

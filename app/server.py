@@ -9,6 +9,7 @@ import hashlib
 import hmac
 import os
 import re
+import secrets
 import time
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -259,7 +260,8 @@ def signed_binance_get(path, query_params, api_key, secret_key):
     ).digest()).decode("ascii")
     request = Request(BINANCE_BASE + url_path, headers={
         "X-OC-APIKEY": api_key, "X-OC-TIMESTAMP": timestamp,
-        "X-OC-SIGN": signature, "Accept": "application/json",
+        "X-OC-SIGN": signature, "X-OC-NONCE": secrets.token_hex(16),
+        "Accept": "application/json",
     }, method="GET")
     started = time.monotonic()
     body, http_status = b"", None
