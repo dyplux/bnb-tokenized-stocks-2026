@@ -18,3 +18,7 @@ A second signed quote at 18:35:28.067 UTC checked the selected cost fields. It r
 - A random nonholder address proves only a technical read path. It cannot establish balance, wallet eligibility, user need, executable allowance, a safe Venus loan, fill, profit or a meaningful sell-versus-borrow decision.
 
 **Next proof:** observe a consenting eligible holder's real cash task, request the same amount for their public wallet, and compare a fresh quote with their actual borrowing state and alternatives. Confirm route execution semantics with the Binance team before presenting SWAP as an actionable route.
+
+## Local display slice
+
+After the live observation, the server began exposing `estimated_output_usdt` alongside the validated raw route fields. The separate Sale check displays an approximate estimated amount, mode and response time; the main cash-choice card remains **Unquoted** and shows no net proceeds. The displayed estimate clears after 20 seconds. Five targeted synthetic quote-flow tests passed. A Chrome run with an intercepted synthetic quote at 320 CSS pixels showed the estimate and mode-review label, no horizontal overflow or page error, and the expiry state after 20 seconds. This browser run did not call Binance or validate a holder task.

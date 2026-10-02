@@ -51,7 +51,7 @@
       <div id="quote-result" hidden aria-live="polite">
         <div class="metrics"><div class="metric"><span>RWA identity check</span><strong id="quote-identity">Not checked</strong></div><div class="metric"><span>Local identity response received (UTC)</span><strong id="quote-identity-captured">Unknown</strong></div><div class="metric"><span>Quote status</span><strong id="quote-status"></strong></div><div class="metric"><span>Route count</span><strong id="quote-count">Unknown</strong></div><div class="metric"><span>Local quote response received (UTC)</span><strong id="quote-captured">Unknown</strong></div><div class="metric"><span>Quote request latency</span><strong id="quote-latency">Unknown</strong></div><div class="metric"><span>Raw input amount sent</span><strong id="quote-input-raw">Unknown</strong></div><div class="metric"><span>Token metadata block</span><strong id="quote-block">Unknown</strong></div></div>
         <div id="quote-routes" class="metrics"></div>
-        <div class="notice">A live technical NVDAB quote returned a SWAP route, while the Binance endpoint reference says RWA routes use RFQ. The route's estimated output is withheld until execution and cost scope are reconciled. No net USDT proceeds or executable sale are established by this check.</div>
+        <div class="notice">Any USDT amount above is an estimated output at the response time, before final execution costs. The displayed estimate clears after 20 seconds; Binance quotes expire in about 30 seconds. A SWAP mode needs review because the endpoint reference says RWA routes use RFQ. This check doesn't establish net proceeds or an executable sale.</div>
       </div>
     </section>
     <details class="optional-tools">
@@ -178,7 +178,18 @@
         document.querySelector('#quote-captured').textContent=data.capture_time_utc?new Date(data.capture_time_utc).toLocaleString('en-US',{timeZone:'UTC'})+' UTC':'Not captured';document.querySelector('#quote-latency').textContent=data.latency_ms===null||data.latency_ms===undefined?'Not available':data.latency_ms+' ms';
         document.querySelector('#quote-input-raw').textContent=data.request_amount_raw||'Not sent';document.querySelector('#quote-block').textContent=data.token_metadata_block===undefined?'Not available':data.token_metadata_block+' ('+data.token_metadata_block_tag+') · '+new Date(data.token_metadata_block_time_utc).toLocaleString('en-US',{timeZone:'UTC'})+' UTC';
         const routeList=document.querySelector('#quote-routes');routeList.replaceChildren();
-        for(const route of data.routes||[]){const row=document.createElement('div');row.className='metric';const details=document.createElement('span');details.textContent=route.vendorName+' · '+route.executionMode;const label=document.createElement('strong');label.textContent=route.executionMode==='SWAP'?'Review required':'Route observed';row.append(details,label);routeList.append(row)}
+        for(const route of data.routes||[]){
+          const row=document.createElement('div');row.className='metric';
+          const details=document.createElement('span');details.textContent=route.vendorName+' · '+route.executionMode+(route.executionMode==='SWAP'?' · Mode review':'');
+          const label=document.createElement('strong'),output=Number(route.estimated_output_usdt);
+          label.textContent=Number.isFinite(output)&&output>0?(output<0.005?'<0.01':'≈ '+output.toLocaleString('en-US',{maximumFractionDigits:2}))+' USDT estimated':'Estimate unavailable';
+          row.append(details,label);routeList.append(row);
+        }
+        if(routeList.childElementCount)window.setTimeout(()=>{
+          if(request!==quoteGeneration||panel.hidden)return;
+          document.querySelector('#quote-status').textContent='Quote snapshot expired. Request a new quote.';
+          routeList.querySelectorAll('strong').forEach(label=>{label.textContent='Expired estimate'});
+        },20000);
       }catch(_){if(request===quoteGeneration){panel.hidden=false;document.querySelector('#quote-identity').textContent='Unknown';document.querySelector('#quote-identity-captured').textContent='Unknown';document.querySelector('#quote-status').textContent='Local quote request failed';document.querySelector('#quote-count').textContent='Unknown';document.querySelector('#quote-captured').textContent='Unknown';document.querySelector('#quote-latency').textContent='Unknown';document.querySelector('#quote-input-raw').textContent='Not sent';document.querySelector('#quote-block').textContent='Unknown';document.querySelector('#quote-routes').replaceChildren()}}
       finally{button.disabled=false;button.textContent='Request one Binance quote'}
     });
