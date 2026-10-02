@@ -1,10 +1,11 @@
 """Synthetic parser checks only; these fixtures are not live Binance API evidence."""
 from datetime import datetime, timezone
 from decimal import Decimal
+import json
 import unittest
 from unittest.mock import MagicMock, patch
 
-from app.server import NVDAB, USDT, request_binance_quote, signed_binance_get
+from app.server import NVDAB, USDT, request_binance_quote, request_target_sized_quote, signed_binance_get
 
 
 WALLET = "0x" + "1" * 40
@@ -34,6 +35,21 @@ def quote_response(from_amount=AMOUNT_RAW):
             "toToken": {"tokenContractAddress": USDT, "tokenSymbol": "USDT", "decimal": "18"},
         }]},
     }
+
+
+def sized_quote_response(from_amount, output_raw="200000000000000000000"):
+    response = quote_response(from_amount)
+    response["payload"]["data"][0]["toTokenAmount"] = output_raw
+    return response
+
+
+def two_route_quote_response(from_amount, first_output, second_output):
+    response = sized_quote_response(from_amount, first_output)
+    second = dict(response["payload"]["data"][0])
+    second["vendorName"] = "SecondVendor"
+    second["toTokenAmount"] = second_output
+    response["payload"]["data"].append(second)
+    return response
 
 
 def rpc_reply(method, params):
@@ -126,6 +142,77 @@ class BinanceQuoteFlowTests(unittest.TestCase):
         self.assertEqual(result["status"], "malformed_response")
         self.assertEqual(result["error_label"], "route_input_amount_mismatch")
         self.assertNotIn("routes", result)
+
+    def test_target_quote_uses_one_identity_and_two_quotes(self):
+        candidate_raw = "500000000000000000"
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response(), two_route_quote_response(candidate_raw, "150000000000000000000", "50000000000000000000")]) as signed, \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("100"))
+        self.assertEqual(result["status"], "target_quote_observed")
+        self.assertEqual(result["quote_count"], 2)
+        self.assertEqual(result["candidate_sale_raw"], candidate_raw)
+        self.assertEqual(result["entered_holding_raw"], AMOUNT_RAW)
+        self.assertEqual(result["identity_status"], "verified")
+        self.assertEqual(result["identity_business_code"], 0)
+        self.assertEqual(result["routes"][0]["target_relation"], "above_target")
+        self.assertEqual(result["routes"][1]["target_relation"], "below_target")
+        self.assertNotIn("target_relation", result)
+        self.assertNotIn("quoteId", result["routes"][0])
+        self.assertEqual(signed.call_count, 3)
+        self.assertEqual([call.args[0] for call in signed.call_args_list], [
+            "/api/v1/dex/market/rwa/search",
+            "/api/v1/dex/aggregator/quote",
+            "/api/v1/dex/aggregator/quote",
+        ])
+        self.assertEqual(signed.call_args_list[1].args[1][-2], ("amount", AMOUNT_RAW))
+        self.assertEqual(signed.call_args_list[2].args[1][-2], ("amount", candidate_raw))
+
+    def test_full_holding_shortfall_stops_before_second_quote(self):
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response()]) as signed, \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("201"))
+        self.assertEqual(result["status"], "target-unreachable-before-costs")
+        self.assertEqual(result["quote_count"], 1)
+        self.assertEqual(signed.call_count, 2)
+
+    def test_candidate_is_capped_at_entered_holding(self):
+        holding = Decimal("0.25")
+        holding_raw = "250000000000000000"
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), sized_quote_response(holding_raw, "50000000000000000000")]) as signed, \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, holding, Decimal("100"))
+        self.assertEqual(result["candidate_sale_raw"], holding_raw)
+        self.assertEqual(result["quote_count"], 1)
+        self.assertEqual(signed.call_count, 2)
+
+    def test_second_quote_failure_is_not_replaced_by_probe(self):
+        failure = {"state": "network_error", "capture_time_utc": "2026-10-02T02:00:02.000Z", "latency_ms": 5,
+                   "error_label": "binance_network_error"}
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response(), failure]) as signed, \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("100"))
+        self.assertEqual(result["status"], "target_quote_failure")
+        self.assertEqual(result["quote_count"], 2)
+        self.assertNotIn("routes", result)
+        self.assertEqual(signed.call_count, 3)
+
+    def test_invalid_cash_does_not_sign(self):
+        with patch("app.server.signed_binance_get") as signed:
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("0"))
+        self.assertEqual(result["status"], "invalid_input")
+        signed.assert_not_called()
+
+    def test_target_output_never_leaks_quote_id(self):
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response(), sized_quote_response("500000000000000000")]) as signed, \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("100"))
+        self.assertEqual(result["status"], "target_quote_observed")
+        self.assertNotIn("quoteId", json.dumps(result))
 
 
 if __name__ == "__main__":

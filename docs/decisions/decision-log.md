@@ -235,3 +235,13 @@ The [Venus source review](../research/2026-10-02-account-wide-risk-feasibility.m
 The bounded [read-only build](../research/2026-10-02-first-live-swap-build.md) took one fresh 1 NVDAB LiquidMesh `SWAP` quote into `GET /swap`. Both signed GET requests returned HTTP 200/business code 0. The response contained an unsigned `tx` with the temporary sender, nonempty calldata, a 450000 gas limit, a separate gas price and a minimum receive amount. In this route, the quote's `estimateGasFee=450000` matched the built transaction's gas limit; it was not a paid wei fee. The address had no known holdings, allowance or signer, and no simulation or broadcast occurred.
 
 **CEO decision:** mark the SWAP transaction-construction path observed for one technical request. Keep the main sale card Unquoted and the separate quote indicative. A constructed transaction cannot establish net proceeds, a fill, eligibility or the holder's cash choice. The holder task, allowance, execution-cost interpretation, account-wide Venus risk and incumbent comparison remain the release gates. The 4 October D-017 checkpoint stays in force.
+
+## D-023: quote a candidate partial sale against the cash target
+
+**Date:** 2026-10-02
+**Owner:** Dyplux
+**Status:** approved for one read-only implementation slice; no release approval
+
+The current interface compares a quote for every typed NVDAB unit with a loan for the entered USDT cash target. For a 1 NVDAB holding and a 100 USDT need, that can put a roughly 234 USDT sale beside a 100 USDT loan. The [fractional technical quote](../research/2026-10-02-fractional-target-quote.md) returned an estimated 100.663406831290082054 USDT for 0.43 NVDAB at 22:08 UTC, before final costs. The [Binance quote reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) only accepts a sell-token input amount; it has no exact-output cash-target parameter.
+
+**CEO decision:** treat typed NVDAB units as the amount available for the collateral scenario. A bounded read-only quote flow may use one fresh quote to estimate a candidate fraction to sell for the same USDT target, then quote that fraction once. Show the candidate units, final estimated output, target gap and both response times. If there is no first route, no second route, or the estimate remains below target, report that state and stop. At most two Trading API quote calls may follow one identity check per click. Do not show a guaranteed cash amount, net proceeds or a recommendation. The holder, costs, account-risk and incumbent gates remain unchanged. If the extra quote calls cannot be bounded and explained in the DX report, stop this implementation.

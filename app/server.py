@@ -20,7 +20,7 @@ getcontext().prec = 36
 API_URL = "https://api.venus.io/markets?chainId=56&limit=100"
 RPC_URL = "https://bsc-dataseed.bnbchain.org"
 BINANCE_BASE = "https://web3.binance.com/build"
-BINANCE_PATH = "/build/api/v1/dex/aggregator/quote"
+BINANCE_PATH = "/api/v1/dex/aggregator/quote"
 RWA_SEARCH_PATH = "/api/v1/dex/market/rwa/search"
 CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
@@ -430,7 +430,7 @@ def request_binance_quote(wallet, units):
         ("amount", str(amount_raw)),
         ("userWalletAddress", wallet),
     ]
-    quote_response = signed_binance_get("/api/v1/dex/aggregator/quote", params, api_key, secret_key)
+    quote_response = signed_binance_get(BINANCE_PATH, params, api_key, secret_key)
     capture_time = quote_response.get("capture_time_utc", checked_at)
     latency_ms = quote_response.get("latency_ms")
     if quote_response.get("state") != "response":
@@ -497,6 +497,159 @@ def request_binance_quote(wallet, units):
                         token_metadata_block_time_utc=block_time, request_amount_raw=str(amount_raw),
                         http_status=http_status, business_code=code,
                         error_label=None if routes else "no_route", **identity)
+
+
+def _target_quote_metadata(identity):
+    try:
+        chain_id = rpc("eth_chainId", [])
+        if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
+            return None, ("metadata_unavailable", "bsc_rpc_chain_mismatch")
+        block_hex = rpc("eth_blockNumber", [])
+        if not isinstance(block_hex, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", block_hex):
+            return None, ("metadata_unavailable", "bsc_rpc_invalid_block")
+        block_number = int(block_hex, 16)
+        block_tag = hex(block_number)
+        nvdab_code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
+        nvdab_decimals_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": "0x313ce567"}, block_tag])
+        usdt_code = rpc("eth_getCode", ["0x" + USDT[2:], block_tag])
+        usdt_decimals_word = rpc("eth_call", [{"to": "0x" + USDT[2:], "data": "0x313ce567"}, block_tag])
+        block = rpc("eth_getBlockByNumber", [block_tag, False])
+        if (not isinstance(nvdab_code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", nvdab_code)
+                or int(nvdab_code[2:] or "0", 16) == 0
+                or not isinstance(nvdab_decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", nvdab_decimals_word)
+                or int(nvdab_decimals_word, 16) != 18
+                or not isinstance(usdt_code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", usdt_code)
+                or int(usdt_code[2:] or "0", 16) == 0
+                or not isinstance(usdt_decimals_word, str) or not re.fullmatch(r"0x[0-9a-fA-F]{64}", usdt_decimals_word)
+                or int(usdt_decimals_word, 16) != 18
+                or not isinstance(block, dict) or not isinstance(block.get("timestamp"), str)
+                or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"])):
+            return None, ("metadata_unavailable", "token_metadata_unverified")
+        return {
+            "token_metadata_block": block_number,
+            "token_metadata_block_tag": block_tag,
+            "token_metadata_block_time_utc": datetime.fromtimestamp(int(block["timestamp"], 16), timezone.utc).isoformat(timespec="seconds"),
+        }, None
+    except Exception:
+        return None, ("metadata_unavailable", "bsc_rpc_or_amount_error")
+
+
+def _target_quote_once(wallet, amount_raw, api_key, secret_key, identity, metadata):
+    response = signed_binance_get(BINANCE_PATH, [
+        ("binanceChainId", "56"), ("fromTokenAddress", "0x" + NVDAB[2:]),
+        ("toTokenAddress", "0x" + USDT[2:]), ("amount", str(amount_raw)),
+        ("userWalletAddress", wallet)], api_key, secret_key)
+    capture_time = response.get("capture_time_utc")
+    # Flatten identity fields so the sanitized target response exposes the same
+    # identity_status and identity timing fields as the legacy quote response.
+    common = dict(identity, **metadata)
+    if response.get("state") != "response":
+        return quote_result(response.get("state", "network_error"), capture_time, response.get("latency_ms"),
+                            error_label=response.get("error_label", "binance_network_error"), **common)
+    http_status, payload = response.get("http_status"), response.get("payload")
+    code = payload.get("code") if isinstance(payload, dict) else None
+    if not isinstance(code, int) or isinstance(code, bool):
+        return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="missing_business_code", http_status=http_status, **common)
+    if code != 0:
+        status = "no_route" if code in (40374, 40421, 40441) else ("documented_error" if code in BINANCE_ERROR_LABELS else "unmapped_error")
+        return quote_result(status, capture_time, response.get("latency_ms"), http_status=http_status, business_code=code,
+                            error_label=BINANCE_ERROR_LABELS.get(code, "unmapped_business_error"), route_count=0 if status == "no_route" else None, **common)
+    if http_status is None or not 200 <= http_status < 300:
+        return quote_result("http_error", capture_time, response.get("latency_ms"), error_label="unexpected_http_status", http_status=http_status, **common)
+    routes = payload.get("data")
+    if not isinstance(routes, list) or any(not isinstance(route, dict) for route in routes):
+        return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="unexpected_routes_shape", http_status=http_status, business_code=code, **common)
+    sanitized, review_mode_required = [], False
+    for route in routes:
+        vendor, mode = route.get("vendorName"), route.get("executionMode")
+        if (not isinstance(vendor, str) or not re.fullmatch(r"[A-Za-z0-9_. -]{1,80}", vendor) or mode not in ("SWAP", "RFQ")):
+            return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="unexpected_route_fields", http_status=http_status, business_code=code, **common)
+        if route.get("binanceChainId") != "56":
+            return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="route_chain_mismatch", http_status=http_status, business_code=code, **common)
+        for token, contract, symbol in ((route.get("fromToken"), NVDAB, "NVDAB"), (route.get("toToken"), USDT, "USDT")):
+            if (not isinstance(token, dict) or not isinstance(token.get("tokenContractAddress"), str)
+                    or not re.fullmatch(r"0x[0-9a-fA-F]{40}", token["tokenContractAddress"])
+                    or token["tokenContractAddress"].lower() != contract or token.get("tokenSymbol") != symbol
+                    or token.get("decimal") != "18"):
+                return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="route_token_identity_mismatch", http_status=http_status, business_code=code, **common)
+        from_amount, to_amount = route.get("fromTokenAmount"), route.get("toTokenAmount")
+        if (not isinstance(from_amount, str) or len(from_amount) > 78 or not re.fullmatch(r"[0-9]+", from_amount)
+                or not isinstance(to_amount, str) or len(to_amount) > 78 or not re.fullmatch(r"[0-9]+", to_amount)):
+            return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="unexpected_route_amount", http_status=http_status, business_code=code, **common)
+        if from_amount != str(amount_raw):
+            return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="route_input_amount_mismatch", http_status=http_status, business_code=code, **common)
+        if int(to_amount) <= 0:
+            return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="route_output_amount_nonpositive", http_status=http_status, business_code=code, **common)
+        whole, fraction = to_amount[:-18].lstrip("0") or "0", to_amount[-18:].rjust(18, "0").rstrip("0")
+        sanitized.append({"vendorName": vendor, "executionMode": mode, "fromTokenAmount": from_amount,
+                          "toTokenAmount": to_amount, "estimated_output_usdt": whole + (("." + fraction) if fraction else "")})
+        review_mode_required |= mode == "SWAP"
+    return quote_result("no_route" if not sanitized else ("route_observed_mode_review_required" if review_mode_required else "route_observed_proceeds_unverified"),
+                        capture_time, response.get("latency_ms"), route_count=len(sanitized), routes=sanitized,
+                        request_amount_raw=str(amount_raw), http_status=http_status, business_code=code,
+                        error_label=None if sanitized else "no_route", **common)
+
+
+def request_target_sized_quote(wallet, units, cash):
+    """Return one bounded, read-only probe and at most one target-sized quote."""
+    identity = identity_summary("not_checked", error_label="missing_credentials")
+    if (not isinstance(wallet, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", wallet)
+            or not isinstance(units, Decimal) or not units.is_finite() or units <= ZERO
+            or not isinstance(cash, Decimal) or not cash.is_finite() or cash <= ZERO
+            or units > MAX_INPUT or cash > MAX_INPUT
+            or units.as_tuple().exponent < -18 or cash.as_tuple().exponent < -18):
+        return quote_result("invalid_input", None, None, error_label="invalid_quote_input", **identity)
+    entered_raw = int(units * (Decimal(10) ** 18))
+    target_raw = int(cash * (Decimal(10) ** 18))
+    if entered_raw <= 0 or len(str(entered_raw)) > 78 or target_raw <= 0 or len(str(target_raw)) > 78:
+        return quote_result("invalid_amount", None, None, error_label="raw_amount_out_of_range", **identity)
+    credentials = binance_credentials(Path(__file__).resolve().parents[1])
+    if credentials is None:
+        return quote_result("missing_credentials", None, None, error_label="missing_credentials", **identity)
+    api_key, secret_key = credentials
+    identity_result = signed_binance_get(RWA_SEARCH_PATH, [("keyword", "NVDA"), ("platformId", "bstock")], api_key, secret_key)
+    identity_state, identity_error = verify_rwa_identity(identity_result)
+    identity = identity_summary(identity_state, identity_result, identity_error)
+    if identity_state != "verified":
+        return quote_result("identity_failure", None, None, **identity)
+    metadata, metadata_error = _target_quote_metadata(identity)
+    if metadata_error:
+        status, error_label = metadata_error
+        return quote_result(status, None, None, error_label=error_label, entered_holding_raw=str(entered_raw), quote_count=0, **identity)
+    probe_raw = min(entered_raw, 10 ** 18)
+    first = _target_quote_once(wallet, probe_raw, api_key, secret_key, identity, metadata)
+    base = {"entered_holding_raw": str(entered_raw), "probe_capture_time_utc": first.get("capture_time_utc"),
+            "quote_count": 1, "probe_amount_raw": str(probe_raw)}
+    if first.get("status") != "route_observed_proceeds_unverified" and first.get("status") != "route_observed_mode_review_required":
+        return quote_result(first["status"], first.get("capture_time_utc"), first.get("latency_ms"), **base,
+                            **{key: value for key, value in first.items() if key not in ("status", "capture_time_utc", "latency_ms")})
+    probe_output_raw = int(first["routes"][0]["toTokenAmount"])
+    candidate_raw = min(entered_raw, (probe_raw * target_raw + probe_output_raw - 1) // probe_output_raw)
+    base.update({"candidate_sale_raw": str(candidate_raw), "target_raw": str(target_raw)})
+    if probe_raw == entered_raw and probe_output_raw < target_raw:
+        final_routes = [dict(route, target_relation="below_target") for route in first["routes"]]
+        return quote_result("target-unreachable-before-costs", first["capture_time_utc"], first.get("latency_ms"), **base,
+                            routes=final_routes, final_quote=final_routes, final_quote_status=first["status"],
+                            **{key: value for key, value in first.items() if key.startswith("identity_") or key.startswith("token_metadata_")})
+    if candidate_raw == probe_raw:
+        final = first
+    else:
+        final = _target_quote_once(wallet, candidate_raw, api_key, secret_key, identity, metadata)
+        base["quote_count"] = 2
+    if final.get("status") not in ("route_observed_proceeds_unverified", "route_observed_mode_review_required"):
+        failed_status = final.get("status") if final.get("status") == "no_route" else "target_quote_failure"
+        return quote_result(failed_status, final.get("capture_time_utc"), final.get("latency_ms"),
+                            **base, quote_stage="candidate" if base["quote_count"] == 2 else "probe",
+                            final_quote_status=final.get("status"), error_label=final.get("error_label", "target_quote_failed"),
+                            **{key: value for key, value in final.items() if key.startswith("identity_") or key.startswith("token_metadata_")})
+    final_routes = []
+    for route in final["routes"]:
+        output_raw = int(route["toTokenAmount"])
+        relation = "below_target" if output_raw < target_raw else "above_target" if output_raw > target_raw else "at_target"
+        final_routes.append(dict(route, target_relation=relation))
+    return quote_result("target_quote_observed", final["capture_time_utc"], final.get("latency_ms"), **base,
+                        routes=final_routes, final_quote=final_routes, final_quote_status=final["status"],
+                        **{key: value for key, value in final.items() if key.startswith("identity_") or key.startswith("token_metadata_")})
 
 
 def d(value):
@@ -767,7 +920,8 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, read_venus_core_account_state(wallet))
             else:
                 units = decimal_input(body.get("units", ""), "units")
-                self.send_json(200, request_binance_quote(wallet, units))
+                cash = decimal_input(body.get("cash", ""), "cash")
+                self.send_json(200, request_target_sized_quote(wallet, units, cash))
         except ScenarioError as exc:
             self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
         except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, UnicodeDecodeError, RuntimeError, ValueError, OSError, OverflowError) as exc:
