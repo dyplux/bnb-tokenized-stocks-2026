@@ -49,4 +49,6 @@ Team/project name and contact email are required; Telegram is optional. It asks 
 4. Review repository contents for secrets and make the project repo public when the founder authorizes submission.
 5. Submit the DX Report first, then the project form. Founder supplies the contact email and prize-receiving wallet address or UID through the forms, not through committed files.
 
-**Not yet proven:** any successful Binance Web3 API request, final product name, deployed URL, video, public repo, completed report or submitted form.
+**As of this 1 October audit, not yet proven:** any successful Binance Web3 API request, final product name, deployed URL, video, public repo, completed report or submitted form. Signed RWA search and quote calls were later observed on 2 October; see the [DX log](../dx/field-log.md).
+
+**2 October read-only recheck:** the public DX form still exposed 53 items through its embedded form metadata. The required questions and choices used in the [answer draft](dx-form-draft.md) were read again. No answer was entered or submitted. Recheck the live form before final submission.

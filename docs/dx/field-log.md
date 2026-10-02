@@ -1,6 +1,6 @@
 # Developer Experience field log
 
-**Status:** partial; signed Binance Web3 RWA search and two read-only NVDAB quotes succeeded on 2026-10-02. No holder-specific quote or trade has been observed. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
+**Status:** partial; two signed Binance Web3 RWA searches and four read-only NVDAB quotes succeeded on 2026-10-02. No holder-specific quote or trade has been observed. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
 
 ## Timing and access
 
@@ -8,7 +8,7 @@
 |---|---|---|---|
 | First visit to the Binance Web3 API docs | time not captured | [API map](../api-map.md) | Cannot reconstruct onboarding duration from memory. |
 | Web3 API key created | founder reported creation, time not captured | private founder message | The shared secret was truncated in the conversation. Do not copy the key into this repo. |
-| Complete local API credential available | **yes**, checked 2026-10-02 before the call | presence-only check in the Git-ignored project `.env`, mode 600; both fields populated without quotes | The values remain private. This confirms the complete pair works for RWA search only. |
+| Complete local API credential available | **yes**, checked 2026-10-02 before the call | presence-only check in the Git-ignored project `.env`, mode 600; both fields populated without quotes | The values remain private. The pair works for the observed RWA search and Trading API quote reads. |
 | First successful signed API call | 2026-10-02 18:27:43.513 UTC | [RWA search probe](../../scripts/probe_binance_rwa.py) and the signed-call row below | No quote, wallet, order or fill was tested. |
 
 ## Contemporaneous observations before a signed call
@@ -65,10 +65,10 @@ One session shows a concrete task, not demand or adoption. Keep personal jurisdi
 
 | Form section | Current evidence | Missing before honest submission |
 |---|---|---|
-| Submission details | Repo exists but is private; modules documented, none called | public repo URL, final product name, contact and team details |
-| Onboarding | credential absence and docs review recorded | timestamps for successful call, founder's key-creation experience, actual ratings |
-| Documentation | reference-price ambiguity and corrected route semantics | review exact pages again at implementation; runnable example observations |
-| API pitfalls | none observed live | signed calls, code, latency, rate limits, honest absence of failures if none occur |
+| Submission details | Repo exists but is private; RWA Data search and Trading API quote called | public repo URL, final product name, contact and team details |
+| Onboarding | first signed call time and credential setup recorded | first-docs and key-creation duration from founder; actual ratings |
+| Documentation | reference-price ambiguity, six-versus-18-decimal example and RFQ-only statement contradicted by live SWAP | founder's own documentation rating; no example was run verbatim |
+| API pitfalls | six signed calls succeeded; search and quote latencies recorded; no live error or rate limit observed | holder quote, off-hours behavior, cost reconciliation and actual ratings |
 | AI stack | local assistant draft and review recorded | which official AI tools were actually used, if any |
 | Tokenized stocks | public market and on-chain research separated | real Web3 quotes/fills or explicit statements that depth/slippage weren't measured; off-hours call |
 | Redesign | candidate suggestions only | rank one change by actual time lost after integration |
