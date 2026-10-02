@@ -1,6 +1,6 @@
 # Developer Experience field log
 
-**Status:** partial; two signed Binance Web3 RWA searches and four read-only NVDAB quotes succeeded on 2026-10-02. No holder-specific quote or trade has been observed. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
+**Status:** partial; two signed Binance Web3 RWA searches and five read-only NVDAB quotes succeeded on 2026-10-02. No holder-specific quote or trade has been observed. This file records what the team actually observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
 
 ## Timing and access
 
@@ -51,6 +51,7 @@ Record one row immediately after each permitted call. Keep wallet addresses reda
 | 2026-10-02 18:35:28.067 UTC | Signed quote for selected cost fields | 1 NVDAB to USDT, BNB 56; new temporary nonholder address omitted | HTTP 200, business code 0 | 303.133 | One LiquidMesh SWAP route; raw estimated output `234646962292722258753`, `tradeFee=0.01800319`, `estimateGasFee=450000`, no custom fee; server timestamp `1790966128035` ms | No API error; cost units and net settlement remain unverified | [Live quote observation](../research/2026-10-02-first-live-binance-quote.md); no raw response saved |
 | 2026-10-02 18:53:23.435 UTC | Signed quote near a fixed-block PancakeSwap QuoterV2 control | 1 NVDAB to USDT, BNB 56; temporary nonholder address omitted | HTTP 200, business code 0 | 847.939 | One LiquidMesh SWAP route, raw estimated output `234788583615476721962`; separate PancakeSwap pool quote at block 125343736 was `234299608428871275878` | No API error; no same-block Binance price or execution | [Route control](../research/2026-10-02-live-route-control.md); no raw response saved |
 | 2026-10-02 18:53:40.851 UTC | Signed quote to inspect route segment name | 1 NVDAB to USDT, BNB 56; new temporary nonholder address omitted | HTTP 200, business code 0 | not captured in the sanitized output | One LiquidMesh SWAP route, raw estimated output `234704136820000000000`; `dexRouterList` named Elfomofi for 100% | No API error; pool and tradeability not independently verified | [Route control](../research/2026-10-02-live-route-control.md); no raw response saved |
+| 2026-10-02 21:15:22.984 UTC, 17:15 New York time | Signed quote after the regular US equity close | 1 NVDAB to USDT, BNB 56; new temporary nonholder address omitted | HTTP 200, business code 0 | 833.917 | One LiquidMesh SWAP route, raw estimated output `234131412129900308257`; US equity late trading may still have been available | No API error; quote only, no weekend or execution proof | [After-close observation](../research/2026-10-02-after-regular-close-quote.md); no raw response saved |
 
 For a quote, additionally record `executionMode`, route, valid-until time, allowance or gas fields, and whether the result was SWAP or RFQ. Quote output is not an executed fill. A separate consent and authorization record is needed before any order.
 
@@ -69,9 +70,9 @@ One session shows a concrete task, not demand or adoption. Keep personal jurisdi
 | Submission details | Repo exists but is private; RWA Data search and Trading API quote called | public repo URL, final product name, contact and team details |
 | Onboarding | first signed call time and credential setup recorded | first-docs and key-creation duration from founder; actual ratings |
 | Documentation | reference-price ambiguity, six-versus-18-decimal example and RFQ-only statement contradicted by live SWAP | founder's own documentation rating; no example was run verbatim |
-| API pitfalls | six signed calls succeeded; search and quote latencies recorded; no live error or rate limit observed | holder quote, off-hours behavior, cost reconciliation and actual ratings |
+| API pitfalls | seven signed calls succeeded; search and quote latencies recorded; no live error or rate limit observed | holder quote, weekend behavior, cost reconciliation and actual ratings |
 | AI stack | local assistant draft and review recorded | which official AI tools were actually used, if any |
-| Tokenized stocks | public market and on-chain research separated | real Web3 quotes/fills or explicit statements that depth/slippage weren't measured; off-hours call |
+| Tokenized stocks | public market and on-chain research separated; one signed Web3 quote succeeded after the regular US equity close | holder quote and fill, weekend behavior, depth/slippage or explicit statements that those weren't measured |
 | Redesign | candidate suggestions only | rank one change by actual time lost after integration |
 
 ## Next entry
