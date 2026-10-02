@@ -483,6 +483,11 @@ def d(value):
         return None
 
 
+def raw_units_string(raw, decimals):
+    whole, fraction = divmod(raw, 10 ** decimals)
+    return str(whole) + ("." + str(fraction).zfill(decimals).rstrip("0") if fraction else "")
+
+
 def market_rows(data):
     rows = data.get("result", []) if isinstance(data, dict) else []
     if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
@@ -516,12 +521,14 @@ def build_scenario(units, cash, data, retrieved_at):
         raise RuntimeError("NVDAB is not currently listed and enabled as collateral.")
     price_m, decimals = d(stock.get("underlyingPriceMantissa")), d(stock.get("underlyingDecimal"))
     cf, lt = d(stock.get("collateralFactorMantissa")), d(stock.get("liquidationThresholdMantissa"))
-    if stock.get("isPriceInvalid") is True or price_m is None or price_m <= 0:
+    if (stock.get("isPriceInvalid") is True or price_m is None or price_m <= 0
+            or price_m != price_m.to_integral_value()):
         raise RuntimeError("Venus NVDAB price is invalid or unavailable.")
-    if decimals is None or decimals < 0 or decimals > 36 or decimals != decimals.to_integral_value():
+    if decimals is None or decimals != 18:
         raise RuntimeError("Venus returned invalid NVDAB decimals.")
     scale = Decimal(10) ** 18
-    if cf is None or lt is None or cf <= 0 or lt <= 0 or cf > scale or lt > scale:
+    if (cf is None or lt is None or cf <= 0 or lt <= 0 or cf > scale or lt > scale
+            or cf != cf.to_integral_value() or lt != lt.to_integral_value()):
         raise RuntimeError("Venus collateral or liquidation factor is unavailable.")
     cap = d(stock.get("supplyCapsMantissa"))
     token_supply = d(stock.get("totalSupplyMantissa"))
@@ -532,17 +539,19 @@ def build_scenario(units, cash, data, retrieved_at):
         raise RuntimeError("Venus NVDAB supply-cap data is unavailable.")
     supplied_raw = int(token_supply) * int(exchange_rate) // (10 ** 18)
     headroom_raw = max(int(cap) - supplied_raw, 0)
-    headroom_units = Decimal(headroom_raw) / (Decimal(10) ** int(decimals))
-    within_indexed_cap = cap > 0 and units <= headroom_units
+    headroom_units = raw_units_string(headroom_raw, int(decimals))
+    entered_units_raw = int(units * (Decimal(10) ** int(decimals)))
+    within_indexed_cap = cap > 0 and entered_units_raw <= headroom_raw
     if usdt.get("isListed") is not True or usdt.get("isBorrowable") is not True:
         raise RuntimeError("Venus USDT borrowing is currently unavailable.")
 
     # Venus documented mantissa scale: 1e(36 - underlying decimals).
     price = price_m / (Decimal(10) ** (36 - int(decimals)))
     usdt_price_m, usdt_decimals = d(usdt.get("underlyingPriceMantissa")), d(usdt.get("underlyingDecimal"))
-    if usdt.get("isPriceInvalid") is True or usdt_price_m is None or usdt_price_m <= 0:
+    if (usdt.get("isPriceInvalid") is True or usdt_price_m is None or usdt_price_m <= 0
+            or usdt_price_m != usdt_price_m.to_integral_value()):
         raise RuntimeError("Venus USDT oracle price is invalid or unavailable.")
-    if usdt_decimals is None or usdt_decimals < 0 or usdt_decimals > 36 or usdt_decimals != usdt_decimals.to_integral_value():
+    if usdt_decimals is None or usdt_decimals != 18:
         raise RuntimeError("Venus returned invalid USDT decimals.")
     usdt_price = usdt_price_m / (Decimal(10) ** (36 - int(usdt_decimals)))
     borrow_rate = d(usdt.get("borrowApyDecimal"))
@@ -553,6 +562,13 @@ def build_scenario(units, cash, data, retrieved_at):
     collateral_value_usd = units * price
     collateral_value_usdt = collateral_value_usd / usdt_price
     capacity = collateral_value_usdt * cf / scale
+    # Venus price mantissas are scaled by 10 ** (36 - token decimals), so raw
+    # token amounts cancel both price scales. Keep the ceiling exact in base units.
+    cash_units_raw = int(cash * (Decimal(10) ** int(usdt_decimals)))
+    required_nvdab_numerator = cash_units_raw * int(usdt_price_m) * (10 ** 18)
+    required_nvdab_denominator = int(price_m) * int(cf)
+    required_nvdab_raw = (required_nvdab_numerator + required_nvdab_denominator - 1) // required_nvdab_denominator
+    required_nvdab_units = raw_units_string(required_nvdab_raw, int(decimals))
     threshold = lt / scale
     liquidation_weighted_usdt = collateral_value_usd * threshold / usdt_price
     health = liquidation_weighted_usdt / cash
@@ -562,10 +578,12 @@ def build_scenario(units, cash, data, retrieved_at):
         "scenario_only": True,
         "assumptions": ["No wallet debt or other collateral", "No E-Mode", "No accrued interest or execution costs", "Market-level snapshot, not a personal safety assessment"],
         "input": {"units": str(units), "cash_usdt": str(cash)},
-        "market": {"nvdab_price_usd": str(price), "usdt_oracle_price_usd": str(usdt_price), "collateral_factor": str(cf / scale), "liquidation_threshold": str(threshold), "borrow_apy": str(borrow_rate), "pool_cash_usdt": str(pool_cash), "nvdab_supply_cap_headroom": str(headroom_units), "nvdab_market": stock.get("address"), "usdt_market": usdt.get("address"), "pool_comptroller": pool, "data_status": "indexed Venus API snapshot, may lag the chain"},
-        "borrow": {"nominal_capacity_usdt": str(capacity), "target_feasible_by_collateral": cash <= capacity,
+        "market": {"nvdab_price_usd": str(price), "usdt_oracle_price_usd": str(usdt_price), "collateral_factor": str(cf / scale), "liquidation_threshold": str(threshold), "borrow_apy": str(borrow_rate), "pool_cash_usdt": str(pool_cash), "nvdab_supply_cap_headroom": headroom_units, "nvdab_market": stock.get("address"), "usdt_market": usdt.get("address"), "pool_comptroller": pool, "data_status": "indexed Venus API snapshot, may lag the chain"},
+        "borrow": {"nominal_capacity_usdt": str(capacity), "target_feasible_by_collateral": entered_units_raw >= required_nvdab_raw,
                    "target_feasible_by_pool_liquidity": cash <= pool_cash,
                    "entered_units_within_indexed_supply_cap": within_indexed_cap,
+                   "minimum_nvdab_for_target": required_nvdab_units,
+                   "minimum_within_indexed_supply_cap": cap > 0 and required_nvdab_raw <= headroom_raw,
                    "health_factor": str(health), "price_drop_to_hf_1_percent": str(drop) if drop is not None else None,
                    "interest_30d_usdt": str(cash * borrow_rate * Decimal(30) / Decimal(365)),
                    "interest_90d_usdt": str(cash * borrow_rate * Decimal(90) / Decimal(365)),
