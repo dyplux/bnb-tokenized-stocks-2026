@@ -22,3 +22,5 @@ Other bStock markets have more cap room in this one snapshot. Choosing one as a 
 ## Targeted NVDAB recheck
 
 At BNB Chain block `125263488`, `2026-10-02 08:51:16 UTC`, the local fixed-block contract reader returned `11.416397078470495107 NVDAB` of Core supply-cap headroom. It checked chain 56, deployed Core and vNVDAB code, pinned underlying, supply cap, vToken supply, stored exchange rate and block time through the [BNB Chain public RPC](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/). A 1 NVDAB deposit still fits the measured cap alone. The value is unchanged from the earlier fixed-block read, but a later transaction can change it; this is not a simulation or a borrowing approval. The signed Binance route and holder task remain unobserved.
+
+At block `125335595`, `2026-10-02 17:52:17 UTC`, the same reader returned `11.416397058476516341 NVDAB` of headroom. One NVDAB still fits this cap check. The small change does not identify a supplier, prove that a deposit will execute, or replace the missing signed quote and holder task.
