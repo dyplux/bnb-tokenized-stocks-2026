@@ -193,3 +193,13 @@ A [read-only product critique](../agent-reports/product-review/2026-10-02-d017-r
 The later [same-block Steward check](../research/2026-10-02-steward-supply-cap-comparison.md) supplies one concrete contrast: Steward's live Swipe output labelled a 25 NVDAB, HF 2 scenario “FUNDABLE NOW” at BNB block 125201341 without showing that the Core NVDAB market had only 20.039492377880186433 NVDAB of remaining supply-cap room at that block. Our read-only scenario flags that entered amount. This is a disclosed precondition difference for one case; it is not proof that all of the competitor's borrowing outputs are wrong, or that our combined cash-choice product changes a real action.
 
 **CEO decision:** continue D-017 only through its existing signed-quote and eligible-holder gates. Keep the cap check visible, but do not add a broad competitor attack or claim that a 100 USDT loan is impossible when fewer NVDAB units might be supplied. Reassess this provisional choice after one same-task participant observation and a permitted signed Binance response, or at the 4 October checkpoint if either remains missing. A safe, working sale-versus-loan comparison must determine the final product direction; the cap example alone does not.
+
+## D-019: restrict the NVDAB onboarding claim after the cap screen
+
+**Date:** 2026-10-02
+**Owner:** Dyplux
+**Status:** applies to the provisional D-017 slice; no new product approved
+
+The [fixed-block screen](../research/2026-10-02-bstock-collateral-cap-screen.md) found only `11.416397078470495107 NVDAB` of Core supply-cap headroom at 07:11 UTC, `0.7611%` of the cap. The three other listed bStock collateral markets had more room at that block, but their wallet-sized Binance Web3 sell routes and same-task users haven't been checked. The Venus `supplierCount` fields and CMC's NVDAB holder display don't measure a shared eligible user population.
+
+**CEO decision:** keep NVDAB as a controlled test case for one cash target, with its cap limitation visible. Don't describe this slice as broad borrower onboarding or count all NVDAB holders as addressable borrowers. Don't switch the active build to another bStock solely because its cap has more room. At the 4 October checkpoint, reject the NVDAB version if the cap has closed or the signed quote and holder-task evidence remain unavailable; compare any replacement against the same user task, integration and risk gates before authorizing code.
