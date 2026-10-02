@@ -23,7 +23,7 @@ def identity_response(contract=NVDAB):
     }
 
 
-def quote_response(from_amount=AMOUNT_RAW):
+def quote_response(from_amount=AMOUNT_RAW, trade_fee=None):
     return {
         "state": "response", "http_status": 200, "business_code": 0,
         "capture_time_utc": "2026-10-02T02:00:01.000Z", "latency_ms": 24,
@@ -33,12 +33,13 @@ def quote_response(from_amount=AMOUNT_RAW):
             "fromTokenAmount": from_amount, "toTokenAmount": "200000000000000000000",
             "fromToken": {"tokenContractAddress": NVDAB, "tokenSymbol": "NVDAB", "decimal": "18"},
             "toToken": {"tokenContractAddress": USDT, "tokenSymbol": "USDT", "decimal": "18"},
+            "tradeFee": trade_fee,
         }]},
     }
 
 
-def sized_quote_response(from_amount, output_raw="200000000000000000000"):
-    response = quote_response(from_amount)
+def sized_quote_response(from_amount, output_raw="200000000000000000000", trade_fee=None):
+    response = quote_response(from_amount, trade_fee)
     response["payload"]["data"][0]["toTokenAmount"] = output_raw
     return response
 
@@ -100,6 +101,28 @@ class BinanceQuoteFlowTests(unittest.TestCase):
         self.assertNotIn("quoteId", result["routes"][0])
         self.assertEqual(signed.call_count, 2)
         self.assertEqual(signed.call_args_list[1].args[1][-1], ("userWalletAddress", WALLET))
+
+    def test_target_quote_preserves_valid_trade_fee_without_subtracting_it(self):
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response(), sized_quote_response("500000000000000000", trade_fee="0.01800319")]), \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("100"))
+        self.assertEqual(result["routes"][0]["network_fee_usd_estimate"], "0.01800319")
+        self.assertEqual(result["routes"][0]["estimated_output_usdt"], "200")
+
+    def test_target_quote_maps_null_trade_fee_to_unknown(self):
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response(), sized_quote_response("500000000000000000", trade_fee=None)]), \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("100"))
+        self.assertIsNone(result["routes"][0]["network_fee_usd_estimate"])
+
+    def test_target_quote_maps_malformed_trade_fee_to_unknown(self):
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response(), sized_quote_response("500000000000000000", trade_fee="-0.01")]), \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_target_sized_quote(WALLET, Decimal("1"), Decimal("100"))
+        self.assertIsNone(result["routes"][0]["network_fee_usd_estimate"])
 
     def test_wrong_identity_blocks_rpc_and_quote(self):
         with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \

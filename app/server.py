@@ -267,6 +267,20 @@ def quote_result(status, capture_time, latency_ms=None, **fields):
     return result
 
 
+def validated_trade_fee(value):
+    """Keep only a finite, nonnegative decimal-string trade fee."""
+    if value is None:
+        return None
+    if (not isinstance(value, str) or len(value) > 78
+            or not re.fullmatch(r"(?:0|[0-9]+)(?:\.[0-9]+)?", value)):
+        return None
+    try:
+        fee = Decimal(value)
+    except InvalidOperation:
+        return None
+    return value if fee.is_finite() and fee >= ZERO else None
+
+
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         return None
@@ -485,7 +499,8 @@ def request_binance_quote(wallet, units):
         fraction = to_amount[-18:].rjust(18, "0").rstrip("0")
         item = {"vendorName": vendor, "executionMode": mode,
                 "fromTokenAmount": from_amount, "toTokenAmount": to_amount,
-                "estimated_output_usdt": whole + ("." + fraction if fraction else "")}
+                "estimated_output_usdt": whole + ("." + fraction if fraction else ""),
+                "network_fee_usd_estimate": validated_trade_fee(route.get("tradeFee"))}
         if mode == "SWAP":
             review_mode_required = True
         sanitized.append(item)
@@ -582,7 +597,8 @@ def _target_quote_once(wallet, amount_raw, api_key, secret_key, identity, metada
             return quote_result("malformed_response", capture_time, response.get("latency_ms"), error_label="route_output_amount_nonpositive", http_status=http_status, business_code=code, **common)
         whole, fraction = to_amount[:-18].lstrip("0") or "0", to_amount[-18:].rjust(18, "0").rstrip("0")
         sanitized.append({"vendorName": vendor, "executionMode": mode, "fromTokenAmount": from_amount,
-                          "toTokenAmount": to_amount, "estimated_output_usdt": whole + (("." + fraction) if fraction else "")})
+                          "toTokenAmount": to_amount, "estimated_output_usdt": whole + (("." + fraction) if fraction else ""),
+                          "network_fee_usd_estimate": validated_trade_fee(route.get("tradeFee"))})
         review_mode_required |= mode == "SWAP"
     return quote_result("no_route" if not sanitized else ("route_observed_mode_review_required" if review_mode_required else "route_observed_proceeds_unverified"),
                         capture_time, response.get("latency_ms"), route_count=len(sanitized), routes=sanitized,
