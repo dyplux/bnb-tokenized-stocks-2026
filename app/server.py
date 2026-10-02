@@ -523,6 +523,17 @@ def build_scenario(units, cash, data, retrieved_at):
     scale = Decimal(10) ** 18
     if cf is None or lt is None or cf <= 0 or lt <= 0 or cf > scale or lt > scale:
         raise RuntimeError("Venus collateral or liquidation factor is unavailable.")
+    cap = d(stock.get("supplyCapsMantissa"))
+    token_supply = d(stock.get("totalSupplyMantissa"))
+    exchange_rate = d(stock.get("exchangeRateMantissa"))
+    if (cap is None or token_supply is None or exchange_rate is None
+            or cap < 0 or token_supply < 0 or exchange_rate <= 0
+            or any(value != value.to_integral_value() for value in (cap, token_supply, exchange_rate))):
+        raise RuntimeError("Venus NVDAB supply-cap data is unavailable.")
+    supplied_raw = int(token_supply) * int(exchange_rate) // (10 ** 18)
+    headroom_raw = max(int(cap) - supplied_raw, 0)
+    headroom_units = Decimal(headroom_raw) / (Decimal(10) ** int(decimals))
+    within_indexed_cap = cap > 0 and units <= headroom_units
     if usdt.get("isListed") is not True or usdt.get("isBorrowable") is not True:
         raise RuntimeError("Venus USDT borrowing is currently unavailable.")
 
@@ -551,9 +562,10 @@ def build_scenario(units, cash, data, retrieved_at):
         "scenario_only": True,
         "assumptions": ["No wallet debt or other collateral", "No E-Mode", "No accrued interest or execution costs", "Market-level snapshot, not a personal safety assessment"],
         "input": {"units": str(units), "cash_usdt": str(cash)},
-        "market": {"nvdab_price_usd": str(price), "usdt_oracle_price_usd": str(usdt_price), "collateral_factor": str(cf / scale), "liquidation_threshold": str(threshold), "borrow_apy": str(borrow_rate), "pool_cash_usdt": str(pool_cash), "nvdab_market": stock.get("address"), "usdt_market": usdt.get("address"), "pool_comptroller": pool, "data_status": "indexed Venus API snapshot, may lag the chain"},
+        "market": {"nvdab_price_usd": str(price), "usdt_oracle_price_usd": str(usdt_price), "collateral_factor": str(cf / scale), "liquidation_threshold": str(threshold), "borrow_apy": str(borrow_rate), "pool_cash_usdt": str(pool_cash), "nvdab_supply_cap_headroom": str(headroom_units), "nvdab_market": stock.get("address"), "usdt_market": usdt.get("address"), "pool_comptroller": pool, "data_status": "indexed Venus API snapshot, may lag the chain"},
         "borrow": {"nominal_capacity_usdt": str(capacity), "target_feasible_by_collateral": cash <= capacity,
                    "target_feasible_by_pool_liquidity": cash <= pool_cash,
+                   "entered_units_within_indexed_supply_cap": within_indexed_cap,
                    "health_factor": str(health), "price_drop_to_hf_1_percent": str(drop) if drop is not None else None,
                    "interest_30d_usdt": str(cash * borrow_rate * Decimal(30) / Decimal(365)),
                    "interest_90d_usdt": str(cash * borrow_rate * Decimal(90) / Decimal(365)),
