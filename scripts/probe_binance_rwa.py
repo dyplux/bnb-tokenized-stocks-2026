@@ -10,7 +10,6 @@ import base64
 import hashlib
 import hmac
 import json
-import os
 import re
 import sys
 import time
@@ -19,6 +18,9 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from app.server import binance_credentials
 
 
 BASE_URL = "https://web3.binance.com/build"
@@ -40,20 +42,6 @@ SAFE_ASSET_FIELDS = (
 
 def now_utc():
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
-
-
-def credentials():
-    values = {}
-    env_file = Path(__file__).resolve().parents[1] / ".env"
-    if env_file.is_file():
-        for line in env_file.read_text(encoding="utf-8").splitlines():
-            name, separator, value = line.strip().partition("=")
-            name = name.removeprefix("export ").strip()
-            if separator and name in {"BINANCE_WEB3_API_KEY", "BINANCE_WEB3_SECRET_KEY"}:
-                values[name] = value.strip().strip("\"'")
-    key = os.environ.get("BINANCE_WEB3_API_KEY") or values.get("BINANCE_WEB3_API_KEY")
-    secret = os.environ.get("BINANCE_WEB3_SECRET_KEY") or values.get("BINANCE_WEB3_SECRET_KEY")
-    return key, secret
 
 
 def business_code(payload):
@@ -96,10 +84,11 @@ def main():
     ticker = args.ticker.strip().upper()
     if not re.fullmatch(r"[A-Z0-9.\-]{1,12}", ticker):
         parser.error("ticker must contain 1 to 12 letters, digits, dots or hyphens")
-    key, secret = credentials()
-    if not key or not secret:
+    auth = binance_credentials(Path(__file__).resolve().parents[1])
+    if auth is None:
         print(json.dumps({"error": "missing_credentials"}))
         return 2
+    key, secret = auth
 
     query = "keyword=" + quote(ticker, safe="")
     if args.platform:

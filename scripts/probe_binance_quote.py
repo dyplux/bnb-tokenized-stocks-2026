@@ -14,7 +14,6 @@ import base64
 import hashlib
 import hmac
 import json
-import os
 import re
 import sys
 import time
@@ -24,13 +23,15 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from app.server import binance_credentials
+
 
 API_BASE = "https://web3.binance.com/build"
 REQUEST_PATH = "/build/api/v1/dex/aggregator/quote"
 CHAIN_ID = "56"
 ADDRESS_RE = re.compile(r"^0x[0-9a-fA-F]{40}$")
 RAW_AMOUNT_RE = re.compile(r"^[0-9]+$")
-SECRET_NAMES = ("BINANCE_WEB3_API_KEY", "BINANCE_WEB3_SECRET_KEY")
 ROUTE_FIELDS = {
     "vendorName",
     "fromTokenAmount",
@@ -113,49 +114,6 @@ def parse_args():
     return args, capture_time
 
 
-def env_file_is_ignored(repo_root):
-    gitignore = repo_root / ".gitignore"
-    try:
-        lines = gitignore.read_text(encoding="utf-8").splitlines()
-    except OSError:
-        return False
-    patterns = {line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")}
-    return bool({".env", ".env*", "*.env", "**/.env"} & patterns)
-
-
-def read_env_file(repo_root):
-    values = {}
-    env_path = repo_root / ".env"
-    if not env_path.is_file() or not env_file_is_ignored(repo_root):
-        return values
-    try:
-        lines = env_path.read_text(encoding="utf-8").splitlines()
-    except OSError:
-        return values
-    for line in lines:
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        name, value = line.split("=", 1)
-        name = name.strip().removeprefix("export ").strip()
-        if name not in SECRET_NAMES:
-            continue
-        value = value.strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-            value = value[1:-1]
-        values[name] = value
-    return values
-
-
-def credentials(repo_root):
-    file_values = read_env_file(repo_root)
-    api_key = os.environ.get(SECRET_NAMES[0]) or file_values.get(SECRET_NAMES[0])
-    secret_key = os.environ.get(SECRET_NAMES[1]) or file_values.get(SECRET_NAMES[1])
-    if not api_key or not secret_key:
-        return None
-    return api_key, secret_key
-
-
 def business_code(payload):
     if isinstance(payload, dict) and isinstance(payload.get("code"), int) and not isinstance(payload.get("code"), bool):
         return payload["code"]
@@ -195,7 +153,7 @@ def sanitize_route(route):
 def main():
     args, capture_time = parse_args()
     repo_root = Path(__file__).resolve().parents[1]
-    auth = credentials(repo_root)
+    auth = binance_credentials(repo_root)
     if auth is None:
         fail(capture_time, "missing_credentials")
     api_key, secret_key = auth
