@@ -461,9 +461,11 @@ def request_binance_quote(wallet, units):
             return quote_result("malformed_response", capture_time, latency_ms, error_label="route_input_amount_mismatch", http_status=http_status, business_code=code, **identity)
         if int(to_amount) <= 0:
             return quote_result("malformed_response", capture_time, latency_ms, error_label="route_output_amount_nonpositive", http_status=http_status, business_code=code, **identity)
+        whole = to_amount[:-18].lstrip("0") or "0"
+        fraction = to_amount[-18:].rjust(18, "0").rstrip("0")
         item = {"vendorName": vendor, "executionMode": mode,
                 "fromTokenAmount": from_amount, "toTokenAmount": to_amount,
-                "estimated_output_usdt": format(Decimal(to_amount) / (Decimal(10) ** 18), "f")}
+                "estimated_output_usdt": whole + ("." + fraction if fraction else "")}
         if mode == "SWAP":
             review_mode_required = True
         sanitized.append(item)

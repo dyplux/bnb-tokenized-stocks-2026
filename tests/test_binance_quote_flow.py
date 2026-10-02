@@ -109,6 +109,15 @@ class BinanceQuoteFlowTests(unittest.TestCase):
         self.assertEqual(result["routes"][0]["estimated_output_usdt"], "234.646962292722258753")
         self.assertNotIn("quoteId", result["routes"][0])
 
+    def test_estimated_output_keeps_all_token_digits(self):
+        response = quote_response()
+        response["payload"]["data"][0]["toTokenAmount"] = "1234567890123456789012345678901234567890"
+        with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
+             patch("app.server.signed_binance_get", side_effect=[identity_response(), response]), \
+             patch("app.server.rpc", side_effect=rpc_reply):
+            result = request_binance_quote(WALLET, Decimal("1"))
+        self.assertEqual(result["routes"][0]["estimated_output_usdt"], "1234567890123456789012.34567890123456789")
+
     def test_mismatched_route_amount_is_not_shown(self):
         with patch("app.server.binance_credentials", return_value=("dummy-key", "dummy-secret")), \
              patch("app.server.signed_binance_get", side_effect=[identity_response(), quote_response("2")]), \
