@@ -245,3 +245,13 @@ The bounded [read-only build](../research/2026-10-02-first-live-swap-build.md) t
 The current interface compares a quote for every typed NVDAB unit with a loan for the entered USDT cash target. For a 1 NVDAB holding and a 100 USDT need, that can put a roughly 234 USDT sale beside a 100 USDT loan. The [fractional technical quote](../research/2026-10-02-fractional-target-quote.md) returned an estimated 100.663406831290082054 USDT for 0.43 NVDAB at 22:08 UTC, before final costs. The [Binance quote reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) only accepts a sell-token input amount; it has no exact-output cash-target parameter.
 
 **CEO decision:** treat typed NVDAB units as the amount available for the collateral scenario. A bounded read-only quote flow may use one fresh quote to estimate a candidate fraction to sell for the same USDT target, then quote that fraction once. Show the candidate units, final estimated output, target gap and both response times. If there is no first route, no second route, or the estimate remains below target, report that state and stop. At most two Trading API quote calls may follow one identity check per click. Do not show a guaranteed cash amount, net proceeds or a recommendation. The holder, costs, account-risk and incumbent gates remain unchanged. If the extra quote calls cannot be bounded and explained in the DX report, stop this implementation.
+
+## D-024: put the two token amounts beside one cash target
+
+**Date:** 2026-10-02
+**Owner:** Dyplux
+**Status:** approved for a small local display slice; no release approval
+
+The [target-sized live browser path](../dx/field-log.md) returned a 0.427027364860048582 NVDAB candidate for a 100 USDT target, while the Venus market result puts its isolated collateral-only minimum inside the longer borrow card. A reviewer has to connect those amounts manually. The two readings have separate source times and different risk meanings.
+
+**CEO decision:** show one compact same-target line only when a current Venus scenario and a current Binance candidate quote match the same typed inputs. Call the sell amount an estimate before costs and the borrow amount an isolated minimum without a safety buffer. Hide the line on a shortfall, error, changed input or expired quote. [The spec](../product/same-cash-amounts-spec.md) defines those states. This doesn't change D-017's holder, personal-risk, cost or incumbent gates.

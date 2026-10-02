@@ -1,0 +1,11 @@
+# Steward Swipe overlap check
+
+**Checked:** 2026-10-02 against public repository commit [`a1ae5cf`](https://github.com/zkasuran/steward-bnb/commit/a1ae5cf4153e370d16ef9dd1cd85cb116f0412ba), committed 2026-09-24. This is a source review, not a fresh end-to-end user test. Steward's license does not permit derivatives; no code was copied.
+
+The public [Swipe route](https://github.com/zkasuran/steward-bnb/blob/a1ae5cf4153e370d16ef9dd1cd85cb116f0412ba/apps/web/app/api/use/swipe/route.ts) takes `market`, `units`, optional `account` and target `hf`. It calls `lending.readSwipeQuote` and returns the market's Venus fields, existing USDT borrow, available liquidity and a plan with `maxSafeBorrowUsd` and `fundableBorrowUsd`. Its route does not request a Binance Web3 sale quote or size a sale against a USDT cash target. The [README](https://github.com/zkasuran/steward-bnb/blob/a1ae5cf4153e370d16ef9dd1cd85cb116f0412ba/README.md) describes Swipe as a way to size a Venus borrow against a bStock and says its Web3 API reference-price/corporate-action adapter is keyless mock until a key is wired.
+
+**Overlap:** Steward already addresses borrowing capacity and account context. It also has a trade guard, market quotes and several user surfaces. A generic 'borrow against bStocks' claim is not differentiated.
+
+**Bounded difference:** the reviewed Swipe route does not put a live Binance target-sized sale amount beside a Venus collateral-only minimum for the same cash target. Our prototype now does that display join. This source comparison does not prove that the whole Steward product lacks a similar workflow, nor that our join changes a real holder's action. The earlier [same-block cap comparison](2026-10-02-steward-supply-cap-comparison.md) found a specific precondition Steward's then-live output did not surface; it does not establish a general error rate.
+
+**Decision impact:** keep the one-task D-017 gate. Before claiming product advantage, observe a consenting eligible holder with the same cash need, compare the actual choice in Steward, a venue and this app, and verify costs and account-wide borrowing risk. If the choice doesn't change or cannot be stated safely, retire or redesign the candidate at the 4 October checkpoint.
