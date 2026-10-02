@@ -211,6 +211,11 @@ def ignored_env_file(repo_root):
 
 
 def binance_credentials(repo_root):
+    env_values = {name: os.environ.get(name) for name in SECRET_NAMES}
+    env_pair = tuple(env_values[name] for name in SECRET_NAMES)
+    if all(env_pair):
+        return env_pair
+
     file_values = {}
     env_path = repo_root / ".env"
     if env_path.is_file() and ignored_env_file(repo_root):
@@ -230,9 +235,8 @@ def binance_credentials(repo_root):
             if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
                 value = value[1:-1]
             file_values[name] = value
-    api_key = os.environ.get(SECRET_NAMES[0]) or file_values.get(SECRET_NAMES[0])
-    secret_key = os.environ.get(SECRET_NAMES[1]) or file_values.get(SECRET_NAMES[1])
-    return (api_key, secret_key) if api_key and secret_key else None
+    file_pair = tuple(file_values.get(name) for name in SECRET_NAMES)
+    return file_pair if all(file_pair) else None
 
 
 def quote_result(status, capture_time, latency_ms=None, **fields):
