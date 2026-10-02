@@ -29,7 +29,10 @@ CORE_UNITROLLER = "0xfd36e2c2a6789db23113685031d7f16329158384"
 V_NVDAB = "0xeb8ca841cbe1bc4832a10b15c7dab1081edad371"
 CORE_GET_ASSETS_IN_SELECTOR = "abfceffc"
 CORE_USER_POOL_ID_SELECTOR = "73769099"
+CORE_GET_BORROWING_POWER_SELECTOR = "528a174c"
+CORE_GET_ACCOUNT_LIQUIDITY_SELECTOR = "5ec88c79"
 MAX_CORE_ENTERED_MARKETS = 64
+CORE_THREE_WORD_RESULT_RE = r"0x[0-9a-fA-F]{192}"
 ZERO = Decimal("0")
 MAX_INPUT = Decimal("1000000000000000")
 MIN_INPUT = Decimal("0.000000000000000001")
@@ -181,6 +184,21 @@ def read_venus_core_account_state(wallet):
     if pool_id >= 2 ** 96:
         raise RuntimeError("Venus Core pool selection exceeded uint96 ABI bounds.")
 
+    def read_core_risk(selector, label):
+        result = rpc("eth_call", [{"to": "0x" + CORE_UNITROLLER[2:], "data": "0x" + selector + address_word}, block_tag])
+        if not isinstance(result, str) or not re.fullmatch(CORE_THREE_WORD_RESULT_RE, result):
+            raise RuntimeError("Venus Core %s three-word ABI response was malformed." % label)
+        words = [int(result[2 + index * 64:2 + (index + 1) * 64], 16) for index in range(3)]
+        error, liquidity, shortfall = words
+        if error != 0:
+            raise RuntimeError("Venus Core %s returned a nonzero error code." % label)
+        if liquidity > 0 and shortfall > 0:
+            raise RuntimeError("Venus Core %s returned inconsistent liquidity and shortfall." % label)
+        return "cushion" if liquidity > 0 else "shortfall" if shortfall > 0 else "zero"
+
+    borrowing_power_state = read_core_risk(CORE_GET_BORROWING_POWER_SELECTOR, "borrowing-power")
+    liquidation_threshold_state = read_core_risk(CORE_GET_ACCOUNT_LIQUIDITY_SELECTOR, "account-liquidity")
+
     block = rpc("eth_getBlockByNumber", [block_tag, False])
     if (not isinstance(block, dict) or not isinstance(block.get("timestamp"), str)
             or not re.fullmatch(r"0x[0-9a-fA-F]+", block["timestamp"])):
@@ -198,8 +216,10 @@ def read_venus_core_account_state(wallet):
         "entered_core_market_count": market_count,
         "user_pool_id": pool_id,
         "configuration_status": "existing_configuration_detected" if has_configuration else "empty_membership_default_pool_observed",
+        "borrowing_power_state": borrowing_power_state,
+        "liquidation_threshold_state": liquidation_threshold_state,
         "rpc_source": RPC_URL,
-        "scope_note": "Core entered-market membership and selected pool only. Debt, supplied balances, other pools and borrow or liquidation safety are unknown.",
+        "scope_note": "Current aggregate Core cushion or shortfall at this block only. This is not a USD amount, health factor or post-deposit safety forecast.",
     }
 
 

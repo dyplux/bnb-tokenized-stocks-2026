@@ -215,3 +215,13 @@ The [first live signed quote](../research/2026-10-02-first-live-binance-quote.md
 **CEO decision:** the missing-key blocker is closed for signed RWA search and technical quote reads. Show the validated output only as a short-lived estimate in the separate Sale check; keep the main sale card unquoted and no net-proceeds or borrow recommendation. The argument against D-017 remains material: a quote and a Venus market scenario may still be two existing workflows beside one another. The next decisive evidence is one consenting eligible holder's same cash task, a holder-sized fresh quote, account-wide Venus risk and an incumbent comparison. At the 4 October checkpoint, keep or retire the candidate against those gates. Do not add Agent Studio or claim a winning product from this technical success.
 
 The later [near-time route control](../research/2026-10-02-live-route-control.md) found a 20.8697-basis-point arithmetic difference between one Binance quote and one isolated PancakeSwap pool quote for 1 NVDAB. A subsequent Binance response named Elfomofi as its LiquidMesh route segment, and the estimate had already changed. This is evidence that route selection can matter, not a measured user saving or proof that our app improves an incumbent. It does not alter the holder and account-risk gates above.
+
+## D-021: show current Core states without forecasting a new loan
+
+**Date:** 2026-10-02
+**Owner:** Dyplux
+**Status:** bounded read-only notice accepted; no release approval
+
+The [Venus source review](../research/2026-10-02-account-wide-risk-feasibility.md) identified separate current aggregate borrowing-power and liquidation-threshold reads. The [runtime check](../research/2026-10-02-current-core-risk-runtime.md) confirmed the deployed empty/default response and the browser display, but did not observe a consenting holder or populated risk position.
+
+**CEO decision:** expose only current cushion, shortfall or zero labels in the optional Core panel, tied to one BNB block. Do not convert raw values to undocumented USD amounts or imply a health factor, safe deposit, executable borrowing capacity or liquidation price. Keep the market-level scenario and sell estimate separate. The 4 October checkpoint and holder, cost and incumbent gates in D-017 and D-020 remain open.

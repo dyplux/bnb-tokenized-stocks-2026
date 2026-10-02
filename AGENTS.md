@@ -14,6 +14,8 @@ Use BNB Smart Chain mainnet, spot and a central bStocks, Ondo or xStocks use cas
 
 Keep credentials, UID, private account details and raw signed requests out of this repository, commits, logs and demos. Do not deploy, change DNS, publish the site or submit forms without the founder's specific authorization for those actions. This repository stays private during research and must be public and accessible through judging when submitted.
 
+Do not use Firecrawl, its CLI, API, browser extension or skills. The founder explicitly excluded it. Use official sources and bounded local reads for research.
+
 ## Done means
 
 The main user task works end to end, with source and freshness visible, error states explained, README instructions reproduced, the Developer Experience Report grounded in actual observations and submission requirements checked against the official event page.
