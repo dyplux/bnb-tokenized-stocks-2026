@@ -22,6 +22,10 @@ The optional **Request one Binance quote** action requires `BINANCE_WEB3_API_KEY
 
 The Venus panel remains a market-level illustration only, with no wallet debt or collateral, verified sale proceeds, order, transaction, or execution. The sale card stays **Unquoted** and reports no proceeds, even if a quote route is observed. Borrow capacity, hypothetical health factor, liquidation-price stress, pool cash and flat-rate interest figures use isolated assumptions and do not establish personal safety or guarantee borrowing. [Venus says its indexed API can lag chain state](https://github.com/VenusProtocol/venus-protocol-documentation/blob/main/services/api.md); inspect the displayed source and retrieval time.
 
+## Prepare Binance Web3 credentials
+
+On the SSD, paste a fresh full key pair only into the ignored repository file `/Volumes/SSD500/Dyplux/bnb-tokenized-stocks-2026/.env`, replacing the empty values for `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRET_KEY`. Do not put either secret in chat, commits, logs or demos. Start the server from the repository root with `python3 app/server.py`, then open `http://127.0.0.1:8000`. The **Request one Binance quote** action performs one signed, read-only RWA identity search and, only when that identity is unambiguous, at most one signed quote request for the entered NVDAB amount and public wallet; it does not submit, approve or broadcast a transaction. Keep the pair in `.env` only; use `.env.example` as the empty-field template.
+
 ## Research record
 
 Research starts with one user task, current alternatives and the event's required Binance Web3 API integration. [Project brief](docs/00-project-brief.md), [verified event rules](docs/01-event-rules.md), [API map](docs/api-map.md), [current status](docs/status.md) and [decision log](docs/decisions/decision-log.md) record evidence and stopping conditions. The current application slice is provisional and does not validate demand or product advantage.
