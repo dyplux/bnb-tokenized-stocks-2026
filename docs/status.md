@@ -1,6 +1,6 @@
 # Project status
 
-**Updated:** 2026-10-02
+**Updated:** 2026-10-02 23:55 UTC
 **Phase:** provisional spec and one read-only implementation slice
 **Product readiness:** not ready. No holder, net proceeds or personal borrow-safety result is recorded.
 **Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
@@ -100,6 +100,8 @@ The short [submission readiness gates](submission/readiness-gates.md) distinguis
 - The [target-sized sale slice](product/target-sized-sale-spec.md) now quotes a candidate fraction of typed NVDAB against the same USDT cash target used by the Venus illustration. A first live run failed because the new helper duplicated `/build` in the signed URL; the second run at 22:33 UTC corrected that local error. It used one identity search and two quotes, sizing a 100 USDT target to `0.427032453767872333 NVDAB` and returning a `100.000418593892086555 USDT` LiquidMesh `SWAP` estimate before costs. Both runs used temporary nonholder addresses. At that point the [DX](dx/field-log.md) recorded 19 signed GET calls; the later browser observation brought the total to 22. Thirty-two local tests and inline JavaScript parsing passed; the candidate isn't a verified holder sale or net proceeds.
 - The [current Steward Swipe source check](research/2026-10-02-steward-swipe-route-check.md) confirms overlap on Venus borrowing capacity. Its reviewed route does not join a Binance sale quote to the same cash target, but this file-level difference isn't user validation or proof of advantage over the whole competitor product.
 - The [fee display slice](decisions/decision-log.md) now preserves Binance's validated `tradeFee` as a separate estimated network fee in USD. It doesn't subtract the fee from estimated USDT output or claim approval costs are covered. Thirty-five local tests passed; synthetic Chrome at 320 and 1440 CSS pixels showed the fee, cleared it after input edit, and had no page error or horizontal overflow. No new signed API call or holder task was made. A [bounded Plus Sol review](agent-reports/product-review/2026-10-03-checkpoint-review.md) keeps the 4 October holder, cost and personal-risk gates open.
+
+- A bounded [conditional remainder slice](product/remaining-units-slice.md) now uses the existing optional balance and target-sized quote only when wallet, inputs and freshness match. Synthetic Chrome at 320 and 1440 CSS pixels covered both read orders, stale/insufficient balances, edit, failure and expiry with no page error or overflow. All 35 local tests passed. This is arithmetic on a synthetic browser fixture, not a holder sale or net proceeds. [D-026](decisions/decision-log.md) keeps the main sale card Unquoted.
 
 ## Current decision
 

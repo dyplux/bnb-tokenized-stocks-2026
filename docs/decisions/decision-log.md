@@ -265,3 +265,14 @@ The [target-sized live browser path](../dx/field-log.md) returned a 0.4270273648
 The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api), checked 2026-10-02 UTC, describes `tradeFee` as an estimated network fee in USD and allows null. The live NVDAB quote had a value, but the app discarded it. Neither that field nor the unsigned build establishes whether an ERC-20 approval or other execution costs are included.
 
 **CEO decision:** retain a validated nonnegative decimal fee estimate from the final target-sized route and display it beside the estimated USDT output. Null or malformed values become Unavailable. Never subtract it from the token output, call the result net proceeds or treat the fee as paid. Clear it on input changes, request errors and expiry. This improves cost visibility without changing the D-017 holder and personal-risk gates. The [Plus Sol checkpoint review](../agent-reports/product-review/2026-10-03-checkpoint-review.md) still finds usefulness unproved.
+
+
+## D-026: show only a conditional remaining balance
+
+**Date:** 2026-10-02 UTC (2026-10-03 Lisbon)
+**Owner:** Dyplux
+**Status:** bounded UI slice completed; no release approval
+
+The [D-017 spec](../product/one-page-spec.md) asks for remaining token units beside a partial sale. The existing optional BNB Chain balance read and Binance candidate quote can support exact arithmetic, but neither proves that a sale executes. The [slice](../product/remaining-units-slice.md) shows the remainder only for a matching wallet, matching inputs, a recent balance block and local receipt, and an unexpired target-reaching quote. It shows an insufficiency warning instead of a negative remainder.
+
+**CEO decision:** keep the result in the separate Sale check, explicitly conditional, with the balance block. The main Sell card remains Unquoted. Synthetic Chrome QA at 320 and 1440 CSS pixels and 35 local tests passed; no holder or live quote was used for this increment. The 4 October product checkpoint and all holder, fee and personal-risk gates remain open.

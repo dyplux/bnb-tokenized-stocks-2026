@@ -70,6 +70,10 @@ For a quote, additionally record `executionMode`, route, valid-until time, allow
 
 On 2026-10-02 UTC (2026-10-03 Lisbon), the target-sized response began retaining a validated `tradeFee` as `network_fee_usd_estimate`, independent of the estimated USDT output. Synthetic fixtures covered a valid `0.01800319` USD string, null and a malformed negative value. All 35 local tests passed. Headless system Chrome at 320 and 1440 CSS pixels, with `/api/quote` intercepted by a synthetic response, displayed `0.01800319 USD estimated`, cleared it on input edit, and showed no page error or horizontal overflow. The standard Playwright headless binary was absent, so the run used the installed Google Chrome executable. No signed Binance request, holder result or actual fee payment occurred in this QA. The [official Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) labels `tradeFee` an estimated network fee in USD; it doesn't establish approval cost or net proceeds.
 
+### Conditional remainder display, local QA
+
+On 2026-10-02 at 23:54 UTC, a read-only UI slice joined the existing balance read and candidate quote in memory. A synthetic Chrome run intercepted `/api/balance` and `/api/quote`: 1 NVDAB observed balance and a 0.43 NVDAB candidate showed 0.57 NVDAB left conditionally at the fixture block. It passed quote-first at 320 CSS pixels, balance-first at 1440, stale-balance prompt, 0.4 NVDAB insufficiency without a negative remainder, wallet edit, quote failure and 20-second expiry. No page errors or horizontal overflow were observed. All 35 local tests passed. The first Plus CLI Chrome attempt could not bind a server or launch Chrome in its sandbox; the coordinator reran the same synthetic script outside that CLI sandbox. No signed Binance request, BNB RPC read, holder action or sale occurred in this QA. See the [slice spec](../product/remaining-units-slice.md).
+
 ## Same-task human observation, to fill when available
 
 | Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |
