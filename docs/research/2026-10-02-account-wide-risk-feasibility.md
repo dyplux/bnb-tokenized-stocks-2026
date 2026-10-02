@@ -4,6 +4,8 @@
 
 **Later check:** a separate [fixed-block read of the deployed Core proxy](2026-10-02-venus-deployed-risk-read.md) on 2026-10-02 found both risk selectors routed to a facet with code and returning three words for an empty account. It didn't match the deployed bytecode to this source version or validate a nonempty account calculation.
 
+A second fixed-block read found `0.45 vNVDAB` held by the Venus Treasury while its Core entered-market array and both aggregate risk results were empty or zero. This confirms an important boundary for the product: holding a vToken isn't equivalent to enabling it as collateral. The Treasury is a protocol account, not a holder-task participant.
+
 ## What the source establishes
 
 - `PolicyFacet.getBorrowingPower(account)` computes a current aggregate net position using collateral-factor weights. `getAccountLiquidity(account)` computes another using liquidation-threshold weights. Each returns an error code, liquidity and shortfall. The result is a **net cushion**, not gross collateral and debt totals.
