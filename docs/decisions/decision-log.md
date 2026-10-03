@@ -528,3 +528,13 @@ The 5 USDC read-only flow was implemented and observed locally three times on 3 
 The [same-amount AAPL check](../research/2026-10-03-aapl-three-representation-route-check.md) used eight signed read-only Binance Web3 calls. At about 22:40 UTC, 5 USDC to AAPLx returned `40374` (no vendor liquidity), to AAPLon returned `40368` (USDC pair unsupported), and to AAPLB returned one quoted route. AAPLon then rejected 5 USDT as below minimum and quoted 10 USDT. The signed RWA search omitted xStocks for three tested tickers although Binance's separate public type-2 list included BNB Chain xStocks. No eligibility, paid cost or trade was checked.
 
 **CEO decision:** retain this as a specific DX and error-state finding. Do not call the bStock quote a recommended alternative and do not pivot to a generic multi-issuer screener on these three responses. The [reviewed Yostocks path](../research/2026-10-03-same-task-substitute-check.md) already scans several representations and guards quotes. A product requires an additional action or outcome that an eligible user cannot obtain there. Continue product research before media or code changes.
+
+## D-051: retire Exit Check as the submission product; specify the exact-budget task
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** product hypothesis for specification, not build or publication approval
+
+The [exact-budget product gate](../research/2026-10-03-exact-budget-product-gate.md) starts from a user with 5 USDC on BNB Chain who wants Apple exposure. The same read-only Binance Web3 task produced three different route states: AAPLx no vendor liquidity, AAPLon unsupported USDC pair and an AAPLB quote. AAPLon rejected 5 USDT as below minimum but quoted 10 USDT. This is a concrete decision surface, although issuer access, total cost and user demand remain unproved. The public Yostocks and PARALLAX descriptions show multi-issuer USDT trading and route guards; a generic issuer picker would duplicate them. PancakeSwap's exact 5 USDC flow remains unverified beyond its jurisdiction screen.
+
+**CEO decision:** the inverse-exit prototype is now a research tool, not the project to submit. Write and review a one-page spec for an exact-budget stock purchase assistant: what can this self-custodial wallet try with its actual stablecoin and amount, why does a route fail, and what is the next permitted action? A quote must never become a personal eligibility or profit claim. Implement only after a selected route has an access and cost plan and the same-task distinction survives review. The video remains stopped.
