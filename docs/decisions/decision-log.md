@@ -468,3 +468,13 @@ The [Venus source review](../research/2026-10-03-bstock-liquidator-substitute.md
 The founder asked again whether creating wallets and using Agent Studio would accelerate delivery or improve the $2,000 special-prize chance. The [official event rules](https://www.bnbchain.org/en/hackathons/tokenized-stocks), checked 2026-10-03, make Studio optional and describe the special as deep use of identity, autonomous runtime and x402 self-funding. The [isolated Plus Sol review](../agent-reports/product-review/2026-10-03-plus-agent-studio-decision.md) found no distinct autonomous customer task in the present NVDAB read-only flow. Its disagreement with a prize-led build is recorded there.
 
 **CEO decision:** do not add Studio or fund a demo wallet to bypass the holder, final-cost or personal-risk evidence gates. Decide the product at the 4 October checkpoint. If it survives, specify a small mainnet demo action and wallet controls before requesting funds or signing. Reopen Studio only for an observed autonomous task with a distinct buyer and valid delivery window.
+
+## D-045: retire the 100 USDT cash-choice claim under a solo demonstration
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** D-017 product claim retired; replacement remains in research
+
+The founder confirmed that the team will not rely on an external holder or test users and would only fund a small self-operated position, around €10. The [solo reset](../research/2026-10-03-solo-product-reset.md) records that the current 100 USDT sell-or-borrow task has zero holder sessions, no defensible net sale proceeds and no personal post-borrow safety result. A small self-purchase cannot reproduce the 100 USDT task or provide a matching Venus loan scenario. This founder constraint resolves D-033 before its scheduled 4 October checkpoint. D-033's safety findings remain valid.
+
+**CEO decision:** retire the cash-choice claim now and keep its code as an internal research artifact. Investigate one founder-operated, small-position entry-and-exit cost task using the existing read-only quote observations. Do not turn that hypothesis into a product until eligibility, same-task incumbent comparison and a one-page spec pass. The founder's wish to keep current wallets and spend little is not a transaction instruction. No new keys, funding, signature or trade were made for this decision.

@@ -1,0 +1,26 @@
+# Solo product reset
+
+**Decision date:** 2026-10-03. **State:** research candidate, no replacement product approved.
+
+## Founder constraint and current evidence
+
+- **Founder statement:** no external holder or test users are available; the team must perform the demonstration itself with a small amount, around €10. Existing wallet addresses and keys are to remain unchanged. This is a scope and spending preference, not authorization to fund or sign a specific transaction.
+- **Observed:** the provisional [sell-or-borrow task](../product/one-page-spec.md) needs a holder choosing how to raise 100 USDT. The observation protocol has zero holder sessions. A [100 USDT transaction build](2026-10-03-target-minimum-check.md) had a minimum output below the target, and no personal post-borrow risk result exists. [Checkpoint review](../agent-reports/product-review/2026-10-03-plus-checkpoint-packet-review.md).
+- **Observed:** read-only 5 USDC to NVDAB and inverse quotes returned routes on 3 October. No order, fill or paid gas occurred. The inverse estimate is not a profit observation. [Quote record](2026-10-03-usdc-nvdab-roundtrip-quote.md).
+- **Official requirement:** the [hackathon](https://www.bnbchain.org/en/hackathons/tokenized-stocks) permits solo teams, requires a central tokenized stock and a working Binance Web3 API integration, and directs teams to demonstrate BSC mainnet spot with small live amounts. It does not require an independent test user. The event scores originality, technical implementation, product quality and a factual Developer Experience Report.
+
+## Decision
+
+The 100 USDT sell-or-borrow product claim is retired early under the founder's solo constraint. Buying approximately 5 USDC of a bStock would make the team a holder, but it would not reproduce the stated 100 USDT cash task or establish a safe, comparable Venus borrow. The existing app is research code and must not be represented as a validated final submission.
+
+One new **research** candidate is a small-position entry-and-exit cost check: before a user buys a tokenized stock, show an amount-specific entry quote, an immediate inverse exit estimate, known approval and gas costs, quote age, and what remains unknown. The user task is deciding whether a position of this size is worth opening at all. Avoid a calculated break-even percentage unless fee units, minimum outputs and route timing support it. A later funded round trip could supply actual costs and a recovery path, subject to eligibility and a specific transaction authorization.
+
+This candidate is not yet differentiated. Binance's own Trading API already ranks routes. A direct README read on 3 October found [OneTicker](https://github.com/JemIIahh/oneticker) describing executable per-share quotes and a deterministic gate, [yostocks](https://github.com/yostocks-protocol/yostocks) describing $5, $10 and $25 purchases and sell actions with quote guards, and [Portir](https://github.com/yeheskieltame/portir) describing cost basis and trading paths. The searched README sections did not claim a same-size pre-entry inverse sell quote with all-in break-even costs, but absence from a README is weak evidence of a product gap. Before selecting this candidate, exercise the same small-trade decision in a first-party interface and the closest entrant available, and identify a material missing action. Reject it if the existing flow already tells the user the all-in exit cost clearly. Do not claim predictive alpha from the weekend correlation study or a risk-free round trip.
+
+## Next gates
+
+1. Confirm the founder's jurisdiction and the selected token's issuer eligibility through an authoritative route. The [Binance bStocks FAQ](https://www.binance.com/en/support/faq/detail/f0c03cd6509a4085b4cce1636f16be38) says bStocks are restricted to eligible users in permitted jurisdictions and refers to a country eligibility API whose route is still unlocated here. If bStocks access cannot be confirmed, compare an eligible Ondo or xStocks route under the event rules rather than assuming access.
+2. Inspect a current same-size entry and inverse exit through the first-party route and one direct substitute, with timing, minimum output, fees and missing data recorded. The founder chose to retain the existing keys after they appeared in the chat. Their exposure remains a risk; any further authenticated read must be necessary, bounded and logged. No wallet signature or funded action follows from this choice.
+3. If a unique decision remains, write a one-page spec with a single output and fail-closed states. Only then adapt the app. A solo €5 round trip would be technical and UX evidence, not independent demand validation or a profit claim.
+
+No funding, signing, approval, transaction, deployment or public repository change is authorized by this memo.

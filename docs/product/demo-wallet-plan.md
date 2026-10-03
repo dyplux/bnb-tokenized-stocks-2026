@@ -11,7 +11,7 @@ The [5 USDC read-only quote check](../research/2026-10-03-usdc-nvdab-roundtrip-q
 ## Gates before funding
 
 1. Founder backs up `BNB_STOCKS_DEMO_PRIVATE_KEY` from the local `.env` to a private password manager and checks that the backup can recover the public address. Never send the key or recovery material in chat, Git, screenshots or a form.
-2. Apply the 4 October product checkpoint. If the cash-choice hypothesis is retired, decide whether a technical buy and sell still serves the new product before moving funds.
+2. Apply [D-045](../decisions/decision-log.md): the 100 USDT cash-choice claim was retired after the founder chose a solo demonstration. Decide whether a technical buy and sell serves a newly selected product before moving funds.
 3. Confirm that the founder is eligible to hold and trade this representation, that the contract addresses and decimals remain correct, and that the chosen USDC is the BNB Chain token quoted by the API. A route response alone does not establish eligibility.
 4. Fetch new entry and inverse quotes for a 5 USDC input from the funded wallet address. Record timestamps, route vendor, minimum received, fee units and quote validity. Confirm approval requirements and simulate the exact proposed transactions. Stop if a required step cannot be explained or simulated.
 5. Prepare an action summary for founder review: network, public wallet address, input token and amount, exact spender and approval amount, transaction destination, expected minimum output, gas ceiling, stop conditions and exit plan. Signing and broadcast require separate, specific authorization.

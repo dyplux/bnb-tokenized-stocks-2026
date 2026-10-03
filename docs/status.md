@@ -1,16 +1,16 @@
 # Project status
 
 **Updated:** 2026-10-03 UTC
-**Phase:** provisional spec and bounded read-only implementation
-**Product readiness:** not ready. No holder, net proceeds or personal borrow-safety result is recorded.
+**Phase:** solo product reset and bounded read-only research
+**Product readiness:** not ready. The 100 USDT sell-or-borrow claim was retired under [D-045](decisions/decision-log.md); no replacement product is approved.
 **Proof boundary:** a [3 October audit](research/2026-10-03-technical-proof-versus-holder-demand.md) separates the dated read-only demo that public data can support from the unproved claim that it helps an eligible holder make a safe cash decision. The holder session is an internal product gate, not an official hackathon requirement.
-**Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
+**Product selected:** none. The founder-operated small-position cost task is a [research candidate](research/2026-10-03-solo-product-reset.md).
 **Application code:** local indexed Venus scenario with a separate fixed-block Core cap read, optional BNB Chain NVDAB balance and current net Venus Core risk-state notice, signed RWA identity and target-sized quote paths, and a same-cash sale estimate beside the hypothetical borrow card in `app/`; a separate research call built one unsigned LiquidMesh SWAP transaction payload. The app can display a short-lived estimated USDT output and a bounded comparison, but holder-specific net proceeds and post-deposit risk remain unverified
 **Deployment:** none
 
 The founder reported on 2026-10-03 that the **Apply as Hacker** form was submitted, with no confirmation email received. This is a founder report, not an independently verified receipt. The project submission form has not been reported as sent. A dedicated zero-balance demo wallet was generated locally on the SSD Mac for a future bounded technical test; its key and address are in the Git-ignored, mode-600 project `.env`. No funding, approval or transaction occurred. A backup under founder control is required before funding. This wallet is separate from any Set and Earn campaign wallet. The [small mainnet demonstration plan](product/demo-wallet-plan.md) sets the proposed funding ceiling and the gates before any transfer or signature.
 
-On 2026-10-03, IDE context sent into the chat included this project's Binance Web3 API pair and demo-wallet private key. The `.env` remains uncommitted, but the values can no longer be treated as local-only secrets. The founder explicitly asked that no key be changed, so no rotation was performed. Do not fund the wallet, sign transactions or make further authenticated API calls until the founder decides how to replace the exposed credentials safely.
+On 2026-10-03, IDE context sent into the chat included this project's Binance Web3 API pair and demo-wallet private key. The `.env` remains uncommitted, but the values can no longer be treated as local-only secrets. The founder explicitly chose to keep the keys and use only a small amount, around €10; no rotation was performed. This accepts the practical exposure risk but does not authorize funding, signing or a particular trade. Further authenticated read-only calls must be necessary, bounded and logged. A funded step still needs the eligibility, cost and action review in the [demo plan](product/demo-wallet-plan.md).
 
 A [USDC to NVDAB and inverse quote check](research/2026-10-03-usdc-nvdab-roundtrip-quote.md) made four signed read-only Binance Web3 requests at 17:36 and 17:47 UTC on 3 October. Both 20 and 5 USDC sizes returned LiquidMesh SWAP routes in each direction. No controlled wallet, purchase, sale or paid fee was involved. These establish quoted USDC exit paths for those amounts at those moments, not recoverable capital or a safe spending budget. The [DX log](dx/field-log.md) now accounts for 56 signed calls. D-033's holder and personal-risk gates remain open.
 
