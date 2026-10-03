@@ -1,13 +1,15 @@
 # Project status
 
-**Updated:** 2026-10-03 00:02 UTC
-**Phase:** provisional spec and one read-only implementation slice
+**Updated:** 2026-10-03 00:16 UTC
+**Phase:** provisional spec and bounded read-only implementation
 **Product readiness:** not ready. No holder, net proceeds or personal borrow-safety result is recorded.
 **Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
 **Application code:** local indexed Venus scenario with a separate fixed-block Core cap read, optional BNB Chain NVDAB balance and current net Venus Core risk-state notice, signed RWA identity and target-sized quote paths, and a same-cash display line in `app/`; a separate research call built one unsigned LiquidMesh SWAP transaction payload. The app can display a short-lived estimated USDT output and a bounded comparison, but holder-specific net proceeds and post-deposit risk remain unverified
 **Deployment:** none
 
 The local Sale check compares each validated estimated quote output with the typed USDT target before costs, using exact raw units. The same-cash line appears only for matching current inputs, fresh Venus data, a target-sized Binance candidate at or above the raw target and an unexpired quote. A later [conditional remainder slice](product/remaining-units-slice.md) joins a fresh matching public balance and candidate quote to show NVDAB units that would remain if the sale executed. Synthetic Chrome QA at 320 and 1440 CSS pixels covered quote-first and balance-first order, stale balance, insufficient balance, wallet edit, quote failure and expiry with no overflow or page error. The full local suite passed 35 tests; inline JavaScript `node --check` and `git diff --check` passed. These displays interpret estimates; they don't prove holder access, execution or net proceeds.
+
+The [quote-age slice](product/quote-age-slice.md) now expires the display no later than 20 seconds from the browser's local request start, including the time needed for identity, metadata and quote calls. Synthetic Chrome cases with 21 and 17 seconds of modelled elapsed request time confirmed immediate expiry and a shortened remaining window. This fixes one stale-display path without another signed API call. The 4 October product checkpoint still depends on a holder task, final costs, personal Venus risk and incumbent comparison.
 
 A [fractional signed quote](research/2026-10-02-fractional-target-quote.md) returned an estimated 100.663406831290082054 USDT for 0.43 NVDAB at 22:08 UTC, before final costs. This exposed the cash-basis mismatch between a whole-position collateral scenario and a partial sale. [D-023](decisions/decision-log.md) authorized the bounded partial-sale sizing slice. The holder, cost and 4 October stop gates remain open. The [DX log](dx/field-log.md) records 23 signed GET calls through 2026-10-03 00:02 UTC. Screen QA made no live Binance call.
 

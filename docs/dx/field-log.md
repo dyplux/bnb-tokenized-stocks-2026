@@ -75,6 +75,10 @@ On 2026-10-02 UTC (2026-10-03 Lisbon), the target-sized response began retaining
 
 On 2026-10-02 at 23:54 UTC, a read-only UI slice joined the existing balance read and candidate quote in memory. A synthetic Chrome run intercepted `/api/balance` and `/api/quote`: 1 NVDAB observed balance and a 0.43 NVDAB candidate showed 0.57 NVDAB left conditionally at the fixture block. It passed quote-first at 320 CSS pixels, balance-first at 1440, stale-balance prompt, 0.4 NVDAB insufficiency without a negative remainder, wallet edit, quote failure and 20-second expiry. No page errors or horizontal overflow were observed. All 35 local tests passed. The first Plus CLI Chrome attempt could not bind a server or launch Chrome in its sandbox; the coordinator reran the same synthetic script outside that CLI sandbox. No signed Binance request, BNB RPC read, holder action or sale occurred in this QA. See the [slice spec](../product/remaining-units-slice.md).
 
+### Request-start quote age, local QA
+
+On 2026-10-03 UTC, a browser-only change moved the 20-second display window from response arrival to the start of the local quote request. Synthetic headless Chrome at 320 CSS pixels intercepted `/api/*`; a controlled monotonic-clock offset modelled 21 seconds of elapsed request time and the estimate expired before display. At 17 seconds elapsed, it stayed visible for about three seconds, then expired. There were no page errors or horizontal overflow. The 35 local tests and inline JavaScript syntax check passed. This used no signed Binance call or live holder data. See the [slice](../product/quote-age-slice.md).
+
 ## Same-task human observation, to fill when available
 
 | Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |

@@ -286,3 +286,13 @@ The [D-017 spec](../product/one-page-spec.md) asks for remaining token units bes
 The [pre-registered probe](../research/2026-10-03-weekend-quote-protocol.md) made one signed, read-only request at 00:02 UTC on Saturday, 20:02 Friday in New York, after Nasdaq's published late-session end. The [result](../research/2026-10-03-after-friday-close-quote.md) was HTTP 200/business code 0, with one LiquidMesh SWAP estimate for 1 NVDAB. Its estimated output was 234.581506161816758656 USDT before final costs. A temporary nonholder address supplied the API's required wallet field. No wallet signed or traded.
 
 **CEO decision:** count this as one positive technical quote-availability observation after the published Friday late session. Don't call it proof of executable weekend access, a price edge or a better cash choice. Preserve the 4 October D-017 checkpoint. The consenting holder, existing-venue, final-cost and personal Venus-risk gates still decide whether to keep, redesign or retire the product.
+
+## D-028: measure quote display time from the local request
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** bounded freshness fix completed; no release approval
+
+The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) describes a roughly 30-second `quoteId` TTL. The app's earlier 20-second UI timer began only after the server had finished identity, RPC and quote calls. A slow request could therefore display an estimate beyond that vendor window.
+
+**CEO decision:** start the conservative 20-second display window when the browser sends the local request. Expire a slower response as soon as it arrives. The [slice](../product/quote-age-slice.md) passed synthetic delayed-response checks and 35 local tests without a live API call. This closes one stale-display path; it doesn't change the D-017 holder, executable cost or personal risk gates.
