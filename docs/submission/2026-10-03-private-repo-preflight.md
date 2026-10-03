@@ -29,3 +29,12 @@ This extends the earlier pattern scan but remains a bounded prepublication check
 - [O] The local Git history contains 140 distinct paths. The sensitive-name path scan found only `.env.example`, whose assignments were previously checked as empty. No real `.env`, credential JSON, PEM, wallet key or certificate path appeared under those patterns.
 
 The scan is broader than the 593-blob pass above, but pattern matching cannot prove that arbitrary unlabeled secrets, private data or future demo assets are absent. Check the **final** commit and any video, screenshots and deploy configuration before the founder authorizes public visibility. No visibility setting was changed.
+
+## Current-head recheck after `e8e8ede`, 2026-10-03 UTC
+
+- [O] The GitHub repository remains private on `main`. The local worktree was clean before the scan.
+- [O] A read-only pass traversed 1,528 reachable Git objects and inspected all **656 unique blobs**. None exceeded 10 MB. It printed aggregate counts only, never candidate values.
+- [O] Zero blobs matched the scanned Binance `BX-` UUID key, Cloudflare `cfut_` token, OpenAI-style `sk-` key, GitHub token, AWS key ID, Google API key, Slack token, PEM private-key header or personal email-domain patterns. These patterns don't detect arbitrary unlabeled secrets.
+- [O] The only sensitive-name path in current files or path history was `.env.example`; its credential assignments are empty. `.env` remains ignored. All reachable commits have the intended Dyplux author identity.
+
+This is a bounded history check on the current private head, not final publication clearance. Repeat it after the final app, media and deployment configuration exist, inspect screenshots and generated assets separately, and obtain the founder's specific authorization before changing visibility.
