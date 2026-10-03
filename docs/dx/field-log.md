@@ -1,6 +1,6 @@
 # Developer Experience field log
 
-**Status:** partial; 28 signed Binance Web3 GET calls were individually recorded through 2026-10-03 03:28 UTC, and nine later holder-ranking GETs were counted as one bounded research sequence. An earlier clean browser run accounts for three more signed GETs by the inspected server branch, although their individual upstream responses weren't captured. The resulting total is 40 accounted-for calls, with different evidence strength. No holder-specific quote or trade has been observed. This file records what the team observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
+**Status:** partial; 28 signed Binance Web3 GET calls were individually recorded through 2026-10-03 03:28 UTC, nine later holder-ranking GETs were counted as one bounded research sequence, and two further holder-ranking GETs plus two DeFi Positions POSTs were made in a second bounded sequence. An earlier clean browser run accounts for three more signed GETs by the inspected server branch, although their individual upstream responses weren't captured. The resulting total is 44 accounted-for calls, with different evidence strength. No holder-specific quote or trade has been observed. This file records what the team observed and keeps the mandatory [form audit](../submission/2026-10-01-live-form-audit.md) honest. Do not add credentials, signed headers, account UID, personal wallet data or unredacted API payloads. The founder supplies team and contact details directly in the forms.
 
 ## Timing and access
 
@@ -127,7 +127,11 @@ On 2026-10-03 from about 03:54 to 04:03 UTC, the team made **nine** signed GET r
 
 At BNB block 125416980, 04:02:50 UTC, the completed probe checked the first 15 ranked addresses against Venus Core. Nine had entered vNVDAB and positive stored vUSDT debt; none had vNVDAB as the sole entered market. Eight of those nine addresses had no deployed code and one was a contract. The first script run failed closed on all 15 per-account reads because it expected one word from `borrowBalanceStored`; the deployed vUSDT returned three words. A direct same-block comparison matched that call's first word to the documented borrow field in `getAccountSnapshot`, whose deployed response returned six words. The corrected script consumes the first four declared snapshot outputs and checks the protocol error. A code review also corrected the holder row's documented `holderWalletAddress` field and removed unsupported pagination parameters. No address, raw account response, key or signature was saved. See the [research note](../research/2026-10-03-nvdab-holder-debt-overlap.md) and [probe](../../scripts/probe_nvdab_holder_debt.py).
 
-This is account-state evidence, not a user session or a net cash result. The signed DeFi positions endpoint remains untested.
+This is account-state evidence, not a user session or a net cash result. The separate DeFi Positions call below tests protocol coverage, not this fixed-block result.
+
+## Binance DeFi Positions coverage read
+
+On 2026-10-03, two bounded research probes made two signed holder-ranking GETs and two signed `POST /api/v1/defi/data/position/list` requests for public addresses selected by same-block Venus membership and debt. All four returned HTTP 200 and business code 0. The first POST took 433.847 ms; the second latency wasn't retained. The first response had one address row and Venus among its protocol names, with USDT in a borrow token group. The second showed NVDAB in a Venus supply group and USDT in a Venus borrow group; pool-level grouping wasn't retained. An initial local import error occurred before any signed call. No raw position response, address, signature or key was saved. See the [coverage note](../research/2026-10-03-binance-defi-positions-coverage.md). This is not a same-block account reconciliation or a post-action risk result.
 
 ## Next entry
 

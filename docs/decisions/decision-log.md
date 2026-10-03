@@ -392,3 +392,13 @@ The [live Steward Swipe check](../research/2026-10-03-steward-live-swipe-same-ta
 The [bounded probe](../research/2026-10-03-nvdab-holder-debt-overlap.md) used one signed Binance holder ranking and one pinned BNB block. Among the first 15 of 48 ranked vNVDAB holders, nine had entered vNVDAB as Core collateral and had positive stored vUSDT debt. All nine had other entered markets; eight were EOAs and one was a contract.
 
 **CEO decision:** treat this as evidence that NVDAB collateral membership and USDT debt coexist in some accounts. Don't infer that NVDAB alone backs their debt, that an EOA is a person, or that a holder wants the app's sell-or-borrow comparison. The 4 October checkpoint still requires an observed consenting holder task, defensible sale costs and a personal-risk boundary. The research probe adds no D-017 product feature.
+
+## D-038: DeFi Positions coverage is context, not a risk forecast
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** read-only API evidence; D-033 unchanged
+
+The [signed coverage read](../research/2026-10-03-binance-defi-positions-coverage.md) returned NVDAB in a Venus `supply` group and USDT in a Venus `borrow` group for a selected public account. The probe didn't retain whether they belonged to the same pool or position. The response wasn't reconciled to the exact Core pool or BNB block used for candidate selection. It contains current positions, not a post-supply or post-borrow simulation.
+
+**CEO decision:** record DeFi Positions as a technically working research surface, but don't integrate it into the D-017 app before the 4 October checkpoint. It can't replace a consenting holder task or prove a safe personal cash choice. A later use would require pool, contract, amount and freshness reconciliation with on-chain Core reads.
