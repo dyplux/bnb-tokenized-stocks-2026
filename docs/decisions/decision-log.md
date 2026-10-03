@@ -336,3 +336,13 @@ The [same-cash incumbent check](../agent-reports/product-review/2026-10-03-same-
 The [public-demo review](../agent-reports/product-review/2026-10-03-public-demo-gate.md) found that localhost-only routing prevents a public browser path and that the signed Binance quote endpoint has no abuse budget or concurrency bound. Edge rate limits alone wouldn't stop distributed quota use. A small local code slice now bounds and validates public Venus and BNB RPC responses and refuses redirects, with 37 Python 3.9 unit tests passing and one successful public-read smoke check.
 
 **CEO decision:** keep the app bound to loopback and the repository private. Implement public-host routing, server-side quota controls and process supervision only if the 4 October product checkpoint keeps this task. Do not expose the current server through a tunnel or place Binance credentials into a public process yet. The founder's specific authorization is required for deployment, DNS, repo publication and submission.
+
+## D-033: record the product stop recommendation before the checkpoint
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** D-017 provisional until 2026-10-04 12:00 UTC
+
+The [Plus Sol stop review](../agent-reports/product-review/2026-10-03-d017-stop-review.md) recommends retiring D-017 because the current app can't establish a holder's safe cash choice, and recommends revisiting exit recovery. The strongest counterargument is the observed signed quote path and a same-cash display that inspected incumbents don't show. The fallback also lacks an observed holder task.
+
+**CEO decision:** hold the final keep/retire judgment until the dated checkpoint, while making no further D-017 product feature changes beforehand. Require an observed consenting holder task, defensible sale-cost treatment and an account-specific risk boundary to keep the cash-choice claim. If those gates fail, retire that claim; do not automatically promote exit recovery without its own holder and signed-result evidence. This records the reviewer's recommendation and the coordinator's narrower timing judgment without artificial consensus.
