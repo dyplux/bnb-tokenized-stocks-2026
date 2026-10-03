@@ -20,3 +20,12 @@ This is a limited pattern scan, not proof that history contains no secret or per
 - [O] A personal-name marker matched one historical blob: this preflight file itself, because its earlier paragraph lists names searched. No personal marker was found in the other 592 blobs by those exact patterns. A filename-history scan found `.env.example` and `tests/test_binance_credentials.py`; `.env.example` has two empty credential assignments. It found no historical `.env`, `auth.json`, PEM or `.key` path.
 
 This extends the earlier pattern scan but remains a bounded prepublication check. It doesn't detect every possible secret or prove that screenshots, generated assets or a future commit are clear. Repeat it on the final public candidate before changing repository visibility.
+
+## Full local-ref pass after commit `a61c956`, 2026-10-03 UTC
+
+- [O] `gh repo view` still reported `PRIVATE` on `main`. The worktree was clean at the start of this pass.
+- [O] A read-only Python scan enumerated all 1,431 objects reachable from local refs and inspected all **616 unique blobs**. None exceeded its 10 MB limit. It printed counts and paths only, never matched values.
+- [O] Zero blobs matched the scanned provider-token prefixes, PEM private-key headers or personal email domains. Eight historical blobs matched a broad sensitive-assignment pattern; a second masked classification found all eight were environment-variable lookups in `app/server.py` or `scripts/probe_binance_quote.py`, not literal assignments.
+- [O] The local Git history contains 140 distinct paths. The sensitive-name path scan found only `.env.example`, whose assignments were previously checked as empty. No real `.env`, credential JSON, PEM, wallet key or certificate path appeared under those patterns.
+
+The scan is broader than the 593-blob pass above, but pattern matching cannot prove that arbitrary unlabeled secrets, private data or future demo assets are absent. Check the **final** commit and any video, screenshots and deploy configuration before the founder authorizes public visibility. No visibility setting was changed.
