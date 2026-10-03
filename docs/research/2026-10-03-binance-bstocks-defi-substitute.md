@@ -7,6 +7,7 @@
 - A [verified Binance Chinese account](https://www.binance.com/en/square/post/359147598727989) announced a live bStocks DeFi Center in August 2026 and described liquidity provision, lending and borrowing for bStocks. A separate [verified Binance News post](https://www.binance.com/en/square/post/08-24-2026-binance-wallet-directs-users-to-bstocks-defi-center-in-the-app-359184274556446) gave two navigation paths inside Binance Wallet. Neither post demonstrates a completed NVDAB loan.
 - Binance's [Web3 Loan announcement](https://www.binance.com/en/support/announcement/detail/89d3d6e8ed2045cf901adbfadbfaf935) says Binance Wallet integrated Venus lending in December 2025. Its launch collateral list did not include bStocks, so it cannot establish that NVDAB appears in that older loan route.
 - Binance's [Wallet DeFi guide](https://www.binance.com/en/support/faq/detail/2bbe70344abe4f1c9d1a555690f2087e) documents a DeFi Loan flow that lets users choose collateral, borrow stablecoins and monitor health factor. The guide doesn't name NVDAB or show a sale comparison.
+- Binance's [Stock Hub announcement](https://www.binance.com/en/support/announcement/detail/32e7cb9ac92d42e3850a7de415013bbe) documents a separate company-level comparison across supported tokenized issuers using price and 24-hour volume. It doesn't describe a partial-sale versus loan decision. The [alternatives map](alternatives-map.md) records the resulting correction to the earlier multi-issuer idea.
 
 ## Lead with lower evidence strength
 
@@ -16,6 +17,6 @@ A [Binance Square author](https://www.binance.com/en/square/post/359824715308342
 
 **Inference:** first-party Binance discovery and borrowing reduce the value of another generic NVDAB collateral screen. The remaining proposed difference is one chosen USDT target compared with a fresh partial-sale estimate and an account-aware loan result. Our current app has neither verified net sale proceeds nor personal post-action risk, so it has not demonstrated that difference for a holder.
 
-**Unknown:** whether an eligible NVDAB holder can currently complete this exact loan inside the bStocks DeFi Center, what it displays before confirmation, and whether it presents a sale alternative for the same USDT target. A clean eligible-user walkthrough would answer those questions; public announcements cannot.
+**Unknown:** whether an eligible NVDAB holder can currently complete this exact loan inside the bStocks DeFi Center, what it displays before confirmation, and whether it presents a sale alternative for the same USDT target. Public sources direct users into the Binance mobile app but provide no inspectable NVDAB loan screen or receipt. A clean eligible-user walkthrough would answer those questions; public announcements cannot.
 
 **Next action:** include the Binance Wallet bStocks DeFi Center in the same-task incumbent check at the [4 October checkpoint](../decisions/decision-log.md). Don't infer product demand from the third-party post or add a feature before the D-033 decision.

@@ -2,6 +2,8 @@
 
 **Historical first pass:** H1 was challenged by the founder and is no longer a standalone recommendation. The [later competitor and product reset](2026-10-01-product-brainstorm.md) sets the current research priority. Keep the original hypotheses below as an audit trail, not a current build plan.
 
+**2026-10-03 correction:** Binance Wallet's [Stock Hub announcement](https://www.binance.com/en/support/announcement/detail/32e7cb9ac92d42e3850a7de415013bbe) explicitly offers same-company, multi-issuer token discovery with price and 24-hour volume comparison. H1's proposed multi-issuer screen is therefore an incumbent capability, not a new product gap. The announcement doesn't establish whether Stock Hub shows issuer rights, ratio or amount-specific quote validity. See the [updated alternatives map](alternatives-map.md).
+
 These are research candidates, not validated user problems. The [event rules](../01-event-rules.md) require BSC mainnet spot, a central bStocks, Ondo or xStocks asset, and a working Binance Web3 API module. The published API contract and product guides were checked on 2026-10-01. Frequency, user harm and demand have not been measured.
 
 ## H1. A decision receipt before choosing a stock token
