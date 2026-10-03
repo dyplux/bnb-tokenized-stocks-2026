@@ -1,6 +1,6 @@
 # Developer Experience Report answer draft
 
-**Prepared:** 2026-10-02; updated 2026-10-03 after one additional read-only quote. For the [official DX form](https://forms.gle/EUQ39xf54GHjC2ys5). This is a copy aid, not a submitted report. The [live form audit](2026-10-01-live-form-audit.md) and [field log](../dx/field-log.md) are the evidence record. Recheck every field before submission. `FOUNDER` means the answer requires first-hand input or a private value. `LATER` means the build still needs an observation. No key, UID, wallet address or private contact belongs in this file.
+**Prepared:** 2026-10-02; updated 2026-10-03 after one additional read-only quote and a fresh form check. For the [official DX form](https://forms.gle/EUQ39xf54GHjC2ys5). This is a copy aid, not a submitted report. The [live form audit](2026-10-01-live-form-audit.md) and [field log](../dx/field-log.md) are the evidence record. Recheck every field before submission. `FOUNDER` means the answer requires first-hand input or a private value. `LATER` means the build still needs an observation. No key, UID, wallet address or private contact belongs in this file.
 
 ## 1. Submission details
 

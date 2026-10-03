@@ -1,6 +1,6 @@
-# Event rules checked on 2026-10-01 and 2026-10-02
+# Event rules checked on 2026-10-01, 2026-10-02 and 2026-10-03
 
-**Primary source:** [BNB Hack: Tokenized Stocks Edition](https://www.bnbchain.org/en/hackathons/tokenized-stocks), opened 2026-10-01 and rechecked through the official page listing on 2026-10-02. The official page combines overview, prizes, tracks and resources. Recheck it before submission.
+**Primary source:** [BNB Hack: Tokenized Stocks Edition](https://www.bnbchain.org/en/hackathons/tokenized-stocks), opened 2026-10-01 and rechecked on 2026-10-02 and 2026-10-03. The official page combines overview, prizes, tracks and resources. Recheck it before submission.
 
 | Topic | Published requirement or fact | Implication |
 |---|---|---|
