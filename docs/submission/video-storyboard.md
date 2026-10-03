@@ -8,7 +8,7 @@ A self-custodial BNB Chain user considers a small NVDAB purchase. Exit Check ask
 
 | Time | Scene | Source and constraint |
 |---|---|---|
-| 0 to 4 s | “Can you see the way out?” | A question, not a measured failure rate. |
+| 0 to 4 s | “Saturday, New York market closed” and “Can you see the way out?” | Saturday 3 October is visible in the dated capture record. A question, not a measured failure rate. |
 | 4 to 16 s | One continuous app capture, click, waiting state and result | System Chrome recording of the actual local build. Public address masked before capture. |
 | 16 to 21 s | First quoted direction, 5 USDC to NVDAB | Exact number from `video-record.json`. |
 | 21 to 27 s | Immediate inverse quote | Exact number from the same record, with “before unverified costs” and “no trade” visible. |
@@ -17,4 +17,4 @@ A self-custodial BNB Chain user considers a small NVDAB purchase. Exit Check ask
 
 ## Reproduction
 
-The raw `real-app-flow.webm`, captured frames, `record.json`, HTML composition, render script and original generated audio live outside the public repo at `/Volumes/SSD500/Dyplux/exit-check-video-source/`. The video uses the founder's supplied `render(t)` HTML method. The composition loads all recorded app frames and the sanitized record before declaring itself ready, then renders each frame from time alone. Review the full MP4 and a dense contact sheet before sharing. Do not treat the immediate quote as a later-sale guarantee.
+The raw `real-app-flow.webm`, captured frames, `record.json`, HTML composition, render script and original generated audio live outside the public repo at the founder's private SSD video-source directory. The video uses the founder's supplied `render(t)` HTML method. The composition loads all recorded app frames and the sanitized record before declaring itself ready, then renders each frame from time alone. Review the full MP4 and a dense contact sheet before sharing. Do not treat the immediate quote as a later-sale guarantee.

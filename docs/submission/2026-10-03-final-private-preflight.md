@@ -1,0 +1,7 @@
+# Private repository prepublication check
+
+**Checked:** 2026-10-03, at private commit `45f0e0e` and the following documentation-only changes. **Purpose:** prepare a reviewable public-repo decision; this file does not authorize publication.
+
+The current Git history lists only `Dyplux <admin@dyplux.com>` as author. `.env` is ignored and isn't tracked. A read-only scan of all Git objects reachable from local refs checked blob contents for a Binance-style Web3 key, a Cloudflare token prefix, 64-hex-character values and a personal-email pattern. It found no Binance-style key, Cloudflare token or personal-email match. Eleven historical blob instances contained 64-hex-character values. Their line context is a BNB block hash, a public transaction hash or an event topic in three research files, not a wallet secret. The 11 instances include older versions of the same files. The newly added demo record, research note, video QA and synthetic test were checked separately and had no match for these patterns.
+
+This is a bounded text-pattern scan. It cannot prove absence of every possible secret or private datum. The final MP4 and source ZIP also need human review before external publication; their browser capture masks the public address, and no private key was loaded into the page. The [publication packet](final-review-packet.md) keeps the repo private until the founder approves its visibility.

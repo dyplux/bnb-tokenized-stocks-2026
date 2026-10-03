@@ -10,7 +10,7 @@
 | Telegram | Optional; founder decides. |
 | Tracks | Main track only. No Agentic Wallet or Agent Studio claim. |
 | Public repository URL | `https://github.com/dyplux/bnb-tokenized-stocks-2026`, only after the founder authorizes public visibility and the final history/media review passes. |
-| Demo video URL | Pending an actual capture of the final behavior. The live form requires it; keep the video at or below four minutes. |
+| Demo video URL | A 34-second MP4 of the actual local behavior exists at `exit-check-demo.mp4` in the founder's local Dyplux folder; a judge-accessible URL is pending. The live form requires a URL and the video must remain at or below four minutes. |
 | Deployed link or judge instructions | [Judge-run instructions](judge-run.md). The official event page accepts instructions in place of a deployed link. |
 | DX report | Submit the factual DX form first, then tick its completion in the project form. |
 
