@@ -1,8 +1,22 @@
 # BNB tokenized stocks project
 
-Working repository for a new Dyplux entry to [BNB Hack: Tokenized Stocks Edition](https://www.bnbchain.org/en/hackathons/tokenized-stocks). The provisional product test compares an NVDAB sale with a Venus USDT borrowing scenario for the same cash target.
+Working repository for a new Dyplux entry to [BNB Hack: Tokenized Stocks Edition](https://www.bnbchain.org/en/hackathons/tokenized-stocks). The active product hypothesis is a **pre-entry exit check** for a small NVDAB purchase on BNB Chain. The earlier NVDAB sale versus Venus borrowing comparison is preserved as research, with its original claim retired in [D-045](docs/decisions/decision-log.md).
 
-## Run the read-only Venus scenario
+## Run the pre-entry exit check
+
+Requires Python 3.9 or newer, no installed packages, and Binance Web3 API credentials for live quotes. From the repository root:
+
+```sh
+python3 app/server.py
+```
+
+Open `http://127.0.0.1:8000`. Enter a positive USDC amount up to 100 and a **public** BNB Chain address, then select **Check both routes**. The server verifies the pinned NVDAB bStock identity with Binance Web3 RWA search and token metadata at a recorded BNB Chain block. It requests a USDC-to-NVDAB quote, then an immediate NVDAB-to-USDC quote for the first quote's estimated output. The page distinguishes both routes quoted, no entry route, no inverse route and an incomplete check. It shows each estimate, provider route, fee estimate when provided and receipt time. The visible result expires 20 seconds after the local request begins.
+
+Set `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRET_KEY` in the process environment or the Git-ignored repository `.env`. The [empty template](.env.example) shows the names. Requests are signed on the local server. The page never asks for a private key, connects a wallet, signs, builds or broadcasts a transaction. A public address is sent to the provider for address-specific quotes; it isn't returned or stored by this app. No Binance exchange account is needed for this read-only check.
+
+**What the result means:** an immediate inverse route is a quote observation, not proof of issuer eligibility, actual fill, recoverable proceeds, a later exit or profit. Approval cost, gas payment, slippage minimum and execution stay unknown. The code currently binds to localhost and has no public deployment. See the [one-page spec](docs/product/pre-entry-exit-spec.md), [current status](docs/status.md), [research receipt](docs/research/2026-10-03-usdc-nvdab-roundtrip-quote.md) and [DX log](docs/dx/field-log.md).
+
+## Archived research: read-only Venus scenario
 
 Requires Python 3.9 or newer and no installed packages. From the repository root, run:
 
@@ -10,7 +24,7 @@ Requires Python 3.9 or newer and no installed packages. From the repository root
 python3 app/server.py
 ```
 
-Open `http://127.0.0.1:8000`. Enter NVDAB units and a USDT target, then select **Fetch scenario**. Each request retrieves an indexed snapshot from the public Venus API. The JSON endpoint is `GET /api/scenario?units=1&cash=100`. The request uses `accept-version: next` because the current `stable` response carries a migration warning; the [dated version check](docs/research/2026-10-02-venus-api-version-check.md) records the observed response shapes.
+Open `http://127.0.0.1:8000/venus-scenario`. Enter NVDAB units and a USDT target, then select **Fetch scenario**. Each request retrieves an indexed snapshot from the public Venus API. The JSON endpoint is `GET /api/scenario?units=1&cash=100`. The request uses `accept-version: next` because the current `stable` response carries a migration warning; the [dated version check](docs/research/2026-10-02-venus-api-version-check.md) records the observed response shapes.
 
 The result appears directly below the amounts. The sell path starts with **Estimate pending**; the borrow path is a hypothetical market illustration. The sale card links to a separate **Sale check**: enter a public address there and select **Estimate partial sale**. The check sizes a candidate NVDAB sale against the same USDT cash target, using one probe quote and at most one candidate quote. It shows the candidate amount, an approximate output and whether the exact raw output reaches the target before costs. When both current results match, the main sell card shows the estimated output and candidate sale next to the borrow illustration. A fresh matching balance below the candidate suppresses the main-card amount; a missing or stale balance is marked unverified. The evidence and limits remain in the Sale check. Editing the target or units clears the estimate. The display expires at most 20 seconds after the local quote request began, including request time; a slower response is expired on arrival. An invalid target blocks the request. None of this establishes net proceeds or gives a sale instruction. The borrow card keeps the principal checks visible and puts exact values, oracle inputs and isolated risk illustrations under **Exact values, oracle inputs and borrow assumptions**. Balance and Venus Core reads are under **Optional balance and Venus Core reads**.
 

@@ -27,6 +27,7 @@ RWA_SEARCH_PATH = "/api/v1/dex/market/rwa/search"
 CHAIN = "56"
 NVDAB = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
 USDT = "0x55d398326f99059ff775485246999027b3197955"
+USDC = "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
 CORE_UNITROLLER = "0xfd36e2c2a6789db23113685031d7f16329158384"
 V_NVDAB = "0xeb8ca841cbe1bc4832a10b15c7dab1081edad371"
 CORE_GET_ASSETS_IN_SELECTOR = "abfceffc"
@@ -618,7 +619,7 @@ def request_binance_quote(wallet, units):
                         error_label=None if routes else "no_route", **identity)
 
 
-def _target_quote_metadata(identity):
+def _target_quote_metadata(identity, quote_token=USDT):
     try:
         chain_id = rpc("eth_chainId", [])
         if not isinstance(chain_id, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", chain_id) or int(chain_id, 16) != 56:
@@ -630,8 +631,8 @@ def _target_quote_metadata(identity):
         block_tag = hex(block_number)
         nvdab_code = rpc("eth_getCode", ["0x" + NVDAB[2:], block_tag])
         nvdab_decimals_word = rpc("eth_call", [{"to": "0x" + NVDAB[2:], "data": "0x313ce567"}, block_tag])
-        usdt_code = rpc("eth_getCode", ["0x" + USDT[2:], block_tag])
-        usdt_decimals_word = rpc("eth_call", [{"to": "0x" + USDT[2:], "data": "0x313ce567"}, block_tag])
+        usdt_code = rpc("eth_getCode", ["0x" + quote_token[2:], block_tag])
+        usdt_decimals_word = rpc("eth_call", [{"to": "0x" + quote_token[2:], "data": "0x313ce567"}, block_tag])
         block = rpc("eth_getBlockByNumber", [block_tag, False])
         if (not isinstance(nvdab_code, str) or not re.fullmatch(r"0x[0-9a-fA-F]+", nvdab_code)
                 or int(nvdab_code[2:] or "0", 16) == 0
@@ -770,6 +771,103 @@ def request_target_sized_quote(wallet, units, cash):
     return quote_result("target_quote_observed", final["capture_time_utc"], final.get("latency_ms"), **base,
                         routes=final_routes, final_quote=final_routes, final_quote_status=final["status"],
                         **{key: value for key, value in final.items() if key.startswith("identity_") or key.startswith("token_metadata_")})
+
+
+def _entry_exit_leg(wallet, amount_raw, from_contract, from_symbol, to_contract, to_symbol, credentials):
+    response = signed_binance_get(BINANCE_PATH, [
+        ("binanceChainId", CHAIN), ("fromTokenAddress", from_contract),
+        ("toTokenAddress", to_contract), ("amount", str(amount_raw)),
+        ("userWalletAddress", wallet)], *credentials)
+    detail = {"capture_time_utc": response.get("capture_time_utc"),
+              "latency_ms": response.get("latency_ms")}
+    if response.get("state") != "response":
+        return "error", dict(detail, reason=response.get("error_label") or "provider_unavailable")
+    payload = response.get("payload")
+    code = payload.get("code") if isinstance(payload, dict) else None
+    if not isinstance(code, int) or isinstance(code, bool):
+        return "error", dict(detail, reason="invalid_provider_status")
+    if code != 0:
+        reason = BINANCE_ERROR_LABELS.get(code, "unmapped_provider_error")
+        state = "no_route" if code in (40367, 40369, 40370, 40374, 40421, 40441) else "error"
+        return state, dict(detail, reason=reason)
+    if response.get("http_status") is None or not 200 <= response["http_status"] < 300:
+        return "error", dict(detail, reason="provider_http_error")
+    routes = payload.get("data")
+    if not isinstance(routes, list) or any(not isinstance(route, dict) for route in routes):
+        return "error", dict(detail, reason="invalid_route_list")
+    if not routes:
+        return "no_route", dict(detail, reason="no_route")
+    best = [route for route in routes if route.get("isBest") is True]
+    if len(routes) == 1:
+        route = routes[0]
+    elif len(best) == 1:
+        route = best[0]
+    else:
+        return "error", dict(detail, reason="ambiguous_best_route")
+    if route.get("binanceChainId") != CHAIN:
+        return "error", dict(detail, reason="route_chain_mismatch")
+    for token, contract, symbol in ((route.get("fromToken"), from_contract, from_symbol),
+                                    (route.get("toToken"), to_contract, to_symbol)):
+        if (not isinstance(token, dict) or not isinstance(token.get("tokenContractAddress"), str)
+                or token["tokenContractAddress"].lower() != contract
+                or token.get("tokenSymbol") != symbol or token.get("decimal") != "18"):
+            return "error", dict(detail, reason="route_token_mismatch")
+    input_raw, output_raw = route.get("fromTokenAmount"), route.get("toTokenAmount")
+    if (not isinstance(input_raw, str) or input_raw != str(amount_raw)
+            or not isinstance(output_raw, str) or len(output_raw) > 78
+            or not re.fullmatch(r"[0-9]+", output_raw) or int(output_raw) <= 0):
+        return "error", dict(detail, reason="route_amount_mismatch")
+    vendor, mode = route.get("vendorName"), route.get("executionMode")
+    if (not isinstance(vendor, str) or not re.fullmatch(r"[A-Za-z0-9_. -]{1,80}", vendor)
+            or mode not in ("SWAP", "RFQ")):
+        return "error", dict(detail, reason="route_metadata_invalid")
+    return "ok", dict(detail, from_symbol=from_symbol, to_symbol=to_symbol,
+                      input_amount=raw_units_string(amount_raw, 18),
+                      estimated_output=raw_units_string(int(output_raw), 18),
+                      output_raw=str(int(output_raw)), vendor=vendor, execution_mode=mode,
+                      network_fee_usd_estimate=validated_trade_fee(route.get("tradeFee")))
+
+
+def request_entry_exit_check(wallet, usdc_amount):
+    """Quote one entry and its immediate inverse without an order or wallet signature."""
+    result = {"status": "CHECK_INCOMPLETE", "asset": "NVDAB", "ticker": "NVDA",
+              "issuer": "bStocks", "chain_id": 56, "contract": NVDAB,
+              "quote_currency": "USDC", "entry": None, "exit": None,
+              "reason": None, "metadata_block": None}
+    if (not isinstance(wallet, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", wallet)
+            or not isinstance(usdc_amount, Decimal) or not usdc_amount.is_finite()
+            or usdc_amount <= ZERO or usdc_amount > Decimal("100")
+            or usdc_amount.as_tuple().exponent < -18):
+        return dict(result, reason="invalid_input")
+    credentials = binance_credentials(Path(__file__).resolve().parents[1])
+    if credentials is None:
+        return dict(result, reason="missing_credentials")
+    identity_response = signed_binance_get(RWA_SEARCH_PATH,
+                                           [("keyword", "NVDA"), ("platformId", "bstock")], *credentials)
+    identity_state, identity_error = verify_rwa_identity(identity_response)
+    result["identity_checked_at_utc"] = identity_response.get("capture_time_utc")
+    if identity_state != "verified":
+        return dict(result, reason=identity_error or "identity_unverified")
+    metadata, error = _target_quote_metadata(identity_state, USDC)
+    if error:
+        return dict(result, reason=error[1])
+    result["metadata_block"] = metadata["token_metadata_block"]
+    result["metadata_block_time_utc"] = metadata["token_metadata_block_time_utc"]
+    amount_raw = int(usdc_amount * (10 ** 18))
+    if amount_raw <= 0:
+        return dict(result, reason="amount_below_one_base_unit")
+    entry_state, entry = _entry_exit_leg(wallet, amount_raw, USDC, "USDC", NVDAB, "NVDAB", credentials)
+    if entry_state != "ok":
+        return dict(result, status="ENTRY_UNAVAILABLE" if entry_state == "no_route" else "CHECK_INCOMPLETE",
+                    reason=entry["reason"], entry_checked_at_utc=entry.get("capture_time_utc"))
+    result["entry"] = {key: value for key, value in entry.items() if key != "output_raw"}
+    exit_state, exit_quote = _entry_exit_leg(wallet, int(entry["output_raw"]), NVDAB, "NVDAB", USDC, "USDC", credentials)
+    if exit_state != "ok":
+        return dict(result, status="EXIT_UNAVAILABLE" if exit_state == "no_route" else "CHECK_INCOMPLETE",
+                    reason=exit_quote["reason"], exit_checked_at_utc=exit_quote.get("capture_time_utc"))
+    result["exit"] = {key: value for key, value in exit_quote.items() if key != "output_raw"}
+    result["status"] = "BOTH_ROUTES_QUOTED"
+    return result
 
 
 def d(value):
@@ -977,9 +1075,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
-        if parsed.path == "/" or parsed.path == "/index.html":
+        if parsed.path in ("/", "/entry", "/entry.html", "/index.html", "/venus-scenario"):
             try:
-                with open("app/index.html", "rb") as page:
+                filename = "app/index.html" if parsed.path == "/venus-scenario" else "app/entry.html"
+                with open(filename, "rb") as page:
                     body = page.read()
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -1008,19 +1107,19 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         endpoint = urlparse(self.path).path
         quote_acquired = False
-        if endpoint not in ("/api/balance", "/api/quote", "/api/venus-account"):
+        if endpoint not in ("/api/balance", "/api/quote", "/api/venus-account", "/api/entry-check"):
             self.send_error(404)
             return
-        if endpoint in ("/api/balance", "/api/quote", "/api/venus-account"):
+        if endpoint in ("/api/balance", "/api/quote", "/api/venus-account", "/api/entry-check"):
             host = self.headers.get("Host", "")
             origin = self.headers.get("Origin")
             content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
             allowed, rejection = protected_post_allowed(host, origin)
             if not allowed:
-                self.send_json(403, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": rejection}})
+                self.send_json(403, {"error": {"field": "quote" if endpoint in ("/api/quote", "/api/entry-check") else "wallet", "message": rejection}})
                 return
             if content_type != "application/json":
-                self.send_json(415, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "API request requires application/json."}})
+                self.send_json(415, {"error": {"field": "quote" if endpoint in ("/api/quote", "/api/entry-check") else "wallet", "message": "API request requires application/json."}})
                 return
         try:
             length = int(self.headers.get("Content-Length", "0"))
@@ -1037,6 +1136,16 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, read_wallet_balance(wallet, units))
             elif endpoint == "/api/venus-account":
                 self.send_json(200, read_venus_core_account_state(wallet))
+            elif endpoint == "/api/entry-check":
+                amount = decimal_input(body.get("amount", ""), "amount")
+                if amount > Decimal("100"):
+                    raise ScenarioError("amount", "Use 100 USDC or less for this check.")
+                decision = quote_request_budget.try_acquire()
+                if decision != "accepted":
+                    self.send_json(429, QUOTE_RATE_LIMIT_ERROR)
+                    return
+                quote_acquired = True
+                self.send_json(200, request_entry_exit_check(wallet, amount))
             else:
                 units = decimal_input(body.get("units", ""), "units")
                 cash = decimal_input(body.get("cash", ""), "cash")
@@ -1056,7 +1165,7 @@ class Handler(BaseHTTPRequestHandler):
                 message = "Venus Core account state is unknown. BNB Chain RPC data could not be verified at one block; retry later."
             else:
                 message = "Binance quote status is unknown. No raw response was retained; retry explicitly if needed."
-            error_field = "quote" if endpoint == "/api/quote" else "wallet"
+            error_field = "quote" if endpoint in ("/api/quote", "/api/entry-check") else "wallet"
             self.send_json(502, {"error": {"field": error_field, "message": message}})
         finally:
             if quote_acquired:

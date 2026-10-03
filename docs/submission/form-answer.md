@@ -7,7 +7,7 @@
 
 > We're testing whether a self-custodial BNB Chain user can see a size-matched entry and immediate exit route for a tokenized stock before buying, using Binance Web3 API quotes with timestamps and known costs.
 
-The [CEO source audit](../research/2026-10-03-market-close-ceo-brief.md) and [same-task competitor check](../research/2026-10-03-same-task-substitute-check.md) make this a research hypothesis, not an approved product. Issuer access, PancakeSwap's full flow and all-in costs remain open. No registration update is required merely because the product research changed.
+The [CEO source audit](../research/2026-10-03-market-close-ceo-brief.md) and [same-task competitor check](../research/2026-10-03-same-task-substitute-check.md) make this an approved **read-only build hypothesis** under [D-048](../decisions/decision-log.md), not a validated user need. Issuer access, PancakeSwap's full flow and all-in costs remain open. No registration update is required merely because the product research changed.
 
 ## Superseded 1 October wording
 

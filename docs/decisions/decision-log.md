@@ -498,3 +498,13 @@ The founder clarified that they cannot use a Binance exchange account in their r
 The founder identified a process failure: API work and safety gates accumulated without a clear view of product paths, competing solutions or the route to submission. The [strategy map](../research/2026-10-03-product-paths-and-sprint.md) sets out six paths, investigates three, and gives a conditional lead to the 5 USDC entry-and-exit decision. A live unauthenticated PancakeSwap visit confirmed a stock discovery surface but did not reach the same-size cost decision.
 
 **CEO decision:** finish one bounded same-task competitor and issuer review by 4 October 18:00 UTC, then select one path or proceed with an explicitly unverified prototype under the short submission window. A founder-operated task can show technical and UX behavior. Independent demand remains unknown, and the official event does not require an outside test user. Do not treat a quote as execution, eligibility or profit. No wallet action is authorised here.
+
+## D-048: build the smallest pre-entry exit check now
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** one active product hypothesis; read-only build approved
+
+The founder rejected the calendar-style staging in D-047. The [same-task review](../research/2026-10-03-same-task-substitute-check.md) found a specific code-level gap in Yostocks' reviewed path: its buyer scan has no inverse quote, and its seller scan requires an existing token balance. PancakeSwap has a mature stock surface, but its full 5 USDC quote path remains unverified behind a jurisdiction confirmation. [Two signed 5 USDC Web3 quotes](../research/2026-10-03-usdc-nvdab-roundtrip-quote.md) already showed both directions for one temporary address. They didn't prove execution, cost or eligibility.
+
+**CEO decision:** implement [one read-only vertical slice](../product/pre-entry-exit-spec.md) immediately in the separate private repo. It should answer whether the exact entered size has an entry route and an immediate inverse exit route, with timings and missing costs visible. This is a working hypothesis, not verified demand or a guarantee of originality. Revisit it if an incumbent's live flow already gives the same decision or an eligible asset cannot be established. No funding, signing, production deploy or public release is part of this decision. The fixed intermediate dates in D-047 are superseded; the event lock on 11 October remains.

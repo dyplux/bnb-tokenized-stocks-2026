@@ -87,24 +87,25 @@ Next step: [refresh quote / choose another asset / inspect wallet]
 
 The inverse quote is an estimate made before any purchase. A positive difference between two quotes isn't profit. The screen must keep that boundary visible and never turn `COST INCOMPLETE` into a buy recommendation.
 
-**Kill condition:** if PancakeSwap or the closest hackathon entrant already presents a same-amount exit estimate and total entry/exit costs clearly before buying, A has no material gap. Switch to B or C only if the same-task review shows a specific failure those products leave unresolved. If a live competing interface can't be reached by 4 October 18:00 UTC, use its current public documentation and label the gap **unverified**; A may proceed as a timeboxed prototype because it has a measured two-way quote, without claiming originality or user demand. If issuer eligibility remains unconfirmed, don't buy that issuer's token for the demo. Use another permitted asset only after checking its terms. A missing eligible token blocks a funded demo, not a read-only prototype or a candid submission.
+**Kill condition:** if PancakeSwap or the closest hackathon entrant already presents a same-amount exit estimate and total entry/exit costs clearly before buying, A has no material gap. Switch to B or C only if the same-task review shows a specific failure those products leave unresolved. If a live competing interface remains inaccessible, use its current public documentation and label the gap **unverified**; A may proceed as a bounded prototype because it has a measured two-way quote, without claiming originality or user demand. If issuer eligibility remains unconfirmed, don't buy that issuer's token for the demo. Use another permitted asset only after checking its terms. A missing eligible token blocks a funded demo, not a read-only prototype or a candid submission.
 
 ### First live substitute observation
 
 At about 18:45 UTC on 3 October, an unauthenticated Chrome session opened [PancakeSwap Stocks](https://pancakeswap.finance/stocks). The page returned HTTP 200 and visibly listed stock references, quote prices, volume, multiple issuers per ticker and a Trade action. The observed table listed NVIDIA with 11 issuers. This confirms a working discovery surface, so a stock catalog isn't our product. This browser session didn't reach a same-size entry quote, inverse exit quote, connected wallet or cost summary. We can't call the exit-cost gap open or closed from that observation.
 
-## Timeboxed work, with visible outputs
+## Execute without calendar waits
 
-| By UTC | Action | Output and pass condition |
-|---|---|---|
-| **4 Oct, 18:00** | Reproduce the 5 USDC entry and exit decision in PancakeSwap and one closest entrant, inspect issuer terms, and record screenshots or URLs where accessible. | A dated competitor walkthrough stating exactly what each product displays, hides or refuses. Decide A, B or C in the decision log, with an unverified flag if access prevents a full task. |
-| **5 Oct, 12:00** | Freeze one page of product scope: user, trigger, three screen states, API calls, freshness, cost maths, error recovery and demo line. | One approved spec with 3 to 7 observable acceptance criteria. No other path enters build. |
-| **7 Oct, 18:00** | Build the single path from amount to evidence-backed decision, with no unlabelled mock result. | Working local UI and API integration; repo instructions match the actual flow. |
-| **8 Oct, 18:00** | Check identity, stale quotes, empty routes, gas and approval cost, and a clean-start judge route. Use the Transaction API if the selected task needs a transaction. | Reproducible technical record and a factual DX report. No claim of fill without a fill. |
-| **9 Oct, 18:00** | Prepare a bounded small mainnet task if eligibility and funding conditions pass, then public repo, reachable demo or judge instructions, short video and submission draft. | Every public claim matches the built product and dated evidence. Funding/signing/publication require their own concrete review. |
-| **10 Oct, 12:00** | Final submission review and submit before the 11 Oct 12:00 UTC lock. | Form receipt and accessible artifacts. Keep a 24-hour buffer. |
+[D-048](../decisions/decision-log.md) supersedes the intermediate dates above. Start the approved [one-page spec](../product/pre-entry-exit-spec.md) immediately. Each completed action unlocks the next one:
 
-**Decision owner:** Dyplux. The founder doesn't need to find another holder or use a Binance exchange account. The first dependency is our own same-task substitute check and eligibility read. The founder's next concrete action, if needed, is to review one bounded mainnet funding/trade plan with amount and costs before any funds move.
+| Action now | Output needed to continue |
+|---|---|
+| Build the 5 USDC read-only entry and inverse exit path | One working local screen with signed Binance Web3 quotes, timestamps and distinct failure states |
+| Review the actual response and closest substitutes | Correct any field or route claim that the evidence doesn't support; retire the hypothesis if an incumbent already answers it |
+| Prepare a small mainnet demonstration only if issuer access and costs pass | A concrete amount, transaction simulation, loss ceiling and founder-controlled wallet review before any funds move |
+| Make the repo accessible, prepare the DX report and short video | Judge can reproduce the exact built flow; every public claim has a dated source |
+| Submit | Form receipt before the official **11 October, 12:00 UTC** lock |
+
+**Decision owner:** Dyplux. The founder doesn't need to find another holder or use a Binance exchange account. No intermediate date is a reason to wait; legal access and actual wallet actions remain separate gates.
 
 ## What remains unknown
 

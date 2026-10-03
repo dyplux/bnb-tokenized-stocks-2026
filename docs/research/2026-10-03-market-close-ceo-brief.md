@@ -1,6 +1,6 @@
 # CEO brief: what changes when the reference market closes?
 
-**Checked:** 2026-10-03 UTC. **Decision state:** one conditional lead, no selected product. **Deadline:** 2026-10-11 at 12:00 UTC ([event](https://www.bnbchain.org/en/hackathons/tokenized-stocks)). This note is internal research, not a trading claim.
+**Checked:** 2026-10-03 UTC. **Decision state:** one active read-only build hypothesis under [D-048](../decisions/decision-log.md), with user demand and eligibility unproved. **Deadline:** 2026-10-11 at 12:00 UTC ([event](https://www.bnbchain.org/en/hackathons/tokenized-stocks)). This note is internal research, not a trading claim.
 
 ## The market event, without the shortcut
 
@@ -48,15 +48,8 @@ The [Venus governance forum](https://community.venus.io/t/bnb-chain-apro-onboard
 
 **Kill the idea if** either closest substitute already gives the same decision for the same amount before purchase, or we can't find a permitted asset/route for a credible small demonstration. A missing inverse quote is a product result only if we can tell route failure apart from our integration error. A stale reference alone isn't a trade signal.
 
-## CEO gate and next seven days
+## CEO gate, with no waiting period
 
-| Gate | By UTC | Observable output | If it fails |
-|---|---|---|---|
-| Same-task teardown | 4 Oct 18:00 | PancakeSwap and Yostocks: 5 USDC entry and matched exit before purchase, screens or exact API/doc evidence, timestamped | Mark gap absent or unverified; do not claim unique feature |
-| Access and price checks | 4 Oct 18:00 | Exact issuer terms, chosen contract, 5 USDC quote pair, expiry, missing fee/gas fields | Keep demo read-only or choose another permitted asset |
-| Product decision | 5 Oct 12:00 | One-page spec, user/action, three states, 3 to 7 acceptance criteria, competitor distinction | No new code path; retain the current research artifact |
-| Vertical slice | 7 Oct 18:00 | Input to live API to dated decision, empty/error states, one wallet route | Cut features until the central path works |
-| Judge proof | 9 Oct 18:00 | Factual DX report, clean-start README, deploy/judge access, optional small mainnet action if permitted and authorized | State limits plainly; don't imply execution |
-| Submit | 10 Oct 12:00 target | Final public repo and form receipt, one day before lock | Escalate missing form or access immediately |
+The founder rejected calendar-style staging. [D-048](../decisions/decision-log.md) approves an immediate read-only build under a [one-page spec](../product/pre-entry-exit-spec.md). Finish the entry and inverse exit path first, review its actual provider responses and closest substitutes next, then prepare judge access and a factual DX report. If the task is already solved by an incumbent or no eligible route can be shown, retire the claim. The only fixed time is the official submission lock on **11 October at 12:00 UTC**.
 
-**What the founder decides next:** after the same-task teardown, approve the selected one-page spec or reject this path. No wallet funding, trade, public repo or production deploy follows from this memo. The working product repo remains private during research and separate from Bell.
+No wallet funding, trade, public repo or production deploy follows from this memo. Those actions require a concrete review. The product repo stays separate from Bell.
