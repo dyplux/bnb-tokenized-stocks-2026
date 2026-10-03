@@ -53,6 +53,8 @@ A [fractional signed quote](research/2026-10-02-fractional-target-quote.md) retu
 
 The short [submission readiness gates](submission/readiness-gates.md) distinguish completed signed technical reads from the remaining holder task, cost interpretation, DX, video, public-repo and form steps. A [founder input checklist](submission/founder-input-checklist.md) groups private form answers and later approvals without storing them. Neither file marks the prototype as submission-ready.
 
+A [limited private-repo prepublication preflight](submission/2026-10-03-private-repo-preflight.md) found `.env` ignored, no tracked secret-file path, Dyplux-only commit authors and no matches for four common secret patterns in 559 historical blobs. This narrows one disclosure risk but is not a complete secret audit or authorization to publish.
+
 **Track clarification, 2026-10-02:** The founder's supplied "Main Track: Tokenized Stocks Products & Agents" text describes the same BNB Hack: Tokenized Stocks Edition recorded in [the event rules](01-event-rules.md). It isn't a second hackathon or a second team entry. The event permits one entry per team. The current project is that entry in preparation; the one-line application answer and final project submission aren't recorded as sent.
 
 ## Completed
