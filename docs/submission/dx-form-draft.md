@@ -9,7 +9,7 @@
 | 2. Team or project name | Final project name, same in all forms | FOUNDER |
 | 3. Contact email | Enter directly in the form | FOUNDER |
 | 4. Public repository URL | `https://github.com/dyplux/bnb-tokenized-stocks-2026` after the founder authorizes publication and a signed-out check passes | LATER |
-| 5. Binance Web3 API modules or tools | Select **RWA Data API** and **Trading API**. Signed RWA searches and read-only quotes ran on 2 and 3 October; the [field log](../dx/field-log.md) records 23 signed GET calls in total. Public BNB Chain RPC and Venus/Pancake data were separate integrations, not Binance Web3 API modules. | READY |
+| 5. Binance Web3 API modules or tools | Select **RWA Data API** and **Trading API**. Signed RWA searches and read-only quotes ran on 2 and 3 October; the [field log](../dx/field-log.md) has 23 individually recorded signed GETs and three later calls inferred from a clean browser branch. Public BNB Chain RPC and Venus/Pancake data were separate integrations, not Binance Web3 API modules. | READY |
 | 6. Team size | Select from actual human contributors. Agents aren't people on the team. | FOUNDER |
 | 7. Most experienced team member's Web3 experience | Select the true category. | FOUNDER |
 | 8. Prior Binance Web3 API use | Select from actual prior experience. | FOUNDER |
