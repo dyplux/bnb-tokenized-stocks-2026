@@ -348,3 +348,13 @@ The [public-demo review](../agent-reports/product-review/2026-10-03-public-demo-
 The [Plus Sol stop review](../agent-reports/product-review/2026-10-03-d017-stop-review.md) recommends retiring D-017 because the current app can't establish a holder's safe cash choice, and recommends revisiting exit recovery. The strongest counterargument is the observed signed quote path and a same-cash display that inspected incumbents don't show. The fallback also lacks an observed holder task.
 
 **CEO decision:** hold the final keep/retire judgment until the dated checkpoint, while making no further D-017 product feature changes beforehand. Require an observed consenting holder task, defensible sale-cost treatment and an account-specific risk boundary to keep the cash-choice claim. If those gates fail, retire that claim. The reviewer's exit-recovery fallback is not selected: the founder rejected it as the main direction, and no new holder evidence changes that. This records the reviewer's recommendation and the coordinator's narrower timing judgment without artificial consensus.
+
+## D-034: keep the cash target conditional on transaction minimum
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** safety wording corrected; no new sale feature approved
+
+The [same-cash technical check](../research/2026-10-03-target-minimum-check.md) made one signed identity search, two signed quotes and one unsigned `/swap` build. For a 100 USDT target, the candidate's quote estimated 100.000443760010104468 USDT, while its 0.5% slippage minimum was 99.500441541210053945 USDT. The request used a nonholder address and did not sign, simulate or broadcast.
+
+**CEO decision:** keep the app's existing quote comparison explicitly labelled **before costs** and add a visible warning that the built minimum can be below the target. Do not treat a target-sized estimate as guaranteed cash or implement an automatic slippage buffer before the D-017 checkpoint. A future actionable target verdict needs a fresh built minimum, explicit slippage choice, allowance and cost treatment, and a holder task. This finding strengthens the existing cost gate; it does not select a different product.
