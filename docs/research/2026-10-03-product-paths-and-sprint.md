@@ -66,6 +66,25 @@ Ratings are internal judgement from 0 to 5, **not** event scores or measured dem
 
 **Recommendation:** spend one bounded discovery session on A. The proposed output is a small, dated **entry and exit decision ticket**: amount, exact token identity, current entry quote, immediate inverse exit estimate, quote age, known fees, unknown costs, and a clear route-available or route-unavailable result. Don't call the estimate a guaranteed resale amount or calculate break-even until fee units, minimum outputs, slippage and gas support it. The user may decide that a tiny trade isn't worth opening. This saves avoidable cost; it doesn't promise a profitable trade.
 
+Proposed first screen, showing fields rather than fabricated values:
+
+```text
+I have: 5 USDC                    I want: tokenized NVDA
+Issuer and contract: [resolved from current RWA data]
+
+If I enter now                 If I tried to leave now
+Token amount: [entry quote]    USDC back: [inverse quote or unavailable]
+Quote received: [time]         Quote received: [time]
+
+Costs we can account for: [itemized amount and unit]
+Costs still missing: [gas / approval / slippage / issuer access]
+
+Decision: ROUTE AVAILABLE / ROUTE UNAVAILABLE / COST INCOMPLETE
+Next step: [refresh quote / choose another asset / inspect wallet]
+```
+
+The inverse quote is an estimate made before any purchase. A positive difference between two quotes isn't profit. The screen must keep that boundary visible and never turn `COST INCOMPLETE` into a buy recommendation.
+
 **Kill condition:** if PancakeSwap or the closest hackathon entrant already presents a same-amount exit estimate and total entry/exit costs clearly before buying, A has no material gap. Switch to B or C only if the same-task review shows a specific failure those products leave unresolved. If a live competing interface can't be reached by 4 October 18:00 UTC, use its current public documentation and label the gap **unverified**; A may proceed as a timeboxed prototype because it has a measured two-way quote, without claiming originality or user demand. If issuer eligibility remains unconfirmed, don't buy that issuer's token for the demo. Use another permitted asset only after checking its terms. A missing eligible token blocks a funded demo, not a read-only prototype or a candid submission.
 
 ### First live substitute observation
