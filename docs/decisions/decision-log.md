@@ -382,3 +382,13 @@ A [bounded public read](../research/2026-10-03-populated-core-account-read.md) f
 The [live Steward Swipe check](../research/2026-10-03-steward-live-swipe-same-task.md) exercised its public `Use` flow with 1 NVDAB. It displayed $82.09 fundable at target HF 2.0 and $102.62 at HF 1.6, at BNB blocks 125408210 and 125408215. The latter exceeds the 100 USDT illustrative cash need. The observed flow did not ask for a cash target or show a matched sale quote. No wallet was connected, and its $0 existing debt was a default scenario.
 
 **CEO decision:** treat Steward as a working borrow-side substitute, not only a code-level overlap. Keep the same-cash sale comparison as an unproven difference that must matter to a consenting holder. Make no D-017 product feature change before the 4 October 12:00 UTC checkpoint. D-031's source-only note remains historical; this live observation supersedes its statement that no competitor runtime task had been exercised.
+
+## D-037: account overlap confirms use of collateral and debt, not a cash task
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** read-only evidence; D-033 unchanged
+
+The [bounded probe](../research/2026-10-03-nvdab-holder-debt-overlap.md) used one signed Binance holder ranking and one pinned BNB block. Among the first 15 of 48 ranked vNVDAB holders, nine had entered vNVDAB as Core collateral and had positive stored vUSDT debt. All nine had other entered markets; eight were EOAs and one was a contract.
+
+**CEO decision:** treat this as evidence that NVDAB collateral membership and USDT debt coexist in some accounts. Don't infer that NVDAB alone backs their debt, that an EOA is a person, or that a holder wants the app's sell-or-borrow comparison. The 4 October checkpoint still requires an observed consenting holder task, defensible sale costs and a personal-risk boundary. The research probe adds no D-017 product feature.
