@@ -59,6 +59,8 @@ A [limited private-repo prepublication preflight](submission/2026-10-03-private-
 
 ## Completed
 
+The dated entries below preserve what was known when each step happened. Some early entries say a key, signed response or UI path was unavailable at that time. The current state is at the top of this file and in the [readiness gates](submission/readiness-gates.md).
+
 - First-pass documentary deliverables are complete: official rules, source ledger, [three explicit hypotheses](research/hypotheses.md), substitute map, prior-winner sample, skills scouting, API map, weighted recommendation, dissent and a provisional one-line application answer. This is a research handoff, not product approval.
 - Read the founder's operating manual and the supplied Super Grok research as an unverified lead.
 - Checked the [official hackathon page](https://www.bnbchain.org/en/hackathons/tokenized-stocks) on 2026-10-01. Rules are recorded in [01-event-rules.md](01-event-rules.md).
