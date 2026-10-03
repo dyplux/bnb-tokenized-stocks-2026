@@ -8,6 +8,8 @@ The [official event page](https://www.bnbchain.org/en/hackathons/tokenized-stock
 
 The founder can't use a Binance exchange account. This project must work through a self-custodied BNB Chain wallet and the separately issued Binance Web3 API. A returned quote doesn't establish issuer eligibility, executable output or profit. The founder's planned demo budget is around EUR 10; existing wallet keys must stay as chosen. No funding or trade is authorised by this document.
 
+The [3 October CEO source audit](2026-10-03-market-close-ceo-brief.md) refines the event premise: Nasdaq has an after-hours session to 8pm ET, Ondo has six eligible-user assets with 24/7 direct redemption, and one builder reports a router-specific NVDAon sell failure despite a buy quote. These facts point to an asset-, route- and amount-specific exit check, not a blanket claim that references or redemptions stop at Friday 4pm. The [source method](SOURCE-METHOD.md) records how developer-forum leads are accepted or rejected.
+
 ## The professional loop for this sprint
 
 The local operating manual and Dyplux method call for the same sequence: start at the judging task, map substitutes, test one user decision, then build the smallest complete path. [Y Combinator's idea and user research material](https://www.ycombinator.com/blog/startup-school-week-1-recap-kevin-hale-and-eric-migicovsky/) treats an idea as a hypothesis and asks what the user last tried, what was hard and what current solutions miss. We won't claim an interview happened when none did. **Our evidence rule:** a founder-operated task can show technical function and some UX behavior; it can't show independent demand. The event permits solo teams and doesn't require an external test user.
