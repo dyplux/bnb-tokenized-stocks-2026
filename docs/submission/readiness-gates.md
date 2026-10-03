@@ -9,7 +9,7 @@
 | New local user task | Main screen and `POST /api/entry-check` completed three 5 USDC read-only runs, including one continuous browser capture. Four synthetic failure-path tests passed; 54 tests passed locally. | Keep the result explicitly as an immediate estimate. Recheck from a clean judge checkout before submitting. |
 | Issuer and execution boundary | API quote access observed; personal issuer access, gas, approval, slippage minimum and fill remain unknown | Keep the public claim read-only unless these are resolved with the founder's specific wallet action review. |
 | Judge access | Repo private and localhost only. [Judge instructions](judge-run.md), a continuous raw browser capture, sanitized [record](video-record.json) and [34-second local MP4](video-qa.md) exist. | Obtain a judge-accessible video URL and founder approval to make the repo public. |
-| DX and submission | 65 signed calls accounted for in the field log; forms not reported complete | Finish actual DX answers, publish the final accessible links, submit DX then project before 11 October 12:00 UTC. |
+| DX and submission | 71 signed calls accounted for in the field log; product, media and forms remain internal drafts | Select and verify the product first. Then finish actual DX answers and accessible links before the 11 October 12:00 UTC lock. |
 
 ## Historical gate record for the retired Venus product
 

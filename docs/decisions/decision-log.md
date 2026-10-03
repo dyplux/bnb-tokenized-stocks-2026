@@ -518,3 +518,13 @@ The founder rejected the calendar-style staging in D-047. The [same-task review]
 The 5 USDC read-only flow was implemented and observed locally three times on 3 October. It returned both quote directions, but no purchase, sale, paid cost, eligibility decision or user advantage was observed. A 34-second video was then rendered before the founder understood or accepted the product. A private GitHub draft release was created prematurely and deleted on 3 October after the founder objected. The local film and source remain internal technical artifacts.
 
 **CEO decision:** the prototype is not a selected product or a submission demo. Stop work on the video, publication packet and form narrative. Explain the user's task in ordinary language, compare the same task with existing products, and identify a concrete decision that the prototype changes. If that difference is absent or too small, retire the prototype and select a better task. Do not use a successful API response or finished film as evidence of product quality. Record the next decision in this log before resuming media or submission work.
+
+## D-050: distinguish route failures, but do not rename Exit Check as a screener
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** research observation; no product selected
+
+The [same-amount AAPL check](../research/2026-10-03-aapl-three-representation-route-check.md) used six signed read-only Binance Web3 calls. At about 22:40 UTC, 5 USDC to AAPLx returned `40374` (no vendor liquidity), to AAPLon returned `40368` (USDC pair unsupported), and to AAPLB returned one quoted route. The signed RWA search omitted xStocks for three tested tickers although Binance's separate public type-2 list included BNB Chain xStocks. No eligibility, paid cost or trade was checked.
+
+**CEO decision:** retain this as a specific DX and error-state finding. Do not call the bStock quote a recommended alternative and do not pivot to a generic multi-issuer screener on these three responses. The [reviewed Yostocks path](../research/2026-10-03-same-task-substitute-check.md) already scans several representations and guards quotes. A product requires an additional action or outcome that an eligible user cannot obtain there. Continue product research before media or code changes.
