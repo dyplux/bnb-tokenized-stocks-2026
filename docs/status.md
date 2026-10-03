@@ -3,6 +3,7 @@
 **Updated:** 2026-10-03 UTC
 **Phase:** provisional spec and bounded read-only implementation
 **Product readiness:** not ready. No holder, net proceeds or personal borrow-safety result is recorded.
+**Proof boundary:** a [3 October audit](research/2026-10-03-technical-proof-versus-holder-demand.md) separates the dated read-only demo that public data can support from the unproved claim that it helps an eligible holder make a safe cash decision. The holder session is an internal product gate, not an official hackathon requirement.
 **Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
 **Application code:** local indexed Venus scenario with a separate fixed-block Core cap read, optional BNB Chain NVDAB balance and current net Venus Core risk-state notice, signed RWA identity and target-sized quote paths, and a same-cash sale estimate beside the hypothetical borrow card in `app/`; a separate research call built one unsigned LiquidMesh SWAP transaction payload. The app can display a short-lived estimated USDT output and a bounded comparison, but holder-specific net proceeds and post-deposit risk remain unverified
 **Deployment:** none
