@@ -38,8 +38,13 @@
       function leg(prefix,data){put(prefix+'-amount',data?data.estimated_output+' '+data.to_symbol:'Not quoted');put(prefix+'-route',data?data.vendor+' · '+data.execution_mode:'Unknown');put(prefix+'-time',data?time(data.capture_time_utc):'Unknown');put(prefix+'-fee',data&&data.network_fee_usd_estimate!==null?'$'+data.network_fee_usd_estimate+' reported by provider':'Unknown')}
       function show(data,started){
         const labels={BOTH_ROUTES_QUOTED:['Both routes quoted','These are two estimates for the same size and public address. The second quote is an immediate hypothetical exit.'],ENTRY_UNAVAILABLE:['Entry route unavailable','The provider returned no entry route for this amount and address. No inverse exit was checked.'],EXIT_UNAVAILABLE:['Exit route unavailable','The entry quote returned a route, but the provider returned no immediate inverse route for its estimated output.'],CHECK_INCOMPLETE:['Check incomplete','The identity, network or provider response could not be verified. Retry explicitly.']};
-        const label=labels[data.status]||labels.CHECK_INCOMPLETE;put('result-title',label[0]);put('result-explain',label[1]);put('result-stamp','Request started '+time(new Date(Date.now()-(performance.now()-started)).toISOString()));leg('entry',data.entry);leg('exit',data.exit);
-        put('receipt-source','Source: Binance Web3 RWA identity and Trading quotes; BNB Chain token metadata'+(data.metadata_block?' at block '+data.metadata_block:' not verified')+'.'+(data.reason?' Provider state: '+data.reason.replace(/_/g,' ')+'.':''));result.hidden=false;
+        const label=labels[data.status]||labels.CHECK_INCOMPLETE;put('result-title',label[0]);
+        let explanation=label[1];
+        if(data.status==='BOTH_ROUTES_QUOTED'&&data.entry&&data.exit)explanation='For '+data.entry.input_amount+' USDC, the immediate inverse quote estimates '+data.exit.estimated_output+' USDC back before unverified costs. This isn\'t a later sale or a profit estimate.';
+        if(data.status==='EXIT_UNAVAILABLE'&&data.entry)explanation='The entry route estimates '+data.entry.estimated_output+' NVDAB, but the provider returned no immediate inverse route for that quantity.';
+        put('result-explain',explanation);put('result-stamp','Request started '+time(new Date(Date.now()-(performance.now()-started)).toISOString()));leg('entry',data.entry);leg('exit',data.exit);
+        const metadata=data.metadata_block?' at block '+data.metadata_block+' ('+time(data.metadata_block_time_utc)+')':' not verified';
+        put('receipt-source','Source: Binance Web3 RWA identity and Trading quotes; BNB Chain token metadata'+metadata+'.'+(data.reason?' Provider state: '+data.reason.replace(/_/g,' ')+'.':''));result.hidden=false;
       }
       form.addEventListener('submit',async event=>{
         event.preventDefault();clear();const request=++generation,typed=amount.value.trim(),address=wallet.value.trim();
