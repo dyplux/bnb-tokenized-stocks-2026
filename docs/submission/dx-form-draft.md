@@ -32,7 +32,7 @@
 |---|---|---|
 | 18. Documentation rating | Select a first-hand rating. | FOUNDER |
 | 19. Errors found | “The Get Aggregated Quote reference says equity/RWA routes always return `RFQ`, but a signed 1 NVDAB to USDT request returned `LiquidMesh` with `executionMode=SWAP` on 2 October. The same reference describes `amount=1000000` as 1 USDT at six decimals while its example response labels that USDT token `decimal: 18`. We checked NVDAB and BNB Chain USDT decimals on-chain instead of copying the example.” See the [live quote](../research/2026-10-02-first-live-binance-quote.md). | READY |
-| 20. Missing or under-documented topics | “Please define bStock route selection and execution-mode guarantees, the source and as-of time of RWA `referencePrice`, and the precise unit and cost scope of `estimateGasFee` and `toTokenAmount` for stock routes.” Source provenance and costs remain unresolved. | READY |
+| 20. Missing or under-documented topics | “Please define bStock route selection and execution-mode guarantees, the source and as-of time of RWA `referencePrice`, and the precise unit and cost scope of `estimateGasFee` and `toTokenAmount` for stock routes. For an observed LiquidMesh `SWAP` route, please clarify how the RWA approval endpoint's `vendor` parameter selects the correct spender and whether approval gas is included in any quote field.” Source provenance, approval behavior and costs remain unresolved. | READY |
 | 21. Examples runnable as written | Select **I did not try the examples** if the founder didn't run any verbatim. We wrote and checked a separate client; don't call that a verbatim example test. | FOUNDER |
 | 22. Failed examples, optional | Leave blank unless a verbatim example was actually run and failed. | FOUNDER |
 | 23. Most useful documentation page, optional | [Authentication](https://web3.binance.com/en/dev-docs/authentication) was used to correct the signed request; founder can choose it. | FOUNDER |
@@ -74,7 +74,7 @@
 | Item | Draft answer | State |
 |---|---|---|
 | 48. First-five-minute redesign | “Put a copyable signed RWA search and bStock quote example on the landing path, with `X-OC-*` headers, the exact `/build` signing path, an explicit BNB Chain token-decimals check and expected response mode. A developer could then prove access before building UI.” | READY |
-| 49. Requested endpoints or tooling | “Add source and as-of timestamps for `referencePrice`, explicit bStock SWAP/RFQ route semantics, and machine-readable units for gas, fee and estimated received amount.” | READY |
+| 49. Requested endpoints or tooling | “Add source and as-of timestamps for `referencePrice`, explicit bStock SWAP/RFQ route semantics, route-specific approval examples, and machine-readable units for gas, fee and estimated received amount.” | READY |
 | 50. One biggest time-saver | “A current bStock quote example and reference that agree on SWAP versus RFQ. We spent review time protecting the product from the conflicting route statements and a misleading token-decimals example; we didn't measure that time in minutes.” | READY |
 | 51. Keep building on the API | Select from actual intention after the product decision. | FOUNDER |
 | 52. Why, optional | Explain the decision selected for item 51, grounded in observed integration and product fit. | FOUNDER |
