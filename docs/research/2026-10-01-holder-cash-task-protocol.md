@@ -8,7 +8,7 @@ Ask one person who already holds a bStock on BNB Chain and independently confirm
 
 ## Task, before showing Dyplux
 
-Ask: “Suppose you need a chosen amount of USDT from this holding this week. What would you do first, and what information would make you switch between selling part and borrowing against it?” Use the participant's own task and amount if they offer one; otherwise use a hypothetical amount and label it as such. Ask them to try the existing sale route and the Venus borrowing flow, or describe why they cannot. Note which costs, risks and units they can actually see, the source and time, and any point where they stop. Do not suggest the proposed answer.
+First ask whether the participant recently needed USDT while holding this bStock, what they needed it for, and what they did. Record a real spending need separately from reinvestment, yield or leverage. Don't turn a hypothetical into a reported need. Only after the open answer, ask: “If you needed a chosen amount of USDT from this holding this week, what would you do first, and what information would make you switch between selling part and borrowing against it?” Use the participant's own task and amount if they offer one; otherwise use a hypothetical amount and label it as such. Ask them to try the existing sale route and the Venus borrowing flow, or describe why they cannot. Note which costs, risks and units they can actually see, the source and time, and any point where they stop. Do not suggest the proposed answer. The [public scan](2026-10-03-public-holder-task-scan.md) found a weak lead about borrowing for an LP, which cannot validate this cash-choice job.
 
 ## Same-task product comparison
 
