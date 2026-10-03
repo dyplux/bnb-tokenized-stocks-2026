@@ -317,6 +317,8 @@ The [Plus Sol review](../agent-reports/product-review/2026-10-03-venus-post-acti
 
 **CEO decision:** keep the existing current-state notice and isolated market illustration. Do not show a personal health factor, liquidation price or safe borrowing amount. Permit a bounded read-only provenance and parity study; add a conditional net-cushion result only after it reproduces deployed behavior and can be explained to an eligible holder. If those gates remain open at the 4 October checkpoint, narrow or retire the cash-choice claim under D-017.
 
+**2026-10-03 source update:** the [Venus source trail](../research/2026-10-03-venus-current-facet-boundary.md) identifies the exact live facet address in official documentation, VIP-640 and the deployment list, with v10.3.0 as its linked source. Compiler-level bytecode equality and populated-account arithmetic remain unverified. This narrows the provenance uncertainty but does not change the decision.
+
 ## D-031: keep same-cash differentiation as a testable gap
 
 **Date:** 2026-10-03
