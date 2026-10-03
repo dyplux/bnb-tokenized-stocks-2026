@@ -4,7 +4,7 @@
 
 ## User and task
 
-An eligible self-custody NVDAB holder needs a chosen amount of USDT today. They want to see what selling enough NVDAB would return now, and whether supplying their NVDAB to Venus and borrowing that USDT would leave a tolerable debt and liquidation threshold. The user makes the choice; the app doesn't sign a sale, supply or loan.
+The target user is an eligible self-custody NVDAB holder who needs a chosen amount of USDT. The proposed task is to see what selling enough NVDAB would return now, and whether supplying NVDAB to Venus and borrowing that USDT would leave tolerable debt and liquidation risk. This is a product hypothesis: no consenting holder has confirmed the task. The user makes the choice; the app doesn't sign a sale, supply or loan.
 
 The trigger is a cash need, not a predicted price move. A public Venus API snapshot on 2026-10-01 showed vNVDAB with about $341,944 of indexed supply and 26 market supplier records, not 26 proven borrowers or product prospects. The [Venus interface](https://docs-v4.venus.io/guides/interface) already offers borrowing, and [Steward](https://github.com/zkasuran/steward-bnb/blob/a1ae5cf4153e370d16ef9dd1cd85cb116f0412ba/apps/web/app/api/use/swipe/route.ts) calculates a maximum bStock-backed borrow. This product must make the **same cash need** legible against a real sale, with risk and costs, or it has no reason to exist.
 

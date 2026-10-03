@@ -6,12 +6,12 @@
 
 ### Exact user task
 
-**[Fact]** An eligible self-custody NVDAB holder needs a chosen amount of USDT today. They need to decide whether to:
+**[Hypothesis]** The target user is an eligible self-custody NVDAB holder who needs a chosen amount of USDT and is deciding whether to:
 
 - sell enough NVDAB for that cash target, or
 - supply NVDAB to Venus and borrow the same USDT amount without accepting intolerable debt and liquidation risk.
 
-The intended result is a source-dated, same-cash comparison. The user makes the decision and the app executes nothing. [One-page spec](../../product/one-page-spec.md)
+The intended result is a source-dated, same-cash comparison. The user makes the decision and the app executes nothing. No consenting holder has confirmed this task. [One-page spec](../../product/one-page-spec.md)
 
 **[Inference]** The current workaround is to obtain sale information from Binance or another trading venue, obtain borrowing information from Steward or Venus, and reconcile the amounts, costs, remaining exposure, debt, and risk manually. D-017 selected the product only as a provisional read-only slice. [D-017](../../decisions/decision-log.md)
 
