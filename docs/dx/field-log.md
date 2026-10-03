@@ -84,6 +84,10 @@ On 2026-10-03 UTC, a browser-only change moved the 20-second display window from
 
 On 2026-10-03 at about 00:34 UTC, a bounded interface change moved the successful, current target-sized sale estimate into the main Sell card beside the hypothetical borrow illustration. A synthetic Chrome run at 320 and 1440 CSS pixels intercepted all three local API paths. It covered scenario-first with a fresh 1 NVDAB balance, quote-first with no balance, 0 and 0.4 NVDAB insufficiency, stale balance, quote failure, below-target output, input edit and 20-second expiry. There were no page errors or horizontal overflow. All 35 local tests and inline JavaScript parsing passed. This was a fixture run with no live Binance request, BNB RPC read, holder or trade. See the [slice](../product/sale-card-clarity-slice.md).
 
+### Public upstream guard, local QA
+
+On 2026-10-03, the Venus API and BNB RPC clients were changed to refuse HTTP redirects, cap each response at 2 MiB and require JSON objects. Synthetic redirect and oversized-body checks passed. A full run on the repository's minimum Python 3.9 initially found a test-fixture error: closing a synthetic `HTTPError` whose body was `None` raised `KeyError`. After giving the fixture a closable in-memory body, all **37** local tests passed. The edited clients then returned 51 Venus market rows and BNB chain ID 56 in one public-read smoke check. No Binance key, signed Web3 call, wallet, deployment or public judge URL was used. The [public-demo gate](../agent-reports/product-review/2026-10-03-public-demo-gate.md) still blocks exposure of the current local server.
+
 ## Same-task human observation, to fill when available
 
 | Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |

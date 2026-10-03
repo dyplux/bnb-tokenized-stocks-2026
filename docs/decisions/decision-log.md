@@ -326,3 +326,13 @@ The [Plus Sol review](../agent-reports/product-review/2026-10-03-venus-post-acti
 The [same-cash incumbent check](../agent-reports/product-review/2026-10-03-same-cash-incumbents.md) inspected Steward's Swipe route, Portir's buy route, Venus guides and Binance Agentic Wallet's market-order reference. The inspected sources don't show one guided target-sized sale versus borrow comparison. Steward already covers much of the borrow task, and Binance Agentic Wallet covers sale quotes. No competitor or holder workflow was exercised end to end.
 
 **CEO decision:** treat the remaining gap as a hypothesis, not a product advantage. Keep D-017 only through the 4 October checkpoint. Don't broaden scope because a feature is absent from a README. Require a consenting holder's same-cash task, defensible cost interpretation and account-specific risk boundary before claiming an actionable comparison. Narrow or retire the cash-choice claim if those gates cannot be met.
+
+## D-032: keep the judge demo local until quota controls exist
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** public deployment blocked; one reusable hardening slice accepted
+
+The [public-demo review](../agent-reports/product-review/2026-10-03-public-demo-gate.md) found that localhost-only routing prevents a public browser path and that the signed Binance quote endpoint has no abuse budget or concurrency bound. Edge rate limits alone wouldn't stop distributed quota use. A small local code slice now bounds and validates public Venus and BNB RPC responses and refuses redirects, with 37 Python 3.9 unit tests passing and one successful public-read smoke check.
+
+**CEO decision:** keep the app bound to loopback and the repository private. Implement public-host routing, server-side quota controls and process supervision only if the 4 October product checkpoint keeps this task. Do not expose the current server through a tunnel or place Binance credentials into a public process yet. The founder's specific authorization is required for deployment, DNS, repo publication and submission.
