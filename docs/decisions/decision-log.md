@@ -358,3 +358,13 @@ The [Plus Sol stop review](../agent-reports/product-review/2026-10-03-d017-stop-
 The [same-cash technical check](../research/2026-10-03-target-minimum-check.md) made one signed identity search, two signed quotes and one unsigned `/swap` build. For a 100 USDT target, the candidate's quote estimated 100.000443760010104468 USDT, while its 0.5% slippage minimum was 99.500441541210053945 USDT. The request used a nonholder address and did not sign, simulate or broadcast.
 
 **CEO decision:** keep the app's existing quote comparison explicitly labelled **before costs** and add a visible warning that the built minimum can be below the target. Do not treat a target-sized estimate as guaranteed cash or implement an automatic slippage buffer before the D-017 checkpoint. A future actionable target verdict needs a fresh built minimum, explicit slippage choice, allowance and cost treatment, and a holder task. This finding strengthens the existing cost gate; it does not select a different product.
+
+## D-035: nonempty Core state narrows ABI uncertainty only
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** technical observation; D-030 and D-033 unchanged
+
+A [bounded public read](../research/2026-10-03-populated-core-account-read.md) found one governance account with five entered Venus Core markets. At block 125402171, the deployed Core returned error 0, positive liquidity and no shortfall for both current risk selectors; the app displayed `cushion` for both. The account's NVDAB balance was zero. The address was not retained.
+
+**CEO decision:** treat this as evidence for the nonempty ABI and current-state label path, not for source arithmetic parity or a bStock holder task. Keep the proposed post-action account forecast out of the UI. The 4 October cash-choice checkpoint still requires a consenting holder, defensible sale costs and a personal-risk boundary.
