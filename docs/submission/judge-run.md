@@ -23,6 +23,6 @@ Open `http://127.0.0.1:8000`. Set `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRE
 
 ## Evidence and limits
 
-The [3 October read-only receipt](../research/2026-10-03-usdc-nvdab-roundtrip-quote.md) recorded entry and inverse quotes for 5 USDC from a temporary nonholder address. The receipt predates this UI. It doesn't validate this screen end to end, a later sell, issuer eligibility or paid costs. The [DX field log](../dx/field-log.md) records actual API experiences and missing observations. The [spec](../product/pre-entry-exit-spec.md) explains each state and deliberate exclusions.
+The [3 October current-build observation](../research/2026-10-03-exit-check-live-browser.md) records three 5 USDC entry and inverse checks from the local app, including a continuous browser capture with a sanitized [record](video-record.json). Those checks verify the local read-only path on that date. They don't validate a later sell, issuer eligibility or paid costs. The [DX field log](../dx/field-log.md) records actual API experiences and missing observations. The [spec](../product/pre-entry-exit-spec.md) explains each state and deliberate exclusions.
 
 The initial screen doesn't connect a wallet or execute a swap. Approval cost, gas payment, slippage minimum, actual fill and future exit availability are unknown. The archived Venus research panel is at `/venus-scenario` and isn't part of this entry task. The app binds to localhost until a separate deployment review and authorization.

@@ -1,0 +1,32 @@
+{
+  "source": "One continuous system Chrome capture of the local final app",
+  "http_status": 200,
+  "status": "BOTH_ROUTES_QUOTED",
+  "metadata_block": 125561266,
+  "metadata_block_time_utc": "2026-10-03T22:05:17+00:00",
+  "entry": {
+    "input_amount": "5",
+    "estimated_output": "0.021265631210341636",
+    "from_symbol": "USDC",
+    "to_symbol": "NVDAB",
+    "vendor": "LiquidMesh",
+    "execution_mode": "SWAP",
+    "capture_time_utc": "2026-10-03T22:05:19.040Z",
+    "network_fee_usd_estimate": "0.01891553"
+  },
+  "immediate_inverse": {
+    "input_amount": "0.021265631210341636",
+    "estimated_output": "5.001168101976778857",
+    "from_symbol": "NVDAB",
+    "to_symbol": "USDC",
+    "vendor": "LiquidMesh",
+    "execution_mode": "SWAP",
+    "capture_time_utc": "2026-10-03T22:05:19.358Z",
+    "network_fee_usd_estimate": "0.01963035"
+  },
+  "page_errors": 0,
+  "limits": [
+    "No approval, signature, transaction or fill",
+    "Later exit, geographic eligibility and final costs unverified"
+  ]
+}

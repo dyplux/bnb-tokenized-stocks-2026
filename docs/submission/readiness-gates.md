@@ -4,12 +4,12 @@
 
 **Decision update:** [D-045](../decisions/decision-log.md) retired the 100 USDT sell-or-borrow claim. [D-048](../decisions/decision-log.md) approved a bounded read-only pre-entry exit prototype immediately. The old holder and Venus product rows below are historical evidence, not active gates. Only the official 11 October lock is a calendar deadline.
 
-| Active gate now | State at private commit `d1d5802` | Next action |
+| Active gate now | State on 3 October, after local browser capture | Next action |
 |---|---|---|
-| New local user task | Main screen and `POST /api/entry-check` written; not yet verified end to end | Review response and failure states against real signed 5 USDC quotes; correct any mismatch. |
+| New local user task | Main screen and `POST /api/entry-check` completed three 5 USDC read-only runs, including one continuous browser capture. Four synthetic failure-path tests passed; 54 tests passed locally. | Keep the result explicitly as an immediate estimate. Recheck from a clean judge checkout before submitting. |
 | Issuer and execution boundary | API quote access observed; personal issuer access, gas, approval, slippage minimum and fill remain unknown | Keep the public claim read-only unless these are resolved with the founder's specific wallet action review. |
-| Judge access | Repo private, localhost only, no video or deployed URL | Prepare a clean judge walkthrough and video from the final behavior, then obtain founder publication approval. |
-| DX and submission | 56 signed calls accounted for in the field log; forms not reported complete | Finish actual DX answers, publish the final accessible links, submit DX then project before 11 October 12:00 UTC. |
+| Judge access | Repo private and localhost only. [Judge instructions](judge-run.md), a continuous raw browser capture, sanitized [record](video-record.json) and [34-second local MP4](video-qa.md) exist. | Obtain a judge-accessible video URL and founder approval to make the repo public. |
+| DX and submission | 65 signed calls accounted for in the field log; forms not reported complete | Finish actual DX answers, publish the final accessible links, submit DX then project before 11 October 12:00 UTC. |
 
 ## Historical gate record for the retired Venus product
 
