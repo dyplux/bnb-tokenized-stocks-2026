@@ -1,0 +1,9 @@
+# Sale target and cost units
+
+**Checked:** 2026-10-03 UTC. This is a source and existing-observation review. No new Binance request, wallet action or product change occurred.
+
+The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) defines `toTokenAmount` as estimated buy-token units, `tradeFee` as an **estimated network fee in USD**, and a built transaction's `minReceiveAmount` as the minimum buy-token amount accepted at its slippage limit. The same reference says custom `feeAmount`, `feeToken` and `actualSwapAmount` are null when a custom fee isn't enabled. `approveTransaction=true` can add separate spender and approval calldata.
+
+In the [read-only 100 USDT task](2026-10-03-target-minimum-check.md), the NVDAB sale quote estimated 100.000443760010104468 USDT. The built transaction at 0.5% slippage set 99.500441541210053945 USDT as its minimum. Its quoted `tradeFee` was 0.02249402 USD; the gas-limit times gas-price ceiling was 0.0000259884585 BNB if the full limit were used. Those quantities have different units and meanings. The network fee would be paid in gas, not automatically deducted from the USDT token output. The transaction wasn't sent, so gas used, approval need, final wallet balance and fill are unknown.
+
+**Decision boundary:** the current UI can say the **estimated USDT output before costs** reached the typed target. It can't say that the user would receive at least 100 USDT. A future actionable cash target must compare the user's accepted `minReceiveAmount` with the typed USDT target, show BNB gas and possible approval separately, and fail closed when any necessary field is missing or expired. It still needs a consenting holder task and a verified route. This analysis doesn't authorize a new UI feature before [D-033](../decisions/decision-log.md)'s 4 October checkpoint.
