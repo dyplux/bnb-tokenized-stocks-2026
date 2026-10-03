@@ -9,7 +9,7 @@
 
 ## Registration and team details
 
-- Confirm whether the hacker registration was submitted. Keep its receipt, account UID and eligibility details private.
+- The founder reported that **Apply as Hacker** was submitted on 2026-10-03, without a confirmation email. Do not repeat it merely because no email arrived. Keep any receipt, account UID and eligibility details private; confirm acceptance with the organizers only if needed.
 - Choose one consistent project or team name and contact email for the registration, DX report and final form. Enter the email directly in the forms.
 - Supply the real human team size, most experienced member's Web3 category and any prior Binance Web3 API use. Coding agents aren't human contributors.
 
