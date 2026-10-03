@@ -402,3 +402,13 @@ The [bounded probe](../research/2026-10-03-nvdab-holder-debt-overlap.md) used on
 The [signed coverage read](../research/2026-10-03-binance-defi-positions-coverage.md) returned NVDAB in a Venus `supply` group and USDT in a Venus `borrow` group for a selected public account. The probe didn't retain whether they belonged to the same pool or position. The response wasn't reconciled to the exact Core pool or BNB block used for candidate selection. It contains current positions, not a post-supply or post-borrow simulation.
 
 **CEO decision:** record DeFi Positions as a technically working research surface, but don't integrate it into the D-017 app before the 4 October checkpoint. It can't replace a consenting holder task or prove a safe personal cash choice. A later use would require pool, contract, amount and freshness reconciliation with on-chain Core reads.
+
+## D-039: public NVDAB holder current-risk parity narrows one technical gap
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** read-only evidence; D-033 unchanged
+
+The [bounded parity probe](../research/2026-10-03-nvdab-holder-current-risk-parity.md) used one signed holder ranking and fixed BNB block 125421781. The first selected public account had entered vNVDAB, positive stored vUSDT debt and three entered markets. Its two active markets produced exact three-word matches for both deployed Core current-risk calls. No account identifier, signed payload or raw position was retained in Git.
+
+**CEO decision:** use this result only to support the current-risk arithmetic for this observed account. It doesn't establish a safe post-action borrow, NVDAB's isolated contribution to account borrowing power, user demand or sale proceeds. Do not add a D-017 product feature before the 4 October 12:00 UTC checkpoint. The consenting holder, cost and personal-risk conditions in D-033 remain open.
