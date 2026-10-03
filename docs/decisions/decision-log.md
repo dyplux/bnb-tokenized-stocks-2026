@@ -372,3 +372,13 @@ A [bounded public read](../research/2026-10-03-populated-core-account-read.md) f
 **2026-10-03 source correction:** the [bounded parity review](../agent-reports/product-review/2026-10-03-venus-parity-source-correction.md) found that the v10.3.0 Lens adds `vaiController.getVAIRepayAmount(account)`, not the raw `mintedVAIs(account)` proposed in an earlier Plus Sol draft. The latter can omit accrued interest. No such local calculation was implemented. Exact parity remains open; D-030 and D-033 stay unchanged.
 
 **2026-10-03 bounded parity update:** a [reproducible read-only probe](../research/2026-10-03-venus-core-bounded-arithmetic-parity.md) exactly matched both deployed current-risk tuples for one nonempty Core account at block 125405244. The account used pool 0, one active market and zero VAI repayment, so E-Mode, nonzero VAI and post-action cases remain open. This narrows the arithmetic uncertainty but doesn't approve a personal forecast or change the 4 October product gate.
+
+## D-036: narrow the differentiation claim after live Steward use
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** read-only competitor evidence; D-033 unchanged
+
+The [live Steward Swipe check](../research/2026-10-03-steward-live-swipe-same-task.md) exercised its public `Use` flow with 1 NVDAB. It displayed $82.09 fundable at target HF 2.0 and $102.62 at HF 1.6, at BNB blocks 125408210 and 125408215. The latter exceeds the 100 USDT illustrative cash need. The observed flow did not ask for a cash target or show a matched sale quote. No wallet was connected, and its $0 existing debt was a default scenario.
+
+**CEO decision:** treat Steward as a working borrow-side substitute, not only a code-level overlap. Keep the same-cash sale comparison as an unproven difference that must matter to a consenting holder. Make no D-017 product feature change before the 4 October 12:00 UTC checkpoint. D-031's source-only note remains historical; this live observation supersedes its statement that no competitor runtime task had been exercised.
