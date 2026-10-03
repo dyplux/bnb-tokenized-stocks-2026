@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Ephemeral, read-only Venus Core current-state parity probe."""
+import argparse
 import json
 import re
 import urllib.request
@@ -127,12 +128,32 @@ def calculate(account, markets, snapshots, strategy, price_oracle, vai_repay):
 
 def main():
     global BLOCK, TAG
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--voter-index",
+        type=int,
+        default=3,
+        metavar="INDEX",
+        help="voter entry index to probe, from 0 through 4 (default: 3)",
+    )
+    args = parser.parse_args()
+    if not 0 <= args.voter_index <= 4:
+        parser.error("--voter-index must be between 0 and 4")
+
     if int(rpc("eth_chainId", []), 16) != 56:
         raise RuntimeError("wrong chain")
     BLOCK = int(rpc("eth_blockNumber", []), 16)
     TAG = hex(BLOCK)
     response = request(API)
-    account = address(response["result"][3]["address"])
+    if not isinstance(response, dict) or not isinstance(response.get("result"), list):
+        raise RuntimeError("API response missing voter result entries")
+    voters = response["result"]
+    if len(voters) <= args.voter_index:
+        raise RuntimeError("API response missing voter entry at index %d" % args.voter_index)
+    voter = voters[args.voter_index]
+    if not isinstance(voter, dict) or "address" not in voter:
+        raise RuntimeError("API response missing address for voter entry at index %d" % args.voter_index)
+    account = address(voter["address"])
     markets = assets_in(account)
     pool_id = one(CORE, "73769099", account)
     spot = returned_address(CORE, "7dc0d1d0")
