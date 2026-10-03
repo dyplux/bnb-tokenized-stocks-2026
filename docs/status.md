@@ -7,6 +7,7 @@
 **Product selected:** one active, unvalidated hypothesis: a [pre-entry inverse exit check](product/pre-entry-exit-spec.md) for a self-custodial user. The immediate read-only prototype is authorised; issuer eligibility, independent demand and final execution costs are unproved.
 **Application code:** `app/entry.html` is the new local main screen and `POST /api/entry-check` quotes a 5 USDC default, bounded at 100 USDC, in both directions after identity and on-chain token checks. The previous Venus scenario remains under `/venus-scenario` as archived research. The [judge walkthrough](submission/judge-run.md) now gives a clean-start path without invented output. No funded transaction or public deployment is present.
 **Deployment:** none
+**Submission preparation:** [judge-run instructions](submission/judge-run.md), [project-form draft](submission/project-form-draft.md), [DX draft](submission/dx-form-draft.md) and a [55-second video storyboard](submission/video-storyboard.md) exist. The video still needs a real final-build capture and a judge-accessible URL. The project and DX forms have not been reported as submitted.
 
 **Public-access boundary:** the [issuer FAQ review](research/2026-10-03-bstocks-public-access-boundary.md) found a stated geographic-control duty for third-party bStocks integrations but no endpoint path in that FAQ. Keep this prototype local while preparing the event's accepted judge-run instructions. A quote isn't an eligibility determination.
 
