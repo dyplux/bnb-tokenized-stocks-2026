@@ -1002,8 +1002,8 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(200, result)
         except ScenarioError as exc:
             self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
-        except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, RuntimeError) as exc:
-            self.send_json(502, {"error": {"field": "service", "message": "Live Venus data is unavailable. No scenario was calculated.", "detail": str(exc)[:180]}})
+        except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, RuntimeError):
+            self.send_json(502, {"error": {"field": "service", "message": "Live Venus data is unavailable. No scenario was calculated."}})
 
     def do_POST(self):
         endpoint = urlparse(self.path).path

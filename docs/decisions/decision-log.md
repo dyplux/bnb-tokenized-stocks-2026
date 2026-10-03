@@ -341,6 +341,8 @@ The [public-demo review](../agent-reports/product-review/2026-10-03-public-demo-
 
 **2026-10-03 implementation update:** the process now enforces a small quote budget and accepts an explicitly configured HTTPS Host and matching Origin for a future reverse proxy. This preparation happened before the checkpoint because it doesn't expose the server, change the product or consume an API call. The process remains bound to loopback and no public origin is configured by default. Public deployment, process supervision, edge controls and the product decision remain blocked. The local Python 3.9 suite passed 49 tests.
 
+**2026-10-03 GET error correction:** `/api/scenario` now sends only the stable 502 service message when a Venus read fails, without raw exception detail. A synthetic secret-marker regression and the full 50-test Python 3.9 suite passed locally. This is a disclosure fix, not a change to D-017 or permission to deploy.
+
 ## D-033: record the product stop recommendation before the checkpoint
 
 **Date:** 2026-10-03

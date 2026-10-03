@@ -139,6 +139,20 @@ class QuoteSafetyTests(unittest.TestCase):
         self.assertEqual(handler.send_json.call_args.args[0], 502)
         self.assertEqual(request_quote.call_count, 2)
 
+    def test_scenario_error_does_not_expose_exception_detail(self):
+        marker = "SYNTHETIC_SECRET_MARKER"
+        handler = Handler.__new__(Handler)
+        handler.path = "/api/scenario?units=1&cash=100"
+        handler.send_json = Mock()
+
+        with patch("app.server.fetch_markets", side_effect=RuntimeError(marker)):
+            Handler.do_GET(handler)
+
+        status, payload = handler.send_json.call_args.args
+        self.assertEqual(status, 502)
+        self.assertNotIn(marker, json.dumps(payload))
+        self.assertNotIn("detail", payload["error"])
+
 
 if __name__ == "__main__":
     unittest.main()
