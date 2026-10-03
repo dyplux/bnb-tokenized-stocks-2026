@@ -1,6 +1,6 @@
 # First post-Friday-close NVDAB quote protocol
 
-**Prepared:** 2026-10-02 23:31 UTC, before the requested measurement. **State:** one bounded read-only probe scheduled for no earlier than 2026-10-03 00:02 UTC. No result is claimed in this file.
+**Prepared:** 2026-10-02 23:31 UTC, before the requested measurement. **State:** the one bounded read-only probe completed at 2026-10-03 00:02 UTC. See the separate [result](2026-10-03-after-friday-close-quote.md); this protocol preserves the question and method defined before the call.
 
 ## Question
 

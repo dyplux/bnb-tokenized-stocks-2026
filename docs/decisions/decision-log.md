@@ -276,3 +276,13 @@ The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog
 The [D-017 spec](../product/one-page-spec.md) asks for remaining token units beside a partial sale. The existing optional BNB Chain balance read and Binance candidate quote can support exact arithmetic, but neither proves that a sale executes. The [slice](../product/remaining-units-slice.md) shows the remainder only for a matching wallet, matching inputs, a recent balance block and local receipt, and an unexpired target-reaching quote. It shows an insufficiency warning instead of a negative remainder.
 
 **CEO decision:** keep the result in the separate Sale check, explicitly conditional, with the balance block. The main Sell card remains Unquoted. Synthetic Chrome QA at 320 and 1440 CSS pixels and 35 local tests passed; no holder or live quote was used for this increment. The 4 October product checkpoint and all holder, fee and personal-risk gates remain open.
+
+## D-027: after-hours route availability is observed once
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** one technical uncertainty narrowed; no release approval
+
+The [pre-registered probe](../research/2026-10-03-weekend-quote-protocol.md) made one signed, read-only request at 00:02 UTC on Saturday, 20:02 Friday in New York, after Nasdaq's published late-session end. The [result](../research/2026-10-03-after-friday-close-quote.md) was HTTP 200/business code 0, with one LiquidMesh SWAP estimate for 1 NVDAB. Its estimated output was 234.581506161816758656 USDT before final costs. A temporary nonholder address supplied the API's required wallet field. No wallet signed or traded.
+
+**CEO decision:** count this as one positive technical quote-availability observation after the published Friday late session. Don't call it proof of executable weekend access, a price edge or a better cash choice. Preserve the 4 October D-017 checkpoint. The consenting holder, existing-venue, final-cost and personal Venus-risk gates still decide whether to keep, redesign or retire the product.
