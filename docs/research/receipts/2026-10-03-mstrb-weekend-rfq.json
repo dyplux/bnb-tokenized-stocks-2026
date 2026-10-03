@@ -1,0 +1,194 @@
+{
+  "capture_date_utc": "2026-10-03",
+  "rpc_preflight": "chain_56_zero_balances",
+  "max_signed_gets": 6,
+  "signed_gets_made": 6,
+  "cases": [
+    {
+      "input_usdt": 25,
+      "buy": {
+        "business_code": 0,
+        "capture_time_utc": "2026-10-03T14:15:07.076Z",
+        "error_kind": "none",
+        "http_status": 200,
+        "latency_ms": 726.627,
+        "route_count": 1
+      },
+      "buy_selection_error": null,
+      "buy_route": {
+        "estimateGasFee": "450000",
+        "executionMode": "SWAP",
+        "fromToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0x55d398326f99059ff775485246999027b3197955",
+          "tokenSymbol": "USDT"
+        },
+        "fromTokenAmount": "25000000000000000000",
+        "isBest": true,
+        "priceImpactPercent": "0.0132286066",
+        "toToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+          "tokenSymbol": "MSTRB"
+        },
+        "toTokenAmount": "154225813083690279",
+        "tradeFee": "0.02347403",
+        "vendorName": "LiquidMesh"
+      },
+      "sell": {
+        "business_code": 0,
+        "capture_time_utc": "2026-10-03T14:15:07.884Z",
+        "error_kind": "none",
+        "http_status": 200,
+        "latency_ms": 296.741,
+        "route_count": 1
+      },
+      "sell_selection_error": null,
+      "sell_route": {
+        "estimateGasFee": "450000",
+        "executionMode": "SWAP",
+        "fromToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+          "tokenSymbol": "MSTRB"
+        },
+        "fromTokenAmount": "154225813083690279",
+        "isBest": true,
+        "priceImpactPercent": "0.0000000000",
+        "toToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0x55d398326f99059ff775485246999027b3197955",
+          "tokenSymbol": "USDT"
+        },
+        "toTokenAmount": "24938734772286846208",
+        "tradeFee": "0.02396435",
+        "vendorName": "LiquidMesh"
+      },
+      "indicative_return_ratio": 0.99754939
+    },
+    {
+      "input_usdt": 100,
+      "buy": {
+        "business_code": 0,
+        "capture_time_utc": "2026-10-03T14:15:08.259Z",
+        "error_kind": "none",
+        "http_status": 200,
+        "latency_ms": 479.342,
+        "route_count": 1
+      },
+      "buy_selection_error": null,
+      "buy_route": {
+        "estimateGasFee": "450000",
+        "executionMode": "SWAP",
+        "fromToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0x55d398326f99059ff775485246999027b3197955",
+          "tokenSymbol": "USDT"
+        },
+        "fromTokenAmount": "100000000000000000000",
+        "isBest": true,
+        "priceImpactPercent": "0.0140105319",
+        "toToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+          "tokenSymbol": "MSTRB"
+        },
+        "toTokenAmount": "616481109458514946",
+        "tradeFee": "0.02302556",
+        "vendorName": "LiquidMesh"
+      },
+      "sell": {
+        "business_code": 0,
+        "capture_time_utc": "2026-10-03T14:15:08.821Z",
+        "error_kind": "none",
+        "http_status": 200,
+        "latency_ms": 368.488,
+        "route_count": 1
+      },
+      "sell_selection_error": null,
+      "sell_route": {
+        "estimateGasFee": "450000",
+        "executionMode": "SWAP",
+        "fromToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+          "tokenSymbol": "MSTRB"
+        },
+        "fromTokenAmount": "616481109458514946",
+        "isBest": true,
+        "priceImpactPercent": "-0.0000000000",
+        "toToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0x55d398326f99059ff775485246999027b3197955",
+          "tokenSymbol": "USDT"
+        },
+        "toTokenAmount": "99686876790020221504",
+        "tradeFee": "0.02302454",
+        "vendorName": "LiquidMesh"
+      },
+      "indicative_return_ratio": 0.99686877
+    },
+    {
+      "input_usdt": 500,
+      "buy": {
+        "business_code": 0,
+        "capture_time_utc": "2026-10-03T14:15:09.269Z",
+        "error_kind": "none",
+        "http_status": 200,
+        "latency_ms": 306.543,
+        "route_count": 1
+      },
+      "buy_selection_error": null,
+      "buy_route": {
+        "estimateGasFee": "450000",
+        "executionMode": "SWAP",
+        "fromToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0x55d398326f99059ff775485246999027b3197955",
+          "tokenSymbol": "USDT"
+        },
+        "fromTokenAmount": "500000000000000000000",
+        "isBest": true,
+        "priceImpactPercent": "0.0049381792",
+        "toToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+          "tokenSymbol": "MSTRB"
+        },
+        "toTokenAmount": "3081146400362247958",
+        "tradeFee": "0.02398203",
+        "vendorName": "LiquidMesh"
+      },
+      "sell": {
+        "business_code": 0,
+        "capture_time_utc": "2026-10-03T14:15:09.657Z",
+        "error_kind": "none",
+        "http_status": 200,
+        "latency_ms": 343.352,
+        "route_count": 1
+      },
+      "sell_selection_error": null,
+      "sell_route": {
+        "estimateGasFee": "450000",
+        "executionMode": "SWAP",
+        "fromToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+          "tokenSymbol": "MSTRB"
+        },
+        "fromTokenAmount": "3081146400362247958",
+        "isBest": true,
+        "priceImpactPercent": "0.0000000000",
+        "toToken": {
+          "decimal": "18",
+          "tokenContractAddress": "0x55d398326f99059ff775485246999027b3197955",
+          "tokenSymbol": "USDT"
+        },
+        "toTokenAmount": "498232401150336897888",
+        "tradeFee": "0.02254513",
+        "vendorName": "LiquidMesh"
+      },
+      "indicative_return_ratio": 0.9964648
+    }
+  ]
+}
