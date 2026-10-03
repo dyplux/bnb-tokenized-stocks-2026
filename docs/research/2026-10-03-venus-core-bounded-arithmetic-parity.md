@@ -10,6 +10,8 @@ For each entered market, the script reads the vToken account snapshot, effective
 
 The deployed vToken calls in this sample returned six 32-byte words for `getAccountSnapshot`. The Lens source consumes the first four declared return values. The script does the same and counts the two extra words per market without assigning them undocumented meaning.
 
+A first draft of the probe sent vToken and oracle calls to Core Unitroller and compared one raw collateral/debt pair with a net-risk tuple. It was rejected in review before execution. The corrected script targets each returned contract, computes both strategies separately, and compares the exact three-integer net tuples.
+
 ## Observed result
 
 | Check | Result |
