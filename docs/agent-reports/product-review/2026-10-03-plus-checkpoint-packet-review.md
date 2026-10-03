@@ -41,6 +41,8 @@ The intended result is a source-dated, same-cash comparison. The user makes the 
 
 **[Inference]** A generic NVDAB borrowing-capacity card would duplicate Steward. The only remaining proposed distinction is placing a target-sized sale estimate beside the borrowing path. That distinction remains unproven unless it changes a consenting holder’s decision.
 
+**2026-10-03 coordinator update:** verified Binance accounts also announce a [bStocks DeFi Center](../../research/2026-10-03-binance-bstocks-defi-substitute.md) with lending and borrowing access, while Binance's Wallet guide documents a generic DeFi Loan flow. Those public sources don't prove a live NVDAB loan or same-cash sale comparison in the Wallet. They make a generic collateral screen less distinctive and add a first-party path to the holder walkthrough. The reviewer's keep-or-retire recommendation is unchanged.
+
 ### Predetermined keep or retire criteria
 
 **Keep the cash-choice claim only if all three D-033 gates are satisfied by the checkpoint:**

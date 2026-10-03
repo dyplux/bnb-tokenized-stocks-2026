@@ -385,6 +385,8 @@ The [live Steward Swipe check](../research/2026-10-03-steward-live-swipe-same-ta
 
 **CEO decision:** treat Steward as a working borrow-side substitute, not only a code-level overlap. Keep the same-cash sale comparison as an unproven difference that must matter to a consenting holder. Make no D-017 product feature change before the 4 October 12:00 UTC checkpoint. D-031's source-only note remains historical; this live observation supersedes its statement that no competitor runtime task had been exercised.
 
+**2026-10-03 source update:** verified Binance accounts also announced a [bStocks DeFi Center](../research/2026-10-03-binance-bstocks-defi-substitute.md) with lending and borrowing access. This adds a first-party discovery route to the incumbent set. The sources don't show a completed NVDAB loan or same-cash sale comparison, so they don't prove full task equivalence. D-033's checkpoint and the need for a holder walkthrough remain unchanged.
+
 ## D-037: account overlap confirms use of collateral and debt, not a cash task
 
 **Date:** 2026-10-03
