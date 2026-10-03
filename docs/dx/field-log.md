@@ -88,6 +88,10 @@ On 2026-10-03 at about 00:34 UTC, a bounded interface change moved the successfu
 
 On 2026-10-03, the Venus API and BNB RPC clients were changed to refuse HTTP redirects, cap each response at 2 MiB and require JSON objects. Synthetic redirect and oversized-body checks passed. A full run on the repository's minimum Python 3.9 initially found a test-fixture error: closing a synthetic `HTTPError` whose body was `None` raised `KeyError`. After giving the fixture a closable in-memory body, all **37** local tests passed. The edited clients then returned 51 Venus market rows and BNB chain ID 56 in one public-read smoke check. No Binance key, signed Web3 call, wallet, deployment or public judge URL was used. The [public-demo gate](../agent-reports/product-review/2026-10-03-public-demo-gate.md) still blocks exposure of the current local server.
 
+## Clean archive without credentials
+
+On 2026-10-03 at 01:42 UTC, a fresh `git archive HEAD` of `36130dc` started on the SSD with no `.env` and with Binance Web3 environment variables removed. The landing page returned HTTP 200 and the 1 NVDAB / 100 USDT live Venus scenario returned HTTP 200 with source time `2026-10-03T01:42:14+00:00`. A valid quote request returned `missing_credentials` before any signed API call. The server was stopped and the temporary checkout removed. This checks no-key local onboarding, not a holder task or a deployed judge path. [Reproduction record](../research/2026-10-03-clean-archive-reproduction.md).
+
 ## Same-task human observation, to fill when available
 
 | Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |
