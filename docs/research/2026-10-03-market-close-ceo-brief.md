@@ -33,8 +33,8 @@ This is a hypothesis about a decision, not demonstrated demand. The [3 October t
 
 | Substitute | Observed or claimed capability | Remaining question |
 |---|---|---|
-| [PancakeSwap Stocks](https://pancakeswap.finance/stocks) | Our 3 October unauthenticated visit showed asset discovery, issuer choices and Trade actions. | Does its live quote path show the same-size inverse exit and full costs before buying? We didn't reach that screen. |
-| [Yostocks](https://github.com/yostocks-protocol/yostocks) | Its public README and DX log describe buy/sell execution and quote guards, including paused assets and near-zero output. | Does its current UI expose an immediate, size-matched inverse quote before purchase? The README alone can't answer. |
+| [PancakeSwap Stocks](https://pancakeswap.finance/stocks) | Our 3 October browser visit showed asset discovery, 11 NVIDIA issuers and Trade actions. A jurisdiction confirmation appeared before the 5 USDC task could finish. | Does its live quote path show the same-size inverse exit and full costs before buying? Unverified behind that gate. |
+| [Yostocks](https://github.com/yostocks-protocol/yostocks) | Its public README and DX log describe buy/sell execution and quote guards. [Pinned code review](2026-10-03-same-task-substitute-check.md) found the reviewed buy path omits the inverse exit; the sell path requires a positive holding. | The code-level difference is specific; its bot wasn't invoked and user demand remains unproved. |
 | [Ondo](https://ondo.finance/ondo-stocks) and [Binance](https://www.binance.com/en/blog/markets/8716450413672266850) | Issuer and exchange products have 24/7 features for eligible users. | Which features can a self-custodial founder actually use in their region and venue? Exchange-account conversion isn't their route. |
 | [Robinhood](https://robinhood.com/us/en/newsroom/hood-summit-2026/) | Its 24 Hour Market reaches Friday 8pm ET; on 29 September it announced future weekend equities trading. | Its user access and chain route differ, and the weekend advantage may shrink. |
 
