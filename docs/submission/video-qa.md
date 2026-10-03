@@ -1,6 +1,6 @@
 # Exit Check video QA
 
-**Reviewed:** 2026-10-03. **Deliverable:** 34-second MP4 at `exit-check-demo.mp4` in the founder's local Dyplux folder, 1920 × 1080, 24 frames per second. The video and source stay outside the public project repository until publication is authorized.
+**Reviewed:** 2026-10-03. **State:** internal technical prototype, not a submission deliverable. The 34-second MP4 is at `exit-check-demo.mp4` in the founder's local Dyplux folder, 1920 × 1080, 24 frames per second. The video and source stay outside the public project repository.
 
 The app sequence came from one continuous 10.64-second system Chrome recording. It shows the click, waiting state and returned dual-route result. The visible address was masked before capture. The quote values on cards were loaded from the same capture's sanitized [record](video-record.json). No card calls the above-5-USDC inverse estimate profit or settled proceeds.
 
@@ -8,4 +8,4 @@ The HTML composition rendered 816 of 816 frames without page errors. `ffprobe` c
 
 Final MP4 SHA-256: `f3208058f06728c00ee02f55b77fa847f49a7f99bc2bd12cca0d1b2959813dac`. Complete ZIP SHA-256: `2536dfb943137b764420b4f4683999aa3ad31b06435f83b9118288a97c5ab862`.
 
-**External-use gate:** review the final file once at normal playback speed, then give it a judge-accessible URL. The repository is still private; the final card deliberately contains no URL. This review doesn't establish issuer eligibility, a swap fill or a later exit.
+**External-use gate:** product selection and founder review come first. This film demonstrates a technical route but does not establish user value, originality, issuer eligibility, a swap fill or a later exit. The private draft release created on 3 October was deleted. Do not publish or submit this cut as the product demo.

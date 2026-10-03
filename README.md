@@ -1,6 +1,6 @@
-# Exit Check by Dyplux
+# Exit Check by Dyplux, research prototype
 
-**See an immediate exit quote before buying a tokenized stock.** Enter a USDC amount and a public BNB Chain address. Exit Check asks Binance Web3 for a NVDAB entry quote, then asks for an inverse quote on the exact estimated NVDAB amount. It makes no trade.
+**Product decision still open.** This read-only prototype asks Binance Web3 for a NVDAB entry quote, then an inverse quote on the exact estimated NVDAB amount for a chosen USDC amount and public BNB Chain address. It makes no trade. The founder has not approved this as the final product or its demo.
 
 On Saturday 3 October 2026 at 22:05 UTC, the local app returned both directions for 5 USDC. The entry estimate was **0.021265631210341636 NVDAB**; the immediate inverse estimate was **5.001168101976778857 USDC** at BNB metadata block **125561266**. Those are separate, expiring quotes. The inverse amount above 5 USDC isn't profit: approval, gas, slippage, eligibility and execution weren't verified. See the [sanitized record](docs/submission/video-record.json) and [observation](docs/research/2026-10-03-exit-check-live-browser.md).
 
@@ -23,7 +23,7 @@ The screen distinguishes **Both routes quoted**, **Entry route unavailable**, **
 - The [current-build observation](docs/research/2026-10-03-exit-check-live-browser.md) records three local read-only runs on 3 October. The [video record](docs/submission/video-record.json) corresponds to one continuous browser capture, with no wallet address or credentials retained.
 - The [34-second video QA](docs/submission/video-qa.md) describes the local MP4 and full source archive. A public video URL hasn't been published yet.
 - `python3 -m unittest discover -s tests -q` ran **54 synthetic tests** locally. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37157834389) passed on private commit `45f0e0e` without credentials or live API calls.
-- The [DX field log](docs/dx/field-log.md) separates signed API observations, local integration errors and missing measurements. The [one-page spec](docs/product/pre-entry-exit-spec.md) defines the chosen task and excluded claims.
+- The [DX field log](docs/dx/field-log.md) separates signed API observations, local integration errors and missing measurements. The [one-page spec](docs/product/pre-entry-exit-spec.md) defines this prototype's task and excluded claims; [D-049](docs/decisions/decision-log.md) reopens the product decision.
 
 ## Limits and submission state
 

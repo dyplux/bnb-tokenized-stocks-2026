@@ -4,13 +4,13 @@
 
 | Form field | Prepared answer or owner |
 |---|---|
-| Team or project name | Exit Check by Dyplux, working name. Founder confirms the final name matches registration and DX report. |
+| Team or project name | Undecided. Exit Check is a working prototype name only. Founder confirms any final name matches registration and DX report after product selection. |
 | Contact email | Founder enters directly in the form. |
 | Prize wallet or Binance UID | Founder enters directly in the form. Never commit either. |
 | Telegram | Optional; founder decides. |
 | Tracks | Main track only. No Agentic Wallet or Agent Studio claim. |
 | Public repository URL | `https://github.com/dyplux/bnb-tokenized-stocks-2026`, only after the founder authorizes public visibility and the final history/media review passes. |
-| Demo video URL | A 34-second MP4 of the actual local behavior exists at `exit-check-demo.mp4` in the founder's local Dyplux folder; a judge-accessible URL is pending. The live form requires a URL and the video must remain at or below four minutes. |
+| Demo video URL | No approved product video or judge-accessible URL exists. The 34-second `exit-check-demo.mp4` is an internal technical prototype. This form draft must be revised after the product decision. |
 | Deployed link or judge instructions | [Judge-run instructions](judge-run.md). The official event page accepts instructions in place of a deployed link. |
 | DX report | Submit the factual DX form first, then tick its completion in the project form. |
 

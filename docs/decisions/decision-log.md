@@ -508,3 +508,13 @@ The founder identified a process failure: API work and safety gates accumulated 
 The founder rejected the calendar-style staging in D-047. The [same-task review](../research/2026-10-03-same-task-substitute-check.md) found a specific code-level gap in Yostocks' reviewed path: its buyer scan has no inverse quote, and its seller scan requires an existing token balance. PancakeSwap has a mature stock surface, but its full 5 USDC quote path remains unverified behind a jurisdiction confirmation. [Two signed 5 USDC Web3 quotes](../research/2026-10-03-usdc-nvdab-roundtrip-quote.md) already showed both directions for one temporary address. They didn't prove execution, cost or eligibility.
 
 **CEO decision:** implement [one read-only vertical slice](../product/pre-entry-exit-spec.md) immediately in the separate private repo. It should answer whether the exact entered size has an entry route and an immediate inverse exit route, with timings and missing costs visible. This is a working hypothesis, not verified demand or a guarantee of originality. Revisit it if an incumbent's live flow already gives the same decision or an eligible asset cannot be established. No funding, signing, production deploy or public release is part of this decision. The fixed intermediate dates in D-047 are superseded; the event lock on 11 October remains.
+
+## D-049: return to the product gate before media and submission
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** product decision reopened; video work stopped
+
+The 5 USDC read-only flow was implemented and observed locally three times on 3 October. It returned both quote directions, but no purchase, sale, paid cost, eligibility decision or user advantage was observed. A 34-second video was then rendered before the founder understood or accepted the product. A private GitHub draft release was created prematurely and deleted on 3 October after the founder objected. The local film and source remain internal technical artifacts.
+
+**CEO decision:** the prototype is not a selected product or a submission demo. Stop work on the video, publication packet and form narrative. Explain the user's task in ordinary language, compare the same task with existing products, and identify a concrete decision that the prototype changes. If that difference is absent or too small, retire the prototype and select a better task. Do not use a successful API response or finished film as evidence of product quality. Record the next decision in this log before resuming media or submission work.

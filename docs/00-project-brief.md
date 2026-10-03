@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-01
 **Name:** Exit Check, working name
-**Stage:** read-only pre-entry exit prototype under D-048
+**Stage:** read-only pre-entry exit prototype; product decision reopened under D-049
 **Owner:** Dyplux
 
 ## Mission
