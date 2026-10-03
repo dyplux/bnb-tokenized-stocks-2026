@@ -296,3 +296,13 @@ The [pre-registered probe](../research/2026-10-03-weekend-quote-protocol.md) mad
 The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) describes a roughly 30-second `quoteId` TTL. The app's earlier 20-second UI timer began only after the server had finished identity, RPC and quote calls. A slow request could therefore display an estimate beyond that vendor window.
 
 **CEO decision:** start the conservative 20-second display window when the browser sends the local request. Expire a slower response as soon as it arrives. The [slice](../product/quote-age-slice.md) passed synthetic delayed-response checks and 35 local tests without a live API call. This closes one stale-display path; it doesn't change the D-017 holder, executable cost or personal risk gates.
+
+## D-029: show a guarded sale estimate in the main comparison
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** bounded interface slice completed; product gate open
+
+The [clean local browser path](../research/2026-10-03-clean-local-path-result.md) returned a target-sized estimate, but the main Sell card still said Unquoted. A [Plus Sol product review](../agent-reports/product-review/2026-10-03-clean-path-gate.md) identified this as a misleading first impression. No holder, net proceeds or personal post-deposit risk was observed.
+
+**CEO decision:** supersede D-026's main-card display restriction for a current, input-matched, target-reaching quote and Venus scenario. Show the estimate beside the borrow illustration, labelled before costs. If a fresh matching public balance is below the candidate, suppress the main-card amount and show insufficiency. Mark absent or stale balance unverified. Expire and clear on input change or failure. The [slice](../product/sale-card-clarity-slice.md) passed synthetic browser states and 35 local tests. This improves legibility only; D-017's holder, cost, personal-risk and incumbent gates remain open.

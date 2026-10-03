@@ -80,6 +80,10 @@ On 2026-10-02 at 23:54 UTC, a read-only UI slice joined the existing balance rea
 
 On 2026-10-03 UTC, a browser-only change moved the 20-second display window from response arrival to the start of the local quote request. Synthetic headless Chrome at 320 CSS pixels intercepted `/api/*`; a controlled monotonic-clock offset modelled 21 seconds of elapsed request time and the estimate expired before display. At 17 seconds elapsed, it stayed visible for about three seconds, then expired. There were no page errors or horizontal overflow. The 35 local tests and inline JavaScript syntax check passed. This used no signed Binance call or live holder data. See the [slice](../product/quote-age-slice.md).
 
+### Main sale card, local QA
+
+On 2026-10-03 at about 00:34 UTC, a bounded interface change moved the successful, current target-sized sale estimate into the main Sell card beside the hypothetical borrow illustration. A synthetic Chrome run at 320 and 1440 CSS pixels intercepted all three local API paths. It covered scenario-first with a fresh 1 NVDAB balance, quote-first with no balance, 0 and 0.4 NVDAB insufficiency, stale balance, quote failure, below-target output, input edit and 20-second expiry. There were no page errors or horizontal overflow. All 35 local tests and inline JavaScript parsing passed. This was a fixture run with no live Binance request, BNB RPC read, holder or trade. See the [slice](../product/sale-card-clarity-slice.md).
+
 ## Same-task human observation, to fill when available
 
 | Consent and eligibility confirmed | UTC time | User's chosen asset and amount | Existing venue result | Web3 API result | User's stated next action | Product decision changed |
