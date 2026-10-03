@@ -14,7 +14,7 @@ import time
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlparse, parse_qs
-from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 getcontext().prec = 36
 API_URL = "https://api.venus.io/markets?chainId=56&limit=100"
@@ -37,6 +37,7 @@ ZERO = Decimal("0")
 MAX_INPUT = Decimal("1000000000000000")
 MIN_INPUT = Decimal("0.000000000000000001")
 SECRET_NAMES = ("BINANCE_WEB3_API_KEY", "BINANCE_WEB3_SECRET_KEY")
+MAX_PUBLIC_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_QUOTE_RESPONSE_BYTES = 1048576
 BINANCE_ERROR_LABELS = {
     40001: "invalid_request_parameters", 40101: "invalid_or_disabled_api_key",
@@ -59,6 +60,24 @@ class ScenarioError(Exception):
         self.field, self.message = field, message
 
 
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def read_json_object(response, label):
+    body = response.read(MAX_PUBLIC_RESPONSE_BYTES + 1)
+    if len(body) > MAX_PUBLIC_RESPONSE_BYTES:
+        raise RuntimeError("%s response exceeded the size limit." % label)
+    try:
+        payload = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise RuntimeError("%s returned malformed JSON." % label) from exc
+    if not isinstance(payload, dict):
+        raise RuntimeError("%s returned a non-object JSON payload." % label)
+    return payload
+
+
 def decimal_input(value, field):
     try:
         number = Decimal(value)
@@ -75,19 +94,24 @@ def decimal_input(value, field):
 
 def fetch_markets():
     request = Request(API_URL, headers={"User-Agent": "Dyplux-Venus-Scenario/0.1 (read-only)", "accept-version": "next"})
-    with urlopen(request, timeout=12) as response:
+    with build_opener(NoRedirect()).open(request, timeout=12) as response:
         if response.status != 200:
             raise RuntimeError("Venus API returned HTTP %s." % response.status)
-        return json.loads(response.read().decode("utf-8"))
+        payload = read_json_object(response, "Venus API")
+        if not isinstance(payload.get("result"), list):
+            raise RuntimeError("Venus API returned an invalid market payload.")
+        return payload
 
 
 def rpc(method, params):
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
     request = Request(RPC_URL, data=body, headers={"Content-Type": "application/json", "User-Agent": "Dyplux-NVDAB-Balance/0.1 (read-only)"})
     try:
-        with urlopen(request, timeout=12) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as exc:
+        with build_opener(NoRedirect()).open(request, timeout=12) as response:
+            if response.status != 200:
+                raise RuntimeError("BNB Chain RPC returned HTTP %s." % response.status)
+            payload = read_json_object(response, "BNB Chain RPC")
+    except (HTTPError, URLError, TimeoutError, RuntimeError) as exc:
         raise RuntimeError("BNB Chain RPC request failed.") from exc
     if not isinstance(payload, dict) or payload.get("error") or "result" not in payload:
         raise RuntimeError("BNB Chain RPC returned no usable result.")
@@ -279,11 +303,6 @@ def validated_trade_fee(value):
     except InvalidOperation:
         return None
     return value if fee.is_finite() and fee >= ZERO else None
-
-
-class NoRedirect(HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        return None
 
 
 def signed_binance_get(path, query_params, api_key, secret_key):

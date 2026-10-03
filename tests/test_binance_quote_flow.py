@@ -1,11 +1,13 @@
 """Synthetic parser checks only; these fixtures are not live Binance API evidence."""
 from datetime import datetime, timezone
 from decimal import Decimal
+from io import BytesIO
 import json
 import unittest
+from urllib.error import HTTPError
 from unittest.mock import MagicMock, patch
 
-from app.server import NVDAB, USDT, request_binance_quote, request_target_sized_quote, signed_binance_get
+from app.server import NVDAB, USDT, fetch_markets, request_binance_quote, request_target_sized_quote, rpc, signed_binance_get
 
 
 WALLET = "0x" + "1" * 40
@@ -68,6 +70,30 @@ def rpc_reply(method, params):
 
 
 class BinanceQuoteFlowTests(unittest.TestCase):
+    def test_public_fetches_reject_redirects(self):
+        opener = MagicMock()
+        redirect = HTTPError("https://example.invalid", 302, "redirect", {"Location": "https://evil.invalid"}, BytesIO())
+        opener.open.side_effect = redirect
+        with patch("app.server.build_opener", return_value=opener):
+            with self.assertRaises(HTTPError):
+                fetch_markets()
+            with self.assertRaisesRegex(RuntimeError, "RPC request failed"):
+                rpc("eth_chainId", [])
+        redirect.close()
+        self.assertEqual(opener.open.call_count, 2)
+
+    def test_public_fetches_reject_oversized_bodies(self):
+        response = MagicMock(status=200)
+        response.read.return_value = b"{" + b"a" * (2 * 1024 * 1024) + b"}"
+        opener = MagicMock()
+        opener.open.return_value.__enter__.return_value = response
+        with patch("app.server.build_opener", return_value=opener):
+            with self.assertRaisesRegex(RuntimeError, "size limit"):
+                fetch_markets()
+            with self.assertRaisesRegex(RuntimeError, "RPC request failed"):
+                rpc("eth_chainId", [])
+        self.assertEqual(response.read.call_args.args, (2 * 1024 * 1024 + 1,))
+
     def test_identical_same_millisecond_requests_have_distinct_nonces(self):
         response = MagicMock(status=200)
         response.read.return_value = b'{"code":0,"data":[]}'
