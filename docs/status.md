@@ -1,6 +1,6 @@
 # Project status
 
-**Updated:** 2026-10-03 00:34 UTC
+**Updated:** 2026-10-03 00:59 UTC
 **Phase:** provisional spec and bounded read-only implementation
 **Product readiness:** not ready. No holder, net proceeds or personal borrow-safety result is recorded.
 **Product selected:** provisional sell-or-borrow cash decision for an eligible NVDAB holder, [D-017](decisions/decision-log.md)
@@ -12,6 +12,8 @@ The local Sale check compares each validated estimated quote output with the typ
 The [quote-age slice](product/quote-age-slice.md) now measures the 20-second display window from the browser's local request start, including the time needed for identity, metadata and quote calls. Synthetic Chrome cases with 21 and 17 seconds of modelled elapsed request time confirmed immediate expiry and a shortened remaining window. This fixes one stale-display path. The 4 October product checkpoint still depends on a holder task, final costs, personal Venus risk and incumbent comparison.
 
 The [sale-card clarity slice](product/sale-card-clarity-slice.md) puts the current target-sized sale estimate next to the Venus market scenario, explicitly before costs. A fresh matching balance below the candidate suppresses the main-card amount; missing or stale balance is labelled unverified. Synthetic Chrome at 320 and 1440 CSS pixels covered both arrival orders, 0 and 0.4 NVDAB balances, stale balance, quote failure, below-target output, input edit and 20-second expiry without page error or overflow. All 35 local tests and inline JavaScript parsing passed. This is synthetic UI evidence, not a holder task or a safe cash decision.
+
+A [3 October Venus risk review](agent-reports/product-review/2026-10-03-venus-post-action-gate.md) found a conditional post-action net-cushion estimate technically plausible but still unfit for display. The public hypothetical method cannot model a new supply, the deployed source has not been matched, and no populated account has reproduced the arithmetic. [D-030](decisions/decision-log.md) keeps personal borrowing safety unknown and limits the next technical work to provenance and parity before the 4 October product checkpoint.
 
 A [fractional signed quote](research/2026-10-02-fractional-target-quote.md) returned an estimated 100.663406831290082054 USDT for 0.43 NVDAB at 22:08 UTC, before final costs. This exposed the cash-basis mismatch between a whole-position collateral scenario and a partial sale. [D-023](decisions/decision-log.md) authorized the bounded partial-sale sizing slice. The holder, cost and 4 October stop gates remain open. The [DX log](dx/field-log.md) separates 23 individually recorded signed GETs from three later calls inferred from a clean browser branch. Synthetic screen QA made no live Binance call.
 

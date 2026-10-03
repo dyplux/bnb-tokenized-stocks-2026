@@ -306,3 +306,13 @@ The [Binance Trading API reference](https://web3.binance.com/en/dev-docs/catalog
 The [clean local browser path](../research/2026-10-03-clean-local-path-result.md) returned a target-sized estimate, but the main Sell card still said Unquoted. A [Plus Sol product review](../agent-reports/product-review/2026-10-03-clean-path-gate.md) identified this as a misleading first impression. No holder, net proceeds or personal post-deposit risk was observed.
 
 **CEO decision:** supersede D-026's main-card display restriction for a current, input-matched, target-reaching quote and Venus scenario. Show the estimate beside the borrow illustration, labelled before costs. If a fresh matching public balance is below the candidate, suppress the main-card amount and show insufficiency. Mark absent or stale balance unverified. Expire and clear on input change or failure. The [slice](../product/sale-card-clarity-slice.md) passed synthetic browser states and 35 local tests. This improves legibility only; D-017's holder, cost, personal-risk and incumbent gates remain open.
+
+## D-030: gate account-specific post-action risk on deployed parity
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** research gate open; no personal forecast approved
+
+The [Plus Sol review](../agent-reports/product-review/2026-10-03-venus-post-action-gate.md) checked Venus's current aggregate risk methods against its source and E-Mode documentation. The public hypothetical method has no new-supply parameter. A local estimate of post-supply and post-borrow net cushions is possible in principle only with same-block account state, effective factors, both oracle paths, exact vToken rounding and protocol gates. The deployed source and a populated-account parity case are still unverified.
+
+**CEO decision:** keep the existing current-state notice and isolated market illustration. Do not show a personal health factor, liquidation price or safe borrowing amount. Permit a bounded read-only provenance and parity study; add a conditional net-cushion result only after it reproduces deployed behavior and can be explained to an eligible holder. If those gates remain open at the 4 October checkpoint, narrow or retire the cash-choice claim under D-017.
