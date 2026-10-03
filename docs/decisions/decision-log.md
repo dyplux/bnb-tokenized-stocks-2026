@@ -448,3 +448,13 @@ The [Saturday read](../research/2026-10-03-mstrb-weekend-rfq-result.md) establis
 The [fixed read](../research/2026-10-03-nvdab-approval-result.md) sent one signed approval-builder GET for NVDAB, the earlier candidate amount and `vendor=LiquidMesh`. It returned one matching ERC-20 approval, a route-specific spender, a 70,000-gas limit and 58,045,851 wei per gas. No wallet address or transaction was involved.
 
 **CEO decision:** record that the LiquidMesh approval builder works for this technical input. The result doesn't prove a holder needs approval, has allowance or BNB, can execute the earlier swap, or receives the quoted USDT. Do not add a product feature or claim net proceeds before D-033's checkpoint.
+
+## D-043: no generic bStock liquidation fallback
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** primary-source substitute check; D-033 unchanged
+
+The [Venus source review](../research/2026-10-03-bstock-liquidator-substitute.md) found a July proposal for a dedicated bStock backstop liquidator, with flash-loan access restricted to approved accounts, and an August report of an added bStock oracle cross-check. The proposal does not prove deployment or current execution. Neither source gives a measured outside liquidation opportunity or user task.
+
+**CEO decision:** don't replace D-017 with a generic weekend liquidator if its 4 October gate fails. The earlier June liquidity warning is a research lead, not evidence of a current executable edge. Product selection after D-033 still requires a real task, an accessible integration and a demonstrable outcome.
