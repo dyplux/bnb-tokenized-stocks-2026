@@ -1,0 +1,13 @@
+# Issuer access depends on the route
+
+**Checked:** 2026-10-03 UTC. **Purpose:** identify which product demonstrations can be discussed without treating an API quote as permission to trade. This is a source map, not a conclusion about the founder's personal status or local law.
+
+| Representation | Official source and observed rule | Consequence for this project |
+|---|---|---|
+| bStocks | The [Binance bStocks FAQ](https://www.binance.com/en/support/faq/detail/f0d41139fadc4790bf9a4c0c7bce2e88) says third-party integrations must enforce geographic restrictions and points to a public country-eligibility API. The FAQ does not give its endpoint path. The issuer may restrict wallet addresses. | A bStock quote cannot establish that the founder or any visitor may use it. Keep the current bStock app local and read-only until the control and the user's location are reviewed. |
+| Ondo Stocks | [Ondo eligibility](https://docs.ondo.finance/ondo-stocks/eligibility) lists prohibited jurisdictions and additional EEA conditions for direct issuer onboarding. Its [secondary-market restrictions](https://docs.ondo.finance/ondo-stocks/secondary-market-restrictions) say a secondary buyer represents that they aren't prohibited; direct redemption still requires issuer due diligence, and a liquid market is not guaranteed. | Don't treat the EEA direct-issuance condition as a blanket statement that all secondary purchases are prohibited or permitted. A quoted secondary route is a technical result only. Verify the exact venue and participant status before any funded action. |
+| xStocks | The [issuer's legal overview](https://docs.xstocks.fi/docs/product-legal-overview) describes EU/EEA retail distribution through licensed third-party distributors and says distributors must comply with local requirements. | This is evidence of an EU distribution framework, not authorization for Dyplux to offer an xStock trade. The [same-amount AAPL check](2026-10-03-aapl-three-representation-route-check.md) found no Binance Web3 vendor liquidity for AAPLx at 5 USDC; it says nothing about other venues or sizes. |
+
+The [event rules](https://www.bnbchain.org/en/hackathons/tokenized-stocks) have a separate participant-jurisdiction list. Passing hackathon eligibility doesn't prove issuer or venue eligibility. No personal location, accreditation or wallet restriction status was checked or stored.
+
+**Decision effect:** the current NVDAB film can't be presented as a consumer acquisition demo. A public hosted quote interface also needs its issuer-specific access boundary resolved. Read-only research and a private code walkthrough can continue while the product task is selected.
