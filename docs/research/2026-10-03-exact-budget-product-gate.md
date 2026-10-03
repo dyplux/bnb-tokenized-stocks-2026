@@ -29,6 +29,8 @@ Eight signed, read-only Binance Web3 GETs between 22:38 and 22:46 UTC are logged
 
 The [Yostocks README](https://github.com/yostocks-protocol/yostocks) documents `/buy NVDA 5` with USDT, scans representations and guards bad quotes. Its [reviewed buy code](https://github.com/yostocks-protocol/yostocks/blob/5cf6988af1f429615ef27e3ac70e63eca22cbbf3/apps/agent/yo.mjs#L94-L105) already solves much of issuer choice. The [PARALLAX README](https://github.com/rishu4436/parallax) describes a USDT-funded desk that quotes every wrapper, simulates swaps and offers an Agent Studio surface. Both are serious substitutes. Their public descriptions don't establish an exact 5 USDC explanation of the three failure states above. That absence is a narrow documentation observation, not a claim that their live products cannot solve the task. [PancakeSwap Stocks](https://pancakeswap.finance/stocks) has stock, issuer and trading screens; our unauthenticated browser review stopped at a jurisdiction confirmation, so its exact-size behavior is unverified.
 
+**Additional counterevidence checked 2026-10-03:** [PancakeSwap's own July report](https://blog.pancakeswap.finance/articles/kitchen-report-july-2026) says its Stock Terminal scans issuer quotes and liquidity and routes each trade to the best available quote. Its [bStocks guide](https://blog.pancakeswap.finance/articles/bstocks-on-pancakeswap) directs users to a self-custodial swap or Stock Terminal, with regional restrictions. Therefore issuer selection, best quote and self-custody are already served. A Dyplux product would need to beat the specific failure explanation and next-action task, not present those existing features as new. The live exact 5 USDC path remains unobserved because the browser reached a jurisdiction confirmation.
+
 The [issuer access map](2026-10-03-issuer-access-by-route.md) leaves the founder's personal bStock, Ondo and xStock route eligibility unknown. A route response cannot answer that question. [xStocks' legal overview](https://docs.xstocks.fi/docs/product-legal-overview) describes EU/EEA distribution through licensed third parties, not a blanket authorization for this app. This limits a consumer buy flow, especially one that would rank an AAPLB quote as the answer.
 
 ## CEO decision and kill conditions
@@ -39,7 +41,7 @@ Advance the exact-budget task to **one-page product specification**, with an exp
 
 Stop or redesign this hypothesis if any of the following is true:
 
-1. An incumbent already explains the same exact-budget failure and next action at equal clarity in a usable flow.
+1. An incumbent already explains the same exact-budget failure and next action at equal clarity in a usable flow. PancakeSwap's published best-route claim makes this an immediate, serious risk.
 2. No selected issuer route can be shown lawfully and technically to an eligible judge or founder.
 3. Conversion, approval or gas costs make the small purchase non-executable or opaque, with no useful decision left to present.
 4. The interface can only say “a quote exists” without a defensible next action.
