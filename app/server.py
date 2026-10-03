@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only, market-level Venus scenario server. Python 3.9 standard library only."""
+"""Read-only BNB stock quote check and archived Venus scenario. Python 3.9 stdlib."""
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation, getcontext
 from collections import deque
@@ -1181,5 +1181,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = ThreadingHTTPServer(("127.0.0.1", 8000), Handler)
-    print("Read-only scenario at http://127.0.0.1:8000")
+    print("Read-only Exit Check at http://127.0.0.1:8000")
     server.serve_forever()

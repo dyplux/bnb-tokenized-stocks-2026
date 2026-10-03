@@ -1,8 +1,8 @@
 # Project brief
 
 **Date:** 2026-10-01
-**Name:** to be decided
-**Stage:** provisional product spec and read-only implementation
+**Name:** Exit Check, working name
+**Stage:** read-only pre-entry exit prototype under D-048
 **Owner:** Dyplux
 
 ## Mission
@@ -27,4 +27,4 @@ A reviewer can identify the target user and task in one sentence, run the docume
 3. Does the Binance Web3 API expose enough data and a reproducible quote for the smallest useful flow?
 4. What is the simplest test that would reject the leading hypothesis?
 
-The [status](status.md) and [decision log](decisions/decision-log.md) hold the current answer. [D-017](decisions/decision-log.md) approves one provisional sell-or-borrow slice. Signed Web3 search and quote reads succeeded for temporary nonholder addresses, but an eligible holder task, defensible final sale costs and personal borrowing risk are still missing. The technical responses don't establish an actionable product or demand.
+The [status](status.md) and [decision log](decisions/decision-log.md) hold the current answer. [D-045](decisions/decision-log.md) retired the sell-or-borrow task. [D-048](decisions/decision-log.md) approved one bounded pre-entry check: a self-custody user enters a small USDC amount and a public address, then sees an NVDAB entry quote and an immediate inverse exit quote for the estimated token amount. The local implementation is in `app/`, but it hasn't been verified end to end or deployed. Earlier 5 USDC signed calls establish that both API quote directions returned estimates for one temporary nonholder address on 3 October; they don't establish issuer eligibility, a fill, final cost or user demand. The [one-page spec](product/pre-entry-exit-spec.md) fixes the active scope.
