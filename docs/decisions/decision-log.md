@@ -438,3 +438,13 @@ The [official track](https://www.bnbchain.org/en/hackathons/tokenized-stocks), r
 The [Saturday read](../research/2026-10-03-mstrb-weekend-rfq-result.md) established amount-sized MSTRB/USDT quote availability, while the [ten-weekend study](../research/2026-10-01-weekend-crypto-equity-task.md) found no compelling one-hour BTC lead. The [official Agentic Wallet guide](https://developers.binance.com/en/docs/products/agentic-wallet/use-cases/trading/stock-trading), modified 2 October, already documents ticker resolution, status, amount quotes, buy and sell, order status and ongoing trading rules. Its runtime wasn't exercised, so the comparison is to its documented flow.
 
 **CEO decision:** the generic BTC alert plus quote or automatic buy has no demonstrated product advantage and won't replace D-017 at its checkpoint. Re-open only with a user task and same-task evidence that the official flow misses. No trading edge or Agent Studio buyer has been established.
+
+## D-042: approval construction narrows one cost unknown
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** read-only API evidence; D-033 unchanged
+
+The [fixed read](../research/2026-10-03-nvdab-approval-result.md) sent one signed approval-builder GET for NVDAB, the earlier candidate amount and `vendor=LiquidMesh`. It returned one matching ERC-20 approval, a route-specific spender, a 70,000-gas limit and 58,045,851 wei per gas. No wallet address or transaction was involved.
+
+**CEO decision:** record that the LiquidMesh approval builder works for this technical input. The result doesn't prove a holder needs approval, has allowance or BNB, can execute the earlier swap, or receives the quoted USDT. Do not add a product feature or claim net proceeds before D-033's checkpoint.

@@ -1,0 +1,20 @@
+{
+  "capture_time_utc": "2026-10-03T14:33:46.660Z",
+  "latency_ms": 668.385,
+  "http_status": 200,
+  "state": "response",
+  "business_code": 0,
+  "error_label": null,
+  "transaction_count": 1,
+  "transactions": [
+    {
+      "dexContractAddress": "0xB44446b0c8E56988c34f7Ff73Ae904982b5FdDA5",
+      "gasLimit": "70000",
+      "gasPrice": "58045851",
+      "calldata_shape_valid": true,
+      "spender_matches_calldata": true,
+      "amount_matches_request": true,
+      "gas_ceiling_wei": "4063209570000"
+    }
+  ]
+}
