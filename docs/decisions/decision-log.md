@@ -458,3 +458,13 @@ The [fixed read](../research/2026-10-03-nvdab-approval-result.md) sent one signe
 The [Venus source review](../research/2026-10-03-bstock-liquidator-substitute.md) found a July proposal for a dedicated bStock backstop liquidator, with flash-loan access restricted to approved accounts, and an August report of an added bStock oracle cross-check. The proposal does not prove deployment or current execution. Neither source gives a measured outside liquidation opportunity or user task.
 
 **CEO decision:** don't replace D-017 with a generic weekend liquidator if its 4 October gate fails. The earlier June liquidity warning is a research lead, not evidence of a current executable edge. Product selection after D-033 still requires a real task, an accessible integration and a demonstrable outcome.
+
+## D-044: Agent Studio special does not change the current product gate
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** product review; D-033 unchanged
+
+The founder asked again whether creating wallets and using Agent Studio would accelerate delivery or improve the $2,000 special-prize chance. The [official event rules](https://www.bnbchain.org/en/hackathons/tokenized-stocks), checked 2026-10-03, make Studio optional and describe the special as deep use of identity, autonomous runtime and x402 self-funding. The [isolated Plus Sol review](../agent-reports/product-review/2026-10-03-plus-agent-studio-decision.md) found no distinct autonomous customer task in the present NVDAB read-only flow. Its disagreement with a prize-led build is recorded there.
+
+**CEO decision:** do not add Studio or fund a demo wallet to bypass the holder, final-cost or personal-risk evidence gates. Decide the product at the 4 October checkpoint. If it survives, specify a small mainnet demo action and wallet controls before requesting funds or signing. Reopen Studio only for an observed autonomous task with a distinct buyer and valid delivery window.
