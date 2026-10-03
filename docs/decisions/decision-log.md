@@ -488,3 +488,13 @@ The founder confirmed that the team will not rely on an external holder or test 
 The founder clarified that they cannot use a Binance exchange account in their region. An earlier answer about seeing bStocks in such an account was a misunderstanding and is not evidence of access. The [hackathon rules](https://www.bnbchain.org/en/hackathons/tokenized-stocks) require BSC mainnet spot and a working Binance Web3 API integration, not a Binance Spot account. The [bStocks FAQ](https://www.binance.com/en/support/faq/detail/f0c03cd6509a4085b4cce1636f16be38) separately restricts bStock access by jurisdiction and user eligibility.
 
 **CEO decision:** design the solo experiment around a self-custodial BNB Chain wallet and the Web3 API, without a Binance exchange account, deposit or redemption. Do not infer permission to hold or trade NVDAB from an API quote. Keep bStock eligibility unresolved; inspect Ondo or xStocks under their own issuer rules if bStocks cannot be confirmed. No order or funding is authorized by this correction.
+
+## D-047: show the product choices and timebox the decision
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** planning decision; no replacement product selected
+
+The founder identified a process failure: API work and safety gates accumulated without a clear view of product paths, competing solutions or the route to submission. The [strategy map](../research/2026-10-03-product-paths-and-sprint.md) sets out six paths, investigates three, and gives a conditional lead to the 5 USDC entry-and-exit decision. A live unauthenticated PancakeSwap visit confirmed a stock discovery surface but did not reach the same-size cost decision.
+
+**CEO decision:** finish one bounded same-task competitor and issuer review by 4 October 18:00 UTC, then select one path or proceed with an explicitly unverified prototype under the short submission window. A founder-operated task can show technical and UX behavior. Independent demand remains unknown, and the official event does not require an outside test user. Do not treat a quote as execution, eligibility or profit. No wallet action is authorised here.
