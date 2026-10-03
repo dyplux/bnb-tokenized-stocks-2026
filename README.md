@@ -1,6 +1,6 @@
-# Exit Check by Dyplux, research prototype
+# Dyplux tokenized-stock research prototype
 
-**Product decision still open.** This read-only prototype asks Binance Web3 for a NVDAB entry quote, then an inverse quote on the exact estimated NVDAB amount for a chosen USDC amount and public BNB Chain address. It makes no trade. The founder has not approved this as the final product or its demo.
+**Product decision still open.** The current local interface is an Exit Check research tool: it asks Binance Web3 for a NVDAB entry quote, then an inverse quote on the estimated NVDAB amount for a chosen USDC amount and public BNB Chain address. It makes no trade. [D-051](docs/decisions/decision-log.md) retired Exit Check as the proposed submission product. The current [exact-budget product spec](docs/product/exact-budget-stock-spec.md) asks what a person with a particular stablecoin and amount can try when a stock token's route is unavailable, below minimum or quoted. That spec has no interface or verified executable route yet. Neither task is presented as a finished consumer product.
 
 On Saturday 3 October 2026 at 22:05 UTC, the local app returned both directions for 5 USDC. The entry estimate was **0.021265631210341636 NVDAB**; the immediate inverse estimate was **5.001168101976778857 USDC** at BNB metadata block **125561266**. Those are separate, expiring quotes. The inverse amount above 5 USDC isn't profit: approval, gas, slippage, eligibility and execution weren't verified. See the [sanitized record](docs/submission/video-record.json) and [observation](docs/research/2026-10-03-exit-check-live-browser.md).
 
@@ -21,14 +21,14 @@ The screen distinguishes **Both routes quoted**, **Entry route unavailable**, **
 ## Evidence a reviewer can reproduce
 
 - The [current-build observation](docs/research/2026-10-03-exit-check-live-browser.md) records three local read-only runs on 3 October. The [video record](docs/submission/video-record.json) corresponds to one continuous browser capture, with no wallet address or credentials retained.
-- The [34-second video QA](docs/submission/video-qa.md) describes the local MP4 and full source archive. A public video URL hasn't been published yet.
+- The [34-second video QA](docs/submission/video-qa.md) records an internal technical capture. Video and submission work stopped at [D-049](docs/decisions/decision-log.md), before the product was selected.
 - `python3 -m unittest discover -s tests -q` ran **54 synthetic tests** locally. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37157834389) passed on private commit `45f0e0e` without credentials or live API calls.
-- The [DX field log](docs/dx/field-log.md) separates signed API observations, local integration errors and missing measurements. The [one-page spec](docs/product/pre-entry-exit-spec.md) defines this prototype's task and excluded claims; [D-049](docs/decisions/decision-log.md) reopens the product decision.
+- The [DX field log](docs/dx/field-log.md) separates signed API observations, local integration errors and missing measurements. The [Exit Check spec](docs/product/pre-entry-exit-spec.md) defines the built prototype; the [exact-budget spec](docs/product/exact-budget-stock-spec.md) and [D-051](docs/decisions/decision-log.md) record the newer, unbuilt hypothesis. The [5 USDC Apple route check](docs/research/2026-10-03-aapl-three-representation-route-check.md) records three different provider states and an Ondo USDT minimum follow-up.
 
 ## Limits and submission state
 
 The app is a read-only localhost prototype. It hasn't bought or sold NVDAB, simulated a funded transaction, proved issuer access for a person or jurisdiction, measured final paid costs or validated later exit availability. Binance's [bStocks FAQ](https://www.binance.com/en/support/faq/detail/f0d41139fadc4790bf9a4c0c7bce2e88) says third-party integrators must enforce geographic restrictions; the endpoint path mentioned there wasn't confirmed in our source review. Public quote hosting is blocked pending that control.
 
-This repository is private while the founder reviews [publication and submission steps](docs/submission/final-review-packet.md). The official hackathon accepts judge-run instructions in place of a deployed link. The project form and Developer Experience Report haven't been submitted. Bell is a separate CoinMarketCap hackathon project; this repository has separate code, credentials and evidence.
+This repository is private while the founder reviews the product and [publication and submission steps](docs/submission/final-review-packet.md). The official hackathon accepts judge-run instructions in place of a deployed link. The project form and Developer Experience Report haven't been submitted. Bell is a separate CoinMarketCap hackathon project; this repository has separate code, credentials and evidence.
 
 Earlier NVDAB sale-versus-Venus-borrow work was retired as the active product. Its original README and method remain in the [research archive](docs/archive/README-before-exit-check.md); the panel still runs at `/venus-scenario` for inspection.
