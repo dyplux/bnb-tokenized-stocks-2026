@@ -1,6 +1,6 @@
 # Developer Experience Report answer draft
 
-**Prepared:** 2026-10-02 for the [official DX form](https://forms.gle/EUQ39xf54GHjC2ys5). This is a copy aid, not a submitted report. The [live form audit](2026-10-01-live-form-audit.md) and [field log](../dx/field-log.md) are the evidence record. Recheck every field before submission. `FOUNDER` means the answer requires first-hand input or a private value. `LATER` means the build still needs an observation. No key, UID, wallet address or private contact belongs in this file.
+**Prepared:** 2026-10-02; updated 2026-10-03 after one additional read-only quote. For the [official DX form](https://forms.gle/EUQ39xf54GHjC2ys5). This is a copy aid, not a submitted report. The [live form audit](2026-10-01-live-form-audit.md) and [field log](../dx/field-log.md) are the evidence record. Recheck every field before submission. `FOUNDER` means the answer requires first-hand input or a private value. `LATER` means the build still needs an observation. No key, UID, wallet address or private contact belongs in this file.
 
 ## 1. Submission details
 
@@ -9,7 +9,7 @@
 | 2. Team or project name | Final project name, same in all forms | FOUNDER |
 | 3. Contact email | Enter directly in the form | FOUNDER |
 | 4. Public repository URL | `https://github.com/dyplux/bnb-tokenized-stocks-2026` after the founder authorizes publication and a signed-out check passes | LATER |
-| 5. Binance Web3 API modules or tools | Select **RWA Data API** and **Trading API**. Two signed RWA searches and five read-only quotes ran on 2 October. Public BNB Chain RPC and Venus/Pancake data were separate integrations, not Binance Web3 API modules. | READY |
+| 5. Binance Web3 API modules or tools | Select **RWA Data API** and **Trading API**. Signed RWA searches and read-only quotes ran on 2 and 3 October; the [field log](../dx/field-log.md) records 23 signed GET calls in total. Public BNB Chain RPC and Venus/Pancake data were separate integrations, not Binance Web3 API modules. | READY |
 | 6. Team size | Select from actual human contributors. Agents aren't people on the team. | FOUNDER |
 | 7. Most experienced team member's Web3 experience | Select the true category. | FOUNDER |
 | 8. Prior Binance Web3 API use | Select from actual prior experience. | FOUNDER |
@@ -44,7 +44,7 @@
 | 25. Reliability rating | Select a first-hand rating. The small set of signed GET calls isn't enough to score broad reliability objectively. One locally malformed path caused a non-JSON response before it was corrected. | FOUNDER |
 | 26. Edge cases or unexpected behavior | “A bStock quote returned `SWAP` despite the RFQ-only sentence in the endpoint reference. The route carried a short-lived estimate; we kept its mode visible and didn't treat it as an executable order. We observed no nonzero API business code.” | READY |
 | 27. Unclear error messages | “No Binance business-code error was observed across 23 signed GET calls through 2026-10-03 00:02 UTC. Two direct local probes passed the wrong Python type. A later target-sized probe used a duplicated `/build` path and received a non-JSON response; both were our integration errors. The route-mode and decimal issues were documentation inconsistencies.” | READY |
-| 28. Slow endpoints, optional | “No endpoint was clearly too slow in this small sample. Two earlier RWA searches took 1051.8 and 651.814 ms. Five earlier quote latencies were 315.419, 303.133, 847.939, 833.917 and 771.321 ms; some later latencies weren't retained. One unsigned SWAP build took 394.610 ms.” | READY |
+| 28. Slow endpoints, optional | “No endpoint was clearly too slow in this small sample. Two earlier RWA searches took 1051.8 and 651.814 ms. Recorded quote latencies include 315.419, 303.133, 847.939, 833.917, 771.321 and 801.055 ms; some other quote latencies weren't retained. One unsigned SWAP build took 394.610 ms.” | READY |
 | 29. Rate limits | Select **No** if no later limit occurs. None was observed in the 23 signed GET calls through 2026-10-03 00:02 UTC. | READY at current evidence |
 | 30. Rate-limit detail, optional | Leave blank unless a real limit is observed later. | LATER |
 | 31. Signing difficulties, optional | “The first local draft used the wrong Binance header family; we corrected it before calling the API. A later target-sized path accidentally added `/build` twice and received a non-JSON response. We corrected the path and the next signed search plus two quotes succeeded. No live signature rejection occurred.” | READY |
@@ -63,9 +63,9 @@
 | Item | Draft answer | State |
 |---|---|---|
 | 41. Platforms | Select **bStocks**. The build used NVDAB. Don't imply an executed trade. | READY |
-| 42. Liquidity depth | “For 1 NVDAB, five read-only Binance Web3 quote requests each returned one LiquidMesh SWAP route. We didn't measure depth across sizes or execute a trade, so this can't establish available depth or a fill.” | READY, may expand |
+| 42. Liquidity depth | “Multiple read-only Binance Web3 quote requests for 1 NVDAB returned a LiquidMesh SWAP route, including one after Friday's published 20:00 New York late-session end. We also quoted one fractional amount. We didn't measure executable depth across sizes or fill a trade, so these responses can't establish available depth or a fill.” | READY, may expand |
 | 43. Slippage at trade sizes used | “No trade was executed, so realized slippage wasn't measured. The quote output is an estimate. One same-size technical control found a 20.8697-basis-point gap versus one isolated PancakeSwap pool quote near the same time; those are different routes and not a slippage measurement.” See [route control](../research/2026-10-02-live-route-control.md). | READY, may expand |
-| 44. Outside traditional market hours | “At 17:15 New York time on Friday 2 October, after the regular US equity close, a signed read-only Binance Web3 quote for 1 NVDAB to USDT returned HTTP 200, business code 0 and one LiquidMesh SWAP route in 833.917 ms. Some traditional late sessions remained open then. We didn't test weekend availability, execution, fill or spread.” See [after-close observation](../research/2026-10-02-after-regular-close-quote.md). | READY for this bounded observation |
+| 44. Outside traditional market hours | “At 17:15 New York time on Friday 2 October, after the regular US equity close, one signed read-only 1 NVDAB to USDT quote returned HTTP 200, business code 0 and a LiquidMesh SWAP route. Traditional late sessions could still have been open. At 20:02 New York time, after Nasdaq's published Friday late-session end, a second one-call probe returned HTTP 200, business code 0 and one LiquidMesh SWAP estimate in 801.055 ms. Neither quote established holder access, execution, fill, net proceeds or spread. We didn't test a Saturday New York session.” See the [17:15](../research/2026-10-02-after-regular-close-quote.md) and [20:02](../research/2026-10-03-after-friday-close-quote.md) observations. | READY for these bounded observations |
 | 45. On-chain versus underlying reference, optional | “We didn't calculate a premium or discount. The RWA `referencePrice` source and as-of time weren't established, so it wasn't used as an independent equity benchmark.” | READY |
 | 46. bStocks versus Ondo/xStock, optional | “The current build tested NVDAB only. We didn't run a same-ticker, same-time representation comparison.” | READY |
 
