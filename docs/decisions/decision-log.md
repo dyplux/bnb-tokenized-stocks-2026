@@ -412,3 +412,13 @@ The [signed coverage read](../research/2026-10-03-binance-defi-positions-coverag
 The [bounded parity probe](../research/2026-10-03-nvdab-holder-current-risk-parity.md) used one signed holder ranking and fixed BNB block 125421781. The first selected public account had entered vNVDAB, positive stored vUSDT debt and three entered markets. Its two active markets produced exact three-word matches for both deployed Core current-risk calls. No account identifier, signed payload or raw position was retained in Git.
 
 **CEO decision:** use this result only to support the current-risk arithmetic for this observed account. It doesn't establish a safe post-action borrow, NVDAB's isolated contribution to account borrowing power, user demand or sale proceeds. Do not add a D-017 product feature before the 4 October 12:00 UTC checkpoint. The consenting holder, cost and personal-risk conditions in D-033 remain open.
+
+## D-040: separate technical quotes from the track's live demo direction
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** delivery requirement recheck; no transaction authorized
+
+The [official track](https://www.bnbchain.org/en/hackathons/tokenized-stocks), rechecked 2026-10-03, permits spot on BNB Smart Chain mainnet and directs teams to dry-run with the Transaction API while building, then demonstrate with small live amounts. The repo has a signed Binance quote and an unsigned `/swap` construction for a temporary nonholder address, but no Transaction API simulation or signed mainnet execution.
+
+**CEO decision:** make the live-amount gap explicit in the [readiness gates](../submission/readiness-gates.md). A read-only estimate cannot be described as an executed cash-out or as a complete live demo. Decide the product at the 4 October checkpoint first. Any small transaction later needs a concrete wallet, amount, spend cap, expected fee, failure-recovery path and specific founder authorization; don't use a public holder's assets. If the chosen product cannot produce a permitted mainnet task, report the gap rather than imply that a quote satisfies this direction.
