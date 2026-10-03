@@ -7,3 +7,7 @@ The eight contracts came from the [public Binance bStock list](https://www.binan
 For each row, divide both raw multiplier values by `10^18`. Convert `effective_at_unix` to UTC. Compare the transaction and effective time with the relevant Binance announcement and with a current on-chain `uiMultiplier()` read. An event announces an update; it doesn't alone prove a specific wallet held the token at the record snapshot or that the update was a dividend. Check for later cancellations or overwritten schedules before attributing an increment. An initialization event with `old_multiplier_raw = 0` is not a dividend.
 
 If no rows appear, inspect whether the live contract uses a different event signature or whether the update fell outside this window. Don't report zero dividend events from an empty result. If Dune returns a schema or syntax error, save that exact error without credentials in the Developer Experience log before revising the query.
+
+## Venus NVDAB mint calls
+
+Paste [nvdab-mint-call-outcomes.sql](nvdab-mint-call-outcomes.sql) into Dune and run it manually only if the cap-pressure question still matters. It has **not been run**. Save the query URL, exact SQL, execution time and result before citing any count. The query lists at most 200 calls, so a full-window count requires a separate aggregation if the limit is reached. Interpret raw return codes with the deployed vToken ABI and receipt logs; EVM transaction success alone does not prove a completed deposit. See the [cap-pressure note](../2026-10-03-nvdab-cap-pressure-evidence.md).
