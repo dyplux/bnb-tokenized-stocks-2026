@@ -20,7 +20,7 @@ The page states that vague or AI-generated Developer Experience Reports are not 
 ## Still unknown
 
 - Fields, UID and permissions inside the private hacker application and submission forms. Keep the UID out of this repository.
-- Per-account Binance Web3 API scopes, quota and live coverage until the authorized key and a narrow probe are checked.
-- Whether the planned flow can obtain a reproducible quote for the selected token, size and time. Documentation alone does not prove runtime behavior.
+- The key has authenticated signed RWA search, holder-ranking and Trading quote GETs, but its full account-level scopes and production quota remain unverified. See the [DX field log](dx/field-log.md).
+- The planned flow has returned several NVDAB to USDT quotes for temporary nonholder addresses. Eligible-holder route availability, final costs, fills and repeatability across sizes or times remain unverified. See the [readiness gates](submission/readiness-gates.md).
 
 The official page links the [Binance Web3 API documentation](https://web3.binance.com/en/dev-docs/introduction), [API authentication](https://web3.binance.com/en/dev-docs/authentication), [submission form](https://forms.gle/yToDUzaDMwWnq6R6A) and [Developer Experience Report template](https://forms.gle/EUQ39xf54GHjC2ys5).
