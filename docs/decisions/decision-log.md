@@ -339,6 +339,8 @@ The [public-demo review](../agent-reports/product-review/2026-10-03-public-demo-
 
 **CEO decision:** keep the app bound to loopback and the repository private. Implement public-host routing, server-side quota controls and process supervision only if the 4 October product checkpoint keeps this task. Do not expose the current server through a tunnel or place Binance credentials into a public process yet. The founder's specific authorization is required for deployment, DNS, repo publication and submission.
 
+**2026-10-03 implementation update:** the process now enforces a small quote budget and accepts an explicitly configured HTTPS Host and matching Origin for a future reverse proxy. This preparation happened before the checkpoint because it doesn't expose the server, change the product or consume an API call. The process remains bound to loopback and no public origin is configured by default. Public deployment, process supervision, edge controls and the product decision remain blocked. The local Python 3.9 suite passed 49 tests.
+
 ## D-033: record the product stop recommendation before the checkpoint
 
 **Date:** 2026-10-03

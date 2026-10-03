@@ -100,6 +100,55 @@ class QuoteRequestBudget:
 
 quote_request_budget = QuoteRequestBudget()
 
+LOCAL_HOSTS = ("127.0.0.1:8000", "localhost:8000")
+LOCAL_ORIGINS = ("http://127.0.0.1:8000", "http://localhost:8000")
+
+
+def public_origin_config(value=None):
+    """Return the configured public HTTPS origin, or None when unset."""
+    if value is None:
+        value = os.environ.get("DYPLUX_PUBLIC_ORIGIN")
+    if value is None:
+        return None, True
+    if not isinstance(value, str) or not re.fullmatch(
+        r"https://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
+        r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?::[0-9]{1,5})?",
+        value,
+    ):
+        return None, False
+    parsed = urlparse(value)
+    try:
+        port = parsed.port
+    except ValueError:
+        return None, False
+    if port is not None and not 1 <= port <= 65535:
+        return None, False
+    return value, True
+
+
+def protected_post_allowed(host, origin):
+    """Authorize protected POSTs using only Host and Origin headers."""
+    public_origin, valid = public_origin_config()
+    if not valid:
+        return False, "Configured public origin is invalid."
+    host = (host or "").lower()
+    if public_origin is None:
+        if host not in LOCAL_HOSTS:
+            return False, "Local API request rejected for this host."
+        if origin is not None and origin not in LOCAL_ORIGINS:
+            return False, "Local API request rejected for this origin."
+        return True, None
+    public_host = urlparse(public_origin).netloc.lower()
+    if host in LOCAL_HOSTS:
+        if origin is not None and origin not in LOCAL_ORIGINS:
+            return False, "Local API request rejected for this origin."
+        return True, None
+    if host != public_host:
+        return False, "Public API request rejected for this host."
+    if origin != public_origin:
+        return False, "Public API request rejected for this origin."
+    return True, None
+
 
 def read_json_object(response, label):
     body = response.read(MAX_PUBLIC_RESPONSE_BYTES + 1)
@@ -963,17 +1012,15 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(404)
             return
         if endpoint in ("/api/balance", "/api/quote", "/api/venus-account"):
-            host = self.headers.get("Host", "").lower()
+            host = self.headers.get("Host", "")
             origin = self.headers.get("Origin")
             content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
-            if host not in ("127.0.0.1:8000", "localhost:8000"):
-                self.send_json(403, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "Local API request rejected for this host."}})
-                return
-            if origin is not None and origin not in ("http://127.0.0.1:8000", "http://localhost:8000"):
-                self.send_json(403, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "Local API request rejected for this origin."}})
+            allowed, rejection = protected_post_allowed(host, origin)
+            if not allowed:
+                self.send_json(403, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": rejection}})
                 return
             if content_type != "application/json":
-                self.send_json(415, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "Local API request requires application/json."}})
+                self.send_json(415, {"error": {"field": "quote" if endpoint == "/api/quote" else "wallet", "message": "API request requires application/json."}})
                 return
         try:
             length = int(self.headers.get("Content-Length", "0"))

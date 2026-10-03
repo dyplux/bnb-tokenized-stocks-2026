@@ -5,13 +5,36 @@ import time
 import unittest
 from unittest.mock import Mock, patch
 
-from app.server import Handler, QuoteRequestBudget
+from app.server import Handler, QuoteRequestBudget, protected_post_allowed, public_origin_config
 
 
 WALLET = "0x" + "1" * 40
 
 
 class QuoteSafetyTests(unittest.TestCase):
+    def test_public_origin_config_accepts_single_https_origin(self):
+        self.assertEqual(public_origin_config("https://demo.example.com:8443"), ("https://demo.example.com:8443", True))
+
+    def test_public_origin_config_rejects_non_origin_values(self):
+        for value in ("http://demo.example.com", "https://demo.example.com/path", "https://demo.example.com?x=1", "https://demo.example.com?", "https://demo.example.com#", "https://user@demo.example.com", "https://*.example.com", "https://-bad.example.com", "https://bad..example.com", "https://demo.example.com,https://other.example.com"):
+            self.assertEqual(public_origin_config(value), (None, False))
+
+    def test_public_pair_is_accepted_and_requires_exact_origin(self):
+        with patch.dict("os.environ", {"DYPLUX_PUBLIC_ORIGIN": "https://demo.example.com"}, clear=True):
+            self.assertEqual(protected_post_allowed("demo.example.com", "https://demo.example.com"), (True, None))
+            self.assertEqual(protected_post_allowed("demo.example.com", None)[0], False)
+            self.assertEqual(protected_post_allowed("demo.example.com", "https://other.example.com")[0], False)
+
+    def test_invalid_public_origin_fails_closed(self):
+        with patch.dict("os.environ", {"DYPLUX_PUBLIC_ORIGIN": "http://demo.example.com"}, clear=True):
+            self.assertEqual(protected_post_allowed("127.0.0.1:8000", None)[0], False)
+
+    def test_unset_public_origin_preserves_localhost_policy(self):
+        with patch.dict("os.environ", {}, clear=True):
+            self.assertEqual(protected_post_allowed("127.0.0.1:8000", None), (True, None))
+            self.assertEqual(protected_post_allowed("localhost:8000", "http://localhost:8000"), (True, None))
+            self.assertFalse(protected_post_allowed("demo.example.com", None)[0])
+
     def test_budget_allows_six_then_rejects_until_window_rolls(self):
         budget = QuoteRequestBudget()
 
@@ -34,10 +57,12 @@ class QuoteSafetyTests(unittest.TestCase):
             budget.release()
         self.assertEqual(budget.try_acquire(now=6.0), "rate_limited")
 
-    def make_handler(self, payload):
+    def make_handler(self, payload, host="127.0.0.1:8000", origin=None):
         body = json.dumps(payload).encode("utf-8")
         headers = Message()
-        headers["Host"] = "127.0.0.1:8000"
+        headers["Host"] = host
+        if origin is not None:
+            headers["Origin"] = origin
         headers["Content-Type"] = "application/json"
         headers["Content-Length"] = str(len(body))
         handler = Handler.__new__(Handler)
@@ -46,6 +71,26 @@ class QuoteSafetyTests(unittest.TestCase):
         handler.rfile = BytesIO(body)
         handler.send_json = Mock()
         return handler
+
+    def test_public_origin_rejections_happen_before_quote_call(self):
+        with patch.dict("os.environ", {"DYPLUX_PUBLIC_ORIGIN": "https://demo.example.com"}, clear=True), \
+             patch("app.server.request_target_sized_quote") as request_quote:
+            for origin in (None, "https://other.example.com"):
+                handler = self.make_handler({"wallet": WALLET, "units": "1", "cash": "100"}, host="demo.example.com", origin=origin)
+                Handler.do_POST(handler)
+                self.assertEqual(handler.send_json.call_args.args[0], 403)
+        request_quote.assert_not_called()
+
+    def test_public_origin_accepts_quote_with_matching_host_and_origin(self):
+        handler = self.make_handler(
+            {"wallet": WALLET, "units": "1", "cash": "100"},
+            host="demo.example.com", origin="https://demo.example.com",
+        )
+        with patch.dict("os.environ", {"DYPLUX_PUBLIC_ORIGIN": "https://demo.example.com"}, clear=True), \
+             patch("app.server.request_target_sized_quote", return_value={"status": "ok"}) as request_quote:
+            Handler.do_POST(handler)
+        handler.send_json.assert_called_once_with(200, {"status": "ok"})
+        request_quote.assert_called_once()
 
     def test_invalid_input_does_not_consume_budget(self):
         budget = QuoteRequestBudget()
