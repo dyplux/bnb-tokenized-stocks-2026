@@ -2,7 +2,18 @@
 
 **Checked:** 2026-10-03. **Deadline:** 2026-10-11 12:00 UTC, per the [official event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks). This is an internal checklist, not a claim that an entry has been submitted. Recheck the [live forms](2026-10-01-live-form-audit.md) before sending anything.
 
-**Decision update:** [D-045](../decisions/decision-log.md) retired the provisional 100 USDT sell-or-borrow claim after the founder chose a solo, small-position demonstration. The historical product and holder rows below document why that claim failed; they are not pending founder requests. A replacement product is still in research.
+**Decision update:** [D-045](../decisions/decision-log.md) retired the 100 USDT sell-or-borrow claim. [D-048](../decisions/decision-log.md) approved a bounded read-only pre-entry exit prototype immediately. The old holder and Venus product rows below are historical evidence, not active gates. Only the official 11 October lock is a calendar deadline.
+
+| Active gate now | State at private commit `d1d5802` | Next action |
+|---|---|---|
+| New local user task | Main screen and `POST /api/entry-check` written; not yet verified end to end | Review response and failure states against real signed 5 USDC quotes; correct any mismatch. |
+| Issuer and execution boundary | API quote access observed; personal issuer access, gas, approval, slippage minimum and fill remain unknown | Keep the public claim read-only unless these are resolved with the founder's specific wallet action review. |
+| Judge access | Repo private, localhost only, no video or deployed URL | Prepare a clean judge walkthrough and video from the final behavior, then obtain founder publication approval. |
+| DX and submission | 56 signed calls accounted for in the field log; forms not reported complete | Finish actual DX answers, publish the final accessible links, submit DX then project before 11 October 12:00 UTC. |
+
+## Historical gate record for the retired Venus product
+
+The table below preserves the earlier audit. Its holder and 4 October actions were superseded by D-045 and D-048 and are not instructions to wait.
 
 | Gate | Current evidence | State | Next proof and owner |
 |---|---|---|---|
@@ -19,7 +30,7 @@
 | Public evidence and video | The repository is private. A [prepublication history scan](2026-10-03-private-repo-preflight.md) inspected 616 unique Git blobs with bounded token, assignment, key-header and email patterns; no credential literal was identified by those patterns. This isn't a final clearance. No final demo video or judge-accessible URL is recorded. The [live project form audit](2026-10-01-live-form-audit.md) found its video URL field required, while the event page says optional. | Missing | After the product gate, repeat the review on the final commit and media, prepare a video of at most four minutes and a reproducible judge path. Founder authorizes making the separate repo public; check both links while signed out and keep them accessible through judging. |
 | Final project submission | No submission receipt is recorded. The [live form audit](2026-10-01-live-form-audit.md) lists ten fields and requires confirmation that the DX form was sent. | Unconfirmed | Founder checks for an existing receipt; otherwise supplies contact and prize-receiving wallet/UID privately, rechecks the form, then submits the [project form](https://forms.gle/yToDUzaDMwWnq6R6A) after DX. Save only a non-sensitive receipt status. |
 
-## Order of work
+## Superseded order of work for the retired cash-choice task
 
 1. Apply [D-045](../decisions/decision-log.md): the 100 USDT cash-choice claim is retired. Check issuer eligibility and whether the [solo small-position task](../research/2026-10-03-solo-product-reset.md) gives a decision that the first-party and closest entrant flows do not already give.
 2. If that task survives, approve one new spec and adapt only the necessary app path. Preserve the dated API and DX observations without presenting historical code as a finished product.

@@ -2,10 +2,10 @@
 
 **Prepared:** 2026-10-03. **Sources:** [live form audit](2026-10-01-live-form-audit.md), [DX answer draft](dx-form-draft.md) and [readiness gates](readiness-gates.md). This is a handoff list, not a request to put private values in Git or chat.
 
-## Product checkpoint, 4 October 12:00 UTC
+## Product task now
 
-- Confirm whether one eligible, consenting self-custody bStock holder can attempt the same 100 USDT task with the existing venue and prototype. A participant can say no. The team records the observed action without identity, jurisdiction or wallet address in Git.
-- If there is no holder task, apply [D-033](../decisions/decision-log.md) and retire the current cash-choice claim. The previously rejected exit-recovery direction doesn't become the new product by default.
+- The 100 USDT sell-or-borrow task was retired under [D-045](../decisions/decision-log.md). There is no participant to recruit and no 4 October product gate.
+- Review the [new 5 USDC entry-and-immediate-exit check](../product/pre-entry-exit-spec.md) as soon as the working interface is verified. Before any small funded demo, confirm that the specific issuer and route permit your use, and review the exact amount and possible loss. No wallet funding is needed for the read-only demo.
 
 ## Registration and team details
 
@@ -19,7 +19,7 @@
 - Choose onboarding, documentation and API reliability ratings from actual experience. Confirm whether `llms.txt` or `llms-full.txt` was fed to an AI agent and whether any documentation example was run unchanged.
 - Confirm the intention to keep building on the Binance Web3 API after the event. Review the [proposed free-text answers](dx-form-draft.md) for accuracy before submitting the required DX report.
 
-## Final delivery, after a product passes its gate
+## Final delivery, as soon as the build is ready
 
 - Review the separate repo and authorize its publication, a public demo deployment or judge-run instructions, and any DNS change. These are separate actions; none has happened.
 - Provide a judge-accessible video URL of **four minutes or less**. The current project form requires the URL even though the event page calls the video optional.
