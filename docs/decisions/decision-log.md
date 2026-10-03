@@ -316,3 +316,13 @@ The [clean local browser path](../research/2026-10-03-clean-local-path-result.md
 The [Plus Sol review](../agent-reports/product-review/2026-10-03-venus-post-action-gate.md) checked Venus's current aggregate risk methods against its source and E-Mode documentation. The public hypothetical method has no new-supply parameter. A local estimate of post-supply and post-borrow net cushions is possible in principle only with same-block account state, effective factors, both oracle paths, exact vToken rounding and protocol gates. The deployed source and a populated-account parity case are still unverified.
 
 **CEO decision:** keep the existing current-state notice and isolated market illustration. Do not show a personal health factor, liquidation price or safe borrowing amount. Permit a bounded read-only provenance and parity study; add a conditional net-cushion result only after it reproduces deployed behavior and can be explained to an eligible holder. If those gates remain open at the 4 October checkpoint, narrow or retire the cash-choice claim under D-017.
+
+## D-031: keep same-cash differentiation as a testable gap
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** provisional until the 4 October product checkpoint
+
+The [same-cash incumbent check](../agent-reports/product-review/2026-10-03-same-cash-incumbents.md) inspected Steward's Swipe route, Portir's buy route, Venus guides and Binance Agentic Wallet's market-order reference. The inspected sources don't show one guided target-sized sale versus borrow comparison. Steward already covers much of the borrow task, and Binance Agentic Wallet covers sale quotes. No competitor or holder workflow was exercised end to end.
+
+**CEO decision:** treat the remaining gap as a hypothesis, not a product advantage. Keep D-017 only through the 4 October checkpoint. Don't broaden scope because a feature is absent from a README. Require a consenting holder's same-cash task, defensible cost interpretation and account-specific risk boundary before claiming an actionable comparison. Narrow or retire the cash-choice claim if those gates cannot be met.
