@@ -2,6 +2,7 @@
 """Read-only, market-level Venus scenario server. Python 3.9 standard library only."""
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation, getcontext
+from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import base64
@@ -10,6 +11,7 @@ import hmac
 import os
 import re
 import secrets
+import threading
 import time
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -39,6 +41,11 @@ MIN_INPUT = Decimal("0.000000000000000001")
 SECRET_NAMES = ("BINANCE_WEB3_API_KEY", "BINANCE_WEB3_SECRET_KEY")
 MAX_PUBLIC_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_QUOTE_RESPONSE_BYTES = 1048576
+QUOTE_REQUEST_LIMIT = 6
+QUOTE_REQUEST_WINDOW_SECONDS = 60.0
+QUOTE_RATE_LIMIT_ERROR = {
+    "error": {"field": "quote", "message": "Quote request limit reached. No quote was used."}
+}
 BINANCE_ERROR_LABELS = {
     40001: "invalid_request_parameters", 40101: "invalid_or_disabled_api_key",
     40102: "signature_mismatch_or_missing", 40103: "timestamp_expired_or_replayed_request",
@@ -63,6 +70,35 @@ class ScenarioError(Exception):
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         return None
+
+
+class QuoteRequestBudget:
+    """Process-wide rolling request budget with a single active-request gate."""
+
+    def __init__(self, limit=QUOTE_REQUEST_LIMIT, window_seconds=QUOTE_REQUEST_WINDOW_SECONDS):
+        self.limit = limit
+        self.window_seconds = window_seconds
+        self._accepted_at = deque()
+        self._lock = threading.Lock()
+        self._active = threading.Lock()
+
+    def try_acquire(self, now=None):
+        now = time.monotonic() if now is None else now
+        with self._lock:
+            while self._accepted_at and now - self._accepted_at[0] >= self.window_seconds:
+                self._accepted_at.popleft()
+            if len(self._accepted_at) >= self.limit:
+                return "rate_limited"
+            if not self._active.acquire(False):
+                return "busy"
+            self._accepted_at.append(now)
+            return "accepted"
+
+    def release(self):
+        self._active.release()
+
+
+quote_request_budget = QuoteRequestBudget()
 
 
 def read_json_object(response, label):
@@ -922,6 +958,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         endpoint = urlparse(self.path).path
+        quote_acquired = False
         if endpoint not in ("/api/balance", "/api/quote", "/api/venus-account"):
             self.send_error(404)
             return
@@ -956,6 +993,11 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 units = decimal_input(body.get("units", ""), "units")
                 cash = decimal_input(body.get("cash", ""), "cash")
+                decision = quote_request_budget.try_acquire()
+                if decision != "accepted":
+                    self.send_json(429, QUOTE_RATE_LIMIT_ERROR)
+                    return
+                quote_acquired = True
                 self.send_json(200, request_target_sized_quote(wallet, units, cash))
         except ScenarioError as exc:
             self.send_json(400, {"error": {"field": exc.field, "message": exc.message}})
@@ -969,6 +1011,9 @@ class Handler(BaseHTTPRequestHandler):
                 message = "Binance quote status is unknown. No raw response was retained; retry explicitly if needed."
             error_field = "quote" if endpoint == "/api/quote" else "wallet"
             self.send_json(502, {"error": {"field": error_field, "message": message}})
+        finally:
+            if quote_acquired:
+                quote_request_budget.release()
 
     def log_message(self, fmt, *args):
         # Keep access logs free of entered query amounts.
