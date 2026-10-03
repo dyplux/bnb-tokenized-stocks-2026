@@ -428,3 +428,13 @@ The [bounded parity probe](../research/2026-10-03-nvdab-holder-current-risk-pari
 The [official track](https://www.bnbchain.org/en/hackathons/tokenized-stocks), rechecked 2026-10-03, permits spot on BNB Smart Chain mainnet and directs teams to dry-run with the Transaction API while building, then demonstrate with small live amounts. The repo has a signed Binance quote and an unsigned `/swap` construction for a temporary nonholder address, but no Transaction API simulation or signed mainnet execution.
 
 **CEO decision:** make the live-amount gap explicit in the [readiness gates](../submission/readiness-gates.md). A read-only estimate cannot be described as an executed cash-out or as a complete live demo. Decide the product at the 4 October checkpoint first. Any small transaction later needs a concrete wallet, amount, spend cap, expected fee, failure-recovery path and specific founder authorization; don't use a public holder's assets. If the chosen product cannot produce a permitted mainnet task, report the gap rather than imply that a quote satisfies this direction.
+
+## D-041: reject a generic weekend BTC-to-MSTRB agent
+
+**Date:** 2026-10-03
+**Owner:** Dyplux
+**Status:** research candidate rejected; D-033 unchanged
+
+The [Saturday read](../research/2026-10-03-mstrb-weekend-rfq-result.md) established amount-sized MSTRB/USDT quote availability, while the [ten-weekend study](../research/2026-10-01-weekend-crypto-equity-task.md) found no compelling one-hour BTC lead. The [official Agentic Wallet guide](https://developers.binance.com/en/docs/products/agentic-wallet/use-cases/trading/stock-trading), modified 2 October, already documents ticker resolution, status, amount quotes, buy and sell, order status and ongoing trading rules. Its runtime wasn't exercised, so the comparison is to its documented flow.
+
+**CEO decision:** the generic BTC alert plus quote or automatic buy has no demonstrated product advantage and won't replace D-017 at its checkpoint. Re-open only with a user task and same-task evidence that the official flow misses. No trading edge or Agent Studio buyer has been established.
