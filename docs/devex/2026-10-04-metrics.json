@@ -3,79 +3,79 @@
   "endpoints": [
     {
       "business_code_counts": {
-        "0": 92,
+        "0": 97,
         "40367": 2,
         "40374": 9
       },
-      "calls": 103,
+      "calls": 108,
       "endpoint": "/api/v1/dex/aggregator/quote",
       "http_status_counts": {
-        "200": 103
+        "200": 108
       },
       "max_latency_ms": 757.14,
-      "median_latency_ms": 329.67,
+      "median_latency_ms": 327.75,
       "method": "GET",
       "p95_latency_ms_nearest_rank": 648.75,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 8
+        "0": 11
       },
-      "calls": 8,
+      "calls": 11,
       "endpoint": "/api/v1/dex/aggregator/swap",
       "http_status_counts": {
-        "200": 8
+        "200": 11
       },
-      "max_latency_ms": 423.83,
-      "median_latency_ms": 336.99,
+      "max_latency_ms": 458.79,
+      "median_latency_ms": 340.02,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 423.83,
+      "p95_latency_ms_nearest_rank": 458.79,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 109,
+        "0": 126,
         "None": 1
       },
-      "calls": 110,
+      "calls": 127,
       "endpoint": "/api/v1/dex/market/rwa/price",
       "http_status_counts": {
-        "200": 109,
+        "200": 126,
         "414": 1
       },
       "max_latency_ms": 670.79,
-      "median_latency_ms": 299.95,
+      "median_latency_ms": 299.12,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 391.34,
+      "p95_latency_ms_nearest_rank": 389.41,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 113
+        "0": 131
       },
-      "calls": 113,
+      "calls": 131,
       "endpoint": "/api/v1/dex/market/rwa/tokens",
       "http_status_counts": {
-        "200": 113
+        "200": 131
       },
       "max_latency_ms": 3925.65,
-      "median_latency_ms": 2197.0,
+      "median_latency_ms": 2193.37,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 3735.57,
+      "p95_latency_ms_nearest_rank": 3875.75,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 27
+        "0": 35
       },
-      "calls": 27,
+      "calls": 35,
       "endpoint": "/api/v1/dex/market/rwa/underlying-market",
       "http_status_counts": {
-        "200": 27
+        "200": 35
       },
       "max_latency_ms": 386.74,
-      "median_latency_ms": 302.67,
+      "median_latency_ms": 302.3,
       "method": "GET",
       "p95_latency_ms_nearest_rank": 384.41,
       "schema_mismatches": 0
@@ -97,15 +97,15 @@
     },
     {
       "business_code_counts": {
-        "0": 7
+        "0": 10
       },
-      "calls": 7,
+      "calls": 10,
       "endpoint": "/api/v1/dex/pre-transaction/simulate",
       "http_status_counts": {
-        "200": 7
+        "200": 10
       },
       "max_latency_ms": 479.78,
-      "median_latency_ms": 370.26,
+      "median_latency_ms": 356.47,
       "method": "POST",
       "p95_latency_ms_nearest_rank": 479.78,
       "schema_mismatches": 0
@@ -140,15 +140,41 @@
     },
     {
       "business_code_counts": {},
-      "calls": 36,
+      "calls": 1,
+      "endpoint": "https://api.xstocks.fi/api/v2/public/assets/AAPLx/price-data",
+      "http_status_counts": {
+        "None": 1
+      },
+      "max_latency_ms": 15130.55,
+      "median_latency_ms": 15130.55,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 15130.55,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {},
+      "calls": 1,
+      "endpoint": "https://api.xstocks.fi/api/v2/public/assets/NVDAx/price-data",
+      "http_status_counts": {
+        "None": 1
+      },
+      "max_latency_ms": 15080.17,
+      "median_latency_ms": 15080.17,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 15080.17,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {},
+      "calls": 50,
       "endpoint": "https://bsc-dataseed.bnbchain.org",
       "http_status_counts": {
-        "200": 36
+        "200": 50
       },
       "max_latency_ms": 371.55,
-      "median_latency_ms": 240.66,
+      "median_latency_ms": 255.82,
       "method": "POST eth_call JSON-RPC batch",
-      "p95_latency_ms_nearest_rank": 362.53,
+      "p95_latency_ms_nearest_rank": 360.29,
       "schema_mismatches": 0
     },
     {
@@ -169,6 +195,6 @@
   ],
   "method": "append-only sanitized call ledger, not a controlled load benchmark",
   "note": "Business rejections can be expected task outcomes; HTTP 200 isn't a successful quote or transaction. No request header, API key or wallet private key is included.",
-  "request_count": 414,
-  "snapshot_last_logged_at": "2026-10-04T16:20:03.149Z"
+  "request_count": 484,
+  "snapshot_last_logged_at": "2026-10-04T17:25:02.548Z"
 }
