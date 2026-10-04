@@ -1,6 +1,6 @@
 # Safety product submission readiness
 
-**Checked:** 2026-10-04 20:10 UTC. **Deadline:** 2026-10-11 12:00 UTC. This is the current product packet. [The former Exit Check packet](final-review-packet.md) is shelved.
+**Checked:** 2026-10-04 21:05 UTC. **Deadline:** 2026-10-11 12:00 UTC. This is the current product packet. [The former Exit Check packet](final-review-packet.md) is shelved.
 
 | Official item | Current evidence | Remaining gate |
 |---|---|---|

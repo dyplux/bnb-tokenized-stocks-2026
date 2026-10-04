@@ -14,5 +14,6 @@ The complete local source is `/Volumes/SSD500/Dyplux/execution-safety-judge-vide
 | Video | 1920 × 1080 H.264, 24 fps, exactly 60.000 seconds, 1,440 encoded frames. |
 | Audio | Original synthesized music, two-pass normalization and AAC encoding. Automated decoded level check: mean −14.1 dB and peak −1.3 dB. Subjective full-length listening remains an editorial check. |
 | MP4 SHA-256 | `d4d3530e120477fa73d8dd9d4a2938f4ca8872ca00f03ee6ac35c2147795a6e4`, identical in source, public-repo copy and local standalone copy before deployment. |
+| Published path | Commit `2e67ec9` passed Python CI and GitHub Pages deployment. A signed-out download from Pages matched the MP4 SHA-256 above. Chrome loaded the published page at 1440, 390 and 320 CSS pixels; the new link was present, with no page errors or horizontal overflow. |
 
 The film doesn't prove independent stock-reference freshness, user eligibility, passing funded simulation, a capital transaction, or an economic advantage. The public receipt hash verifies the published decision body's internal consistency; the signed API response bodies named by its source hashes remain local. Monday's preregistered observation and any later authorized trade require a separate evidence cut before changing the claims.
