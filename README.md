@@ -7,7 +7,7 @@ The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. 
 ## See the product
 
 - [Public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/): observed, dated `NEED_HUMAN` and mandate-bound `DENY` cases; a clearly marked synthetic `ALLOW` policy fixture; source times, reason codes, receipt downloads and system status. It makes no live signed API request.
-- [30-second product video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-demo.mp4): a separate, dated read-only run. It shows no trade.
+- [60-second two-case product video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4): an 18:28 UTC live local read-only capture and a separate 19:56 UTC dated replay. The first returned `NEED_HUMAN`; the second returned `DENY` when a 100 USDT request exceeded a 20 USDT mandate. No trade was signed.
 - [Judge instructions](docs/submission/safety-judge-run.md): run a fresh signed check with your own Binance Web3 API credentials, then try a mandate denial. The public page also works without credentials.
 
 ## Run a fresh check locally
