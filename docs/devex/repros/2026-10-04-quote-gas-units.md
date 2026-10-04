@@ -1,0 +1,9 @@
+# Quote gas field has an unresolved unit definition
+
+**Observed:** a signed, read-only BNB Chain `GET /api/v1/dex/aggregator/quote` response on 2026-10-04 returned one LiquidMesh SWAP route. The [sanitized request fixture](../fixtures/2026-10-04-rwa-quote-swap-request.json) and [exact response body](../fixtures/2026-10-04-rwa-quote-swap-raw.json) allow the field values and response hash to be checked without credentials. No build, signature or transaction followed.
+
+The route returned `estimateGasFee="450000"` and `tradeFee="0.02531995"`. The [Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) defines `estimateGasFee` as estimated gas in the chain's smallest unit, with wei as its example, and `tradeFee` as an estimated network fee in USD. A value of 450,000 is also a plausible **gas-unit limit**, which has a different dimension from wei. The response doesn't include a gas price or a field that resolves this interpretation. The corrected [eight-quote size ladder](../../../experiments/EXP-RWA-009/quote_depth.csv) reported the same `estimateGasFee=450000` at four USDC input sizes for each of two bStocks.
+
+**Interpretation limit:** the numeric pattern suggests gas units, but there was no built or executed transaction to prove it. `tradeFee` is a vendor estimate, not a paid cost. The project doesn't multiply `estimateGasFee` by a BNB price or present it as a final cost. Approval gas, route expiry and settlement remain unmeasured.
+
+**Suggested documentation correction:** identify the unit of `estimateGasFee` per chain and execution mode. If it is a gas-unit estimate, state that the caller still needs a gas price to estimate native-token cost. If it is wei, explain how the displayed number should be reconciled with the USD network-fee estimate. A small self-custodial purchase needs this distinction before it can show a reliable all-in cost.
