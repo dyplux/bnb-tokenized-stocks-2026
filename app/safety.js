@@ -1,5 +1,6 @@
 const form = document.querySelector('#check-form');
 const submit = document.querySelector('#submit');
+const example = document.querySelector('#example');
 const error = document.querySelector('#form-error');
 let latest = null;
 
@@ -50,6 +51,11 @@ function fact(list, name, value, status = '') {
 
 function render(data) {
   latest = data;
+  const replay = document.querySelector('#replay-disclosure');
+  replay.hidden = data.origin !== 'DATED_REPLAY';
+  replay.textContent = data.origin === 'DATED_REPLAY'
+    ? (data.replay_note || 'This is a fixed recorded example, not a live check.')
+    : '';
   document.querySelector('#empty-state').hidden = true;
   document.querySelector('#result-state').hidden = false;
   const decision = document.querySelector('#decision');
@@ -101,6 +107,7 @@ form.addEventListener('submit', async event => {
   error.hidden = true;
   if (!form.reportValidity()) return;
   submit.disabled = true;
+  example.disabled = true;
   submit.textContent = 'Checking live sources…';
   const values = new FormData(form);
   const request = Object.fromEntries(values.entries());
@@ -116,7 +123,25 @@ form.addEventListener('submit', async event => {
     error.hidden = false;
   } finally {
     submit.disabled = false;
+    example.disabled = false;
     submit.innerHTML = 'Review action <span aria-hidden="true">↗</span>';
+  }
+});
+
+example.addEventListener('click', async () => {
+  error.hidden = true;
+  submit.disabled = true;
+  example.disabled = true;
+  try {
+    const response = await fetch('/api/dated-example');
+    if (!response.ok) throw new Error('The recorded example is unavailable.');
+    render(await response.json());
+  } catch (failure) {
+    error.textContent = failure.message;
+    error.hidden = false;
+  } finally {
+    submit.disabled = false;
+    example.disabled = false;
   }
 });
 
@@ -125,7 +150,7 @@ document.querySelector('#download').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify(latest, null, 2)], {type: 'application/json'});
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = `dyplux-nvda-decision-${latest.receipt.timestamp.slice(0, 10)}.json`;
+  link.download = `dyplux-nvda-${latest.origin === 'DATED_REPLAY' ? 'dated-example' : 'decision'}-${latest.receipt.timestamp.slice(0, 10)}.json`;
   link.click();
   URL.revokeObjectURL(link.href);
 });

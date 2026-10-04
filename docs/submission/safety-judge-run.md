@@ -1,6 +1,8 @@
 # Judge run: one stock-token action
 
-**State:** local read-only build, checked 2026-10-04. Use Python 3.9+ and your own Binance Web3 API key and secret in a Git-ignored `.env` or process environment. No wallet, Binance account or private key is needed for the screen. The API can change between this note and judging.
+**State:** local read-only build, checked 2026-10-04. Use Python 3.9+. A live check requires your own Binance Web3 API key and secret in a Git-ignored `.env` or process environment; the dated example does not. No wallet, Binance account or private key is needed for the screen. The API can change between this note and judging.
+
+If credentials aren't available, click **View dated example from 4 October** after opening the page. This is a fixed NVDAB result captured at 15:34 UTC, with a verifiable receipt hash. It doesn't use the form values, call the live API or establish current market conditions. The steps below exercise the live integration and need valid API credentials.
 
 1. Run `python3 app/safety_server.py` and open `http://127.0.0.1:8001`.
 2. Select **NVDAB**, set the action to **10 USDT** and the mandate to **10 USDT maximum**. Leave price impact at **0.5%**. Select **Review action**.

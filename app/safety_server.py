@@ -34,6 +34,10 @@ class Handler(BaseHTTPRequestHandler):
         self.respond(status, json.dumps({"error": message}).encode())
 
     def do_GET(self):
+        if self.path == "/api/dated-example":
+            fixture = APP / "fixtures/safety-nvdab-2026-10-04.json"
+            self.respond(200, fixture.read_bytes())
+            return
         paths = {"/": ("safety.html", "text/html; charset=utf-8"),
                  "/safety.js": ("safety.js", "text/javascript; charset=utf-8"),
                  "/safety.css": ("safety.css", "text/css; charset=utf-8")}

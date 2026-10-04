@@ -32,12 +32,15 @@
         </div>
         <p class="helper">This local check uses live signed Binance Web3 reads and a public BSC read. Four checks per minute. No private key, approval or order.</p>
         <button type="submit" id="submit">Review action <span aria-hidden="true">↗</span></button>
+        <button type="button" id="example">View dated example from 4 October</button>
+        <p class="example-help">A fixed recorded result. Your form values don't change it.</p>
         <p id="form-error" class="form-error" role="alert" hidden></p>
       </form>
       <section class="panel result" aria-labelledby="result-heading">
         <div class="panel-head"><span>02 / DECISION</span><span id="observed">AWAITING CHECK</span></div>
         <div id="empty-state" class="empty"><span class="empty-symbol" aria-hidden="true">◇</span><h2 id="result-heading">Evidence appears here</h2><p>Run one check to see what the available data supports, what it cannot prove, and the next action.</p></div>
         <div id="result-state" hidden aria-live="polite">
+          <p id="replay-disclosure" class="replay-disclosure" hidden></p>
           <div class="verdict"><p class="eyebrow">POLICY RESULT</p><h2 id="decision"></h2><p id="decision-context"></p></div>
           <div class="reason-block"><h3>Why</h3><ul id="reasons"></ul></div>
           <div class="evidence-block"><h3>Evidence</h3><dl id="facts"></dl></div>
