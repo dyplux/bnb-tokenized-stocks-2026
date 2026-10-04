@@ -44,6 +44,35 @@ def unsigned_tx_is_exact(tx, wallet):
             bool(re.fullmatch(r"0x[0-9a-fA-F]+", calldata)))
 
 
+def token_address(token):
+    return str(token.get("tokenContractAddress", "")).lower() if isinstance(token, dict) else ""
+
+
+def route_base_matches(route, source, destination, raw_amount):
+    return (isinstance(route, dict) and str(route.get("binanceChainId")) == "56" and
+            token_address(route.get("fromToken")) == source.lower() and
+            token_address(route.get("toToken")) == destination.lower() and
+            str(route.get("fromTokenAmount")) == str(raw_amount))
+
+
+def route_matches_intent(route, source, destination, raw_amount):
+    return (route_base_matches(route, source, destination, raw_amount) and
+            ADDRESS.fullmatch(str(route.get("approveTarget", ""))) is not None)
+
+
+def build_matches_quote(data, route, wallet, source, destination, raw_amount):
+    if not isinstance(data, dict):
+        return False
+    result = data.get("routerResult")
+    tx = data.get("tx")
+    if not unsigned_tx_is_exact(tx, wallet):
+        return False
+    return (route_base_matches(result, source, destination, raw_amount) and
+            result.get("router") == route.get("router") and
+            tx["to"].lower() == str(route.get("approveTarget", "")).lower() and
+            str(tx.get("value") or "0") == "0")
+
+
 def run(provider="bstock", wallet=None, api=None):
     if provider not in ("bstock", "ondo"):
         raise ValueError("Only NVDA bStock/Ondo supported")
@@ -69,20 +98,23 @@ def run(provider="bstock", wallet=None, api=None):
     contract = selected[0]["contract"]
     result["security"] = {"ticker": "NVDA", "symbol": symbol, "contract": contract,
                           "catalog_observed_at": at, "catalog_sha256": catalog_hash}
+    raw_amount = str(10 * 10**18)
     common = [("binanceChainId", "56"), ("fromTokenAddress", USDT),
-              ("toTokenAddress", contract), ("amount", str(10 * 10**18)),
+              ("toTokenAddress", contract), ("amount", raw_amount),
               ("userWalletAddress", wallet)]
     quote, at, digest = api.get(
         QUOTE, common, EXPERIMENT, "10 USDT exact-wallet quote",
         {"provider": provider, "step": "quote"}, allow_error=True)
     routes = quote.get("data") if quote.get("code") == 0 and isinstance(quote.get("data"), list) else []
     route = next((row for row in routes if isinstance(row, dict) and row.get("isBest") is True),
-                 routes[0] if routes else {})
+                 next((row for row in routes if isinstance(row, dict)), {}))
+    quote_exact = route_matches_intent(route, USDT, contract, raw_amount)
     result["quote"] = {"observed_at": at, "business_code": quote.get("code"),
                        "route_count": len(routes), "execution_mode": route.get("executionMode"),
-                       "vendor": route.get("vendorName"), "sha256": digest}
+                       "vendor": route.get("vendorName"), "intent_match": quote_exact,
+                       "sha256": digest}
     result["stage"] = "QUOTE"
-    if not route.get("quoteId") or route.get("executionMode") != "SWAP":
+    if not quote_exact or not route.get("quoteId") or route.get("executionMode") != "SWAP":
         return result
     build, at, digest = api.get(
         SWAP_BUILD, common + [("quoteId", route["quoteId"]), ("slippagePercent", "0.5")],
@@ -90,10 +122,10 @@ def run(provider="bstock", wallet=None, api=None):
         {"provider": provider, "step": "build"}, allow_error=True)
     data = build.get("data") if isinstance(build.get("data"), dict) else {}
     tx = data.get("tx") if isinstance(data.get("tx"), dict) else {}
-    exact = unsigned_tx_is_exact(tx, wallet)
+    exact = build_matches_quote(data, route, wallet, USDT, contract, raw_amount)
     result["build"] = {"observed_at": at, "business_code": build.get("code"),
                        "execution_mode": data.get("executionMode"),
-                       "unsigned_tx_present": bool(tx), "exact_wallet_and_shape": exact,
+                       "unsigned_tx_present": bool(tx), "quote_build_intent_match": exact,
                        "tx_to": tx.get("to") if exact else None,
                        "calldata_sha256": hashlib.sha256(tx["data"].encode()).hexdigest() if exact else None,
                        "sha256": digest}
