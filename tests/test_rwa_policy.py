@@ -105,6 +105,50 @@ class PolicyFixtureTest(unittest.TestCase):
                     normalized = Decimal(case[point]["token_price_usd"]) / Decimal(case[point]["token_to_share_ratio"])
                     self.assertEqual(normalized, Decimal(case["normalized_per_share_" + point + "_usd"]))
 
+    def test_bstock_requires_onchain_multiplier_by_default(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("ONCHAIN_MULTIPLIER_UNVERIFIED", result["reason_codes"])
+
+    def test_bstock_matching_fixed_block_multiplier(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        self.mandate["max_onchain_multiplier_age_seconds"] = 3600
+        self.evidence.update({"onchain_ui_multiplier": "1", "onchain_multiplier_block": 123,
+                              "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
+                              "onchain_multiplier_effective_at": 0})
+        self.assertEqual(self.run_policy()["decision"], "ALLOW")
+
+    def test_bstock_mismatched_multiplier_denies(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        self.mandate["max_onchain_multiplier_age_seconds"] = 3600
+        self.evidence.update({"onchain_ui_multiplier": "1.1", "onchain_multiplier_block": 123,
+                              "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
+                              "onchain_multiplier_effective_at": 0})
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("ONCHAIN_MULTIPLIER_MISMATCH", result["reason_codes"])
+
+    def test_bstock_scheduled_multiplier_needs_human(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        self.mandate["max_onchain_multiplier_age_seconds"] = 3600
+        self.evidence.update({"onchain_ui_multiplier": "1", "onchain_multiplier_block": 123,
+                              "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
+                              "onchain_multiplier_effective_at": 1791075600})
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("ONCHAIN_MULTIPLIER_SCHEDULE_UNKNOWN", result["reason_codes"])
+
+    def test_bstock_old_block_needs_human(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        self.mandate["max_onchain_multiplier_age_seconds"] = 60
+        self.evidence.update({"onchain_ui_multiplier": "1", "onchain_multiplier_block": 123,
+                              "onchain_multiplier_block_timestamp": "2026-10-03T23:58:00Z",
+                              "onchain_multiplier_effective_at": 0})
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("ONCHAIN_MULTIPLIER_STALE", result["reason_codes"])
+
     def test_synthetic_halt_denies(self):
         self.evidence["market_status"] = "pause"
         self.evidence["market_reason"] = "ASSET_PAUSED"

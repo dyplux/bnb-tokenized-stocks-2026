@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 
 
 def number(value):
@@ -63,6 +63,31 @@ def eligibility_guard(evidence, mandate, now):
     return None
 
 
+def onchain_multiplier_guard(evidence, mandate, now):
+    """Cross-check bStock display scaling against a recent fixed-block read."""
+    if evidence.get("provider") != "bstock" or mandate.get("require_onchain_multiplier") is False:
+        return None
+    ratio = number(evidence.get("token_to_share_ratio"))
+    multiplier = number(evidence.get("onchain_ui_multiplier"))
+    block = evidence.get("onchain_multiplier_block")
+    timestamp = evidence.get("onchain_multiplier_block_timestamp")
+    max_age = number(mandate.get("max_onchain_multiplier_age_seconds"))
+    if ratio is None or ratio <= 0 or multiplier is None or multiplier <= 0 or not isinstance(block, int) or block <= 0 or not isinstance(timestamp, str) or max_age is None or max_age <= 0:
+        return "ONCHAIN_MULTIPLIER_UNVERIFIED", "NEED_HUMAN"
+    try:
+        checked = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+        age = (now - checked).total_seconds() if checked.tzinfo is not None else None
+    except (ValueError, TypeError):
+        age = None
+    if age is None or age < 0 or Decimal(str(age)) > max_age:
+        return "ONCHAIN_MULTIPLIER_STALE", "NEED_HUMAN"
+    if multiplier != ratio:
+        return "ONCHAIN_MULTIPLIER_MISMATCH", "DENY"
+    if evidence.get("onchain_multiplier_effective_at") != 0:
+        return "ONCHAIN_MULTIPLIER_SCHEDULE_UNKNOWN", "NEED_HUMAN"
+    return None
+
+
 def evaluate(intent, evidence, mandate, now=None):
     """Return a fail-closed decision for one planned BSC spot action.
 
@@ -102,6 +127,10 @@ def evaluate(intent, evidence, mandate, now=None):
             deny("UNVERIFIED_RATIO_CHANGE")
         else:
             uncertain("CORPORATE_ACTION_REVIEW")
+    onchain_result = onchain_multiplier_guard(evidence, mandate, now)
+    if onchain_result is not None:
+        code, severity = onchain_result
+        (deny if severity == "DENY" else uncertain)(code)
     if evidence.get("market_status") in ("pause", "halted") or evidence.get("market_reason") == "ASSET_PAUSED":
         deny("ASSET_PAUSED")
     elif evidence.get("market_status") in ("closed", "offhours", "overnight"):
@@ -148,11 +177,14 @@ def evaluate(intent, evidence, mandate, now=None):
         "intent": {k: intent.get(k) for k in ("chain_id", "ticker", "provider", "contract", "notional_usd")},
         "mandate": {k: mandate.get(k) for k in (
             "max_token_price_age_ms", "require_independent_reference", "max_reference_age_seconds",
-            "max_notional_usd", "max_price_impact_percent", "max_eligibility_age_seconds")},
+            "max_notional_usd", "max_price_impact_percent", "max_eligibility_age_seconds",
+            "require_onchain_multiplier", "max_onchain_multiplier_age_seconds")},
         "evidence": {k: evidence.get(k) for k in (
             "chain_id", "ticker", "provider", "contract", "issuer_verified",
             "eligibility_status", "eligibility_basis", "eligibility_checked_at", "token_to_share_ratio",
-            "previous_token_to_share_ratio", "corporate_action_verified", "market_status", "market_reason",
+            "previous_token_to_share_ratio", "corporate_action_verified",
+            "onchain_ui_multiplier", "onchain_multiplier_block", "onchain_multiplier_block_timestamp",
+            "onchain_multiplier_effective_at", "market_status", "market_reason",
             "token_price_age_ms", "token_price_age_calculation", "reference_price_updated_at",
             "reference_age_seconds", "reference_age_status", "quote_available",
             "price_impact_percent", "simulation_passed", "source_response_sha256")},
