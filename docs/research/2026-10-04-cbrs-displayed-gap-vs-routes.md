@@ -1,0 +1,13 @@
+# CBRS: a displayed gap with one closed route
+
+**Observed:** 2026-10-04 12:51 UTC, Sunday. **Experiment:** EXP-RWA-008. [Reproduction script](../../scripts/probe_cbrs_routes.py), [sanitized results and response hashes](../../experiments/EXP-RWA-008/cbrs_sunday_probe.json). All five calls used the signed, read-only Binance Web3 API; no transaction was built or sent.
+
+The 11:00 catalog showed bStock CBRSB at $182.21 and Ondo CBRSon at $171.566667, both with a displayed token/share ratio of 1. The apparent gap was 6.20% against the lower price. We chose this case because it was the largest raw gap among 34 bStock/Ondo stock ticker pairs in that snapshot. This was an exploratory selection, not a preregistered universe test.
+
+At 12:51, the same `/rwa/price` request returned $180.57 for CBRSB and $171.566667 for CBRSon. The arithmetic gap had fallen to **5.25%**. CBRSB's token-price timestamp was less than one second old at retrieval. CBRSon's token-price timestamp was **35.85 hours old**, from 2026-10-03 00:59:56 UTC. These timestamps measure the token prices, not the issuer's independent stock reference; the [API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) documents `tokenPriceUpdatedAt` with that narrower meaning.
+
+Two amount-specific CBRSB requests returned one LiquidMesh `SWAP` route each: buy with 100 USDT and sell the arithmetic equivalent of 0.1 share. The matching CBRSon requests returned business code `40367`, with a market-closed message and **zero routes** on both sides. The 100 USDT input used 18 decimal places, and the successful response echoed that amount and decimal count. A temporary, unfunded address was used only to request the quotes.
+
+**Decision:** this snapshot supplies no cross-issuer executable spread. The cheaper displayed representation couldn't be bought or sold through the tested route at that time. Even had both routes existed, different issuer rights, eligibility, final fees, settlement and fills would remain unverified. Do not build an arbitrage or profit claim from a catalog spread. The useful product question is whether a user can distinguish a displayed price from an action they can actually take, and whether an incumbent already makes that distinction clear.
+
+**Next check:** repeat the same asset, sides and size during a verified regular US equity session, then compare actual quote units and route availability. If both routes appear, examine net bid/ask and issuer terms before considering a cross-provider action. Keep this Sunday failure as a dated state, not a permanent claim about Ondo.

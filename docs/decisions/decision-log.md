@@ -594,3 +594,13 @@ The [instrumented sell-side probe](../research/2026-10-04-sell-route-sunday.md) 
 The [pinned source audit](../research/2026-10-04-gateway-substitute-audit.md) found that OneTicker already exposes token resolution, normalized quotes, a deterministic gate, MCP and Wallet Skill tools, and a five-minute tape. Its published implementation also reads APRO oracle rounds. Our direct [APRO NVDAB/USD read](../../data/external_reference/2026-10-04-apro-nvdab.json) found a genuine `updatedAt`, but it dates a tokenized-equity oracle, not an independent US stock reference. Binance's issuer-reference clock remains unknown in the observed developer API.
 
 **CEO decision:** retain the collector, the policy skeleton and DevEx evidence as reusable research. Don't select a gateway or route screener as the submission product merely because these components work. Use the frozen Monday benchmark and a specifically observed user task to decide what product surrounds them. If no task clears the gate, report that rather than duplicating a named incumbent.
+
+## D-057: a Sunday CBRS price gap is not an executable cross-issuer spread
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** cross-issuer arbitrage framing rejected for the observed task; product remains open
+
+The [12:51 UTC CBRS probe](../research/2026-10-04-cbrs-displayed-gap-vs-routes.md) followed the largest same-ticker raw gap in the 11:00 catalog. A fresh signed price request still showed a 5.25% arithmetic difference, but the cheaper Ondo token's price timestamp was 35.85 hours old. The signed Trading API returned one read-only buy and sell route for CBRSB, and zero routes with business code `40367` for CBRSon on both sides. Those are estimates for an unfunded nonholder; issuer rights and eligibility remain unknown.
+
+**CEO decision:** treat price age and route availability as separate gates. No cross-issuer arbitrage or profit claim survives this Sunday example. The failure may be useful to a user deciding whether a displayed quote can be acted upon, but an incumbent comparison and a verified next action are still required before selecting a product. Repeat the case during regular US trading to learn whether it is a temporary market state or a persistent coverage issue.

@@ -3,6 +3,7 @@
 
 import csv
 import json
+from math import ceil
 from collections import Counter, defaultdict
 from decimal import Decimal, InvalidOperation
 from datetime import datetime
@@ -30,6 +31,21 @@ def decimal(value):
         return result if result.is_finite() else None
     except (InvalidOperation, TypeError, ValueError):
         return None
+
+
+def age_distribution(values):
+    """Describe observed token-clock ages; this says nothing about stock reference age."""
+    ordered = sorted(values)
+    if not ordered:
+        return {"count": 0}
+    return {
+        "count": len(ordered),
+        "median_ms": int(median(ordered)),
+        "p95_ms_nearest_rank": ordered[ceil(0.95 * len(ordered)) - 1],
+        "max_ms": ordered[-1],
+        "over_60_seconds": sum(age > 60_000 for age in ordered),
+        "over_300_seconds": sum(age > 300_000 for age in ordered),
+    }
 
 
 def session_context(observed):
@@ -60,6 +76,7 @@ def main():
 
     freshness = []
     ages_by_status = defaultdict(list)
+    ages_by_provider = defaultdict(list)
     ages_by_session = defaultdict(list)
     market_review = Counter()
     future_token_timestamps = 0
@@ -77,6 +94,7 @@ def main():
         market_review[(session, status, review)] += 1
         if isinstance(age, int) and age >= 0:
             ages_by_status[status].append(age)
+            ages_by_provider[row["provider"]].append(age)
             ages_by_session[session].append(age)
         freshness.append({
             "observed_at": row["observed_at"], "origin": row["origin"], "ticker": row["ticker"],
@@ -114,6 +132,7 @@ def main():
         "token_price_freshness": {"age_calculation": "observed_at minus tokenPriceUpdatedAt, recomputed from raw timestamps for every row",
                                   "median_nonnegative_age_ms_by_api_market_status": {k: int(median(v)) for k, v in ages_by_status.items()},
                                   "median_nonnegative_age_ms_by_session_context": {k: int(median(v)) for k, v in ages_by_session.items()},
+                                  "age_distribution_by_provider": {k: age_distribution(v) for k, v in sorted(ages_by_provider.items())},
                                   "with_timestamp": sum(row.get("token_price_updated_at_ms") is not None for row in samples),
                                   "future_timestamp_rows": future_token_timestamps},
         "market_state_correctness": {"basis": "Nasdaq published premarket 04:00 to 09:30, regular 09:30 to 16:00 and after-hours 16:00 to 20:00 ET; no holiday, early-close, security halt or venue validation",
@@ -124,6 +143,22 @@ def main():
         "status_counts": dict(Counter(row.get("market_status") or "unknown" for row in samples)),
         "conclusion": "The API supplies tokenPriceUpdatedAt, not an independently sourced stock-reference timestamp. Independent reference freshness is unmeasured.",
         "source": "https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data",
+    }
+    # Compare only identical ticker-minute slots with both providers present.
+    # This reduces universe bias, but it doesn't make the instruments equivalent.
+    paired_slots = defaultdict(dict)
+    for row in freshness:
+        if row["provider"] in {"bstock", "ondo"} and row["token_price_age_status"] == "OBSERVED":
+            paired_slots[(row["observed_at"][:16], row["ticker"])][row["provider"]] = row
+    paired = [slot for slot in paired_slots.values() if {"bstock", "ondo"} <= slot.keys()]
+    results["token_price_freshness"]["matched_ticker_minute_slots"] = {
+        "pair_count": len(paired),
+        "tickers": sorted({slot["bstock"]["ticker"] for slot in paired}),
+        "basis": "same ticker and UTC minute, independent token update clocks; no economic equivalence inferred",
+        "by_provider": {
+            provider: age_distribution([slot[provider]["token_price_age_ms"] for slot in paired])
+            for provider in ("bstock", "ondo")
+        },
     }
     (reference / "results.json").write_text(json.dumps(results, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 

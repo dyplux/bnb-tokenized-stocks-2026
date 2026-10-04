@@ -1,7 +1,7 @@
 {
   "conclusion": "The API supplies tokenPriceUpdatedAt, not an independently sourced stock-reference timestamp. Independent reference freshness is unmeasured.",
   "first_observed_at": "2026-10-04T10:22:07.442Z",
-  "last_observed_at": "2026-10-04T11:40:02.573Z",
+  "last_observed_at": "2026-10-04T12:45:03.756Z",
   "market_state_correctness": {
     "basis": "Nasdaq published premarket 04:00 to 09:30, regular 09:30 to 16:00 and after-hours 16:00 to 20:00 ET; no holiday, early-close, security halt or venue validation",
     "independent_validation": false,
@@ -9,13 +9,13 @@
     "review_counts": [
       {
         "api_status": "offhours",
-        "count": 85,
+        "count": 150,
         "market_session_context": "weekend",
         "review": "PLAUSIBLE_NOT_PROVEN"
       },
       {
         "api_status": "unknown",
-        "count": 471,
+        "count": 926,
         "market_session_context": "weekend",
         "review": "UNKNOWN"
       }
@@ -25,24 +25,70 @@
   "reference_timestamp_availability": {
     "documented_field_available": false,
     "independent_reference_age_observations": 0,
-    "unknown_reference_age_rows": 556
+    "unknown_reference_age_rows": 1076
   },
-  "sample_count": 556,
+  "sample_count": 1076,
   "source": "https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data",
   "status_counts": {
-    "offhours": 85,
-    "unknown": 471
+    "offhours": 150,
+    "unknown": 926
   },
   "token_price_freshness": {
     "age_calculation": "observed_at minus tokenPriceUpdatedAt, recomputed from raw timestamps for every row",
+    "age_distribution_by_provider": {
+      "bstock": {
+        "count": 926,
+        "max_ms": 629281,
+        "median_ms": 3932,
+        "over_300_seconds": 11,
+        "over_60_seconds": 113,
+        "p95_ms_nearest_rank": 116928
+      },
+      "ondo": {
+        "count": 150,
+        "max_ms": 8207,
+        "median_ms": 2144,
+        "over_300_seconds": 0,
+        "over_60_seconds": 0,
+        "p95_ms_nearest_rank": 3733
+      }
+    },
     "future_timestamp_rows": 0,
+    "matched_ticker_minute_slots": {
+      "basis": "same ticker and UTC minute, independent token update clocks; no economic equivalence inferred",
+      "by_provider": {
+        "bstock": {
+          "count": 120,
+          "max_ms": 295123,
+          "median_ms": 2929,
+          "over_300_seconds": 0,
+          "over_60_seconds": 6,
+          "p95_ms_nearest_rank": 52811
+        },
+        "ondo": {
+          "count": 120,
+          "max_ms": 8207,
+          "median_ms": 2144,
+          "over_300_seconds": 0,
+          "over_60_seconds": 0,
+          "p95_ms_nearest_rank": 3704
+        }
+      },
+      "pair_count": 120,
+      "tickers": [
+        "COIN",
+        "MSTR",
+        "NVDA",
+        "TSLA"
+      ]
+    },
     "median_nonnegative_age_ms_by_api_market_status": {
-      "offhours": 1999,
-      "unknown": 3860
+      "offhours": 2144,
+      "unknown": 3932
     },
     "median_nonnegative_age_ms_by_session_context": {
-      "weekend": 3180
+      "weekend": 3190
     },
-    "with_timestamp": 556
+    "with_timestamp": 1076
   }
 }
