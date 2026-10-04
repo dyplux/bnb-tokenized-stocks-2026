@@ -674,3 +674,13 @@ The founder has frozen **Dyplux Execution Safety Layer for Tokenized Equities** 
 ZelCore's [public bStocks guide and purchase walkthrough](../research/2026-10-04-zelcore-bstocks-substitute.md) already describe self-custodial BSC purchase through Binance Web3, region gating, route selection and a transaction summary. We haven't tested that product with an eligible wallet or established what it shows for independent stock-reference time and multiplier integrity at approval.
 
 **Decision:** don't pitch Dyplux as the first way to buy bStocks without a Binance account, or as the first country check. The product's testable contribution is an explicit pre-sign policy decision with a dated, hash-verifiable receipt for one exact action. Keep originality conditional until a same-action competitor walkthrough proves which safety decision existing flows omit. This doesn't change the mainnet eligibility gate or authorize a trade.
+
+## D-065: a route target code hash alone doesn't authorize execution
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** signer gate tightened; no trade approved
+
+A [fixed-block public RPC read](../product/2026-10-04-execution-target-read.md) found a 180-byte execution target at the address returned by one unsigned NVDAB build. Its runtime is consistent with selector-based delegation, and the mapped address for the built selector contained 8,622 bytes of code. Standard ERC-1967 implementation, beacon and admin slots were zero at that block. The read establishes observed code and storage at one block, not source provenance, ownership, immutability, investor access or a security audit.
+
+**Decision:** do not allowlist this router from the target address or target runtime hash alone. Any later signer review must bind a fresh quote and build to the exact intended wallet, selector, target and mapped implementation, then establish trusted provenance and the remaining policy, eligibility, funding, simulation and human-approval gates. A changed route requires a new review. This narrows the mainnet path without changing the collector or Monday experiment.
