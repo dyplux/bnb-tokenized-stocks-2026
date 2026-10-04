@@ -430,11 +430,11 @@ def capture_underlying_watch(api, chosen, slot, interval, context):
         "last_slot": slot, "next_due_at_epoch": epoch + 1800,
     })
     failures = 0
-    target_count = 0
-    for row in chosen:
-        if row["ticker"] != "NVDA" or row["provider"] not in ("bstock", "ondo"):
-            continue
-        target_count += 1
+    targets = [row for row in chosen if row["ticker"] == "NVDA" and
+               row["provider"] in ("bstock", "ondo")]
+    target_count = len(targets)
+    new_observations = 0
+    for row in targets:
         sample_id = hashlib.sha256(("underlying" + str(slot) + row["contract"]).encode()).hexdigest()[:24]
         if sample_id in seen:
             continue
@@ -443,7 +443,7 @@ def capture_underlying_watch(api, chosen, slot, interval, context):
                 UNDERLYING_MARKET,
                 [("binanceChainId", "56"), ("tokenContractAddress", row["contract"])],
                 "EXP-RWA-010/WATCH", "NVDA market-state and independent reference timestamp availability",
-                context, allow_error=True,
+                context,
             )
             data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
             state = data.get("statusInfo") if isinstance(data.get("statusInfo"), dict) else {}
@@ -459,21 +459,23 @@ def capture_underlying_watch(api, chosen, slot, interval, context):
                 "reference_age_status": "UNKNOWN",
                 "raw_response_sha256": digest,
             })
+            new_observations += 1
         except Exception as exc:
             failures += 1
             append_jsonl(MARKET / "underlying_watch_errors.jsonl", {
                 "at": utc_now(), "slot": slot, "provider": row["provider"],
                 "error_type": type(exc).__name__, "message": str(exc)[:160],
             })
+            if isinstance(exc, ApiError) and (exc.http_status == 429 or exc.business_code in (429, 42900)):
+                break
     completed_ids = existing_ids(UNDERLYING_WATCH)
-    completed = sum(1 for row in chosen if row["ticker"] == "NVDA" and
-                    row["provider"] in ("bstock", "ondo") and
+    completed = sum(1 for row in targets if
                     hashlib.sha256(("underlying" + str(slot) + row["contract"]).encode()).hexdigest()[:24]
                     in completed_ids)
     succeeded = failures == 0 and target_count == 2 and completed == target_count
     write_json(UNDERLYING_WATCH_HEALTH, {
         "state": "running" if succeeded else "degraded", "last_attempt_at": attempted_at,
-        "last_success_at": utc_now() if succeeded else previous.get("last_success_at"),
+        "last_success_at": utc_now() if succeeded and new_observations else previous.get("last_success_at"),
         "consecutive_failures": 0 if succeeded else previous.get("consecutive_failures", 0) + 1,
         "last_slot": slot, "contracts_expected": target_count, "contracts_sampled": completed,
         "next_due_at_epoch": epoch + 1800,
