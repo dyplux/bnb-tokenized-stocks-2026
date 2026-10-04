@@ -72,6 +72,16 @@
       </ol>
       <p class="limit">In a <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/experiments/EXP-RWA-002/reference_formula_results.json">measured 40-contract sample</a>, <code>referencePrice</code> matched token price divided by the share ratio at reported precision. Its upstream source and underlying-stock as-of time remain unverified. <code>tokenPriceUpdatedAt</code> dates the token price. A displayed quote, an <code>ALLOW</code> fixture and an API simulation response don't prove eligible access or a completed trade.</p>
     </section>
+
+    <section class="devex-links" aria-labelledby="devex-title">
+      <div><span class="eyebrow">DEVELOPER EXPERIENCE</span><h2 id="devex-title">Four findings from the build</h2><p>611 logged requests, including 516 signed Web3 calls, at the fixed 4 October, 19:35 UTC cut. Each link opens a dated reproduction.</p></div>
+      <ul>
+        <li><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/devex/repros/2026-10-04-market-status-enum.md">Market state</a><span><code>offhours</code> appeared in 31 of 488 catalog entries; the documented enum omits it.</span></li>
+        <li><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/devex/repros/2026-10-04-independent-reference-clock.md">Reference clock</a><span>Sampled price responses gave token-price time, without an independent stock-reference as-of time.</span></li>
+        <li><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/devex/repros/2026-10-04-rwa-price-url-limit.md">Batch request</a><span>A 100-address GET returned HTTP 414; 35-address batches worked.</span></li>
+        <li><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/research/2026-10-04-route-semantics-matrix.md">Route wording</a><span>Seven of eight Sunday quotes used <code>SWAP</code>; the API documents differ on RFQ wording.</span></li>
+      </ul>
+    </section>
   </main>
   <footer><span>DYPLUX / BNB CHAIN RESEARCH BUILD</span><span>Policy version 0.6.0 · Snapshot 4 Oct 2026</span><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026">Source ↗</a></footer>
 </body>
