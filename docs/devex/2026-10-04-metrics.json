@@ -1,0 +1,159 @@
+{
+  "date": "2026-10-04",
+  "endpoints": [
+    {
+      "business_code_counts": {
+        "0": 65,
+        "40367": 2,
+        "40374": 5
+      },
+      "calls": 72,
+      "endpoint": "/api/v1/dex/aggregator/quote",
+      "http_status_counts": {
+        "200": 72
+      },
+      "max_latency_ms": 757.14,
+      "median_latency_ms": 320.05,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 650.83,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "0": 2
+      },
+      "calls": 2,
+      "endpoint": "/api/v1/dex/aggregator/swap",
+      "http_status_counts": {
+        "200": 2
+      },
+      "max_latency_ms": 423.83,
+      "median_latency_ms": 397.59,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 423.83,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "0": 60,
+        "None": 1
+      },
+      "calls": 61,
+      "endpoint": "/api/v1/dex/market/rwa/price",
+      "http_status_counts": {
+        "200": 60,
+        "414": 1
+      },
+      "max_latency_ms": 670.79,
+      "median_latency_ms": 299.92,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 468.36,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "0": 58
+      },
+      "calls": 58,
+      "endpoint": "/api/v1/dex/market/rwa/tokens",
+      "http_status_counts": {
+        "200": 58
+      },
+      "max_latency_ms": 3925.29,
+      "median_latency_ms": 2258.03,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 3878.69,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "0": 2
+      },
+      "calls": 2,
+      "endpoint": "/api/v1/dex/market/rwa/underlying-market",
+      "http_status_counts": {
+        "200": 2
+      },
+      "max_latency_ms": 295.84,
+      "median_latency_ms": 290.03,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 295.84,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "0": 2
+      },
+      "calls": 2,
+      "endpoint": "/api/v1/dex/market/rwa/underlying-profile",
+      "http_status_counts": {
+        "200": 2
+      },
+      "max_latency_ms": 594.06,
+      "median_latency_ms": 447.37,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 594.06,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "0": 1
+      },
+      "calls": 1,
+      "endpoint": "/api/v1/dex/pre-transaction/simulate",
+      "http_status_counts": {
+        "200": 1
+      },
+      "max_latency_ms": 479.78,
+      "median_latency_ms": 479.78,
+      "method": "POST",
+      "p95_latency_ms_nearest_rank": 479.78,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {},
+      "calls": 3,
+      "endpoint": "/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/rwa/stock/detail/list/ai",
+      "http_status_counts": {
+        "200": 3
+      },
+      "max_latency_ms": 861.06,
+      "median_latency_ms": 438.17,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": 861.06,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {
+        "000000": 2
+      },
+      "calls": 2,
+      "endpoint": "/bapi/defi/v2/public/wallet-direct/buw/wallet/market/token/rwa/dynamic/ai",
+      "http_status_counts": {
+        "200": 2
+      },
+      "max_latency_ms": null,
+      "median_latency_ms": null,
+      "method": "GET",
+      "p95_latency_ms_nearest_rank": null,
+      "schema_mismatches": 0
+    },
+    {
+      "business_code_counts": {},
+      "calls": 9,
+      "endpoint": "https://bsc-dataseed.bnbchain.org",
+      "http_status_counts": {
+        "200": 9
+      },
+      "max_latency_ms": 371.55,
+      "median_latency_ms": 200.76,
+      "method": "POST eth_call JSON-RPC batch",
+      "p95_latency_ms_nearest_rank": 371.55,
+      "schema_mismatches": 0
+    }
+  ],
+  "method": "append-only sanitized call ledger, not a controlled load benchmark",
+  "note": "Business rejections can be expected task outcomes; HTTP 200 isn't a successful quote or transaction. No request header, API key or wallet private key is included.",
+  "request_count": 212,
+  "snapshot_last_logged_at": "2026-10-04T13:45:02.966Z"
+}
