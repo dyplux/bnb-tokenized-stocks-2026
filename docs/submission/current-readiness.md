@@ -1,0 +1,18 @@
+# Safety product submission readiness
+
+**Checked:** 2026-10-04 UTC. **Deadline:** 2026-10-11 12:00 UTC. This is the current product packet. [The former Exit Check packet](final-review-packet.md) is shelved.
+
+| Official item | Current evidence | Remaining gate |
+|---|---|---|
+| Working BSC tokenized-stock project | [One-action local safety screen](../../app/safety.html), signed Binance RWA and Trading reads, fixed-block BSC multiplier, deterministic [policy](../../app/rwa_policy.py), downloadable receipt | Clean judge session and a stable access path. The live anonymous workflow is read-only and normally returns `NEED_HUMAN`. |
+| Public repository | Private `dyplux/bnb-tokenized-stocks-2026`, current README and [judge-run guide](safety-judge-run.md) | Founder publication decision and signed-out verification; keep available through judging. |
+| Deployed link or judge instructions | [Local judge-run guide](safety-judge-run.md) exists. The [event submission section](https://www.bnbchain.org/en/hackathons/tokenized-stocks) accepts a deployed link or instructions, while eligibility says repo, demo and deployed link stay accessible. | Resolve wording with organisers; prepare a stable public access path after approval. Localhost alone may limit scoring. |
+| Mainnet flow | Quote, unsigned build and off-chain simulation succeeded as API calls for both providers with one public demo wallet. Both [predicted transactions failed](../devex/repros/2026-10-04-demo-wallet-dry-run.md) for insufficient USDT. | Issuer/user eligibility, router and allowance review, funded same-wallet simulation, explicit human approval, bounded signer and pre/post proof. No capital broadcast is approved. |
+| Demo video | The old Exit Check video exists only as an internal artifact and depicts a retired flow. | Record the final safety workflow only when the product and claims are settled; show actual read-only behavior and its limits. The event page calls a video under four minutes strongly recommended; the organiser blog describes it as mandatory, so prepare one for submission. |
+| Developer Experience Report | [Current evidence draft](dx-form-current.md) from 339 logged calls as of 15:20 UTC; [field-level reproductions](../devex/2026-10-04-evidence-summary.md) | Founder verifies firsthand ratings/private form details; append Monday market-session evidence; submit official form. |
+| Monday off-hours claim | [Frozen experiment protocol](../../experiments/EXP-RWA-004/monday-open-protocol.md), Sunday tape and Friday close snapshot | Observe Monday open and score exactly as preregistered. Keep `H-RWA-OFFHOURS=TESTING` until then. |
+| Final project form | [Official form](https://forms.gle/yToDUzaDMwWnq6R6A) known | Submit after repo access, final demo, truthful claim set and DX report. No submission receipt exists. |
+
+The [official event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks) requires a public repo and a working project on BSC mainnet with bStocks, Ondo or xStocks central; it gives 30% technical, 25% originality, 25% DevEx and 20% UX weights. Its track rules say dry-run while building and demo with small live amounts. A read-only build therefore has a material judging risk even though it can show a useful safety decision. Issuer access and human approval govern any funded demo; a quote is insufficient.
+
+**Current truthful demo claim:** “For one proposed NVDA stock-token purchase on BSC, Dyplux reads live identity, token price, market state, a size-specific route and on-chain multiplier where applicable, then returns a deterministic policy receipt naming what is known, blocked and still unknown before signing.” No issuer eligibility, prediction, execution or profit claim is supported yet.
