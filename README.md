@@ -28,6 +28,8 @@ An optional read-only [exact-wallet dry run](docs/devex/repros/2026-10-04-demo-w
 
 For a single audit packet, run `python3 scripts/prepare_pre_execution_packet.py --provider bstock`. It now requests one policy quote for the **public demo wallet** and passes that same in-memory route into unsigned build and off-chain simulation. The [16:58 UTC dated packet](docs/product/pre-execution-packet-linked-2026-10-04.json) has matching policy and build quote hashes and remains `BLOCKED`: policy `NEED_HUMAN`, predicted simulation `FAILED`, and no human approval. It includes the full policy receipt for SHA-256 checking; the raw API responses remain in the local content-addressed store. The earlier [16:27 packet](docs/product/pre-execution-packet-2026-10-04.json) used two distinct quotes and remains in the record. Neither packet has a signer or broadcast path.
 
+`python3 scripts/read_demo_wallet_state.py` makes a fixed-block, read-only BNB Chain balance and allowance check for that packet. The [4 October result](docs/product/demo-wallet-state-2026-10-04.md) found zero USDT, zero BNB and zero allowance at the demo address. The build's single-swap gas product was 0.00002439733905 BNB; approval gas is separate. The public summary doesn't retain the address or grant execution authority.
+
 ## Evidence a reviewer can reproduce
 
 - The [safety evidence](docs/research/2026-10-04-safety-evidence.md) links each observed failure to a source, a product guard and its remaining uncertainty. The [single-action spec](docs/product/safety-one-page-spec.md) names the current user task and acceptance criteria.

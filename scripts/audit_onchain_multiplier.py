@@ -19,7 +19,8 @@ RPC = "https://bsc-dataseed.bnbchain.org"
 SELECTORS = {"uiMultiplier": "0xa60bf13d", "newUIMultiplier": "0xdc767007", "effectiveAt": "0x97a4064f"}
 
 
-def rpc_batch(calls, block, experiment):
+def rpc_batch(calls, block, experiment, expected_behavior="fixed-block read-only multiplier values",
+              market_context="fixed_block_corporate_action_audit"):
     body = json.dumps(calls, separators=(",", ":")).encode()
     started = time.monotonic()
     status, raw, error = None, b"", None
@@ -39,7 +40,7 @@ def rpc_batch(calls, block, experiment):
     success = status == 200 and isinstance(payload, (dict, list))
     append_jsonl(DEVEX / (at[:10] + ".jsonl"), {
         "timestamp": at, "endpoint": RPC, "method": "POST eth_call JSON-RPC batch",
-        "experiment_id": experiment, "expected_behavior": "fixed-block read-only multiplier values",
+        "experiment_id": experiment, "expected_behavior": expected_behavior,
         "actual_behavior": "success" if success else "failure",
         "latency_ms": round((time.monotonic() - started) * 1000, 2), "http_status": status,
         "sanitized_request": {"method_count": len(calls), "block": block,
@@ -47,7 +48,7 @@ def rpc_batch(calls, block, experiment):
         "sanitized_response": {"row_count": len(payload) if isinstance(payload, list) else 1 if isinstance(payload, dict) else 0,
                                "error_count": sum(bool(item.get("error")) for item in payload) if isinstance(payload, list) else bool(payload.get("error")) if isinstance(payload, dict) else None},
         "raw_response_sha256": digest, "schema_mismatch": status == 200 and not success,
-        "error": error, "market_context": "fixed_block_corporate_action_audit",
+        "error": error, "market_context": market_context,
         "secret_scan": "public_rpc_no_auth_headers_or_wallet_key",
     })
     if not success:

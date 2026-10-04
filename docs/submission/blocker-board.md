@@ -5,7 +5,7 @@
 | BLOCKER | OWNER | EVIDENCE NEEDED | DEADLINE | STATUS |
 |---|---|---|---|---|
 | Canonical demo asset | Dyplux | [Dated comparison](demo-asset-selection.md) selects NVDAB for technical preflight; issuer and user access still need a dated basis | 2026-10-05 | TECHNICAL TARGET SELECTED, ACCESS OPEN |
-| Funded exact-wallet simulation | Dyplux | Same wallet and quote now proven; passing funded simulation, bounded gas and loss estimate remain | 2026-10-06 | SAME QUOTE BOUND, UNFUNDED SIMULATION FAILED |
+| Funded exact-wallet simulation | Dyplux | Same wallet and quote proven; [fixed-block funding read](../product/demo-wallet-state-2026-10-04.md) found zero USDT, BNB and allowance. Passing funded simulation and full approval gas estimate remain | 2026-10-06 | SAME QUOTE BOUND, WALLET UNFUNDED |
 | Mainnet proof | Dyplux + founder | `ALLOW` policy, passing simulation, specific human approval, transaction hash and before/after balances | 2026-10-07 | NOT AUTHORIZED |
 | Public repository | Dyplux | Final tracked and history secret scan, public visibility, signed-out access | 2026-10-05 | PUBLIC, SIGNED-OUT CHECK PENDING |
 | Public judge path | Dyplux | Stable page, dated/live evidence, receipt download, status, repo and judge instructions | 2026-10-06 | PUBLISHED DATED PACKET, CLEAN BROWSER CHECK PENDING |
