@@ -102,9 +102,9 @@ def evaluate(intent, evidence, mandate, now=None):
         deny("NO_EXECUTABLE_QUOTE")
     elif evidence.get("quote_available") is not True:
         uncertain("QUOTE_UNVERIFIED")
-    if impact is None or max_impact is None:
+    if impact is None or max_impact is None or max_impact <= 0:
         uncertain("PRICE_IMPACT_UNKNOWN")
-    elif impact > max_impact:
+    elif abs(impact) > max_impact:
         deny("PRICE_IMPACT_LIMIT_EXCEEDED")
     if evidence.get("simulation_passed") is not True:
         uncertain("SIMULATION_UNVERIFIED")

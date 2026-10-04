@@ -14,6 +14,7 @@ hypotheses:
     evidence: experiments/EXP-RWA-010/results.json
     additional_evidence: experiments/EXP-RWA-001/xstock_price_probe_results.json
     formula_check: experiments/EXP-RWA-002/reference_formula_results.json
+    live_policy_probe: experiments/EXP-RWA-010/live_policy_probe.json
     counterevidence: First-party tools already expose some route and market state checks.
     promote_if: A distinct user task and at least one observed preventable failure survive incumbent comparison.
   - id: H-RWA-CORPACT

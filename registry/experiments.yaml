@@ -6,5 +6,5 @@ experiments:
   EXP-RWA-004: {state: collecting_with_first_analysis, output: experiments/EXP-RWA-004/results.json, external_close_comparison: experiments/EXP-RWA-004/friday_close_benchmark_results.json}
   EXP-RWA-008: {state: initial_read_only, output: experiments/EXP-RWA-008/cross_issuer_quotes.csv}
   EXP-RWA-009: {state: corrected_read_only, output: experiments/EXP-RWA-009/quote_depth.csv}
-  EXP-RWA-010: {state: three_part_audit_reference_unknown, output: experiments/EXP-RWA-010/results.json}
+  EXP-RWA-010: {state: three_part_audit_reference_unknown, output: experiments/EXP-RWA-010/results.json, policy_probe: experiments/EXP-RWA-010/live_policy_probe.json}
   EXP-RWA-011: {state: synthetic_fixture_and_live_profile_without_event_history, output: experiments/EXP-RWA-011/corporate_action_fixtures.json, profile: experiments/EXP-RWA-011/profile_probe.json}

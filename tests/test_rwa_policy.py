@@ -96,6 +96,16 @@ class PolicyFixtureTest(unittest.TestCase):
         self.evidence["quote_available"] = False
         self.assertIn("NO_EXECUTABLE_QUOTE", self.run_policy()["reason_codes"])
 
+    def test_negative_price_impact_above_magnitude_limit_denies(self):
+        self.evidence["price_impact_percent"] = "-1.1"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("PRICE_IMPACT_LIMIT_EXCEEDED", result["reason_codes"])
+
+    def test_nonpositive_impact_limit_needs_human(self):
+        self.mandate["max_price_impact_percent"] = "0"
+        self.assertIn("PRICE_IMPACT_UNKNOWN", self.run_policy()["reason_codes"])
+
 
 if __name__ == "__main__":
     unittest.main()

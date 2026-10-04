@@ -1,0 +1,792 @@
+{
+  "claim_limit": "This is a fail-closed offline capability audit. Unknown issuer access, reference time, quote, impact and simulation weren't filled with assumptions. No user benefit or executable action is proved.",
+  "contract_count": 40,
+  "decision_counts": {
+    "DENY": 3,
+    "NEED_HUMAN": 37
+  },
+  "mandate": {
+    "max_notional_usd": "100",
+    "max_price_impact_percent": "1",
+    "max_reference_age_seconds": 60,
+    "max_token_price_age_ms": 60000,
+    "require_independent_reference": true
+  },
+  "origin": "LIVE tape with SYNTHETIC 100 USD intent; no holder, quote, simulation or trade",
+  "reason_counts": {
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN": 40,
+    "ISSUER_UNVERIFIED": 40,
+    "MARKET_STATE_UNKNOWN": 35,
+    "PRICE_IMPACT_UNKNOWN": 40,
+    "QUOTE_UNVERIFIED": 40,
+    "SIMULATION_UNVERIFIED": 40,
+    "TOKEN_PRICE_STALE": 3,
+    "UNDERLYING_MARKET_NOT_REGULAR": 5
+  },
+  "rows": [
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x10343ef7da3301493d7ecb647d68a288c6c1db2f",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.288Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "a33d772756aa7cf971cdb59b83a599b0e0fd6473f5801f6c42db96e377bf8bb6",
+      "ticker": "AAOI"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x390a684ef9cade28a7ad0dfa61ab1eb3842618c4",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.289Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "ondo",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "UNDERLYING_MARKET_NOT_REGULAR"
+      ],
+      "receipt_sha256": "d1cb97184d3a95bbd82c09b9d016db415a13f01af4bb14fd2df1bc6b57e2e530",
+      "ticker": "AAPL"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x75fd4cf6f8392e41e70391d60c90c0d5211603a1",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.290Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "37eb470a8dfdef739ca19e396dbb5dca3b07e9074ecb8467ae4cdc464f418539",
+      "ticker": "AMD"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xd42a79ebb7f527f40faecd196ffb47ad5e8d6f8c",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.290Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "374e611bda23559be4578ef1744ac361dfba5ac52568bd5ea98ac6a4f827e2ae",
+      "ticker": "ARM"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x76682c454467b3a1150ad8b6a92fc5ee2c21d7ed",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.291Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "d85143d3dfd4c63f05095773fd7fa99624ba9a41b15ac3689e1863c8efab1178",
+      "ticker": "AVGO"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x9bdc8b470dbf89dbcb123587c6f5e49cca3463be",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.291Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "2648052c1dd9d9ff58223bbc77b539d300b15a7c3cf5ef33bb4c0a6d64fd2322",
+      "ticker": "AXTI"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x4ef9d3062c7f6eba4aae4990c5036598c6eff4ec",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.292Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "bcd1b001548ded1b1b9383d9282296ec45ba301c3c9f0deb3a35b0aa88dda7c8",
+      "ticker": "BABA"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xe81c6bb0266cd68b4f17278531dd03ea1f12da4e",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.292Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "fbdcb2c499168dfa325b8fdaa06028113c1c02ffd5f81de7b22ea2b7760813a7",
+      "ticker": "CBRS"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x585bde7c54abb5ccd7791f923d6c2187635f3952",
+      "decision": "DENY",
+      "observed_at": "2026-10-04T12:00:04.293Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "TOKEN_PRICE_STALE"
+      ],
+      "receipt_sha256": "4c538628f9e9bd4605372073a694d863b73fa805f1cadcf25790fc6b9ce9b9d7",
+      "ticker": "COIN"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xf8589b526fdd65f7f301c605a6e04f0f1b4b3620",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.293Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "ondo",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "UNDERLYING_MARKET_NOT_REGULAR"
+      ],
+      "receipt_sha256": "2c120953fe8259b4260269582b2d68b34158bcfda18414bea7a0b1b7cdc93128",
+      "ticker": "COIN"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x80f3d493ebce97e343c53d29a137942416b4ffc0",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.294Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "6c730876ffed677e53894c3429742f520de01caceb134a7c31dedecf1d6534ee",
+      "ticker": "CRCL"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x33e7317e17838fee56b10fe8d0b9ca6ca3090c95",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.294Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "0a014e806782d43f456120c366ed4fd06a82c7d6404369576efd16a87a4520b3",
+      "ticker": "CRWV"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x740e075cbbea22a082b9d6679e65e82767875b6a",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.295Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "91272568254628e8fdb75534b9b17ec1e9f94b99be3e25eb692712751b010060",
+      "ticker": "GLW"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x3f53de71c126bdabae20f9cd64848d317f6c3238",
+      "decision": "DENY",
+      "observed_at": "2026-10-04T12:00:04.295Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "TOKEN_PRICE_STALE"
+      ],
+      "receipt_sha256": "2ef31956555f54a6cec077e7f4f827bc0dc713de5de7f2c5257f7d0a3d456912",
+      "ticker": "GOOGL"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xa394dcea3fd3847fd793afbfd163e2e3858b7c65",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.296Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "1b3924bad9632a6c7568bccddda121b966468884f199790d9f99c009f6cfd3a2",
+      "ticker": "HOOD"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xfa273b076feb8c0fb34e554ae341082323d016a3",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.296Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "7cb120ed65aa6631257a72c08629ea9399534c1c032efd7dd0659c1b87c25c2b",
+      "ticker": "IBM"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xe614e2fc6c787035ff51f452e8e826bfd32d5283",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.297Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "b0830a588900c7df45264553f2ae34f22f96f01e0beb1d1ca3416a2ad7cc3364",
+      "ticker": "INTC"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x64748bea17b6d19e242adf20425de2440c656142",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.297Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "f39ae74ac1848b4e9ad8557ffb6a9739cc09209995b67d7183dd8b9d53f6664b",
+      "ticker": "LITE"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x7425889fe94f9d693e8daefe88bcced6acfef4c0",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.298Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "fb3ce2cda65f5c8630fb5b87a63c54eeeadb16ea40481ae3e7df4dd80f0b35e7",
+      "ticker": "META"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x16cd4fe7e8880ecc3ba222795229e20489fc2c76",
+      "decision": "DENY",
+      "observed_at": "2026-10-04T12:00:04.298Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "TOKEN_PRICE_STALE"
+      ],
+      "receipt_sha256": "b10be02d182e7d981b4297ff0daaaa680ebb8c966792d0a5cc7964d5a1a9898a",
+      "ticker": "MRVL"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x80106cb3ead06659a5ad19df39d9b4733863b9b0",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.298Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "4bf7c63006362b14b05cac4dcf208f39c9a4eaa5fa0a9a4fd010a83385367a72",
+      "ticker": "MSFT"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.299Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "3fa8c4e1a734947a25bbf9659976b6ba530d68775a5c59989c4afbcf63964355",
+      "ticker": "MSTR"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x7313ea16493b2f55054df0131a3a14b043ec8992",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.299Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "ondo",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "UNDERLYING_MARKET_NOT_REGULAR"
+      ],
+      "receipt_sha256": "2e2080a7b3e1831c4d0116d813d46d35117f115c868471db595a5a0556a887bb",
+      "ticker": "MSTR"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xcdf2f3e0fa43c47a6662a91c9e4a7c5f69762699",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.300Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "fa622ea74d0b358718d97a149318c79e597415f5b959227575bb52d50e3acc3a",
+      "ticker": "MU"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xe256bc2a4f5297f8ba6f043f180a46300ecbcbb1",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.300Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "9e2454544b75a21d9cbce26e387d75eccc51ded44d62074ca03a6b8753762526",
+      "ticker": "NBIS"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x7c4d7a180d737dd5a70d8065a90e6746a69c37ea",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.301Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "6ab3c15c268aa24df6fa5e9fedada16278eea0a007786c71b3105aab9934952c",
+      "ticker": "NOK"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.301Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "fb8fb5c6a426a032f62988da9b33f6ea59df2da4af4a901b7202b5e6e7f220ac",
+      "ticker": "NVDA"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.301Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "ondo",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "UNDERLYING_MARKET_NOT_REGULAR"
+      ],
+      "receipt_sha256": "1dfed36404a935edf129b88288dc0984dd0e785de9f2a3fe92ee8a3779f05415",
+      "ticker": "NVDA"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x4684d9887fc1c71cba7bab8e88835cec217eb598",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.302Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "55723ba16da44e713150d0bdea8cf3bbcab67c4b1eff2c4d625a94754b7ac5cb",
+      "ticker": "ORCL"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x0ca5d51d0277bd006fd9607d3e560785ebad8222",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.302Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "726cba54df5ff9696ecb264a3e79ac750a77cf198e887149c289988284061c0e",
+      "ticker": "PLTR"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x5f7a56e877b9130608bf8be962621011182fefe1",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.303Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "75b7cf68356f6ace9cb5ff4c6071de175f3417d324b034765099513b7e76df37",
+      "ticker": "QCOM"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xd721c192d612db77621df57a9fab38418033c02e",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.303Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "d4e5e3428afb6740867d1599d6ab60d9d4d98d3f8bdcc34d7d5c036bcdc11f31",
+      "ticker": "QNT"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xc8da12cbcce7c45180692a6420b0076e03a5179a",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.304Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "127149bdbc08fa12bef61220bc461138a056f25e836862c8668acfc5bdb3b903",
+      "ticker": "RKLB"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xca750ef65f295bbecd685abf54e82caf297bdb61",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.304Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "127e897afa9540177c1c890d9760ef04ba6b29324214416d515ea1c1186a1d10",
+      "ticker": "SKHY"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x3ee4df61bd4f867e349beae8bfe07bc31b4850fb",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.305Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "c05537f271b1aef6a630fbaaeaf1f8784efdebb2ccae48a9c2d0d58d1b24820b",
+      "ticker": "SNDK"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xbe9d156892e55e7154bcd3cb0fea677f9d3103e1",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.305Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "c9d351ca1d78a7a798b68aa5db479b63fd160ceb50a23eb604d7d9d09fb620d9",
+      "ticker": "SPCX"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x5b1910eaad6450e50f816082aa078c41f10c292f",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.306Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "f5bba44760c86763c6761d595c7550570820938fd713c26710162ecf1dcfad3e",
+      "ticker": "TSLA"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0x2494b603319d4d9f9715c9f4496d9e0364b59d93",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.306Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "ondo",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED",
+        "UNDERLYING_MARKET_NOT_REGULAR"
+      ],
+      "receipt_sha256": "25f82005f161b55dcea92b5a1e47ba2e7f7f9e03693e3e26a24ed6301dfe2dd4",
+      "ticker": "TSLA"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xab78b89b5bb00236be0b4b20704cbfa04efc711c",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.307Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "c309517f7968d32b027dd867a570e89a820d8d7f4026979516f06e511aa0d38e",
+      "ticker": "TSM"
+    },
+    {
+      "catalog_response_sha256": "78e58c4829dea25c0a530aeb73c705e06fa6c9c4df92480f7dea27b823cb649f",
+      "contract": "0xebe29695f8047c13d36e7a790ca8c1b239ffad1c",
+      "decision": "NEED_HUMAN",
+      "observed_at": "2026-10-04T12:00:04.307Z",
+      "policy_version": "0.2.0",
+      "price_response_sha256": "2959a2cbc0286825e41d9da43373e0cac938d1cb0291e2ac23f54e5e0191dfc6",
+      "provider": "bstock",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "PRICE_IMPACT_UNKNOWN",
+        "QUOTE_UNVERIFIED",
+        "SIMULATION_UNVERIFIED"
+      ],
+      "receipt_sha256": "75fe6a20615431743fda7255934b81329bea33f999ac44180c0925efffa70bd8",
+      "ticker": "WDC"
+    }
+  ],
+  "slot": 5970384
+}
