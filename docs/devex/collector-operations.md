@@ -6,7 +6,11 @@ The collector runs every 300 seconds while the Mac is awake. Each cycle makes on
 python3 scripts/rwa_research.py start --interval 300 --keep-awake
 python3 scripts/rwa_research.py health
 python3 scripts/audit_market_tape.py 2026-10-04
+python3 scripts/collector_watchdog.py start
+python3 scripts/collector_watchdog.py status
 ```
+
+The separate watchdog checks collector health every 60 seconds. It writes an atomic status and append-only state-change events under ignored `data/market_hours/`. Its `status` command exits nonzero if the watchdog or collector isn't healthy. A live collector with API failures, an overdue cycle or a stalled underlying watch is reported as `DEGRADED` and left to the collector's existing retry logic. The watchdog requests **one** restart only if the collector process has exited; the existing exclusive collector lock and sample-ID deduplication still apply. It never changes the 300-second interval or 40-contract universe. `python3 scripts/collector_watchdog.py stop` stops only the watchdog. Its one-restart budget prevents a crash loop; subsequent process death needs human inspection. Like the detached collector, this watchdog survives terminal closure but not a Mac reboot. The LaunchAgent permission issue described below remains unresolved. At 21:36 UTC on 4 October, detached watchdog PID 77280 reported collector PID 26634 `HEALTHY` after the 21:35 40-contract cycle; no restart was requested.
 
 `start` detaches the loop from its terminal. An exclusive lock prevents a second loop. `health` prints `last_success_at`, `last_attempt_at`, `consecutive_failures`, `observation_count`, `contracts_sampled` and `next_expected_run`; it exits nonzero if the process is missing, more than 60 seconds overdue, retrying after a failure, or stuck in `collecting` for over 90 seconds. The process PID is in `data/market_hours/collector.pid`; its stdout and stderr are in `data/market_hours/collector.log`.
 
