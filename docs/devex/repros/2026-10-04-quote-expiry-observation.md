@@ -1,0 +1,9 @@
+# Quote expiry field absent from the observed NVDAB route
+
+**Observed:** 2026-10-04 16:58 UTC in a signed Binance Web3 Aggregator Quote response for one 10 USDT, exact-wallet NVDAB buy. **Rechecked:** 17:15 UTC with a new quote, unsigned build and off-chain simulation. The raw 16:58 response is retained locally by SHA-256 `dae1137fbbf70108c5e3a38cd69b97a23629bcb358b3d9a0868c9d76a29d0fe6`; request credentials and wallet details aren't published.
+
+The observed route object included `quoteId`, `executionMode`, source and destination amounts, `approveTarget`, router, fees and impact. It did **not** contain an expiry, deadline or valid-until field. This is an observation of these responses, not a claim that no other endpoint or route mode ever supplies one. The top-level response `timestamp` dates the API response and doesn't establish route lifetime.
+
+The 17:15 read-only pre-execution run assembled its packet **0.806 seconds** after the quote and kept the same quote hash through policy and build. Policy remained `NEED_HUMAN`; the unfunded-wallet simulation predicted `FAILED`; the packet stayed `BLOCKED`. It signed and broadcast nothing. New packets now record quote age and reject missing, future or over-60-second observation times. The 60-second threshold is Dyplux's internal safety bound, **not** a Binance promise about quote validity. A future execution must build and simulate a fresh route and recheck it at approval time.
+
+**Documentation question:** What is the validity period for a `SWAP` route's `quoteId`, and is there a documented response field or status endpoint that establishes it for an exact wallet and amount? The current [Trading API reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) should identify that guarantee before a signer relies on it.
