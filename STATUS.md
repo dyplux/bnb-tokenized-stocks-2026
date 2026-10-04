@@ -1,6 +1,6 @@
 # TOKENIZED STOCKS: OCT 11
 
-**As of:** 2026-10-04 17:50 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 18 hours away. This is the primary workstream. Use the health command for the current collector count.
+**As of:** 2026-10-04 18:50 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 17 hours away. This is the primary workstream. Use the health command for the current collector count.
 
 | Hypothesis | State | Decision boundary |
 |---|---|---|
@@ -41,6 +41,8 @@
 **17:40 UTC product and public check:** the [project brief](docs/00-project-brief.md) now names the frozen safety core and the 11 October submission boundary. A fresh 17:38 NVDAB exact-wallet trial matched the built unsigned transaction to the simulation request with a local fingerprint; quote age at assembly was 0.759 seconds. Policy `NEED_HUMAN`, predicted simulation `FAILED`, packet `BLOCKED`; no signature or broadcast. All 132 local synthetic tests passed. Public Python CI and Pages deployment succeeded for `d2ae281`; a clean desktop and mobile session after that deploy showed the new multiplier, route and missing-slippage rows, both receipt hashes, and no JavaScript error or horizontal overflow. The collector reached 3,436 unique LIVE observations across 40 contracts at 17:40 UTC with zero consecutive failures. The frozen Monday protocol and collector configuration weren't changed.
 
 **17:50 UTC unsigned-build bound:** the current preflight now rejects a build whose `slippagePercent` exceeds the requested 0.5% or whose raw `minReceiveAmount` is absent, nonpositive or materially below the quote's 0.5% floor. One raw unit is allowed for rounding. A 17:49 NVDAB exact-wallet API run passed those field checks with a 0.688-second-old quote and matching build/simulation fingerprints, then remained `BLOCKED`: policy `NEED_HUMAN`, simulation `FAILED`, no capital approval. The local synthetic suite still passes 132 tests. The collector reached 3,516 LIVE observations across 40 contracts at 17:50 UTC, zero consecutive failures. No Monday criterion or collector setting changed.
+
+**18:50 UTC judge demo and collection check:** the [30-second dated safety film](docs/submission/safety-video-qa.md) from a separate 18:28 UTC local `NEED_HUMAN` request is published on the judge page. Its source archive stays on the local Dyplux SSD. Public desktop and mobile Chrome loaded the page without errors or overflow, verified the receipt, and fetched the MP4. Python CI and Pages deployment succeeded for commit `7723ed7`. The collector reached 3,996 unique LIVE observations across 40 contracts at 18:50 UTC with zero consecutive failures; the next 5-minute run remained scheduled. The film shows no execution proof. [Agent Studio readiness](docs/product/agent-studio-feasibility.md) was checked without installing a runtime.
 
 **14:10 UTC route follow-up:** the earlier AAOI bStock 100 USDT no-route response was not stable: 10, 100 and 1,000 USDT requests later returned routes. MSTR Ondo still returned `40374` at all three sizes. [Evidence and limits](docs/research/2026-10-04-weekend-route-coverage.md). No execution or user access was established.
 
