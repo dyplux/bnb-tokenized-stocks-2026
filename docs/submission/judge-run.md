@@ -1,6 +1,6 @@
 # Judge walkthrough: Exit Check
 
-**Status:** draft for the final public commit. This file describes the current read-only build. It is not a claim that the project has been submitted or that a live trade was completed.
+**Historical draft:** Exit Check was retired. Use the [current Execution Safety judge guide](safety-judge-run.md). The instructions below record the earlier prototype and aren't the current submission path.
 
 ## Task and setup
 
