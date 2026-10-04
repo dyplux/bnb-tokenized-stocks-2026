@@ -454,8 +454,9 @@ def capture_underlying_watch(api, chosen, slot, interval, context):
                 "business_code": payload.get("code"), "open_state": state.get("openState"),
                 "market_status": state.get("marketStatus"), "reason_code": state.get("reasonCode"),
                 "next_open_time": state.get("nextOpenTime"), "next_close_time": state.get("nextCloseTime"),
-                "derived_reference_price_usd": market.get("referencePrice"),
-                "reference_price_updated_at": None, "reference_age_status": "UNKNOWN",
+                "reported_reference_price_usd": market.get("referencePrice"),
+                "reference_price_updated_at": None, "reference_age_seconds": None,
+                "reference_age_status": "UNKNOWN",
                 "raw_response_sha256": digest,
             })
         except Exception as exc:
