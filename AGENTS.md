@@ -12,7 +12,7 @@ Only one product hypothesis may enter active build. A short, testable spec must 
 
 Use BNB Smart Chain mainnet, spot and a central bStocks, Ondo or xStocks use case as required by the event. A working Binance Web3 API integration is mandatory. Agent Studio and Agentic Wallet are optional until a user task warrants them. No unlabelled mock data, invented interviews, fabricated transactions or claims of user demand from social engagement.
 
-Keep credentials, UID, private account details and raw signed requests out of this repository, commits, logs and demos. Do not deploy, change DNS, publish the site or submit forms without the founder's specific authorization for those actions. This repository stays private during research and must be public and accessible through judging when submitted.
+Keep credentials, UID, private account details and raw signed requests out of this repository, commits, logs and demos. Do not deploy, change DNS, publish the site or submit forms without the founder's specific authorization for those actions. This repository and its dated judge page are now public under the founder's authorization; keep both accessible through judging. Further external changes still need the relevant authorization.
 
 Do not use Firecrawl, its CLI, API, browser extension or skills. The founder explicitly excluded it. Use official sources and bounded local reads for research.
 
