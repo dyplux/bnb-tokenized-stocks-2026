@@ -10,6 +10,7 @@ import hashlib
 import json
 import re
 import sys
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,7 +57,13 @@ def route_base_matches(route, source, destination, raw_amount):
 
 
 def route_matches_intent(route, source, destination, raw_amount):
-    return (route_base_matches(route, source, destination, raw_amount) and
+    if not route_base_matches(route, source, destination, raw_amount):
+        return False
+    try:
+        output = Decimal(str(route.get("toTokenAmount")))
+    except (InvalidOperation, TypeError, ValueError):
+        return False
+    return (output.is_finite() and output > 0 and
             ADDRESS.fullmatch(str(route.get("approveTarget", ""))) is not None)
 
 
@@ -69,6 +76,7 @@ def build_matches_quote(data, route, wallet, source, destination, raw_amount):
         return False
     return (route_base_matches(result, source, destination, raw_amount) and
             result.get("router") == route.get("router") and
+            str(result.get("toTokenAmount")) == str(route.get("toTokenAmount")) and
             tx["to"].lower() == str(route.get("approveTarget", "")).lower() and
             str(tx.get("value") or "0") == "0")
 

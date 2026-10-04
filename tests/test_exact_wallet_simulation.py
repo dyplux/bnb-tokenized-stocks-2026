@@ -42,16 +42,21 @@ class ExactWalletBoundaryTests(unittest.TestCase):
         usdt, stock, router = "0x" + "1" * 40, "0x" + "2" * 40, "0x" + "3" * 40
         route = {"binanceChainId": "56", "fromToken": {"tokenContractAddress": usdt},
                  "toToken": {"tokenContractAddress": stock}, "fromTokenAmount": "100",
+                 "toTokenAmount": "25",
                  "approveTarget": router, "router": "usdt--stock"}
         tx = {"from": wallet, "to": router, "data": "0x1234", "value": "0"}
         build = {"routerResult": {key: route[key] for key in
-                                  ("binanceChainId", "fromToken", "toToken", "fromTokenAmount", "router")},
+                                  ("binanceChainId", "fromToken", "toToken", "fromTokenAmount", "toTokenAmount", "router")},
                  "tx": tx}
         self.assertTrue(route_matches_intent(route, usdt, stock, "100"))
         self.assertTrue(build_matches_quote(build, route, wallet, usdt, stock, "100"))
         for key, wrong in (("binanceChainId", "1"), ("fromTokenAmount", "101"),
+                           ("toTokenAmount", "0"),
                            ("toToken", {"tokenContractAddress": usdt})):
             self.assertFalse(route_matches_intent({**route, key: wrong}, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "routerResult":
+                                             {**build["routerResult"], "toTokenAmount": "24"}},
+                                             route, wallet, usdt, stock, "100"))
         self.assertFalse(build_matches_quote({**build, "tx": {**tx, "to": stock}},
                                              route, wallet, usdt, stock, "100"))
         self.assertFalse(build_matches_quote({**build, "tx": {**tx, "value": "1"}},
