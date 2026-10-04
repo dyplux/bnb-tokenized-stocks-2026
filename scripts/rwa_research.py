@@ -44,6 +44,7 @@ RAW = MARKET / "raw"
 CHECKPOINT = MARKET / "checkpoint.json"
 HEARTBEAT = MARKET / "heartbeat.json"
 UNDERLYING_WATCH = MARKET / "underlying_market_watch.jsonl"
+UNDERLYING_WATCH_HEALTH = MARKET / "underlying_market_watch_health.json"
 
 
 def utc_now():
@@ -420,9 +421,20 @@ def capture_underlying_watch(api, chosen, slot, interval, context):
     if not ("2026-10-04" <= day <= "2026-10-05") or epoch % 1800:
         return
     seen = existing_ids(UNDERLYING_WATCH)
+    previous = json.loads(UNDERLYING_WATCH_HEALTH.read_text(encoding="utf-8")) if UNDERLYING_WATCH_HEALTH.exists() else {}
+    attempted_at = utc_now()
+    write_json(UNDERLYING_WATCH_HEALTH, {
+        "state": "collecting", "last_attempt_at": attempted_at,
+        "last_success_at": previous.get("last_success_at"),
+        "consecutive_failures": previous.get("consecutive_failures", 0),
+        "last_slot": slot, "next_due_at_epoch": epoch + 1800,
+    })
+    failures = 0
+    target_count = 0
     for row in chosen:
         if row["ticker"] != "NVDA" or row["provider"] not in ("bstock", "ondo"):
             continue
+        target_count += 1
         sample_id = hashlib.sha256(("underlying" + str(slot) + row["contract"]).encode()).hexdigest()[:24]
         if sample_id in seen:
             continue
@@ -447,10 +459,24 @@ def capture_underlying_watch(api, chosen, slot, interval, context):
                 "raw_response_sha256": digest,
             })
         except Exception as exc:
+            failures += 1
             append_jsonl(MARKET / "underlying_watch_errors.jsonl", {
                 "at": utc_now(), "slot": slot, "provider": row["provider"],
                 "error_type": type(exc).__name__, "message": str(exc)[:160],
             })
+    completed_ids = existing_ids(UNDERLYING_WATCH)
+    completed = sum(1 for row in chosen if row["ticker"] == "NVDA" and
+                    row["provider"] in ("bstock", "ondo") and
+                    hashlib.sha256(("underlying" + str(slot) + row["contract"]).encode()).hexdigest()[:24]
+                    in completed_ids)
+    succeeded = failures == 0 and target_count == 2 and completed == target_count
+    write_json(UNDERLYING_WATCH_HEALTH, {
+        "state": "running" if succeeded else "degraded", "last_attempt_at": attempted_at,
+        "last_success_at": utc_now() if succeeded else previous.get("last_success_at"),
+        "consecutive_failures": 0 if succeeded else previous.get("consecutive_failures", 0) + 1,
+        "last_slot": slot, "contracts_expected": target_count, "contracts_sampled": completed,
+        "next_due_at_epoch": epoch + 1800,
+    })
 
 
 def collect_once(api, interval):
@@ -569,6 +595,21 @@ def main():
         due = heartbeat.get("next_due_at_epoch")
         overdue = bool(due and now > due + 60)
         stalled = collecting_stalled(heartbeat, now)
+        watch = json.loads(UNDERLYING_WATCH_HEALTH.read_text(encoding="utf-8")) if UNDERLYING_WATCH_HEALTH.exists() else {}
+        watch_active = datetime.fromtimestamp(now, timezone.utc).strftime("%Y-%m-%d") in ("2026-10-04", "2026-10-05")
+        first_watch_due = int(datetime(2026, 10, 4, 14, tzinfo=timezone.utc).timestamp())
+        watch_due = watch.get("next_due_at_epoch") or first_watch_due
+        watch_overdue = bool(watch_active and watch.get("state") != "collecting" and now > watch_due + 120)
+        watch_stalled = collecting_stalled(watch, now)
+        watch_status = {
+            "state": watch.get("state", "scheduled" if watch_active else "inactive"),
+            "last_success_at": watch.get("last_success_at"),
+            "last_attempt_at": watch.get("last_attempt_at"),
+            "consecutive_failures": watch.get("consecutive_failures", 0),
+            "contracts_sampled": watch.get("contracts_sampled", 0),
+            "next_expected_run": datetime.fromtimestamp(watch_due, timezone.utc).isoformat() if watch_active else None,
+            "overdue": watch_overdue, "collecting_stalled": watch_stalled,
+        }
         print(json.dumps({"process_alive": alive, "pid": pid,
                           "last_success_at": checkpoint.get("last_success_at") or heartbeat.get("last_success_at"),
                           "last_attempt_at": heartbeat.get("last_attempt_at") or heartbeat.get("updated_at"),
@@ -576,8 +617,9 @@ def main():
                           "observation_count": checkpoint.get("observation_count"),
                           "contracts_sampled": checkpoint.get("contracts_sampled") or heartbeat.get("selected_contracts"),
                           "next_expected_run": datetime.fromtimestamp(due, timezone.utc).isoformat() if due else None,
-                          "overdue": overdue, "collecting_stalled": stalled, "state": heartbeat.get("state")}))
-        if not alive or overdue or stalled or heartbeat.get("consecutive_failures", 0) > 0:
+                          "overdue": overdue, "collecting_stalled": stalled, "state": heartbeat.get("state"),
+                          "underlying_watch": watch_status}))
+        if not alive or overdue or stalled or heartbeat.get("consecutive_failures", 0) > 0 or watch_overdue or watch_stalled or watch_status["consecutive_failures"] > 0:
             raise SystemExit(1)
         return
     if args.command == "start":
