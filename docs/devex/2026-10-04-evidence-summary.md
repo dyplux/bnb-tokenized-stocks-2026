@@ -1,17 +1,18 @@
 # Binance Web3 RWA developer experience, 4 October 2026
 
-**Scope:** read-only calls during the Sunday research window, from the [sanitized call log](raw/2026-10-04.jsonl). This snapshot covers 91 logged requests through 11:25 UTC: 88 signed Binance Web3 calls and three public website-list calls. It includes exploratory probes and collector cycles, so it isn't a benchmark under controlled load. No order, signature, funded-wallet simulation or fill was made.
+**Scope:** Sunday research and read-only product calls from the [sanitized call log](raw/2026-10-04.jsonl). The fixed [19:35 UTC metrics cut](2026-10-04-metrics.json) covers 611 logged requests in 13 endpoint/method groups, including 516 signed Binance Web3 calls. The log continues to append after this cut. These are mixed collector and exploratory workloads, not a controlled latency or reliability benchmark. Unsigned builds and off-chain simulation API calls succeeded, but the unfunded transaction predictions failed. No order was signed or broadcast and no fill occurred. Earlier cuts are retained below as a chronology, not current totals.
 
-| Endpoint | Calls | Successful responses | Median observed latency |
+| Endpoint at 19:35 UTC | Calls | API business successes | Median observed latency |
 |---|---:|---:|---:|
-| Signed RWA catalog `/tokens` | 29 | 29 | 2,118.8 ms |
-| Signed RWA batch `/price` | 31 | 30 | 298.1 ms |
-| Signed `/underlying-market` | 2 | 2 | 290.0 ms |
-| Signed `/underlying-profile` | 2 | 2 | 447.4 ms |
-| Signed Trading `/quote` | 24 | 21 | 340.7 ms |
-| Public xStock list | 3 | 3 | 438.2 ms |
+| Signed RWA catalog `/tokens` | 163 | 163 | 2,271.29 ms |
+| Signed RWA batch `/price` | 159 | 158; one HTTP 414 | 299.74 ms |
+| Signed `/underlying-market` | 50 | 50 | 302.96 ms |
+| Signed `/underlying-profile` | 2 | 2 | 447.37 ms |
+| Signed Trading `/quote` | 115 | 102; 13 business rejections | 329.67 ms |
+| Signed Transaction API `/swap` (unsigned build) | 14 | 14 API successes | 340.12 ms |
+| Signed off-chain `/simulate` | 13 | 13 API successes; unfunded predictions failed | 353.05 ms |
 
-The three quote failures were HTTP 200 with business code `40374` for 100 USDT MSTRon, MSTRx and NVDAx requests. They indicate no vendor liquidity for those inputs at those times; they aren't transport errors or proof that the assets can never trade. The price failure was HTTP 414 for a 100-address GET. No rate-limit response has been observed in this snapshot.
+The 13 quote rejections were HTTP 200: two business code `40367` and eleven `40374`. They are task outcomes for the specific inputs, not transport errors or proof that those assets can never trade. One 100-address price GET returned HTTP 414. No HTTP 429 appeared in this fixed cut. Public Binance reads, BNB Chain RPC and two timed-out xStocks public requests account for the other 95 logged calls. The simulation success count is for the API response, not the predicted transaction result.
 
 ## Reproducible findings
 
