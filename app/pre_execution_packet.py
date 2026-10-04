@@ -17,6 +17,14 @@ def digest(value):
     return hashlib.sha256(encoded).hexdigest()
 
 
+def observed_time(value):
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed.astimezone(timezone.utc) if parsed.tzinfo is not None else None
+
+
 def assemble(review, dry_run, now=None):
     assembled_at = now or datetime.now(timezone.utc)
     if assembled_at.tzinfo is None:
@@ -72,18 +80,24 @@ def assemble(review, dry_run, now=None):
     if not quote_bound:
         reasons.append("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION")
     quote_age_seconds = None
-    try:
-        observed_at = datetime.fromisoformat(str(quote.get("observed_at", "")).replace("Z", "+00:00"))
-        if observed_at.tzinfo is None:
-            raise ValueError("Quote time has no timezone")
-        quote_age_seconds = (assembled_at - observed_at.astimezone(timezone.utc)).total_seconds()
-    except ValueError:
+    quote_at = observed_time(quote.get("observed_at"))
+    build_at = observed_time(build.get("observed_at"))
+    simulation_at = observed_time(simulation.get("observed_at"))
+    if quote_at is None:
         reasons.append("QUOTE_TIME_UNVERIFIED")
     else:
+        quote_age_seconds = (assembled_at - quote_at).total_seconds()
         if quote_age_seconds < -5:
             reasons.append("QUOTE_TIME_IN_FUTURE")
         elif quote_age_seconds > MAX_QUOTE_AGE_SECONDS:
             reasons.append("QUOTE_TOO_OLD")
+    if build_at is None:
+        reasons.append("BUILD_TIME_UNVERIFIED")
+    if simulation_at is None:
+        reasons.append("SIMULATION_TIME_UNVERIFIED")
+    if quote_at and build_at and simulation_at:
+        if not (quote_at <= build_at <= simulation_at <= assembled_at):
+            reasons.append("EVIDENCE_SEQUENCE_INVALID")
     reasons.append("EXPLICIT_HUMAN_APPROVAL_MISSING")
     packet = {
         "state": "BLOCKED", "execution_authorized": False,

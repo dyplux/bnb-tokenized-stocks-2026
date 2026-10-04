@@ -25,9 +25,11 @@ def examples():
                "quote": {"business_code": 0, "intent_match": True,
                          "bound_to_policy": True, "sha256": "same-quote-hash",
                          "observed_at": "2026-10-04T10:00:00Z"},
-               "build": {"business_code": 0, "quote_build_intent_match": True,
+               "build": {"observed_at": "2026-10-04T10:00:05Z", "business_code": 0,
+                         "quote_build_intent_match": True,
                          "unsigned_tx_fingerprint": "same-unsigned-tx"},
-               "simulation": {"api_business_code": 0, "predicted_transaction_status": "SUCCESS",
+               "simulation": {"observed_at": "2026-10-04T10:00:10Z", "api_business_code": 0,
+                              "predicted_transaction_status": "SUCCESS",
                               "unsigned_tx_fingerprint": "same-unsigned-tx"}}
     return review, dry_run
 
@@ -86,6 +88,18 @@ class PreExecutionPacketTests(unittest.TestCase):
                       assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
         trial["quote"]["observed_at"] = "2026-10-04T10:01:00Z"
         self.assertIn("QUOTE_TIME_IN_FUTURE",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+
+    def test_missing_or_out_of_order_build_and_simulation_times_block(self):
+        review, trial = examples()
+        trial["build"].pop("observed_at")
+        self.assertIn("BUILD_TIME_UNVERIFIED",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+        trial["build"]["observed_at"] = "2026-10-04T10:00:20Z"
+        self.assertIn("EVIDENCE_SEQUENCE_INVALID",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+        trial["simulation"]["observed_at"] = "2026-10-04T10:00:40Z"
+        self.assertIn("EVIDENCE_SEQUENCE_INVALID",
                       assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
 
 
