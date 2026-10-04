@@ -11,5 +11,5 @@
 | Public judge path | Dyplux | Stable page, dated/live evidence, receipt download, status, repo and judge instructions | 2026-10-06 | VERIFIED DATED PACKET: Chrome desktop/mobile, both receipt hashes, no page errors or horizontal overflow; no public live API service |
 | Agentic Wallet path | Dyplux | Official login eligibility or a documented Wallet Skills integration that invokes the same policy | 2026-10-06 | READ-ONLY TOOL EXISTS |
 | BNB Agent Studio path | Dyplux | Minimum real identity/runtime integration using the safety or rebalancing core | 2026-10-07 | OFFICIAL PATH MAPPED; no runtime deployed or buyer observed |
-| Final DevEx report | Dyplux + founder | Reproducible observed discrepancies, counts, limitations and founder review of form answers | 2026-10-08 | DRAFT |
+| Final DevEx report | Dyplux + founder | [Current 53-item answer map](dx-form-safety-answer-map.md), reproducible observations, Monday regular-session cut and founder review of private or subjective answers | 2026-10-08 | FACTUAL DRAFT READY; FOUNDER AND MONDAY PENDING |
 | Final product demo | Dyplux | [Dated real read-only video](safety-video-qa.md) and public judge link; safe `ALLOW` remains a labelled synthetic fixture. Editorial audio check and any later mainnet proof must be separate. | 2026-10-09 | READ-ONLY FILM RENDERED; NO EXECUTION PROOF |

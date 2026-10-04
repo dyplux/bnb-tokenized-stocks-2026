@@ -1,6 +1,6 @@
 # TOKENIZED STOCKS: OCT 11
 
-**As of:** 2026-10-04 18:57 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 17 hours away. This is the primary workstream. Use the health command for the current collector count.
+**As of:** 2026-10-04 19:05 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 17 hours away. This is the primary workstream. Use the health command for the current collector count.
 
 | Hypothesis | State | Decision boundary |
 |---|---|---|
@@ -45,6 +45,8 @@
 **18:50 UTC judge demo and collection check:** the [30-second dated safety film](docs/submission/safety-video-qa.md) from a separate 18:28 UTC local `NEED_HUMAN` request is published on the judge page. Its source archive stays on the local Dyplux SSD. Public desktop and mobile Chrome loaded the page without errors or overflow, verified the receipt, and fetched the MP4. Python CI and Pages deployment succeeded for commit `7723ed7`. The collector reached 3,996 unique LIVE observations across 40 contracts at 18:50 UTC with zero consecutive failures; the next 5-minute run remained scheduled. The film shows no execution proof. [Agent Studio readiness](docs/product/agent-studio-feasibility.md) was checked without installing a runtime.
 
 **18:57 UTC xStock fallback check:** five documented public indexer calls covered all 130 listed BSC xStock contracts and returned three indexed pairs; two wrapped-token pairs used USDT. Signed Binance Web3 exact-wallet quotes for 10 USDT into wPOPMTx and wTCENTx both returned business `40374` with zero routes. The [dated probe](docs/research/2026-10-04-xstock-route-fallback.md) records request/response hashes and the boundary: an indexed pair isn't an aggregator route, current wrapper proof, eligibility or a fill. NVDAB remains a technical target only; this did not clear mainnet access. Collector and Monday protocol unchanged.
+
+**19:05 UTC submission-form check:** both official Google Forms were opened read-only without login. The project form still has ten items and requires a video URL plus a completed DevEx report; the DevEx form still has 53 items. The [current DX answer map](docs/submission/dx-form-safety-answer-map.md) and [project answer map](docs/submission/project-form-safety-answer-map.md) use the safety build and identify founder-only answers. Neither form has been submitted. The collector reached 4,116 LIVE observations across 40 contracts at 19:05 UTC with zero consecutive failures.
 
 **14:10 UTC route follow-up:** the earlier AAOI bStock 100 USDT no-route response was not stable: 10, 100 and 1,000 USDT requests later returned routes. MSTR Ondo still returned `40374` at all three sizes. [Evidence and limits](docs/research/2026-10-04-weekend-route-coverage.md). No execution or user access was established.
 
