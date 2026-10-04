@@ -12,4 +12,4 @@
 | Agentic Wallet path | Dyplux | Official login eligibility or a documented Wallet Skills integration that invokes the same policy | 2026-10-06 | READ-ONLY TOOL EXISTS |
 | BNB Agent Studio path | Dyplux | Minimum real identity/runtime integration using the safety or rebalancing core | 2026-10-07 | OFFICIAL PATH MAPPED; no runtime deployed or buyer observed |
 | Final DevEx report | Dyplux + founder | Reproducible observed discrepancies, counts, limitations and founder review of form answers | 2026-10-08 | DRAFT |
-| Final product demo | Dyplux | Captured build matching public judge path and truthful safe/unsafe outcomes | 2026-10-09 | WAITING FOR PRODUCT PROOF |
+| Final product demo | Dyplux | [Dated real read-only video](safety-video-qa.md) and public judge link; safe `ALLOW` remains a labelled synthetic fixture. Editorial audio check and any later mainnet proof must be separate. | 2026-10-09 | READ-ONLY FILM RENDERED; NO EXECUTION PROOF |

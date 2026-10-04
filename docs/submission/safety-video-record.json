@@ -1,0 +1,66 @@
+{
+  "origin": "LIVE_READ_ONLY",
+  "http_status": 200,
+  "decision": "NEED_HUMAN",
+  "reason_codes": [
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+    "ISSUER_UNVERIFIED",
+    "MARKET_STATE_UNKNOWN",
+    "SIMULATION_UNVERIFIED",
+    "USER_ELIGIBILITY_UNKNOWN"
+  ],
+  "action": "BUY_NVDA_WITH_USDT",
+  "intent": {
+    "chain_id": "56",
+    "ticker": "NVDA",
+    "provider": "bstock",
+    "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "notional_usd": "100"
+  },
+  "receipt_timestamp": "2026-10-04T18:28:18Z",
+  "receipt_sha256": "36b7d5057f2251e8bbb015e29928b7cd95e1674ed86e24c287b799fce6ff1828",
+  "representation": "NVDAB",
+  "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+  "market_status": null,
+  "reference_age_status": "UNKNOWN",
+  "route": "QUOTED",
+  "execution_mode": "SWAP",
+  "multiplier_integrity": "MATCHED_FIXED_BLOCK",
+  "simulation": "NOT_RUN",
+  "source_times": {
+    "catalog": "2026-10-04T18:28:16.794Z",
+    "price": "2026-10-04T18:28:17.106Z",
+    "underlying_market": "2026-10-04T18:28:17.403Z",
+    "stock_info": null,
+    "quote": "2026-10-04T18:28:18.433Z",
+    "rpc": null
+  },
+  "source_hashes": {
+    "catalog": "a59f5ed5fe35e9fa9eb4d53528a93857507ef4f98e86a79acb2d60e13dafe990",
+    "price": "021f557adb8ff0fb06edd3cb3c497685d80ccd7f98ad773f6af6cd7f70ac4869",
+    "underlying_market": "8db8a83fb36b4025d90cc293f4038623a1202f89eb286ea725288214508390a1",
+    "stock_info": null,
+    "quote": "0e1d90d4dc78f03a052dcd7a251c9ae6e5e7517ef5ef60fcc3460564e88292f6",
+    "rpc": [
+      "462a1d953d7bbb267fa45b5f4615f0f9f322fb81fbb49e1b41a948bd2a6e0d97",
+      "7702543e34c7a518afa8aa74b76a87e969ea1debb446193d62699e023f5bb3d6",
+      "e6f117108e7fa60bd422f358664707b31715917bdee17c6b546db58e4216ad95"
+    ]
+  },
+  "page_errors": [],
+  "limits": "Read-only temporary unfunded quote; no eligibility, funded simulation, signature, transaction or fill proven.",
+  "capture_date_utc": "2026-10-04",
+  "capture_kind": "one continuous local Chrome recording of an actual read-only safety check",
+  "capture_sha256": {
+    "real-safety-flow.webm": "70d899564c4f74279f2e3a8eeefd9bd31ad81c10d84d022bf855314739858c7c",
+    "before.png": "f9288b219ccd72587d5dcc7f003f1824d3b472837515296e184875d63c67a055",
+    "result-top.png": "058a973a28e304c071f5c3f8036b5ef26a2d921fcae5daa6a7661cba355d0df9",
+    "result-evidence.png": "8582ed55691c715495416cc0f0c1b9f6e27854efb35b673ebb611329204240eb",
+    "result-receipt.png": "57c317e87833446b40a516f7f9afb24aa5e58665a9955e8dd39223f13bc75b3d",
+    "verdict.png": "8dad7a435982e3f6c1762457a19c4a7bf61d210aa68496e002cb8e368c7e330f",
+    "reasons.png": "9aa5d3617966e053aaad1ec5297d6152d4243ce1a9e03ed1046c31ec5af7481f",
+    "facts.png": "856f86f8b68b305734232af3f1b9f56dd4575117ec50d33f9d5eb604e8039b85",
+    "receipt.png": "0b721f0738c8985388579f28fbe71ffe398957b34d9d180b148a2e4d003afbbc"
+  },
+  "public_reproduction": "Run python3 app/safety_server.py and follow docs/submission/safety-judge-run.md; this record is dated and its quote must not be replayed as live."
+}
