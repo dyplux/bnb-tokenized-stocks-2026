@@ -55,8 +55,17 @@ async function showCase(key) {
     row(list, 'Independent stock-reference age', evidence.reference_age_status);
     row(list, 'Issuer and user access', `${evidence.issuer_verified === true ? 'verified' : 'unknown'} / ${evidence.eligibility_status || 'UNKNOWN'}`);
     row(list, 'Multiplier or share ratio', evidence.token_to_share_ratio);
+    row(list, 'On-chain multiplier check', evidence.onchain_multiplier_block == null
+      ? 'Fixture only; no chain read' :
+      (evidence.onchain_ui_multiplier === evidence.token_to_share_ratio
+        ? `Matched at block ${evidence.onchain_multiplier_block}`
+        : `Mismatch at block ${evidence.onchain_multiplier_block}`));
     row(list, 'Exact route match', evidence.quote_identity_match);
+    row(list, 'Route mode and vendor', evidence.quote_available === true
+      ? `${evidence.quote_execution_mode || 'UNKNOWN'} / ${evidence.quote_vendor || 'UNKNOWN'}`
+      : 'NO ROUTE');
     row(list, 'Price impact', evidence.price_impact_percent == null ? null : `${evidence.price_impact_percent}%`);
+    row(list, 'Slippage tolerance', 'NOT INCLUDED IN THIS POLICY RECEIPT');
     row(list, 'Funded simulation passed', evidence.simulation_passed);
     row(list, 'Mandate cap', `${receipt.mandate.max_notional_usd} USDT`);
     const reasons = document.querySelector('#reasons');

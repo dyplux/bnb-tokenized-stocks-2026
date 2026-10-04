@@ -22,8 +22,8 @@
     </section>
 
     <section class="status" aria-label="Public system status">
-      <div><span class="eyebrow">PUBLISHED STATUS</span><strong>Research collector</strong><small>Last checked 4 Oct 2026, 16:40 UTC</small></div>
-      <p>Running at that check: 2,956 live observations, 40 contracts, zero consecutive failures. This page is a dated snapshot. Its status won't update in your browser.</p>
+      <div><span class="eyebrow">PUBLISHED STATUS</span><strong>Research collector</strong><small>Last checked 4 Oct 2026, 17:30 UTC</small></div>
+      <p>Running at that check: 3,356 live observations, 40 contracts, zero consecutive failures. This page is a dated snapshot. Its status won't update in your browser.</p>
       <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/STATUS.md">Full status ↗</a>
     </section>
 
@@ -59,7 +59,7 @@
     <section class="method" aria-labelledby="method-title">
       <div><span class="eyebrow">WHAT THE JUDGE CAN CHECK</span><h2 id="method-title">A narrow claim, with the unknowns intact</h2></div>
       <ol>
-        <li><strong>Inspect the observed case.</strong> The dated result contains a real signed Binance Web3 quote and a fixed-block multiplier check. Its `NEED_HUMAN` reasons name facts the APIs didn't establish.</li>
+        <li><strong>Inspect the observed case.</strong> The dated result contains a real signed Binance Web3 quote and a fixed-block multiplier check. Its `NEED_HUMAN` reasons name facts the APIs didn't establish. The <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/research/2026-10-04-bstock-multiplier-onchain.md">on-chain audit</a> explains the fixed-block method.</li>
         <li><strong>Verify the receipt hash.</strong> Download the JSON. Remove `receipt_sha256` from `receipt`, serialize the remaining object with sorted keys and compact separators, then calculate SHA-256. The page checks it in your browser too.</li>
         <li><strong>Run the live path.</strong> Clone the public repository and follow <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/submission/safety-judge-run.md">judge instructions</a>. Your own Binance Web3 API credentials are needed for a fresh signed read. The public page doesn't hold an API key.</li>
       </ol>
