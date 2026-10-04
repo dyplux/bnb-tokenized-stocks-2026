@@ -574,3 +574,13 @@ The [same-task substitute matrix](../research/2026-10-04-exact-budget-substitute
 The separate [public dynamic payload repro](../devex/repros/2026-10-04-public-stock-reference-clock.md) found `AAPLon stockInfo.price=333.405` equal, at display precision, to `tokenInfo.price / sharesMultiplier`; no independent timestamp was present. NVDAB's `stockInfo.price` was null. That makes the reference-source question more concrete, while leaving the direction of the upstream pricing relationship unknown. It doesn't validate an independent freshness guard or prove an incumbent's price is wrong.
 
 **CEO decision:** don't build the exact-budget consumer interface or call a null reference clock a trading edge. Continue the 40-contract collector and DevEx work. Before selecting any product, demonstrate either a separate, dated underlying reference source that changes a bounded decision, or a permitted exact-amount task where the existing tools leave a measurable and recoverable failure. If neither appears, select a narrower developer-facing integrity tool or a different task from the event's allowed surface. No UI or video work follows from this entry.
+
+## D-055: this Sunday NVDA quote did not establish an exit-recovery task
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** research falsification; no recovery product selected
+
+The [instrumented sell-side probe](../research/2026-10-04-sell-route-sunday.md) asked the signed Trading API for an arithmetic 0.1-share NVDA sell to USDT through both bStock and Ondo at 12:27 UTC Sunday. Both returned one route and echoed the 18-decimal token input. The outputs were about 23.4543 and 23.4412 USDT. These are nonholder estimates with no signed order or issuer eligibility check. They don't refute every after-hours sell failure, but they failed to reproduce one for this bounded task.
+
+**CEO decision:** don't pivot into a blocked-exit recovery app on the basis of a competitor's different incident. Keep the quote evidence and DevEx logs. A future exit task needs a holder-specific reproducible failure, a verified reason and a next action that current tools omit. Continue the collector and the pre-registered Monday benchmark before any edge claim.

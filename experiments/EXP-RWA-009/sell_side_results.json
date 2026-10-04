@@ -1,0 +1,17 @@
+{
+  "as_of_utc": "2026-10-04T12:27:24.151Z",
+  "origin": "LIVE",
+  "ticker": "NVDA",
+  "target_shares_arithmetic": "0.1",
+  "provider_count": 2,
+  "successful_quote_count": 2,
+  "failed_quote_count": 0,
+  "input_units_verified_count": 2,
+  "gross_output_difference_usdt": "0.013089990255529759",
+  "gross_output_difference_pct_of_ondo": "0.055841866956850136",
+  "fills_observed": 0,
+  "holder_balance_verified": false,
+  "issuer_access_verified": false,
+  "gas_unit_resolved": false,
+  "claim_limit": "Two short-lived read-only Sunday estimates from a nonholder. No actual sale, net proceeds, route availability for a holder, or general after-hours exit conclusion."
+}
