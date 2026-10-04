@@ -1,0 +1,38 @@
+name: Monday open public fallback
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 12 5 10 *'
+    - cron: '07 13 5 10 *'
+    - cron: '09 20 5 10 *'
+    - cron: '27 20 5 10 *'
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture independent public market observations
+        env:
+          MONDAY_FALLBACK_OUTPUT_DIR: ${{ runner.temp }}/monday-open-public/${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python3 scripts/monday_open_fallback.py public-once
+          elif [ "${{ github.event.schedule }}" = "09 20 5 10 *" ] || [ "${{ github.event.schedule }}" = "27 20 5 10 *" ]; then
+            python3 scripts/monday_open_fallback.py public-close
+          else
+            python3 scripts/monday_open_fallback.py public-loop
+          fi
+      - name: Retain timestamped raw responses and manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monday-open-public-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/monday-open-public/${{ github.run_id }}-${{ github.run_attempt }}/
+          if-no-files-found: error
+          retention-days: 14

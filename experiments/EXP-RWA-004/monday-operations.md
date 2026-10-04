@@ -2,6 +2,8 @@
 
 **Prepared:** 2026-10-04 UTC. This is an execution checklist for the [locked protocol](monday-open-protocol.md), not a change to its sample, baseline, thresholds or interpretation.
 
+The separate [opening-window fallback](monday-fallback-operations.md) records operational backup observations. It doesn't write to the primary tape or feed the frozen scorer automatically.
+
 ## Before and during the US regular session, 5 October
 
 Before entering an outcome, check the frozen inputs with `shasum -a 256 experiments/EXP-RWA-004/monday-open-protocol.md experiments/EXP-RWA-004/friday_close_benchmark.csv data/external_reference/2026-10-02-yahoo-close.json`. Their 4 October SHA-256 values are, in that order, `081838ce5c3d8f34f6858f1c9c9a6e7b9da6e6ba861c610345b78ee14b2ad16a`, `3931d82c2ea5403c7d50f818c34fd5f2f3758459a9d8cb762521473bb04fe910` and `1c2c0f8b0e1a683ab45e5f4b961631ba7be39a7503ba8805b97d209f2c0b9b3e`. If one differs, inspect the committed frozen version before scoring; don't silently adopt a changed baseline. This is an integrity check, not a change to the protocol.
