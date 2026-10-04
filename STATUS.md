@@ -1,6 +1,6 @@
 # TOKENIZED STOCKS: OCT 11
 
-**As of:** 2026-10-04 19:05 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 17 hours away. This is the primary workstream. Use the health command for the current collector count.
+**As of:** 2026-10-04 19:20 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 17 hours away. This is the primary workstream. Use the health command for the current collector count.
 
 | Hypothesis | State | Decision boundary |
 |---|---|---|
@@ -47,6 +47,8 @@
 **18:57 UTC xStock fallback check:** five documented public indexer calls covered all 130 listed BSC xStock contracts and returned three indexed pairs; two wrapped-token pairs used USDT. Signed Binance Web3 exact-wallet quotes for 10 USDT into wPOPMTx and wTCENTx both returned business `40374` with zero routes. The [dated probe](docs/research/2026-10-04-xstock-route-fallback.md) records request/response hashes and the boundary: an indexed pair isn't an aggregator route, current wrapper proof, eligibility or a fill. NVDAB remains a technical target only; this did not clear mainnet access. Collector and Monday protocol unchanged.
 
 **19:05 UTC submission-form check:** both official Google Forms were opened read-only without login. The project form still has ten items and requires a video URL plus a completed DevEx report; the DevEx form still has 53 items. The [current DX answer map](docs/submission/dx-form-safety-answer-map.md) and [project answer map](docs/submission/project-form-safety-answer-map.md) use the safety build and identify founder-only answers. Neither form has been submitted. The collector reached 4,116 LIVE observations across 40 contracts at 19:05 UTC with zero consecutive failures.
+
+**19:20 UTC safety and substitute check:** an exact-wallet NVDAB packet now rejects missing or reversed quote, build and simulation timestamps. One live read-only run had the expected order and a 0.759-second-old quote, but still returned `BLOCKED` because policy was `NEED_HUMAN` and the unfunded simulation predicted `FAILED`; [dated record](docs/product/mainnet-execution-path.md). ZelCore's [documented bStock swap flow](docs/research/2026-10-04-zelcore-bstocks-substitute.md) already covers self-custodial purchase and regional gating, so those aren't Dyplux novelty claims. The [Studio CLI package inspection](docs/product/agent-studio-feasibility.md) identified its TypeScript seller hook without installing a runtime or handling keys. Public Python CI and Pages succeeded for `ebfa083`. The public judge page and MP4 returned HTTP 200. Collector health at 19:15 showed 4,196 LIVE observations, 40 contracts and zero consecutive failures. The Monday protocol and collector configuration remain unchanged.
 
 **14:10 UTC route follow-up:** the earlier AAOI bStock 100 USDT no-route response was not stable: 10, 100 and 1,000 USDT requests later returned routes. MSTR Ondo still returned `40374` at all three sizes. [Evidence and limits](docs/research/2026-10-04-weekend-route-coverage.md). No execution or user access was established.
 
