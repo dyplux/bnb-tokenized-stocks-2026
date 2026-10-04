@@ -29,6 +29,8 @@ The screen distinguishes **Both routes quoted**, **Entry route unavailable**, **
 
 On 4 October the project started a read-only five-minute market-hours collector. It samples 40 BNB Chain stock contracts with one signed catalog request and one batched price request per cycle. The 11:10 UTC snapshot, catalog grouping, ratio arithmetic and quote checks are described in the [dated research note](docs/research/2026-10-04-live-rwa-catalog-and-quotes.md). The [current status](STATUS.md) distinguishes measured results from unresolved product choices. An existing visual budget prototype remains local and unintegrated.
 
+The [Sunday DevEx summary](docs/devex/2026-10-04-evidence-summary.md) traces 91 logged calls and links exact fixtures for the undocumented `offhours` state, a route-documentation conflict and the 100-address GET failure. It also separates our own amount-unit and clock errors from API behavior.
+
 With a valid local `.env`, the research commands are:
 
 ```sh

@@ -1,0 +1,30 @@
+# Binance Web3 RWA developer experience, 4 October 2026
+
+**Scope:** read-only calls during the Sunday research window, from the [sanitized call log](raw/2026-10-04.jsonl). This snapshot covers 91 logged requests through 11:25 UTC: 88 signed Binance Web3 calls and three public website-list calls. It includes exploratory probes and collector cycles, so it isn't a benchmark under controlled load. No order, signature, funded-wallet simulation or fill was made.
+
+| Endpoint | Calls | Successful responses | Median observed latency |
+|---|---:|---:|---:|
+| Signed RWA catalog `/tokens` | 29 | 29 | 2,118.8 ms |
+| Signed RWA batch `/price` | 31 | 30 | 298.1 ms |
+| Signed `/underlying-market` | 2 | 2 | 290.0 ms |
+| Signed `/underlying-profile` | 2 | 2 | 447.4 ms |
+| Signed Trading `/quote` | 24 | 21 | 340.7 ms |
+| Public xStock list | 3 | 3 | 438.2 ms |
+
+The three quote failures were HTTP 200 with business code `40374` for 100 USDT MSTRon, MSTRx and NVDAx requests. They indicate no vendor liquidity for those inputs at those times; they aren't transport errors or proof that the assets can never trade. The price failure was HTTP 414 for a 100-address GET. No rate-limit response has been observed in this snapshot.
+
+## Reproducible findings
+
+1. **Market enum:** the [RWA reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) lists six `marketStatus` values. One complete 488-row signed response included `offhours` for 31 Ondo assets. The [repro](repros/2026-10-04-market-status-enum.md) has the request, affected assets and exact raw body with a SHA-256 check. Document the value and specify whether it refers to token trading or the underlying venue.
+2. **Quote route:** the [Trading endpoint reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api) says RWA routes use RFQ, while a 4 October signed NVDAB quote returned `SWAP`. The [repro](repros/2026-10-04-rwa-swap-route.md) keeps the raw response and request shape. The [Trading introduction](https://web3.binance.com/en/dev-docs/products/trading-api/introduction) already describes bStock SWAP, so the documents need reconciliation.
+3. **Batch size:** the [RWA price reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) allows 100 addresses. A 4,597-character 100-address GET returned HTTP 414; four batches of 35, 35, 35 and 25 succeeded. The [repro](repros/2026-10-04-rwa-price-url-limit.md) retains the sanitized 100-address request. Publish a practical URL-length limit or provide a POST batch form.
+4. **Independent reference clock:** the [RWA reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) explicitly describes `referencePrice` as derived from token price and `tokenPriceUpdatedAt` as token-price time. The signed price tape, two underlying-market responses and two [issuer profiles](../../experiments/EXP-RWA-011/profile_probe.json) exposed no independent underlying-reference timestamp. The [three-part audit](../../experiments/EXP-RWA-010/results.json) stores `reference_age_status=UNKNOWN` for every observed tape row. Provide source and as-of time if an independent traditional-equity quote is available; don't let a client mistake token freshness for underlying freshness.
+5. **Sunday market state:** the two [underlying-market response fixtures](repros/2026-10-04-underlying-market-weekend-state.md) returned `openState=true` for NVDA, with `offhours` for one representation and no `marketStatus` for the other. This may reflect product tradability rather than the regular US equity session. Clarify the field's venue and semantics; the observation doesn't prove a market-status bug.
+6. **xStock coverage:** of 130 listed BNB Chain xStocks probed through signed `/price`, 77 returned null token price and timestamp. Of the 53 with a token timestamp, 36 were older than seven days at capture. All 130 price rows had null `platformId`; provider identity came from the public listing. The [reproducible probe](../../experiments/EXP-RWA-001/xstock_price_probe_results.json) separates a returned row from a usable quote. This is a coverage finding, not a claim that the documentation promises pricing for every listing.
+
+## Our integration errors, kept separate
+
+- The first quote ladder used six-decimal USDC units. The API and token metadata use 18 decimals for this BSC contract. Those calls are quarantined; the corrected eight-call [ladder](../../experiments/EXP-RWA-009/results.json) records input-unit confirmation. See the [repro](repros/2026-10-04-bsc-usdc-decimals.md).
+- The first collector calculated token-price age against cycle start and sometimes clamped a negative value. The [clock correction](repros/2026-10-04-token-age-clock.md) keeps the original append-only rows and recomputes from each row's `observed_at`. This was our bug, not an API defect.
+
+**Next measurement:** continue the 40-contract tape through a regular US market session. Compare token-price freshness, status fields and data gaps by session without claiming a timed independent stock reference, investor eligibility, execution quality or profit.

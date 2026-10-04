@@ -1,7 +1,7 @@
 {
   "conclusion": "The API supplies tokenPriceUpdatedAt, not an independently sourced stock-reference timestamp. Independent reference freshness is unmeasured.",
   "first_observed_at": "2026-10-04T10:22:07.442Z",
-  "last_observed_at": "2026-10-04T11:15:03.946Z",
+  "last_observed_at": "2026-10-04T11:30:02.493Z",
   "market_state_correctness": {
     "basis": "Nasdaq weekday core hours, 09:30 to 16:00 ET; no security-specific halt or holiday validation",
     "independent_validation": false,
@@ -9,13 +9,13 @@
       {
         "api_status": "offhours",
         "core_hours_context": "weekend_core_closed",
-        "count": 60,
+        "count": 75,
         "review": "PLAUSIBLE_NOT_PROVEN"
       },
       {
         "api_status": "unknown",
         "core_hours_context": "weekend_core_closed",
-        "count": 296,
+        "count": 401,
         "review": "UNKNOWN"
       }
     ]
@@ -24,21 +24,21 @@
   "reference_timestamp_availability": {
     "documented_field_available": false,
     "independent_reference_age_observations": 0,
-    "unknown_reference_age_rows": 356
+    "unknown_reference_age_rows": 476
   },
-  "sample_count": 356,
+  "sample_count": 476,
   "source": "https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data",
   "status_counts": {
-    "offhours": 60,
-    "unknown": 296
+    "offhours": 75,
+    "unknown": 401
   },
   "token_price_freshness": {
     "age_calculation": "observed_at minus tokenPriceUpdatedAt, recomputed from raw timestamps for every row",
     "future_timestamp_rows": 0,
     "median_nonnegative_age_ms_by_api_market_status": {
-      "offhours": 1992,
-      "unknown": 4538
+      "offhours": 1999,
+      "unknown": 4176
     },
-    "with_timestamp": 356
+    "with_timestamp": 476
   }
 }
