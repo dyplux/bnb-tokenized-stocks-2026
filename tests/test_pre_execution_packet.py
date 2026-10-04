@@ -10,14 +10,18 @@ def examples():
     contract = "0x" + "a" * 40
     receipt = {"decision": "ALLOW", "reason_codes": [],
                "intent": {"chain_id": "56", "ticker": "NVDA", "provider": "bstock",
-                          "contract": contract, "notional_usd": "10"}}
+                          "contract": contract, "notional_usd": "10"},
+               "evidence": {"source_response_sha256": {"quote": "same-quote-hash"}}}
     receipt["receipt_sha256"] = digest(receipt)
     review = {"origin": "LIVE_READ_ONLY", "decision": "ALLOW", "reason_codes": [],
-              "receipt": receipt}
+              "receipt": receipt, "sources": {"quote": {"sha256": "same-quote-hash",
+                                                  "observed_at": "2026-10-04T10:00:00Z"}}}
     dry_run = {"origin": "LIVE_READ_ONLY", "chain_id": "56", "side": "BUY",
                "source_token": USDT, "notional_usdt": "10", "provider": "bstock", "stage": "SIMULATED",
                "security": {"ticker": "NVDA", "contract": contract},
-               "quote": {"business_code": 0, "intent_match": True},
+               "quote": {"business_code": 0, "intent_match": True,
+                         "bound_to_policy": True, "sha256": "same-quote-hash",
+                         "observed_at": "2026-10-04T10:00:00Z"},
                "build": {"business_code": 0, "quote_build_intent_match": True},
                "simulation": {"api_business_code": 0, "predicted_transaction_status": "SUCCESS"}}
     return review, dry_run
@@ -29,8 +33,7 @@ class PreExecutionPacketTests(unittest.TestCase):
         packet = assemble(review, trial)
         self.assertEqual(packet["state"], "BLOCKED")
         self.assertFalse(packet["execution_authorized"])
-        self.assertEqual(packet["reason_codes"], ["EXPLICIT_HUMAN_APPROVAL_MISSING",
-                                                  "POLICY_QUOTE_NOT_BOUND_TO_EXECUTION"])
+        self.assertEqual(packet["reason_codes"], ["EXPLICIT_HUMAN_APPROVAL_MISSING"])
         self.assertEqual(packet["packet_sha256"], digest({k: v for k, v in packet.items()
                                                       if k != "packet_sha256"}))
         self.assertEqual(packet["policy"]["receipt_sha256"],
@@ -47,6 +50,12 @@ class PreExecutionPacketTests(unittest.TestCase):
                      "POLICY_RESULT_MISMATCH", "ACTION_EVIDENCE_MISMATCH",
                      "EXACT_WALLET_SIMULATION_NOT_PASSED"):
             self.assertIn(code, codes)
+
+    def test_separate_quote_cannot_be_treated_as_bound(self):
+        review, trial = examples()
+        trial["quote"]["sha256"] = "another-quote"
+        self.assertIn("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION",
+                      assemble(review, trial)["reason_codes"])
 
 
 if __name__ == "__main__":

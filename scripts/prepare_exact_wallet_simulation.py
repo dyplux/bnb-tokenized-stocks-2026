@@ -81,7 +81,7 @@ def build_matches_quote(data, route, wallet, source, destination, raw_amount):
             str(tx.get("value") or "0") == "0")
 
 
-def run(provider="bstock", wallet=None, api=None):
+def run(provider="bstock", wallet=None, api=None, route_context=None):
     if provider not in ("bstock", "ondo"):
         raise ValueError("Only NVDA bStock/Ondo supported")
     wallet = wallet or public_demo_address()
@@ -95,34 +95,57 @@ def run(provider="bstock", wallet=None, api=None):
               "quote": None, "build": None, "simulation": None,
               "decision": "NOT_APPROVED",
               "limits": "No issuer eligibility, funded fill, signature, broadcast, or policy ALLOW is established."}
-    catalog, at, catalog_hash = api.get(
-        TOKENS, [("binanceChainId", "56")], EXPERIMENT,
-        "exact BSC NVDA representation for dry run", {"provider": provider})
-    rows = [normalize(row) for row in catalog["data"]]
     symbol = "NVDAB" if provider == "bstock" else "NVDAon"
-    selected = [row for row in rows if row and row["asset_type"] == 1 and
-                row["ticker"] == "NVDA" and row["provider"] == provider and
-                row["token_symbol"] == symbol]
-    if len(selected) != 1:
-        raise RuntimeError("Exactly one NVDA contract required")
-    contract = selected[0]["contract"]
-    result["security"] = {"ticker": "NVDA", "symbol": symbol, "contract": contract,
-                          "catalog_observed_at": at, "catalog_sha256": catalog_hash}
     raw_amount = str(10 * 10**18)
+    if route_context is None:
+        catalog, at, catalog_hash = api.get(
+            TOKENS, [("binanceChainId", "56")], EXPERIMENT,
+            "exact BSC NVDA representation for dry run", {"provider": provider})
+        rows = [normalize(row) for row in catalog["data"]]
+        selected = [row for row in rows if row and row["asset_type"] == 1 and
+                    row["ticker"] == "NVDA" and row["provider"] == provider and
+                    row["token_symbol"] == symbol]
+        if len(selected) != 1:
+            raise RuntimeError("Exactly one NVDA contract required")
+        contract = selected[0]["contract"]
+        result["security"] = {"ticker": "NVDA", "symbol": symbol, "contract": contract,
+                              "catalog_observed_at": at, "catalog_sha256": catalog_hash}
+    else:
+        if (route_context.get("wallet", "").lower() != wallet.lower() or
+                route_context.get("provider") != provider or
+                route_context.get("ticker") != "NVDA" or
+                route_context.get("symbol") != symbol or
+                route_context.get("raw_amount") != raw_amount or
+                route_context.get("quote_business_code") != 0 or
+                not ADDRESS.fullmatch(str(route_context.get("contract", ""))) or
+                not route_context.get("quote_sha256") or
+                not route_context.get("quote_observed_at")):
+            raise ValueError("Policy route context does not match exact wallet and action")
+        contract = route_context["contract"]
+        result["security"] = {"ticker": "NVDA", "symbol": symbol, "contract": contract,
+                              "catalog_observed_at": route_context.get("catalog_observed_at"),
+                              "catalog_sha256": route_context.get("catalog_sha256")}
     common = [("binanceChainId", "56"), ("fromTokenAddress", USDT),
               ("toTokenAddress", contract), ("amount", raw_amount),
               ("userWalletAddress", wallet)]
-    quote, at, digest = api.get(
-        QUOTE, common, EXPERIMENT, "10 USDT exact-wallet quote",
-        {"provider": provider, "step": "quote"}, allow_error=True)
-    routes = quote.get("data") if quote.get("code") == 0 and isinstance(quote.get("data"), list) else []
-    route = next((row for row in routes if isinstance(row, dict) and row.get("isBest") is True),
-                 next((row for row in routes if isinstance(row, dict)), {}))
+    if route_context is None:
+        quote, at, digest = api.get(
+            QUOTE, common, EXPERIMENT, "10 USDT exact-wallet quote",
+            {"provider": provider, "step": "quote"}, allow_error=True)
+        routes = quote.get("data") if quote.get("code") == 0 and isinstance(quote.get("data"), list) else []
+        route = next((row for row in routes if isinstance(row, dict) and row.get("isBest") is True),
+                     next((row for row in routes if isinstance(row, dict)), {}))
+        quote_code = quote.get("code")
+    else:
+        route = route_context.get("route") or {}
+        routes = [route] if route else []
+        at, digest = route_context["quote_observed_at"], route_context["quote_sha256"]
+        quote_code = route_context["quote_business_code"]
     quote_exact = route_matches_intent(route, USDT, contract, raw_amount)
-    result["quote"] = {"observed_at": at, "business_code": quote.get("code"),
+    result["quote"] = {"observed_at": at, "business_code": quote_code,
                        "route_count": len(routes), "execution_mode": route.get("executionMode"),
                        "vendor": route.get("vendorName"), "intent_match": quote_exact,
-                       "sha256": digest}
+                       "sha256": digest, "bound_to_policy": route_context is not None}
     result["stage"] = "QUOTE"
     if not quote_exact or not route.get("quoteId") or route.get("executionMode") != "SWAP":
         return result

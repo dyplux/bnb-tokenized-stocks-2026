@@ -253,5 +253,6 @@ def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info,
                     "contract": contract, "raw_amount": str(raw_amount),
                     "quote_observed_at": (sources["quote"] or {}).get("observed_at"),
                     "quote_sha256": (sources["quote"] or {}).get("sha256"),
+                    "quote_business_code": (sources["quote"] or {}).get("business_code"),
                     "catalog_observed_at": sources["catalog"]["observed_at"],
                     "catalog_sha256": sources["catalog"]["sha256"]}

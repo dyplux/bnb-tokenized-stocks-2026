@@ -1,8 +1,6 @@
-"""Read-only join of a policy review and exact-wallet simulation evidence.
+"""Read-only join of an exact-wallet policy quote, build and simulation.
 
 This packet is an audit aid. It has no transaction, key, signer or broadcast path.
-The policy service uses a temporary wallet, so its quote cannot authorize the
-separate exact-wallet quote even when both describe the same asset and amount.
 """
 
 import hashlib
@@ -54,9 +52,15 @@ def assemble(review, dry_run):
     if simulation.get("api_business_code") != 0 or simulation.get("predicted_transaction_status") != "SUCCESS":
         reasons.append("EXACT_WALLET_SIMULATION_NOT_PASSED")
 
-    # The current policy quote was requested for a temporary wallet. A new
-    # policy evaluation tied to the executable wallet and quote is required.
-    reasons.extend(("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION", "EXPLICIT_HUMAN_APPROVAL_MISSING"))
+    source_quote = (review.get("sources") or {}).get("quote") or {}
+    receipt_sources = (receipt.get("evidence") or {}).get("source_response_sha256") or {}
+    quote_bound = (quote.get("bound_to_policy") is True and
+                   quote.get("sha256") and quote.get("sha256") == source_quote.get("sha256") and
+                   quote.get("sha256") == receipt_sources.get("quote") and
+                   quote.get("observed_at") == source_quote.get("observed_at"))
+    if not quote_bound:
+        reasons.append("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION")
+    reasons.append("EXPLICIT_HUMAN_APPROVAL_MISSING")
     packet = {
         "state": "BLOCKED", "execution_authorized": False,
         "reason_codes": sorted(set(reasons)),
@@ -76,7 +80,9 @@ def assemble(review, dry_run):
                                "simulation_observed_at": simulation.get("observed_at"),
                                "simulation_sha256": simulation.get("sha256"),
                                "predicted_transaction_status": simulation.get("predicted_transaction_status")},
-        "boundary": "Separate quotes; no signer, broadcast or approved capital action.",
+        "boundary": ("One exact-wallet quote joined to the policy and unsigned simulation; "
+                     "no signer, broadcast or approved capital action." if quote_bound else
+                     "Quote binding unverified; no signer, broadcast or approved capital action."),
     }
     packet["packet_sha256"] = digest(packet)
     return packet

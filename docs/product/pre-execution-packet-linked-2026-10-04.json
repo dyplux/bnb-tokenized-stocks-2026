@@ -1,0 +1,132 @@
+{
+  "action": {
+    "chain_id": "56",
+    "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "notional_usdt": "10",
+    "provider": "bstock",
+    "side": "BUY",
+    "ticker": "NVDA"
+  },
+  "boundary": "One exact-wallet quote joined to the policy and unsigned simulation; no signer, broadcast or approved capital action.",
+  "exact_wallet_trial": {
+    "build_observed_at": "2026-10-04T16:58:38.941Z",
+    "build_sha256": "d84c8b7a2177386e3aadaf77f0a227b9bc838f07a4f19de4641fbf6bac42d889",
+    "predicted_transaction_status": "FAILED",
+    "quote_observed_at": "2026-10-04T16:58:38.611Z",
+    "quote_sha256": "dae1137fbbf70108c5e3a38cd69b97a23629bcb358b3d9a0868c9d76a29d0fe6",
+    "simulation_observed_at": "2026-10-04T16:58:39.304Z",
+    "simulation_sha256": "30b2ae869c96b051ae8ae29cb736ad31386515c9cb41cbcf2e54e825ed5a462b",
+    "stage": "SIMULATED"
+  },
+  "execution_authorized": false,
+  "packet_sha256": "c14fa9869e487590ffba18022b8bdd3438bb0a16e3cd43c0b407a4dca9bb61da",
+  "policy": {
+    "decision": "NEED_HUMAN",
+    "observed_at": "2026-10-04T16:58:38Z",
+    "reason_codes": [
+      "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+      "ISSUER_UNVERIFIED",
+      "MARKET_STATE_UNKNOWN",
+      "SIMULATION_UNVERIFIED",
+      "USER_ELIGIBILITY_UNKNOWN"
+    ],
+    "receipt": {
+      "checks": {
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN": "NEED_HUMAN",
+        "ISSUER_UNVERIFIED": "NEED_HUMAN",
+        "MARKET_STATE_UNKNOWN": "NEED_HUMAN",
+        "SIMULATION_UNVERIFIED": "NEED_HUMAN",
+        "USER_ELIGIBILITY_UNKNOWN": "NEED_HUMAN"
+      },
+      "decision": "NEED_HUMAN",
+      "evidence": {
+        "chain_id": "56",
+        "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+        "corporate_action_verified": null,
+        "eligibility_basis": null,
+        "eligibility_checked_at": null,
+        "eligibility_status": "UNKNOWN",
+        "issuer_verified": false,
+        "market_open_state": true,
+        "market_reason": "TRADING",
+        "market_status": null,
+        "onchain_multiplier_block": 125712326,
+        "onchain_multiplier_block_timestamp": "2026-10-04T16:58:37+00:00",
+        "onchain_multiplier_effective_at": 0,
+        "onchain_new_ui_multiplier": "1.000778223752807865",
+        "onchain_ui_multiplier": "1.000778223752807865",
+        "previous_token_to_share_ratio": null,
+        "price_impact_percent": "-0.0003512303",
+        "provider": "bstock",
+        "quote_available": true,
+        "quote_execution_mode": "SWAP",
+        "quote_identity_match": true,
+        "quote_observed_at": "2026-10-04T16:58:38.611Z",
+        "quote_vendor": "LiquidMesh",
+        "reference_age_seconds": null,
+        "reference_age_status": "UNKNOWN",
+        "reference_price_updated_at": null,
+        "reported_reference_price_usd": "234.677368",
+        "simulation_passed": false,
+        "source_observed_at": {
+          "catalog": "2026-10-04T16:58:36.825Z",
+          "price": "2026-10-04T16:58:37.153Z",
+          "quote": "2026-10-04T16:58:38.611Z",
+          "underlying_market": "2026-10-04T16:58:37.452Z"
+        },
+        "source_response_sha256": {
+          "catalog": "973f5cb9c4443e6e10c0bb292463d098506b49f603adf89214a0ff7d8eb1e54a",
+          "price": "8bf6a67aa0f3d6771029be56c41bbb50d8f92fdc7e6c4c1c46cbcc7b3f6f83dd",
+          "quote": "dae1137fbbf70108c5e3a38cd69b97a23629bcb358b3d9a0868c9d76a29d0fe6",
+          "rpc": [
+            "09a57b958ef0e22d8c76a8d1b06eee9448752b3db8bee68507303aa04ea306e6",
+            "69ea46e50171848893bab53b9dadcdffde2050cf12477f3fd0e50e4d1d0caa91",
+            "e6f117108e7fa60bd422f358664707b31715917bdee17c6b546db58e4216ad95"
+          ],
+          "underlying_market": "ed3af99d38b12a127cc5f50f45f285c7f6bad092d52f4c625ecab75adef61dd1"
+        },
+        "stock_feed_price_asof": null,
+        "stock_feed_price_usd": null,
+        "ticker": "NVDA",
+        "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
+        "token_price_age_ms": 1521,
+        "token_price_usd": "234.86000000",
+        "token_to_share_ratio": "1.000778223752807865"
+      },
+      "intent": {
+        "chain_id": "56",
+        "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+        "notional_usd": "10",
+        "provider": "bstock",
+        "ticker": "NVDA"
+      },
+      "mandate": {
+        "max_eligibility_age_seconds": 3600,
+        "max_notional_usd": "10",
+        "max_onchain_multiplier_age_seconds": 120,
+        "max_price_impact_percent": "0.5",
+        "max_reference_age_seconds": 300,
+        "max_token_price_age_ms": 60000,
+        "require_independent_reference": true,
+        "require_onchain_multiplier": true
+      },
+      "policy_version": "0.6.0",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "SIMULATION_UNVERIFIED",
+        "USER_ELIGIBILITY_UNKNOWN"
+      ],
+      "receipt_sha256": "bc17f99b368ed8f61a2a824fadcd107673ceb1a01cc3404f0864064917cd7974",
+      "timestamp": "2026-10-04T16:58:38Z"
+    },
+    "receipt_sha256": "bc17f99b368ed8f61a2a824fadcd107673ceb1a01cc3404f0864064917cd7974"
+  },
+  "reason_codes": [
+    "EXACT_WALLET_SIMULATION_NOT_PASSED",
+    "EXPLICIT_HUMAN_APPROVAL_MISSING",
+    "POLICY_NOT_ALLOW"
+  ],
+  "state": "BLOCKED"
+}
