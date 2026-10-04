@@ -1,0 +1,15 @@
+# Is a timed reference check distinct from an existing stock agent?
+
+**Checked:** 2026-10-04 UTC. **Scope:** one pinned [Yostocks agent file](https://github.com/yostocks-protocol/yostocks/blob/5cf6988af1f429615ef27e3ac70e63eca22cbbf3/apps/agent/yo.mjs), not a live session or a full repository audit. The [Binance Web3 RWA reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) and our [signed payload audit](../../experiments/EXP-RWA-010/results.json) are a separate API surface from Yostocks' public website BAPI. Do not transfer field semantics between them without checking a response.
+
+## What the reviewed path does
+
+Yostocks' `market()` gathers token dynamics and status for the ticker. It takes a `stockInfo.price` when any row supplies one; otherwise it falls back to Ondo's `tokenInfo.price / multiplier`. Its `scan()` obtains amount-specific USDT buy quotes, applies `judge()` to the rows and chooses the lowest accepted per-share price. `judge()` rejects certain pause or unsupported reason codes and quote deviations above its configured threshold. The reviewed `market()` and `judge()` lines don't check an as-of timestamp for the selected stock price or fallback. The [pinned source](https://github.com/yostocks-protocol/yostocks/blob/5cf6988af1f429615ef27e3ac70e63eca22cbbf3/apps/agent/yo.mjs#L710-L816) supports these code-level observations.
+
+This is a real, strong substitute for generic issuer discovery, quote screening and buying. It also makes the distinction between an independently sourced, timed stock price and a token-derived fallback a plausible narrow policy question. If the fallback is used, a per-share token price is the comparison baseline; the reviewed code doesn't prove that it represents a fresh traditional-equity quote. We haven't observed how often that fallback occurs, whether another layer checks freshness, or whether users make a different decision because of it. Don't call Yostocks unsafe or broken from this file review.
+
+## What our data actually adds
+
+The signed Binance Web3 `/rwa/price` feed has `tokenPriceUpdatedAt`, while its documented `referencePrice` is derived from token price. In our 516 LIVE Sunday tape rows through 11:35 UTC, the independent reference timestamp count is zero. The one-off xStock probe returned 77 rows without price/time out of 130 public listings. These facts make a fail-closed data-availability guard technically defensible. They don't show a customer willing to use or pay for a separate guard, and they don't prove that an amount-specific quote is uneconomic.
+
+**Falsification gate:** take one exact amount and asset through a competitor's permitted live flow and our proposed decision. If both identify the same missing field and next action with equal clarity, or if independent reference time doesn't matter to the user's task, a standalone guard adds little value. A synthetic `ALLOW`/`NEED_HUMAN` difference alone isn't product validation. The next build choice remains open under [D-052](../decisions/decision-log.md).
