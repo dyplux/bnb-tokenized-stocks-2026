@@ -30,7 +30,7 @@
 
 **14:34 UTC route-mode matrix:** eight Sunday read-only cases covered NVDA and TSLA, bStock and Ondo, buy and sell. Seven returned `SWAP`; TSLAon sell returned business `40374` with no route. [Matrix and interpretation](docs/research/2026-10-04-route-semantics-matrix.md). This remains a question about documented RFQ semantics, not a declared docs defect. Monday regular-session cases remain pending.
 
-**Critical blockers:** independent underlying reference timestamp/source, verified issuer and action metadata, [issuer eligibility](docs/research/2026-10-04-issuer-access-gate.md), exact-wallet funded simulation, independent user task and final submission claim. Four [precise mentor questions](docs/devex/mentor-questions.md) are prepared, not sent. The existing visual prototype `app/budget-preview.html` is preserved uncommitted and hasn't been integrated. No final-product video is being made.
+**Critical blockers:** independent underlying reference timestamp/source, verified issuer and action metadata, [issuer eligibility](docs/research/2026-10-04-issuer-access-gate.md), exact-wallet funded simulation, independent user task and final submission claim. The Ondo general eligibility page and newer public EEA disclosures differ in scope; NVDAon final terms, KID and venue terms remain unverified. Four [precise API mentor questions plus an issuer-document question](docs/devex/mentor-questions.md) are prepared, not sent. The existing visual prototype `app/budget-preview.html` is preserved uncommitted and hasn't been integrated. No final-product video is being made.
 
 # SET AND EARN: NOV 5
 

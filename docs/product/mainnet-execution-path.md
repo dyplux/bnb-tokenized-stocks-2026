@@ -19,7 +19,7 @@
 |---|---|---|
 | Exact security and amount | Working read-only | Live catalog and local input validation |
 | Quote for temporary unfunded wallet | Working read-only | Signed API response, not investor access |
-| Eligible intended holder | Unknown | Issuer access decision for the actual person and wallet |
+| Eligible intended holder | Unknown | Issuer access decision for the actual person and wallet. For Ondo, resolve the [conflicting general and asset-level EEA descriptions](../research/2026-10-04-issuer-access-gate.md) using current NVDAon final terms, KID and venue terms. |
 | Independent stock reference clock | Unknown | Permitted source with explicit venue and as-of time, or a formally different mandate |
 | Exact-wallet build and funded simulation | Unrun | Same-wallet route, unsigned build, successful simulation |
 | Human approval | Pending | Approval of one bounded transaction |
