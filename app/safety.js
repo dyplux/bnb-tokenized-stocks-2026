@@ -51,9 +51,13 @@ function fact(list, name, value, status = '') {
 
 function render(data) {
   latest = data;
+  const isReplay = data.origin === 'DATED_REPLAY';
+  document.querySelector('.mode').textContent = isReplay
+    ? 'DATED EXAMPLE · BSC MAINNET'
+    : 'LIVE READ-ONLY CHECK · BSC MAINNET';
   const replay = document.querySelector('#replay-disclosure');
-  replay.hidden = data.origin !== 'DATED_REPLAY';
-  replay.textContent = data.origin === 'DATED_REPLAY'
+  replay.hidden = !isReplay;
+  replay.textContent = isReplay
     ? (data.replay_note || 'This is a fixed recorded example, not a live check.')
     : '';
   document.querySelector('#empty-state').hidden = true;
@@ -89,7 +93,7 @@ function render(data) {
   fact(facts, 'Quote captured at', data.sources.quote?.observed_at || 'UNKNOWN');
   if (data.sources.rpc) fact(facts, 'Multiplier BSC block', `${data.sources.rpc.block} · ${data.sources.rpc.block_timestamp}`);
   fact(facts, 'Simulation', view.simulation, 'caution');
-  fact(facts, 'Your mandate', `${data.receipt.intent.notional_usd} USDT requested · ${data.mandate.max_notional_usd} USDT cap · ${data.mandate.max_price_impact_percent}% impact cap`);
+  fact(facts, isReplay ? 'Recorded mandate' : 'Your mandate', `${data.receipt.intent.notional_usd} USDT requested · ${data.mandate.max_notional_usd} USDT cap · ${data.mandate.max_price_impact_percent}% impact cap`);
   fact(facts, 'Observed at', data.receipt.timestamp);
   if (data.errors.length) fact(facts, 'Source errors', data.errors.map(e => e.source).join(', '), 'caution');
   const next = data.reason_codes.includes('MANDATE_LIMIT_EXCEEDED')
