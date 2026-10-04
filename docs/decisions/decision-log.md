@@ -584,3 +584,13 @@ The separate [public dynamic payload repro](../devex/repros/2026-10-04-public-st
 The [instrumented sell-side probe](../research/2026-10-04-sell-route-sunday.md) asked the signed Trading API for an arithmetic 0.1-share NVDA sell to USDT through both bStock and Ondo at 12:27 UTC Sunday. Both returned one route and echoed the 18-decimal token input. The outputs were about 23.4543 and 23.4412 USDT. These are nonholder estimates with no signed order or issuer eligibility check. They don't refute every after-hours sell failure, but they failed to reproduce one for this bounded task.
 
 **CEO decision:** don't pivot into a blocked-exit recovery app on the basis of a competitor's different incident. Keep the quote evidence and DevEx logs. A future exit task needs a holder-specific reproducible failure, a verified reason and a next action that current tools omit. Continue the collector and the pre-registered Monday benchmark before any edge claim.
+
+## D-056: don't submit a generic policy gateway against OneTicker
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** generic gateway rejected; clock-provenance question remains open
+
+The [pinned source audit](../research/2026-10-04-gateway-substitute-audit.md) found that OneTicker already exposes token resolution, normalized quotes, a deterministic gate, MCP and Wallet Skill tools, and a five-minute tape. Its published implementation also reads APRO oracle rounds. Our direct [APRO NVDAB/USD read](../../data/external_reference/2026-10-04-apro-nvdab.json) found a genuine `updatedAt`, but it dates a tokenized-equity oracle, not an independent US stock reference. Binance's issuer-reference clock remains unknown in the observed developer API.
+
+**CEO decision:** retain the collector, the policy skeleton and DevEx evidence as reusable research. Don't select a gateway or route screener as the submission product merely because these components work. Use the frozen Monday benchmark and a specifically observed user task to decide what product surrounds them. If no task clears the gate, report that rather than duplicating a named incumbent.

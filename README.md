@@ -33,6 +33,8 @@ The [Sunday DevEx summary](docs/devex/2026-10-04-evidence-summary.md) traces 91 
 
 The [5 USDC Apple substitute matrix](docs/research/2026-10-04-exact-budget-substitute-matrix.md) compares our dated route check with pinned Yostocks source and PancakeSwap's public Stock Terminal. [D-054](docs/decisions/decision-log.md) pauses the exact-budget standalone build until it demonstrates a permitted user action that existing tools don't already support. A separate [public Binance payload repro](docs/devex/repros/2026-10-04-public-stock-reference-clock.md) shows the reference-source ambiguity without claiming an independent stock-price clock.
 
+A [Sunday sell-side probe](docs/research/2026-10-04-sell-route-sunday.md) returned two indicative NVDA exit quotes and no blocked route for its bounded amount. The [pinned gateway substitute audit](docs/research/2026-10-04-gateway-substitute-audit.md) records why a generic policy/MCP/tape wrapper would overlap OneTicker. One block-pinned APRO NVDAB/USD round has a real update time, but it dates a token oracle, not the underlying stock reference.
+
 With a valid local `.env`, the research commands are:
 
 ```sh
