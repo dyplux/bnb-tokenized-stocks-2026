@@ -634,3 +634,13 @@ The [issuer-access check](../research/2026-10-04-issuer-access-gate.md) found th
 The [40-contract Sunday probe](../research/2026-10-04-weekend-route-coverage.md) obtained one 100 USDT buy quote for each monitored contract. Thirty-eight returned routes, while AAOI bStock and MSTR Ondo returned amount-specific insufficient-liquidity code `40374`. All 38 routed quotes reported `SWAP`. One later CBRSB route produced unsigned calldata, and its off-chain simulation predicted failure for an unfunded temporary wallet. In the routed quote set, the Ondo NVDA entry amount implied a token price 1.6193% above the quote's own indicative token-unit price; it isn't a comparison with the underlying stock.
 
 **CEO decision:** reject the simple “US equities are closed, so tokenized equities cannot be quoted” problem statement. The observed task is about interpreting and safely acting on a quote while independent stock-reference time and user access remain unresolved. OneTicker and PancakeSwap already cover broad route screening, so don't turn this into a generic scanner. Preserve the deterministic evidence and policy components, continue the frozen Monday benchmark, and require a distinct user action or developer failure before naming the submission product. The `SWAP` responses also warrant a DevEx correction because the Trading reference says equity/RWA routes always use `RFQ`.
+
+## D-061: promote the on-chain multiplier cross-check, not a split claim
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** normalization primitive strengthened; live corporate-action outcome unmeasured
+
+At fixed BSC block `0x77dd188`, the [35-contract audit](../research/2026-10-04-bstock-multiplier-onchain.md) read `uiMultiplier()`, `newUIMultiplier()` and `effectiveAt()` on each monitored bStock. Every current on-chain display multiplier exactly matched the signed catalog ratio captured about two minutes earlier. All 35 had `effectiveAt=0`. Thirty-two ratios were not 1, so this is more than a trivial all-unit match.
+
+**CEO decision:** retain a current-block multiplier check as a defensible normalization primitive and possible agent safeguard. Don't claim a detected split, event history, issuer backing or full BEP-677 compliance. The live ratio audit has not observed a transition, and a product still needs a distinct task and user benefit beyond OneTicker's existing normalization. Preserve the fixed-block fixture for the eventual demo or DevEx report, with the mixed-time limitation visible.
