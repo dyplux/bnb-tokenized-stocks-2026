@@ -4,7 +4,7 @@
 
 | BLOCKER | OWNER | EVIDENCE NEEDED | DEADLINE | STATUS |
 |---|---|---|---|---|
-| Canonical demo asset | Dyplux | [Dated comparison](demo-asset-selection.md) selects NVDAB for technical preflight; issuer and user access still need a dated basis | 2026-10-05 | TECHNICAL TARGET SELECTED, ACCESS OPEN |
+| Canonical demo asset | Dyplux | [Dated comparison](demo-asset-selection.md) selects NVDAB for technical preflight; issuer and user access still need a dated basis. Two [wrapped xStock fallbacks](../research/2026-10-04-xstock-route-fallback.md) had indexed USDT pairs but no 10 USDT Binance Web3 route. | 2026-10-05 | TECHNICAL TARGET SELECTED, ACCESS OPEN |
 | Funded exact-wallet simulation | Dyplux | Same wallet and quote proven; [fixed-block funding read](../product/demo-wallet-state-2026-10-04.md) found zero USDT, BNB and allowance. The 17:49 fresh packet bound the built EVM call to the simulation request, checked the build's 0.5% slippage and positive minimum received, then predicted `FAILED`. Passing funded simulation and full approval gas estimate remain. New packets reject quotes older than 60 seconds; provider expiry wasn't exposed in the observed route. | 2026-10-06 | BUILD BOUNDS CHECKED, WALLET UNFUNDED |
 | Mainnet proof | Dyplux + founder | `ALLOW` policy, passing simulation, specific human approval, transaction hash and before/after balances | 2026-10-07 | NOT AUTHORIZED |
 | Public repository | Dyplux | Final tracked and history secret scan, public visibility, signed-out access | 2026-10-05 | VERIFIED: public HTTP 200, bounded secret scan; keep available through judging |

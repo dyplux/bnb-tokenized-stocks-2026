@@ -1,0 +1,38 @@
+{
+  "dexscreener_raw_local": "data/market_hours/xstocks_dexscreener_2026-10-04.json",
+  "limit": "Read-only quotes do not establish issuer access, exact wrapper backing, funded simulation, approval or fill.",
+  "rows": [
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x4ebf5fd25b02022afad96e2fa25da54a246fded0",
+      "execution_modes": [],
+      "input_usdt": "10",
+      "observed_at": "2026-10-04T18:57:03.908Z",
+      "origin": "LIVE",
+      "provider": "xstocks_public_listing",
+      "raw_response_sha256": "cdc0c5e583e4d5c41bc7e568f1fb6f93010cd4994324ace9fe92c4a3ec7a4056",
+      "route_count": 0,
+      "symbol": "wPOPMTx",
+      "ticker": "POPMT",
+      "vendors": []
+    },
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x41333df9e7639188bbfca5522dc4844398af9f9e",
+      "execution_modes": [],
+      "input_usdt": "10",
+      "observed_at": "2026-10-04T18:57:05.379Z",
+      "origin": "LIVE",
+      "provider": "xstocks_public_listing",
+      "raw_response_sha256": "271a1d2e1e68f9f93d4233c792aed3f65e49c689e1158d74cbe3d603dab2e142",
+      "route_count": 0,
+      "symbol": "wTCENTx",
+      "ticker": "TCENT",
+      "vendors": []
+    }
+  ],
+  "source": "Binance Web3 Trading API signed quote",
+  "wallet": "existing_public_demo_address_not_retained"
+}

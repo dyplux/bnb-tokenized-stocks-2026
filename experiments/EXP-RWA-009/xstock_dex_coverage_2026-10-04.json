@@ -1,0 +1,89 @@
+{
+  "batches": [
+    {
+      "http_status": 200,
+      "pair_count": 0,
+      "requested_contracts": 30,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "http_status": 200,
+      "pair_count": 0,
+      "requested_contracts": 30,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "http_status": 200,
+      "pair_count": 0,
+      "requested_contracts": 30,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "http_status": 200,
+      "pair_count": 0,
+      "requested_contracts": 30,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "http_status": 200,
+      "pair_count": 3,
+      "requested_contracts": 10,
+      "response_sha256": "758e3262a5a2a45235bdbcdba85685d3b51b6627fc5c7a33541d7dfe4af909d1"
+    }
+  ],
+  "captured_at": "2026-10-04T18:56:11.161025+00:00",
+  "limits": "DEX Screener indexed pairs are not a complete BSC liquidity census, a trade route, an issuer eligibility decision, an ERC-4626 wrapper verification, or a fill. Values are a dated response snapshot.",
+  "listing_count": 130,
+  "matched_contract_count": 3,
+  "origin": "LIVE_PUBLIC_INDEXER",
+  "pairs": [
+    {
+      "asset_type": 1,
+      "contract": "0x68fa48b1c2fe52b3d776e1953e0e782b5044ce28",
+      "counter_token": {
+        "address": "0x18d0e455B3491E09210292d3953157A4Bf104444",
+        "name": "比特币",
+        "symbol": "比特币"
+      },
+      "dex": "uniswap",
+      "liquidity_usd": 800.27,
+      "pair_contract": "0xB6d44183F8DB46C9A73d9Ac5a38041e71059f392",
+      "symbol": "SPCXx",
+      "ticker": "SPCX",
+      "url": "https://dexscreener.com/bsc/0xb6d44183f8db46c9a73d9ac5a38041e71059f392",
+      "volume_24h_usd": 0.67
+    },
+    {
+      "asset_type": null,
+      "contract": "0x4ebf5fd25b02022afad96e2fa25da54a246fded0",
+      "counter_token": {
+        "address": "0x55d398326f99059fF775485246999027B3197955",
+        "name": "Tether USD",
+        "symbol": "USDT"
+      },
+      "dex": "pancakeswap",
+      "liquidity_usd": 61459.85,
+      "pair_contract": "0x8AC8737D04a8cBcb7E86b98235778B6c0906950c",
+      "symbol": "wPOPMTx",
+      "ticker": "POPMT",
+      "url": "https://dexscreener.com/bsc/0x8ac8737d04a8cbcb7e86b98235778b6c0906950c",
+      "volume_24h_usd": 244153.56
+    },
+    {
+      "asset_type": null,
+      "contract": "0x41333df9e7639188bbfca5522dc4844398af9f9e",
+      "counter_token": {
+        "address": "0x55d398326f99059fF775485246999027B3197955",
+        "name": "Tether USD",
+        "symbol": "USDT"
+      },
+      "dex": "pancakeswap",
+      "liquidity_usd": 415835.63,
+      "pair_contract": "0xfc0B6cE7Ee23683Ef34dea599525f8701ec604D8",
+      "symbol": "wTCENTx",
+      "ticker": "TCENT",
+      "url": "https://dexscreener.com/bsc/0xfc0b6ce7ee23683ef34dea599525f8701ec604d8",
+      "volume_24h_usd": 111553.03
+    }
+  ]
+}
