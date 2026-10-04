@@ -5,8 +5,11 @@ This packet is an audit aid. It has no transaction, key, signer or broadcast pat
 
 import hashlib
 import json
+from datetime import datetime, timezone
 
 from app.server import USDT
+
+MAX_QUOTE_AGE_SECONDS = 60
 
 
 def digest(value):
@@ -14,7 +17,11 @@ def digest(value):
     return hashlib.sha256(encoded).hexdigest()
 
 
-def assemble(review, dry_run):
+def assemble(review, dry_run, now=None):
+    assembled_at = now or datetime.now(timezone.utc)
+    if assembled_at.tzinfo is None:
+        raise ValueError("Packet assembly time must include a timezone")
+    assembled_at = assembled_at.astimezone(timezone.utc)
     receipt = review.get("receipt") or {}
     reasons = []
     claimed_hash = receipt.get("receipt_sha256")
@@ -60,9 +67,23 @@ def assemble(review, dry_run):
                    quote.get("observed_at") == source_quote.get("observed_at"))
     if not quote_bound:
         reasons.append("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION")
+    quote_age_seconds = None
+    try:
+        observed_at = datetime.fromisoformat(str(quote.get("observed_at", "")).replace("Z", "+00:00"))
+        if observed_at.tzinfo is None:
+            raise ValueError("Quote time has no timezone")
+        quote_age_seconds = (assembled_at - observed_at.astimezone(timezone.utc)).total_seconds()
+    except ValueError:
+        reasons.append("QUOTE_TIME_UNVERIFIED")
+    else:
+        if quote_age_seconds < -5:
+            reasons.append("QUOTE_TIME_IN_FUTURE")
+        elif quote_age_seconds > MAX_QUOTE_AGE_SECONDS:
+            reasons.append("QUOTE_TOO_OLD")
     reasons.append("EXPLICIT_HUMAN_APPROVAL_MISSING")
     packet = {
         "state": "BLOCKED", "execution_authorized": False,
+        "assembled_at": assembled_at.isoformat().replace("+00:00", "Z"),
         "reason_codes": sorted(set(reasons)),
         "action": {"chain_id": intent.get("chain_id"), "ticker": intent.get("ticker"),
                    "provider": intent.get("provider"), "contract": intent.get("contract"),
@@ -74,6 +95,9 @@ def assemble(review, dry_run):
                    "receipt": receipt},
         "exact_wallet_trial": {"stage": dry_run.get("stage"),
                                "quote_observed_at": quote.get("observed_at"),
+                               "quote_age_seconds_at_assembly": quote_age_seconds,
+                               "internal_max_quote_age_seconds": MAX_QUOTE_AGE_SECONDS,
+                               "provider_quote_expiry": "NOT_EXPOSED_IN_OBSERVED_ROUTE",
                                "quote_sha256": quote.get("sha256"),
                                "build_observed_at": build.get("observed_at"),
                                "build_sha256": build.get("sha256"),

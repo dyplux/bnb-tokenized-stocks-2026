@@ -1,9 +1,12 @@
 """Synthetic checks for the read-only pre-execution evidence packet."""
 
 import unittest
+from datetime import datetime, timezone
 
 from app.pre_execution_packet import assemble, digest
 from app.server import USDT
+
+ASSEMBLY_TIME = datetime(2026, 10, 4, 10, 0, 30, tzinfo=timezone.utc)
 
 
 def examples():
@@ -30,7 +33,7 @@ def examples():
 class PreExecutionPacketTests(unittest.TestCase):
     def test_even_all_positive_read_only_evidence_does_not_authorize_execution(self):
         review, trial = examples()
-        packet = assemble(review, trial)
+        packet = assemble(review, trial, now=ASSEMBLY_TIME)
         self.assertEqual(packet["state"], "BLOCKED")
         self.assertFalse(packet["execution_authorized"])
         self.assertEqual(packet["reason_codes"], ["EXPLICIT_HUMAN_APPROVAL_MISSING"])
@@ -45,7 +48,7 @@ class PreExecutionPacketTests(unittest.TestCase):
         review["receipt"]["decision"] = "NEED_HUMAN"
         trial["security"]["contract"] = "0x" + "b" * 40
         trial["simulation"]["predicted_transaction_status"] = "FAILED"
-        codes = assemble(review, trial)["reason_codes"]
+        codes = assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"]
         for code in ("POLICY_RECEIPT_INVALID", "POLICY_NOT_ALLOW",
                      "POLICY_RESULT_MISMATCH", "ACTION_EVIDENCE_MISMATCH",
                      "EXACT_WALLET_SIMULATION_NOT_PASSED"):
@@ -55,7 +58,24 @@ class PreExecutionPacketTests(unittest.TestCase):
         review, trial = examples()
         trial["quote"]["sha256"] = "another-quote"
         self.assertIn("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION",
-                      assemble(review, trial)["reason_codes"])
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+
+    def test_stale_quote_is_explicitly_blocked(self):
+        review, trial = examples()
+        packet = assemble(review, trial, now=datetime(2026, 10, 4, 10, 2, tzinfo=timezone.utc))
+        self.assertIn("QUOTE_TOO_OLD", packet["reason_codes"])
+        self.assertEqual(packet["exact_wallet_trial"]["quote_age_seconds_at_assembly"], 120)
+        self.assertEqual(packet["exact_wallet_trial"]["provider_quote_expiry"],
+                         "NOT_EXPOSED_IN_OBSERVED_ROUTE")
+
+    def test_unknown_or_future_quote_time_is_explicitly_blocked(self):
+        review, trial = examples()
+        trial["quote"]["observed_at"] = "no timestamp"
+        self.assertIn("QUOTE_TIME_UNVERIFIED",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+        trial["quote"]["observed_at"] = "2026-10-04T10:01:00Z"
+        self.assertIn("QUOTE_TIME_IN_FUTURE",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
 
 
 if __name__ == "__main__":
