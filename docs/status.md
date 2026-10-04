@@ -1,5 +1,9 @@
 # Project status
 
+**Current checkpoint:** [STATUS.md](../STATUS.md), updated 2026-10-04 12:35 UTC. The 40-contract, five-minute collector is running. [D-054](decisions/decision-log.md) paused the standalone exact-budget interface, [D-055](decisions/decision-log.md) found no blocked NVDA sell route in the bounded Sunday probe, and [D-056](decisions/decision-log.md) rejected a generic policy gateway because OneTicker already covers much of it. No submission product has been selected. The dated block below is retained as the 3 October checkpoint.
+
+## Historical checkpoint, 3 October
+
 **Updated:** 2026-10-03 UTC
 **Phase:** exact-budget product specification under [D-051](decisions/decision-log.md); the previous read-only Exit Check is a research tool
 **Product readiness:** the new screen and endpoint completed a read-only live local browser run on 3 October. They aren't deployed. The 100 USDT sell-or-borrow claim remains retired under [D-045](decisions/decision-log.md).
