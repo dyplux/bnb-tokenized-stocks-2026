@@ -88,8 +88,7 @@ function render(data) {
   fact(facts, 'Share ratio / multiplier', `${view.token_to_share_ratio} / ${view.multiplier_integrity}`,
        view.multiplier_integrity === 'MATCHED_FIXED_BLOCK' ? 'ok' : 'caution');
   fact(facts, 'Holder eligibility', view.eligibility, 'caution');
-  fact(facts, 'Size-specific route', `${view.route}${view.execution_mode ? ` · ${view.execution_mode}` : ''}${view.quote_vendor ? ` · ${view.quote_vendor}` : ''}`,
-       view.route === 'QUOTED' ? 'ok' : 'caution');
+  fact(facts, 'Indicative route', `${view.route}${view.execution_mode ? ` · ${view.execution_mode}` : ''}${view.quote_vendor ? ` · ${view.quote_vendor}` : ''} · temporary unfunded wallet`, 'caution');
   fact(facts, 'Quoted price impact', view.price_impact_percent === null ? 'UNKNOWN' : `${view.price_impact_percent}%`);
   fact(facts, 'Quote captured at', data.sources.quote?.observed_at || 'UNKNOWN');
   if (data.sources.rpc) fact(facts, 'Multiplier BSC block', `${data.sources.rpc.block} · ${data.sources.rpc.block_timestamp}`);
