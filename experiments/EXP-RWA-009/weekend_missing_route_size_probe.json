@@ -1,0 +1,91 @@
+{
+  "limit": "Sequential indicative quotes, no user eligibility, transaction build, simulation, fill or final cost.",
+  "rows": [
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x10343ef7da3301493d7ecb647d68a288c6c1db2f",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input_usdt": 10,
+      "observed_at": "2026-10-04T14:09:38.373Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "89efe58bedd0a095fe80b1d935c0f3df01f554031cb86741d9b4be6353720af7",
+      "route_count": 1,
+      "ticker": "AAOI"
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x10343ef7da3301493d7ecb647d68a288c6c1db2f",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input_usdt": 1000,
+      "observed_at": "2026-10-04T14:09:39.617Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "da11f447f4306d7b01982557f931c9b30beb6e9b0b72607bd3ec7350b2640971",
+      "route_count": 1,
+      "ticker": "AAOI"
+    },
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x7313ea16493b2f55054df0131a3a14b043ec8992",
+      "execution_modes": [],
+      "input_usdt": 10,
+      "observed_at": "2026-10-04T14:09:41.000Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "47bbd4f243aee6a671c0eb99de280f1a07e7f2269c8606629e4713bb4297828f",
+      "route_count": 0,
+      "ticker": "MSTR"
+    },
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x7313ea16493b2f55054df0131a3a14b043ec8992",
+      "execution_modes": [],
+      "input_usdt": 1000,
+      "observed_at": "2026-10-04T14:09:42.491Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "b8060d302f3aa38a8ccaf78aa41fffe19d38179e880da2b001cb09db5b630838",
+      "route_count": 0,
+      "ticker": "MSTR"
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x10343ef7da3301493d7ecb647d68a288c6c1db2f",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input_usdt": 100,
+      "observed_at": "2026-10-04T14:10:09.330Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "fcc655762ddb182c9684b5f919fb6fa35f3df7e02d39737381e0077766449ced",
+      "route_count": 1,
+      "ticker": "AAOI"
+    },
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x7313ea16493b2f55054df0131a3a14b043ec8992",
+      "execution_modes": [],
+      "input_usdt": 100,
+      "observed_at": "2026-10-04T14:10:10.602Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "b24713c570aa0b931bc9de5037469f575c08146c68ff505fd77fe99d7982d908",
+      "route_count": 0,
+      "ticker": "MSTR"
+    }
+  ],
+  "source_100_usdt_probe": "weekend_route_coverage_100usdt.json",
+  "wallet": "ephemeral_unfunded_not_stored"
+}

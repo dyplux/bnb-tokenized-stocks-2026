@@ -19,6 +19,8 @@
 | Mainnet execution | None | No wallet signing, broadcast or funded trade. |
 | Leading hypothesis | Product unselected; safety primitive retained | The [current product gates](docs/research/2026-10-04-product-gates.md) compare off-hours intelligence, a bounded developer mandate and first-trade recovery against their strongest substitutes and stopping rules. The 40-contract live-policy probe produced zero automatic `ALLOW` decisions with unknown access, reference time, quote and simulation. [OneTicker](docs/research/2026-10-04-gateway-substitute-audit.md) already covers a generic gateway and off-hours tape. The Sunday [38/40 quote coverage](docs/research/2026-10-04-weekend-route-coverage.md) shows availability of routes, not user eligibility or an alpha edge. Off-hours prediction is unproven. |
 
+**14:10 UTC route follow-up:** the earlier AAOI bStock 100 USDT no-route response was not stable: 10, 100 and 1,000 USDT requests later returned routes. MSTR Ondo still returned `40374` at all three sizes. [Evidence and limits](docs/research/2026-10-04-weekend-route-coverage.md). No execution or user access was established.
+
 **Critical blockers:** independent underlying reference timestamp/source, verified issuer and action metadata, [issuer eligibility](docs/research/2026-10-04-issuer-access-gate.md), independent user task and final product selection. The existing visual prototype `app/budget-preview.html` is preserved uncommitted and hasn't been integrated. No final-product video is being made.
 
 # SET AND EARN: NOV 5

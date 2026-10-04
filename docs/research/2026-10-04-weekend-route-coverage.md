@@ -12,6 +12,10 @@ The two no-route responses were AAOI bStock and MSTR Ondo. Both returned busines
 
 This shows that tokenized-equity **quotes** remain available through much of the monitored BSC universe during the Sunday US equity-market closure. It doesn't show that a person can legally acquire each product, that a funded wallet can pass approvals and simulation, that a quote will survive its short lifetime, or that a trade will settle. Issuer rights and an independent underlying price timestamp are unresolved. A 100 USDT quote isn't an alpha signal.
 
+## Follow-up on the two missing routes
+
+At 14:08 to 14:10 UTC, a bounded [size probe](../../experiments/EXP-RWA-009/weekend_missing_route_size_probe.json) requested 10, 100 and 1,000 USDT buy quotes for AAOI bStock and MSTR Ondo using the same signed API and an unfunded temporary address. AAOI returned one `SWAP` route at **all three sizes**, including the 100 USDT size that had failed in the earlier coverage run. Its earlier no-route result was therefore time-sensitive; these sequential calls don't isolate the cause of recovery. MSTR Ondo returned business code `40374` and no route at **all three sizes** in this later window. That doesn't prove it has no liquidity on another venue or at another time. The follow-up made no trade and didn't establish investor eligibility.
+
 ## Indicative price versus quoted entry
 
 A [local calculation](../../experiments/EXP-RWA-009/quote_vs_metadata_100usdt.json) reuses the retained quote bodies without another API request. It converts the 100 USDT input to USD with that quote's `fromToken.tokenUnitPrice`, divides by its estimated output token quantity, then compares the implied entry price per token with that same quote's `toToken.tokenUnitPrice`. These are two fields within one API quote, not an independent stock price.
