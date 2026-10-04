@@ -22,6 +22,12 @@ Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, se
 
 The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This is an agent-callable tool, **not** a deployed Binance Agentic Wallet or Agent Studio runtime. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
 
+```sh
+printf '%s\n' '{"provider":"bstock","notional_usdt":"10","max_notional_usdt":"10","max_price_impact_percent":"0.5"}' | python3 scripts/safety_agent_tool.py
+```
+
+With your own API credentials configured as above, the result contains `decision`, `reason_codes` and `receipt.receipt_sha256`. Exit code 0 means the tool returned a policy decision; it doesn't mean the proposed purchase was allowed. A source failure exits nonzero and returns an error instead of a decision receipt.
+
 ## What the evidence supports
 
 | Current evidence | Limit |
