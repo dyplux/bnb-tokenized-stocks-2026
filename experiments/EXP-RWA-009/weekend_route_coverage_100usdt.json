@@ -1,0 +1,683 @@
+{
+  "completed_contracts": 40,
+  "expected_contracts": 40,
+  "input": "100 USDT, Binance BSC USDT 18 decimal units",
+  "last_observed_at": "2026-10-04T13:26:23.082Z",
+  "limit": "Sequential, temporary-wallet quotes. No investor eligibility, build, approval, simulation, fill, final fees or executable-spread claim.",
+  "rows": [
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x10343ef7da3301493d7ecb647d68a288c6c1db2f",
+      "execution_modes": [],
+      "observed_at": "2026-10-04T13:25:39.129Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "5d5046853d45eb3a1d2c3d57ebcbd52d98b00fb2b20737d7c24d6362dd2d2f50",
+      "route_count": 0,
+      "ticker": "AAOI",
+      "vendors": []
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x75fd4cf6f8392e41e70391d60c90c0d5211603a1",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:40.244Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "a03cbeb4c7f77551cd13a8d581e7fc82e0e12b5870db3558e6e9637d3b1183ad",
+      "route_count": 1,
+      "ticker": "AMD",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xd42a79ebb7f527f40faecd196ffb47ad5e8d6f8c",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:41.292Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "9df8049bef76cf7728df44a8a6fd3871fe7f78d7bf96c1b5de499df1e6d68864",
+      "route_count": 1,
+      "ticker": "ARM",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x76682c454467b3a1150ad8b6a92fc5ee2c21d7ed",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:42.539Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "391cc53f268aca3dc6bc2f2642170612feda3575ff17916a778aca7cf5efea4b",
+      "route_count": 1,
+      "ticker": "AVGO",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x9bdc8b470dbf89dbcb123587c6f5e49cca3463be",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:43.557Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "43a4bbb5eca5bfb9326b721976cedfc89f7e0c608a3b815caf590be516f2b0bc",
+      "route_count": 1,
+      "ticker": "AXTI",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x4ef9d3062c7f6eba4aae4990c5036598c6eff4ec",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:44.636Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "5fe6c885d5fd9f98119bba5a3360f5077e95b2b782bf7691fce58b67129bf6bd",
+      "route_count": 1,
+      "ticker": "BABA",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xe81c6bb0266cd68b4f17278531dd03ea1f12da4e",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:45.645Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "8d2c6afc0ac4f7fd984fe099f0239fa448c66985dd8ca8fc48a0d84f7de24c6f",
+      "route_count": 1,
+      "ticker": "CBRS",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x585bde7c54abb5ccd7791f923d6c2187635f3952",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:46.715Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "d13b93cd94217d36c7fb4e5905ef53ad323098511232474b22e9fd8ebb6bd497",
+      "route_count": 1,
+      "ticker": "COIN",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x80f3d493ebce97e343c53d29a137942416b4ffc0",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:47.789Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "1dfeba6ae1b96d36c3983dd914a729d1c6338fd94cd81b3f04bace89318f00c7",
+      "route_count": 1,
+      "ticker": "CRCL",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x33e7317e17838fee56b10fe8d0b9ca6ca3090c95",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:48.902Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "5f0b201c8c4fe92be8f4b48e4ba11f9cb5bdef8e35eb03fa978829222e1a0717",
+      "route_count": 1,
+      "ticker": "CRWV",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x740e075cbbea22a082b9d6679e65e82767875b6a",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:50.052Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "9054359d36904e5a28b8df91880f0f4f590f5c4527beaaa37b1186c38970935e",
+      "route_count": 1,
+      "ticker": "GLW",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x3f53de71c126bdabae20f9cd64848d317f6c3238",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:51.126Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "3dbf4981c81445bf258d5a9fd9ab10bd44aee9a9163be1eb32a8c402400c54f6",
+      "route_count": 1,
+      "ticker": "GOOGL",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xa394dcea3fd3847fd793afbfd163e2e3858b7c65",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:52.237Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "d78e684bd260e2070c67dff2c3b1fa52361cad12100b426c151c03027ea7f3ff",
+      "route_count": 1,
+      "ticker": "HOOD",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xfa273b076feb8c0fb34e554ae341082323d016a3",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:53.255Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "be050b52590cd84e7b8650e7e7fd5f51a8d8017aa4a7739e36921e71e2d4c2d5",
+      "route_count": 1,
+      "ticker": "IBM",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xe614e2fc6c787035ff51f452e8e826bfd32d5283",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:54.351Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "88fece91695ae3b84825a728175e1bc55bddadf200fbc0cab3bffac6355da9ac",
+      "route_count": 1,
+      "ticker": "INTC",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x64748bea17b6d19e242adf20425de2440c656142",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:55.460Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "8dc7ae313304ac6769b772a9beff29234de37e819f590e42a69a4090ebe414f9",
+      "route_count": 1,
+      "ticker": "LITE",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x7425889fe94f9d693e8daefe88bcced6acfef4c0",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:56.670Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "82653e2d553ecc0a9ff27ba1a317661f767d30fdb754802d4505399536c914f7",
+      "route_count": 1,
+      "ticker": "META",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x16cd4fe7e8880ecc3ba222795229e20489fc2c76",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:57.674Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "23ea4cdd1986447218d7a8dae1be56fc2f6ea8d64ecbee3cf26e0759f9560994",
+      "route_count": 1,
+      "ticker": "MRVL",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x80106cb3ead06659a5ad19df39d9b4733863b9b0",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:58.723Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "dcbb9c4c5f82236404a17b5038aae40963860c7ae63e96ffaa53d0c25f803944",
+      "route_count": 1,
+      "ticker": "MSFT",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:25:59.830Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "5113af24e8c706df81fedc9103a01b5b2a74abe53089a0232f83bdec0d838375",
+      "route_count": 1,
+      "ticker": "MSTR",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xcdf2f3e0fa43c47a6662a91c9e4a7c5f69762699",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:00.937Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "144648af9e28afd24e2ebd83b189df71206ccdd91921fd0cf1b0afc478d1f8a9",
+      "route_count": 1,
+      "ticker": "MU",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xe256bc2a4f5297f8ba6f043f180a46300ecbcbb1",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:02.010Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "9b8b7521c1eb4d84d3b2ec342e8343a3741b0449f2134f7442970195ed34783d",
+      "route_count": 1,
+      "ticker": "NBIS",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x7c4d7a180d737dd5a70d8065a90e6746a69c37ea",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:03.159Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "0fb8a531f6322ac0445967533718a8a8a61947d0146163cf03549ed4338dccc9",
+      "route_count": 1,
+      "ticker": "NOK",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:04.261Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "74224afe692cce613dde52ba18e1b543f38271f7a3ed77baba82f788c3b08097",
+      "route_count": 1,
+      "ticker": "NVDA",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x4684d9887fc1c71cba7bab8e88835cec217eb598",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:05.367Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "8be1ab0c8934bbaa13f5e127773ec791e3119e0cfc3798423ffb5f5fa9aac32b",
+      "route_count": 1,
+      "ticker": "ORCL",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x0ca5d51d0277bd006fd9607d3e560785ebad8222",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:06.604Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "04e5558fd36644b69be2f7b4391cff9f3fe9bd1ecd95fe7a032b910406882e94",
+      "route_count": 1,
+      "ticker": "PLTR",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x5f7a56e877b9130608bf8be962621011182fefe1",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:07.649Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "b22a8edbf101c1642d2693376ad8a2cfb27f7f7a9b47fae71c969a005273f1a0",
+      "route_count": 1,
+      "ticker": "QCOM",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xd721c192d612db77621df57a9fab38418033c02e",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:08.761Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "63cde4c34025b21fe8ee062fc5b26341c366de5e70840aaafc49a5841984015c",
+      "route_count": 1,
+      "ticker": "QNT",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xc8da12cbcce7c45180692a6420b0076e03a5179a",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:09.830Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "13efacb41af52c5f64e8ae44802e8f4463a242e5fad86d0f219a69727f2ad5a4",
+      "route_count": 1,
+      "ticker": "RKLB",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xca750ef65f295bbecd685abf54e82caf297bdb61",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:11.023Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "78b3604d615456624305a22e1302e2dd6e23be00badc4b09d5421cd476306d31",
+      "route_count": 1,
+      "ticker": "SKHY",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x3ee4df61bd4f867e349beae8bfe07bc31b4850fb",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:12.127Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "7e0993dcc2399f52f1659b385171e70d79dcea5c1ac79bd84ac37890809d0c5a",
+      "route_count": 1,
+      "ticker": "SNDK",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xbe9d156892e55e7154bcd3cb0fea677f9d3103e1",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:13.142Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "459eaf4de9377726017637c2262131c0f1fa6f9f873bca8d0c8fd15db3f75040",
+      "route_count": 1,
+      "ticker": "SPCX",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x5b1910eaad6450e50f816082aa078c41f10c292f",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:14.167Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "6db10db4d9196a8ce171463db0730755c9ef6ab0a42428f62ef2695e1a00f917",
+      "route_count": 1,
+      "ticker": "TSLA",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xab78b89b5bb00236be0b4b20704cbfa04efc711c",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:15.276Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "3addc0b0ca77179f137f659fa2b765d5b9962cdb6c52bfbd1bf72fde5445a737",
+      "route_count": 1,
+      "ticker": "TSM",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xebe29695f8047c13d36e7a790ca8c1b239ffad1c",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:16.385Z",
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_response_sha256": "b9e60d47e6cabc66747962c2ce99f8777c59a59927909c038a5540c189a01e46",
+      "route_count": 1,
+      "ticker": "WDC",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x390a684ef9cade28a7ad0dfa61ab1eb3842618c4",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:17.838Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "190e42a9d86d711ef0da1b38ba65473f01cba3bdf56e060d5271f4581e4e86dd",
+      "route_count": 1,
+      "ticker": "AAPL",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xf8589b526fdd65f7f301c605a6e04f0f1b4b3620",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:19.163Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "93be21589253d2073048dc8ff4739a564888cb8f2ff0a2f62ac94909cc3b1818",
+      "route_count": 1,
+      "ticker": "COIN",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 40374,
+      "business_message": "Insufficient liquidity for a quote. Please decrease the transaction amount or try again later.",
+      "contract": "0x7313ea16493b2f55054df0131a3a14b043ec8992",
+      "execution_modes": [],
+      "observed_at": "2026-10-04T13:26:20.471Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "359a3e4a920513a8f05840a47713df943f9aa32068eb541c700e8f12e6e199d1",
+      "route_count": 0,
+      "ticker": "MSTR",
+      "vendors": []
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:21.773Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "037ee476709e95bcbd34bfddaeeb35af8086cbfa914802c90cf246d7aa8c17b8",
+      "route_count": 1,
+      "ticker": "NVDA",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "business_message": "success",
+      "contract": "0x2494b603319d4d9f9715c9f4496d9e0364b59d93",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "observed_at": "2026-10-04T13:26:23.082Z",
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_response_sha256": "99f65d66cb092bee6fc56ed92a53cd8af414f1453694b7ff34dfd33fc0b19c7d",
+      "route_count": 1,
+      "ticker": "TSLA",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    }
+  ],
+  "started_at": "2026-10-04T13:25:39.129Z",
+  "wallet": "ephemeral_unfunded_not_stored"
+}
