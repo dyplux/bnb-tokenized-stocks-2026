@@ -624,3 +624,13 @@ The [backfilled Friday late-session check](../research/2026-10-04-friday-afterho
 The [issuer-access check](../research/2026-10-04-issuer-access-gate.md) found that Binance's bStocks FAQs make third-party integrators responsible for geographic restrictions and refer to a country-eligibility API without giving us a verified callable path. Our signed quote probes used temporary nonholder addresses. The policy skeleton previously checked issuer identity but had no separate user-access field.
 
 **CEO decision:** policy version 0.3.0 now requires an explicit eligible state with a dated basis inside a caller-specified freshness limit. Ineligible is `DENY`; missing, unverified or stale access is `NEED_HUMAN`. The engine can't establish issuer-recognized permission from a country indication or a quote; the caller remains responsible for validating the evidence. This correction prevents the prototype from returning `ALLOW` solely because its price, market and route fields pass. It doesn't authorize a funded demo.
+
+## D-060: weekend route coverage changes the task, not the product gate
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** market-closed availability measured; product still unselected
+
+The [40-contract Sunday probe](../research/2026-10-04-weekend-route-coverage.md) obtained one 100 USDT buy quote for each monitored contract. Thirty-eight returned routes, while AAOI bStock and MSTR Ondo returned amount-specific insufficient-liquidity code `40374`. All 38 routed quotes reported `SWAP`. One later CBRSB route produced unsigned calldata, and its off-chain simulation predicted failure for an unfunded temporary wallet. In the routed quote set, the Ondo NVDA entry amount implied a token price 1.6193% above the quote's own indicative token-unit price; it isn't a comparison with the underlying stock.
+
+**CEO decision:** reject the simple “US equities are closed, so tokenized equities cannot be quoted” problem statement. The observed task is about interpreting and safely acting on a quote while independent stock-reference time and user access remain unresolved. OneTicker and PancakeSwap already cover broad route screening, so don't turn this into a generic scanner. Preserve the deterministic evidence and policy components, continue the frozen Monday benchmark, and require a distinct user action or developer failure before naming the submission product. The `SWAP` responses also warrant a DevEx correction because the Trading reference says equity/RWA routes always use `RFQ`.

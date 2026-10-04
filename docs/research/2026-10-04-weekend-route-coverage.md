@@ -12,4 +12,10 @@ The two no-route responses were AAOI bStock and MSTR Ondo. Both returned busines
 
 This shows that tokenized-equity **quotes** remain available through much of the monitored BSC universe during the Sunday US equity-market closure. It doesn't show that a person can legally acquire each product, that a funded wallet can pass approvals and simulation, that a quote will survive its short lifetime, or that a trade will settle. Issuer rights and an independent underlying price timestamp are unresolved. A 100 USDT quote isn't an alpha signal.
 
+## Indicative price versus quoted entry
+
+A [local calculation](../../experiments/EXP-RWA-009/quote_vs_metadata_100usdt.json) reuses the retained quote bodies without another API request. It converts the 100 USDT input to USD with that quote's `fromToken.tokenUnitPrice`, divides by its estimated output token quantity, then compares the implied entry price per token with that same quote's `toToken.tokenUnitPrice`. These are two fields within one API quote, not an independent stock price.
+
+For the 34 routed bStocks, the median implied entry premium was +0.1015%, ranging from -0.1804% to +0.4159%. For the four routed Ondo tokens, the median was +0.0092%, with one NVDA response at +1.6193%. That NVDA response reported `priceImpactPercent=0.0125115040`. Price impact and the entry-versus-indicative comparison answer different questions; don't relabel one as the other. The quoted network fee was an estimate, and the calculation isn't an all-in trade cost. There were no fills or wallet approvals.
+
 For product selection, the result weakens a simplistic “the market is closed, so nothing can be quoted” premise. The sharper problem is deciding what can responsibly be acted on when quotes exist but independent issuer-reference freshness and user eligibility can't be established from the current response. [OneTicker](2026-10-04-gateway-substitute-audit.md) already offers a generic market gate, so this observation alone doesn't justify another gateway. The next discriminator is whether a narrow workflow can return a useful, provable next action to a real user without pretending these unknowns are known.
