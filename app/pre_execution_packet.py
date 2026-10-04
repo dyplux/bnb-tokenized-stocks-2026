@@ -106,6 +106,8 @@ def assemble(review, dry_run, now=None):
                                "build_observed_at": build.get("observed_at"),
                                "build_sha256": build.get("sha256"),
                                "unsigned_tx_fingerprint": build_tx,
+                               "build_slippage_percent": build.get("slippage_percent"),
+                               "build_min_receive_amount": build.get("min_receive_amount"),
                                "simulation_observed_at": simulation.get("observed_at"),
                                "simulation_sha256": simulation.get("sha256"),
                                "predicted_transaction_status": simulation.get("predicted_transaction_status")},

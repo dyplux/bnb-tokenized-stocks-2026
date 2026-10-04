@@ -21,10 +21,12 @@ class BuildOnlyApi:
         self.calls.append(path)
         if path != SWAP_BUILD:
             raise AssertionError("A bound route must not request another catalog or quote")
-        return {"code": 0, "data": {"executionMode": "SWAP",
-                                    "routerResult": self.route,
-                                    "tx": {"from": self.wallet, "to": self.route["approveTarget"],
-                                           "value": "0", "data": "0x1234"}}}, "2026-10-04T10:10:01Z", "build-hash"
+        return ({"code": 0, "data": {"executionMode": "SWAP",
+                                     "routerResult": self.route,
+                                     "tx": {"from": self.wallet, "to": self.route["approveTarget"],
+                                            "value": "0", "data": "0x1234",
+                                            "slippagePercent": "0.5", "minReceiveAmount": "99"}}},
+                "2026-10-04T10:10:01Z", "build-hash")
 
     def post_simulation(self, payload, *args, **kwargs):
         self.calls.append("simulation")
@@ -91,7 +93,8 @@ class ExactWalletBoundaryTests(unittest.TestCase):
                  "toToken": {"tokenContractAddress": stock}, "fromTokenAmount": "100",
                  "toTokenAmount": "25",
                  "approveTarget": router, "router": "usdt--stock"}
-        tx = {"from": wallet, "to": router, "data": "0x1234", "value": "0"}
+        tx = {"from": wallet, "to": router, "data": "0x1234", "value": "0",
+              "slippagePercent": "0.5", "minReceiveAmount": "24"}
         build = {"routerResult": {key: route[key] for key in
                                   ("binanceChainId", "fromToken", "toToken", "fromTokenAmount", "toTokenAmount", "router")},
                  "tx": tx}
@@ -107,10 +110,35 @@ class ExactWalletBoundaryTests(unittest.TestCase):
         self.assertFalse(build_matches_quote({**build, "tx": {**tx, "to": stock}},
                                              route, wallet, usdt, stock, "100"))
         self.assertFalse(build_matches_quote({**build, "tx": {**tx, "value": "1"}},
-                                             route, wallet, usdt, stock, "100"))
+                                              route, wallet, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "tx": {**tx, "slippagePercent": "2"}},
+                                              route, wallet, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "tx": {**tx, "minReceiveAmount": "0"}},
+                                              route, wallet, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "tx": {**tx, "minReceiveAmount": "26"}},
+                                              route, wallet, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "tx": {**tx, "minReceiveAmount": "1"}},
+                                              route, wallet, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "tx": {**tx, "slippagePercent": "NaN"}},
+                                              route, wallet, usdt, stock, "100"))
+        self.assertFalse(build_matches_quote({**build, "tx": {k: v for k, v in tx.items()
+                                                       if k != "minReceiveAmount"}},
+                                              route, wallet, usdt, stock, "100"))
         self.assertFalse(build_matches_quote({**build, "routerResult":
                                              {**build["routerResult"], "router": "wrong"}},
                                              route, wallet, usdt, stock, "100"))
+        quoted = "42559805035916938"
+        observed_minimum = "42347006010737353"
+        realistic_route = {**route, "toTokenAmount": quoted}
+        realistic_build = {**build, "routerResult": {**build["routerResult"],
+                                                     "toTokenAmount": quoted},
+                           "tx": {**tx, "minReceiveAmount": observed_minimum}}
+        self.assertTrue(build_matches_quote(realistic_build, realistic_route,
+                                            wallet, usdt, stock, "100"))
+        too_low = {**realistic_build, "tx": {**realistic_build["tx"],
+                                            "minReceiveAmount": str(int(observed_minimum) - 1_000_000)}}
+        self.assertFalse(build_matches_quote(too_low, realistic_route,
+                                             wallet, usdt, stock, "100"))
 
 
 if __name__ == "__main__":

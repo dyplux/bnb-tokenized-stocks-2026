@@ -10,7 +10,7 @@ import hashlib
 import json
 import re
 import sys
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_FLOOR
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,12 +75,28 @@ def route_matches_intent(route, source, destination, raw_amount):
             ADDRESS.fullmatch(str(route.get("approveTarget", ""))) is not None)
 
 
-def build_matches_quote(data, route, wallet, source, destination, raw_amount):
+def build_matches_quote(data, route, wallet, source, destination, raw_amount,
+                        max_slippage_percent="0.5"):
     if not isinstance(data, dict):
         return False
     result = data.get("routerResult")
     tx = data.get("tx")
     if not unsigned_tx_is_exact(tx, wallet):
+        return False
+    try:
+        quoted_output = int(str(route.get("toTokenAmount")))
+        minimum_output = int(str(tx.get("minReceiveAmount")))
+        slippage = Decimal(str(tx.get("slippagePercent")))
+        ceiling = Decimal(str(max_slippage_percent))
+        if not slippage.is_finite() or not ceiling.is_finite():
+            return False
+        permitted_minimum = int((Decimal(quoted_output) * (1 - ceiling / 100)).to_integral_value(
+            rounding=ROUND_FLOOR)) - 1
+    except (InvalidOperation, TypeError, ValueError):
+        return False
+    if (quoted_output <= 0 or minimum_output <= 0 or minimum_output > quoted_output or
+            slippage < 0 or slippage > ceiling or ceiling < 0 or ceiling >= 100 or
+            minimum_output < permitted_minimum):
         return False
     return (route_base_matches(result, source, destination, raw_amount) and
             result.get("router") == route.get("router") and
@@ -168,6 +184,8 @@ def run(provider="bstock", wallet=None, api=None, route_context=None):
                        "execution_mode": data.get("executionMode"),
                        "unsigned_tx_present": bool(tx), "quote_build_intent_match": exact,
                        "tx_to": tx.get("to") if exact else None,
+                       "slippage_percent": tx.get("slippagePercent") if exact else None,
+                       "min_receive_amount": tx.get("minReceiveAmount") if exact else None,
                        "calldata_sha256": hashlib.sha256(tx["data"].encode()).hexdigest() if exact else None,
                        "unsigned_tx_fingerprint": unsigned_tx_fingerprint("56", tx) if exact else None,
                        "sha256": digest}
