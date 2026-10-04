@@ -1,6 +1,6 @@
 # Judge demo narrative, maximum four minutes
 
-**Prepared:** 2026-10-04 UTC. **Target runtime:** about 3 minutes 20 seconds at a measured speaking pace. This is a script and screen order, not a rendered video or a mainnet execution claim. The [60-second film](safety-judge-video-qa.md) combines an 18:28 UTC live local read-only capture with a separate 19:56 UTC dated replay.
+**Prepared:** 2026-10-04 UTC. **Length:** 358 spoken words, about 3 minutes at 120 words per minute, leaving up to one minute for screen transitions. This is a script and screen order, not a rendered video or a mainnet execution claim. The [60-second film](safety-judge-video-qa.md) combines an 18:28 UTC live local read-only capture with a separate 19:56 UTC dated replay.
 
 ## 0:00 to 0:30, one action
 
