@@ -47,6 +47,16 @@ def utc_now():
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
 
+def collecting_stalled(heartbeat, now_epoch, limit_seconds=90):
+    if heartbeat.get("state") != "collecting":
+        return False
+    try:
+        attempted = datetime.fromisoformat(heartbeat["last_attempt_at"].replace("Z", "+00:00"))
+        return now_epoch - attempted.timestamp() > limit_seconds
+    except (KeyError, AttributeError, ValueError, TypeError):
+        return True
+
+
 def write_json(path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -448,6 +458,7 @@ def main():
         now = time.time()
         due = heartbeat.get("next_due_at_epoch")
         overdue = bool(due and now > due + 60)
+        stalled = collecting_stalled(heartbeat, now)
         print(json.dumps({"process_alive": alive, "pid": pid,
                           "last_success_at": checkpoint.get("last_success_at") or heartbeat.get("last_success_at"),
                           "last_attempt_at": heartbeat.get("last_attempt_at") or heartbeat.get("updated_at"),
@@ -455,8 +466,8 @@ def main():
                           "observation_count": checkpoint.get("observation_count"),
                           "contracts_sampled": checkpoint.get("contracts_sampled") or heartbeat.get("selected_contracts"),
                           "next_expected_run": datetime.fromtimestamp(due, timezone.utc).isoformat() if due else None,
-                          "overdue": overdue, "state": heartbeat.get("state")}))
-        if not alive or overdue or heartbeat.get("consecutive_failures", 0) > 0:
+                          "overdue": overdue, "collecting_stalled": stalled, "state": heartbeat.get("state")}))
+        if not alive or overdue or stalled or heartbeat.get("consecutive_failures", 0) > 0:
             raise SystemExit(1)
         return
     if args.command == "start":

@@ -8,7 +8,7 @@ python3 scripts/rwa_research.py health
 python3 scripts/audit_market_tape.py 2026-10-04
 ```
 
-`start` detaches the loop from its terminal. An exclusive lock prevents a second loop. `health` prints `last_success_at`, `last_attempt_at`, `consecutive_failures`, `observation_count`, `contracts_sampled` and `next_expected_run`; it exits nonzero if the process is missing, more than 60 seconds overdue or retrying after a failure. The process PID is in `data/market_hours/collector.pid`; its stdout and stderr are in `data/market_hours/collector.log`.
+`start` detaches the loop from its terminal. An exclusive lock prevents a second loop. `health` prints `last_success_at`, `last_attempt_at`, `consecutive_failures`, `observation_count`, `contracts_sampled` and `next_expected_run`; it exits nonzero if the process is missing, more than 60 seconds overdue, retrying after a failure, or stuck in `collecting` for over 90 seconds. The process PID is in `data/market_hours/collector.pid`; its stdout and stderr are in `data/market_hours/collector.log`.
 
 On this AC-powered Mac, `--keep-awake` launches `caffeinate -s -w <collector-pid>` in a second detached session. It prevents idle system sleep while the collector exists and exits when that PID exits. The 4 October live process was given this assertion at 11:26 UTC; `pmset -g assertions` confirmed `PreventSystemSleep=1`. This doesn't restart a crashed process or survive a reboot; the health command still determines whether collection is active.
 
