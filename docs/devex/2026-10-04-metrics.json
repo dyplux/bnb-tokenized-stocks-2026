@@ -3,79 +3,79 @@
   "endpoints": [
     {
       "business_code_counts": {
-        "0": 97,
+        "0": 102,
         "40367": 2,
-        "40374": 9
+        "40374": 11
       },
-      "calls": 108,
+      "calls": 115,
       "endpoint": "/api/v1/dex/aggregator/quote",
       "http_status_counts": {
-        "200": 108
+        "200": 115
       },
-      "max_latency_ms": 757.14,
-      "median_latency_ms": 327.75,
+      "max_latency_ms": 851.01,
+      "median_latency_ms": 329.67,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 648.75,
+      "p95_latency_ms_nearest_rank": 650.83,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 11
+        "0": 14
       },
-      "calls": 11,
+      "calls": 14,
       "endpoint": "/api/v1/dex/aggregator/swap",
       "http_status_counts": {
-        "200": 11
+        "200": 14
       },
       "max_latency_ms": 458.79,
-      "median_latency_ms": 340.02,
+      "median_latency_ms": 340.12,
       "method": "GET",
       "p95_latency_ms_nearest_rank": 458.79,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 126,
+        "0": 158,
         "None": 1
       },
-      "calls": 127,
+      "calls": 159,
       "endpoint": "/api/v1/dex/market/rwa/price",
       "http_status_counts": {
-        "200": 126,
+        "200": 158,
         "414": 1
       },
       "max_latency_ms": 670.79,
-      "median_latency_ms": 299.12,
+      "median_latency_ms": 299.74,
       "method": "GET",
       "p95_latency_ms_nearest_rank": 389.41,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 131
+        "0": 163
       },
-      "calls": 131,
+      "calls": 163,
       "endpoint": "/api/v1/dex/market/rwa/tokens",
       "http_status_counts": {
-        "200": 131
+        "200": 163
       },
-      "max_latency_ms": 3925.65,
-      "median_latency_ms": 2193.37,
+      "max_latency_ms": 3959.36,
+      "median_latency_ms": 2271.29,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 3875.75,
+      "p95_latency_ms_nearest_rank": 3878.92,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 35
+        "0": 50
       },
-      "calls": 35,
+      "calls": 50,
       "endpoint": "/api/v1/dex/market/rwa/underlying-market",
       "http_status_counts": {
-        "200": 35
+        "200": 50
       },
-      "max_latency_ms": 386.74,
-      "median_latency_ms": 302.3,
+      "max_latency_ms": 490.71,
+      "median_latency_ms": 302.96,
       "method": "GET",
       "p95_latency_ms_nearest_rank": 384.41,
       "schema_mismatches": 0
@@ -97,15 +97,15 @@
     },
     {
       "business_code_counts": {
-        "0": 10
+        "0": 13
       },
-      "calls": 10,
+      "calls": 13,
       "endpoint": "/api/v1/dex/pre-transaction/simulate",
       "http_status_counts": {
-        "200": 10
+        "200": 13
       },
       "max_latency_ms": 479.78,
-      "median_latency_ms": 356.47,
+      "median_latency_ms": 353.05,
       "method": "POST",
       "p95_latency_ms_nearest_rank": 479.78,
       "schema_mismatches": 0
@@ -166,15 +166,15 @@
     },
     {
       "business_code_counts": {},
-      "calls": 50,
+      "calls": 85,
       "endpoint": "https://bsc-dataseed.bnbchain.org",
       "http_status_counts": {
-        "200": 50
+        "200": 85
       },
       "max_latency_ms": 371.55,
-      "median_latency_ms": 255.82,
+      "median_latency_ms": 262.38,
       "method": "POST eth_call JSON-RPC batch",
-      "p95_latency_ms_nearest_rank": 360.29,
+      "p95_latency_ms_nearest_rank": 358.31,
       "schema_mismatches": 0
     },
     {
@@ -195,6 +195,6 @@
   ],
   "method": "append-only sanitized call ledger, not a controlled load benchmark",
   "note": "Business rejections can be expected task outcomes; HTTP 200 isn't a successful quote or transaction. No request header, API key or wallet private key is included.",
-  "request_count": 484,
-  "snapshot_last_logged_at": "2026-10-04T17:25:02.548Z"
+  "request_count": 611,
+  "snapshot_last_logged_at": "2026-10-04T19:35:03.440Z"
 }
