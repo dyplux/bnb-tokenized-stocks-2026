@@ -6,6 +6,7 @@ from app.safety_service import multiplier, review, validate
 from scripts.rwa_research import PRICE, QUOTE, TOKENS, UNDERLYING_MARKET
 
 CONTRACT = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
+ONDO_CONTRACT = "0xa9ee28c80f960b889dfbd1902055218cba016f75"
 
 
 class FakeApi:
@@ -26,6 +27,17 @@ class FakeApi:
         else:
             raise AssertionError("unexpected endpoint")
         return {"code": 0, "data": data}, "2026-10-04T10:10:00.000Z", "synthetic-hash"
+
+
+class FakeOndoApi(FakeApi):
+    def get(self, path, params, *args, **kwargs):
+        result, at, digest = super().get(path, params, *args, **kwargs)
+        if path == TOKENS:
+            result["data"][0].update({"tokenContractAddress": ONDO_CONTRACT,
+                                       "platformId": "ondo", "tokenSymbol": "NVDAon"})
+        elif path == PRICE:
+            result["data"][0]["tokenContractAddress"] = ONDO_CONTRACT
+        return result, at, digest
 
 
 def fake_rpc(calls, block, experiment):
@@ -62,6 +74,17 @@ class SafetyServiceTests(unittest.TestCase):
                         api=FakeApi(), rpc=fake_rpc)
         self.assertEqual(result["decision"], "DENY")
         self.assertIn("MANDATE_LIMIT_EXCEEDED", result["reason_codes"])
+
+    def test_untimed_stock_feed_never_populates_reference_age(self):
+        result = review({"provider": "ondo", "notional_usdt": "100",
+                         "max_notional_usdt": "100", "max_price_impact_percent": "0.5"},
+                        api=FakeOndoApi(), stock_info=lambda contract: (
+                            {"ticker": "NVDA", "symbol": "NVDAon", "stockInfo": {"price": "101"}},
+                            "2026-10-04T10:10:00.000Z", "synthetic-stock-hash"))
+        self.assertEqual(result["view"]["stock_feed_price_usd"], "101")
+        self.assertIsNone(result["view"]["stock_feed_price_asof"])
+        self.assertIn("INDEPENDENT_REFERENCE_TIME_UNKNOWN", result["reason_codes"])
+        self.assertEqual(result["receipt"]["evidence"]["reference_age_status"], "UNKNOWN")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 
-VERSION = "0.4.0"
+VERSION = "0.5.0"
 
 
 def number(value):
@@ -83,6 +83,11 @@ def onchain_multiplier_guard(evidence, mandate, now):
         return "ONCHAIN_MULTIPLIER_STALE", "NEED_HUMAN"
     if multiplier != ratio:
         return "ONCHAIN_MULTIPLIER_MISMATCH", "DENY"
+    next_multiplier = number(evidence.get("onchain_new_ui_multiplier"))
+    if next_multiplier is None or next_multiplier <= 0:
+        return "ONCHAIN_NEXT_MULTIPLIER_UNVERIFIED", "NEED_HUMAN"
+    if next_multiplier != multiplier:
+        return "ONCHAIN_MULTIPLIER_PENDING_CHANGE", "NEED_HUMAN"
     if evidence.get("onchain_multiplier_effective_at") != 0:
         return "ONCHAIN_MULTIPLIER_SCHEDULE_UNKNOWN", "NEED_HUMAN"
     return None
@@ -183,11 +188,15 @@ def evaluate(intent, evidence, mandate, now=None):
             "chain_id", "ticker", "provider", "contract", "issuer_verified",
             "eligibility_status", "eligibility_basis", "eligibility_checked_at", "token_to_share_ratio",
             "previous_token_to_share_ratio", "corporate_action_verified",
-            "onchain_ui_multiplier", "onchain_multiplier_block", "onchain_multiplier_block_timestamp",
-            "onchain_multiplier_effective_at", "market_status", "market_reason",
+            "onchain_ui_multiplier", "onchain_new_ui_multiplier", "onchain_multiplier_block",
+            "onchain_multiplier_block_timestamp", "onchain_multiplier_effective_at",
+            "market_status", "market_reason", "market_open_state",
             "token_price_age_ms", "token_price_age_calculation", "reference_price_updated_at",
-            "reference_age_seconds", "reference_age_status", "quote_available",
-            "price_impact_percent", "simulation_passed", "source_response_sha256")},
+            "reference_age_seconds", "reference_age_status", "token_price_usd",
+            "reported_reference_price_usd", "stock_feed_price_usd", "stock_feed_price_asof",
+            "quote_available", "quote_execution_mode", "quote_vendor", "quote_observed_at",
+            "price_impact_percent", "simulation_passed", "source_observed_at",
+            "source_response_sha256")},
     }
     encoded = json.dumps(receipt, sort_keys=True, separators=(",", ":"), default=str).encode()
     receipt["receipt_sha256"] = hashlib.sha256(encoded).hexdigest()

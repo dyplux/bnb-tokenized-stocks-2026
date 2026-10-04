@@ -11,6 +11,8 @@ const labels = {
   MARKET_STATE_UNKNOWN: 'The market state is missing or isn’t a known regular-session value.',
   ONCHAIN_MULTIPLIER_UNVERIFIED: 'The bStock multiplier couldn’t be verified at a recent BSC block.',
   ONCHAIN_MULTIPLIER_MISMATCH: 'The on-chain multiplier differs from the catalog ratio.',
+  ONCHAIN_MULTIPLIER_PENDING_CHANGE: 'A different next on-chain multiplier has been scheduled or exposed.',
+  ONCHAIN_NEXT_MULTIPLIER_UNVERIFIED: 'The next on-chain multiplier couldn’t be checked.',
   ONCHAIN_MULTIPLIER_SCHEDULE_UNKNOWN: 'A multiplier change needs a dated issuer review.',
   MANDATE_LIMIT_EXCEEDED: 'This amount exceeds the maximum spend you entered.',
   PRICE_IMPACT_LIMIT_EXCEEDED: 'The quoted price impact exceeds your limit.',
@@ -67,7 +69,10 @@ function render(data) {
   fact(facts, 'Security', `${view.canonical_security} / ${view.representation} · ${view.provider}`);
   fact(facts, 'BSC contract', view.contract);
   fact(facts, 'Market state', view.market_status || 'UNKNOWN', view.market_status === 'regular' ? 'ok' : 'caution');
+  fact(facts, 'Token price', view.token_price_usd === null ? 'UNKNOWN' : `$${view.token_price_usd}`);
   fact(facts, 'Token price clock', view.token_price_updated_at ? `${view.token_price_updated_at} · ${view.token_price_age_ms} ms old` : 'UNKNOWN');
+  fact(facts, 'Reported reference', view.reported_reference_price_usd === null ? 'UNKNOWN' : `$${view.reported_reference_price_usd} · source time unknown`, 'caution');
+  if (view.provider === 'ondo') fact(facts, 'Binance stock feed', view.stock_feed_price_usd === null ? 'UNKNOWN' : `$${view.stock_feed_price_usd} · as-of unknown`, 'caution');
   fact(facts, 'Stock reference clock', 'UNKNOWN · no independent timestamp', 'caution');
   fact(facts, 'Share ratio / multiplier', `${view.token_to_share_ratio} / ${view.multiplier_integrity}`,
        view.multiplier_integrity === 'MATCHED_FIXED_BLOCK' ? 'ok' : 'caution');

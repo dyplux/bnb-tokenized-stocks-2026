@@ -115,9 +115,27 @@ class PolicyFixtureTest(unittest.TestCase):
         self.intent["provider"] = self.evidence["provider"] = "bstock"
         self.mandate["max_onchain_multiplier_age_seconds"] = 3600
         self.evidence.update({"onchain_ui_multiplier": "1", "onchain_multiplier_block": 123,
+                              "onchain_new_ui_multiplier": "1",
                               "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
                               "onchain_multiplier_effective_at": 0})
         self.assertEqual(self.run_policy()["decision"], "ALLOW")
+
+    def test_bstock_missing_next_multiplier_needs_human(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        self.mandate["max_onchain_multiplier_age_seconds"] = 3600
+        self.evidence.update({"onchain_ui_multiplier": "1", "onchain_multiplier_block": 123,
+                              "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
+                              "onchain_multiplier_effective_at": 0})
+        self.assertIn("ONCHAIN_NEXT_MULTIPLIER_UNVERIFIED", self.run_policy()["reason_codes"])
+
+    def test_bstock_different_next_multiplier_needs_human(self):
+        self.intent["provider"] = self.evidence["provider"] = "bstock"
+        self.mandate["max_onchain_multiplier_age_seconds"] = 3600
+        self.evidence.update({"onchain_ui_multiplier": "1", "onchain_new_ui_multiplier": "1.1",
+                              "onchain_multiplier_block": 123,
+                              "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
+                              "onchain_multiplier_effective_at": 0})
+        self.assertIn("ONCHAIN_MULTIPLIER_PENDING_CHANGE", self.run_policy()["reason_codes"])
 
     def test_bstock_mismatched_multiplier_denies(self):
         self.intent["provider"] = self.evidence["provider"] = "bstock"
@@ -133,6 +151,7 @@ class PolicyFixtureTest(unittest.TestCase):
         self.intent["provider"] = self.evidence["provider"] = "bstock"
         self.mandate["max_onchain_multiplier_age_seconds"] = 3600
         self.evidence.update({"onchain_ui_multiplier": "1", "onchain_multiplier_block": 123,
+                              "onchain_new_ui_multiplier": "1",
                               "onchain_multiplier_block_timestamp": "2026-10-04T00:00:00Z",
                               "onchain_multiplier_effective_at": 1791075600})
         result = self.run_policy()

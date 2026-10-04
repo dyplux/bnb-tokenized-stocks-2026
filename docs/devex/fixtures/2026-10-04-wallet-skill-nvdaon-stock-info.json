@@ -1,0 +1,87 @@
+{
+  "business_code": "000000",
+  "http_status": 200,
+  "limit": "HTTP response time is not stock-feed as-of time. stockInfo.price is distinct from tokenInfo.price in official Skill guidance, but source venue and stock-price timestamp were not present in this response.",
+  "observed_at": "2026-10-04T14:41:33.005Z",
+  "origin": "LIVE",
+  "raw_response_sha256": "2f94a359f3b3785024d529523038367918593d7279231f15805341ddce14d8c1",
+  "reference_age_seconds": null,
+  "reference_age_status": "UNKNOWN",
+  "reference_price_updated_at": null,
+  "request": {
+    "chainId": "56",
+    "contractAddress": "0xa9ee28c80f960b889dfbd1902055218cba016f75"
+  },
+  "response": {
+    "code": "000000",
+    "data": {
+      "limitInfo": {
+        "maxActiveNotionalValue": "1000000",
+        "maxAttestationCount": "1500"
+      },
+      "statusInfo": {
+        "marketStatus": "offhours",
+        "nextCloseTime": 1791158100000,
+        "nextOpenTime": 1791158700000,
+        "openState": true,
+        "reasonCode": "TRADING",
+        "reasonMsg": null
+      },
+      "stockInfo": {
+        "amplitude": "0.336000",
+        "apy": null,
+        "averageVolume": "161814153",
+        "avgVolume30d": null,
+        "debtToEquity": null,
+        "discount": null,
+        "dividendYield": "0.12",
+        "enterpriseValue": null,
+        "eps": null,
+        "evToEbitda": null,
+        "freeCashFlow": null,
+        "lastCashAmount": "0.250000",
+        "marketCap": "5650398000000",
+        "marketReferenceValuation": null,
+        "perShareValuation": null,
+        "positionMarketValue": null,
+        "price": "234.955",
+        "priceHigh52w": "237.88",
+        "priceLow52w": "164.27",
+        "priceToBook": "24.67",
+        "priceToEarnings": "29.29",
+        "priceToSales": null,
+        "returnOnAssets": null,
+        "returnOnEquity": null,
+        "shareHeld": null,
+        "sharesOutstanding": "24147000000",
+        "turnoverRate": "0.5598",
+        "valuation": null,
+        "volume": "135167817.963212",
+        "wso": "24147000000"
+      },
+      "symbol": "NVDAon",
+      "ticker": "NVDA",
+      "tokenInfo": {
+        "bnHolder": "6088",
+        "bnTrader": "22798",
+        "circulatingSupply": "70805.328845905234176896",
+        "fdv": "16662473.22790501938384966627588160159441344",
+        "marketCap": "16662473.22790501938384966627588160159441344",
+        "maxSupply": "70805.328845905234176896",
+        "price": "235.327954823397903765",
+        "priceChange24h": "0.340583184590623765",
+        "priceChangePct24h": "0.144936803290912563",
+        "priceHigh24h": "235.69858946545241",
+        "priceLow24h": "234.78702858904808",
+        "sharesMultiplier": "1.0017152487959898",
+        "totalHolders": "58484",
+        "volume24h": "31758354669.54647546"
+      },
+      "type": 1
+    },
+    "message": null,
+    "messageDetail": null,
+    "success": true
+  },
+  "source": "https://www.binance.com/bapi/defi/v2/public/wallet-direct/buw/wallet/market/token/rwa/dynamic/ai"
+}

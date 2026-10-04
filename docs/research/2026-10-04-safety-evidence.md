@@ -20,6 +20,8 @@ The measured token clock is not an underlying-stock clock. In the same-ticker, s
 
 **Inference:** a fast token update cannot support a claim that the issuer's stock reference is fresh, independently priced, or suitable for an off-hours signal.
 
+At 14:41 UTC, a public endpoint documented by Binance's [tokenized-securities Wallet Skill](https://github.com/binance/binance-skills-hub/blob/main/skills/binance-web3/binance-tokenized-securities-info/SKILL.md) returned NVDAon `stockInfo.price=234.955` while `tokenInfo.price / sharesMultiplier=234.925`. The Skill describes separate stock-feed and token-oracle sources. The [live fixture and schema repro](../devex/repros/2026-10-04-wallet-skill-stock-clock.md) show no stock-price as-of field or venue. This is a distinct untimed price observation, not independent reference-age evidence. The policy keeps `reference_price_updated_at=null` and `reference_age_status=UNKNOWN`.
+
 **Unknown:** the inspected Binance fields do not show whether another permitted Binance or issuer source carries a timed traditional-equity reference. APRO's observed `updatedAt` is a timed NVDAB/USD token oracle value, not the issuer's underlying NVDA clock. No Alpaca or Nasdaq authenticated benchmark call was made.
 
 ### 2. Off-hours behavior is not documented well enough to interpret as one market

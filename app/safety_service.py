@@ -6,6 +6,7 @@ from decimal import Decimal, InvalidOperation
 
 from app.rwa_policy import evaluate
 from app.server import USDT
+from app.public_stock_info import fetch as public_stock_info
 from scripts.audit_onchain_multiplier import SELECTORS, call, rpc_batch
 from scripts.rwa_research import Api, PRICE, QUOTE, TOKENS, UNDERLYING_MARKET, normalize
 
@@ -64,7 +65,7 @@ def multiplier(contract, rpc=rpc_batch):
     }
 
 
-def review(request, api=None, rpc=rpc_batch):
+def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
     provider, notional, limit, impact_limit = validate(request)
     api = api or Api()
     errors = []
@@ -90,11 +91,13 @@ def review(request, api=None, rpc=rpc_batch):
         "simulation_passed": False, "source_response_sha256": catalog_hash,
     }
     sources = {"catalog": {"observed_at": captured_at, "sha256": catalog_hash},
-               "price": None, "underlying_market": None, "quote": None, "rpc": None}
+               "price": None, "underlying_market": None, "stock_info": None,
+               "quote": None, "rpc": None}
     view = {"canonical_security": "NVDA", "representation": target["token_symbol"],
             "provider": provider, "contract": contract, "market_status": target["market_status"],
             "market_open_state": None, "token_price_usd": None, "token_price_updated_at": None,
             "token_price_age_ms": None, "reported_reference_price_usd": None,
+            "stock_feed_price_usd": None, "stock_feed_price_asof": None,
             "reference_price_updated_at": None, "reference_age_status": "UNKNOWN",
             "token_to_share_ratio": target["token_to_share_ratio"],
             "multiplier_integrity": "UNKNOWN" if provider == "bstock" else "NOT_APPLICABLE",
@@ -111,7 +114,9 @@ def review(request, api=None, rpc=rpc_batch):
         observed = datetime.fromisoformat(at.replace("Z", "+00:00"))
         age = int(observed.timestamp() * 1000) - stamp if isinstance(stamp, int) else None
         evidence.update({"token_price_age_ms": age,
-                         "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt"})
+                         "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
+                         "token_price_usd": row.get("tokenPrice"),
+                         "reported_reference_price_usd": row.get("referencePrice")})
         view.update({"token_price_usd": row.get("tokenPrice"),
                      "reported_reference_price_usd": row.get("referencePrice"),
                      "token_price_updated_at": datetime.fromtimestamp(stamp / 1000, timezone.utc).isoformat() if isinstance(stamp, int) else None,
@@ -126,7 +131,9 @@ def review(request, api=None, rpc=rpc_batch):
         state = payload["data"].get("statusInfo") or {}
         market = payload["data"].get("marketData") or {}
         evidence.update({"market_status": state.get("marketStatus"),
-                         "market_reason": state.get("reasonCode")})
+                         "market_reason": state.get("reasonCode"),
+                         "market_open_state": state.get("openState"),
+                         "reported_reference_price_usd": market.get("referencePrice") or evidence.get("reported_reference_price_usd")})
         view.update({"market_status": state.get("marketStatus"),
                      "market_open_state": state.get("openState"),
                      "reported_reference_price_usd": market.get("referencePrice") or view["reported_reference_price_usd"]})
@@ -135,12 +142,26 @@ def review(request, api=None, rpc=rpc_batch):
         errors.append({"source": "underlying_market", "type": type(exc).__name__})
         evidence["market_status"] = None
         view["market_status"] = None
+    if provider == "ondo":
+        try:
+            stock, at, digest = stock_info(contract)
+            if stock.get("ticker") != "NVDA" or stock.get("symbol") != "NVDAon":
+                raise ValueError("Public stock-info identity mismatch")
+            info = stock.get("stockInfo") if isinstance(stock.get("stockInfo"), dict) else {}
+            view["stock_feed_price_usd"] = info.get("price")
+            evidence["stock_feed_price_usd"] = info.get("price")
+            evidence["stock_feed_price_asof"] = None
+            sources["stock_info"] = {"observed_at": at, "sha256": digest,
+                                     "stock_price_asof": None}
+        except Exception as exc:
+            errors.append({"source": "public_stock_info", "type": type(exc).__name__})
     if provider == "bstock":
         try:
             state = multiplier(contract, rpc)
             evidence.update({k: state[k] for k in (
                 "onchain_ui_multiplier", "onchain_multiplier_effective_at",
                 "onchain_multiplier_block", "onchain_multiplier_block_timestamp")})
+            evidence["onchain_new_ui_multiplier"] = state["onchain_new_ui_multiplier"]
             view["multiplier_integrity"] = (
                 "MATCHED_FIXED_BLOCK" if Decimal(state["onchain_ui_multiplier"]) == Decimal(str(target["token_to_share_ratio"])) and
                 Decimal(state["onchain_new_ui_multiplier"]) == Decimal(state["onchain_ui_multiplier"]) and
@@ -148,8 +169,6 @@ def review(request, api=None, rpc=rpc_batch):
             sources["rpc"] = {"block": state["onchain_multiplier_block"],
                               "block_timestamp": state["onchain_multiplier_block_timestamp"],
                               "sha256": state["rpc_response_sha256"]}
-            if state["onchain_new_ui_multiplier"] != state["onchain_ui_multiplier"]:
-                evidence["onchain_multiplier_effective_at"] = -1
         except Exception as exc:
             errors.append({"source": "rpc_multiplier", "type": type(exc).__name__})
     try:
@@ -166,6 +185,9 @@ def review(request, api=None, rpc=rpc_batch):
         evidence["quote_available"] = bool(route)
         if route:
             evidence["price_impact_percent"] = route.get("priceImpactPercent")
+            evidence["quote_execution_mode"] = route.get("executionMode")
+            evidence["quote_vendor"] = route.get("vendorName")
+            evidence["quote_observed_at"] = at
             view.update({"route": "QUOTED", "execution_mode": route.get("executionMode"),
                          "quote_vendor": route.get("vendorName"),
                          "price_impact_percent": route.get("priceImpactPercent")})
@@ -184,6 +206,8 @@ def review(request, api=None, rpc=rpc_batch):
                "max_onchain_multiplier_age_seconds": 120}
     evidence["source_response_sha256"] = {key: source.get("sha256") for key, source in sources.items()
                                           if isinstance(source, dict)}
+    evidence["source_observed_at"] = {key: source.get("observed_at") for key, source in sources.items()
+                                     if isinstance(source, dict) and source.get("observed_at")}
     receipt = evaluate(intent, evidence, mandate, now=datetime.now(timezone.utc))
     return {"origin": "LIVE_READ_ONLY", "action": "BUY_NVDA_WITH_USDT",
             "decision": receipt["decision"], "reason_codes": receipt["reason_codes"],
