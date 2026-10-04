@@ -61,6 +61,15 @@ def collecting_stalled(heartbeat, now_epoch, limit_seconds=90):
         return True
 
 
+def next_cycle_delay(completed_slot, interval, now_epoch):
+    """Run the next slot immediately when a call straddles its boundary.
+
+    Scheduling from completion time skips the slot that began during a slow
+    collection, even when every API call succeeds.
+    """
+    return max(0.1, (completed_slot + 1) * interval - now_epoch)
+
+
 def write_json(path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -712,9 +721,9 @@ def main():
         failures = 0
         while True:
             try:
-                collect_once(api, args.interval)
+                completed = collect_once(api, args.interval)
                 failures = 0
-                delay = max(1, (int(time.time()) // args.interval + 1) * args.interval - time.time())
+                delay = next_cycle_delay(completed["last_slot"], args.interval, time.time())
             except Exception as exc:
                 failures += 1
                 delay = min(3600, args.interval * 2 ** min(failures - 1, 4))

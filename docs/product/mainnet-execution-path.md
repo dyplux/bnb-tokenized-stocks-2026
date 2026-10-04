@@ -21,7 +21,7 @@
 | Quote for temporary unfunded wallet | Working read-only | Signed API response, not investor access |
 | Eligible intended holder | Unknown | Issuer access decision for the actual person and wallet. For Ondo, resolve the [conflicting general and asset-level EEA descriptions](../research/2026-10-04-issuer-access-gate.md) using current NVDAon final terms, KID and venue terms. |
 | Independent stock reference clock | Unknown | Permitted source with explicit venue and as-of time, or a formally different mandate |
-| Exact-wallet build and funded simulation | Unrun | Same-wallet route, unsigned build, successful simulation |
+| Exact-wallet build and funded simulation | Unfunded read-only trial failed | [10 USDT exact public-wallet quote, unsigned build and off-chain simulation](../devex/repros/2026-10-04-demo-wallet-dry-run.md) used one address; predicted transaction `FAILED` for insufficient balance. A funded, eligible same-wallet simulation remains unrun. |
 | Human approval | Pending | Approval of one bounded transaction |
 | Bounded signer and pre/post proof | Unbuilt | Reviewable code and one approved tiny-capital execution |
 
