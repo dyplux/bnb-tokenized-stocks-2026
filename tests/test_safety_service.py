@@ -1,8 +1,13 @@
 """Synthetic contract tests for the local read-only judge flow."""
 
 import unittest
+import io
+import json
+from contextlib import redirect_stdout
+from unittest.mock import patch
 
 from app.safety_service import multiplier, review, validate
+from scripts.safety_agent_tool import main as agent_tool_main
 from scripts.rwa_research import PRICE, QUOTE, TOKENS, UNDERLYING_MARKET
 
 CONTRACT = "0x02fca66c1d1afb4e2a7884261eb00f63598a7436"
@@ -55,6 +60,23 @@ class SafetyServiceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate({"provider": "bstock", "notional_usdt": "NaN",
                       "max_notional_usdt": "100", "max_price_impact_percent": "0.5"})
+
+    def test_wallet_secret_field_rejected_before_api(self):
+        with self.assertRaises(ValueError):
+            validate({"provider": "bstock", "notional_usdt": "100",
+                      "max_notional_usdt": "100", "max_price_impact_percent": "0.5",
+                      "private_key": "synthetic-do-not-use"})
+
+    def test_agent_tool_deny_is_a_receipt_not_transport_failure(self):
+        request = {"provider": "bstock", "notional_usdt": "100",
+                   "max_notional_usdt": "20", "max_price_impact_percent": "0.5"}
+        output = io.StringIO()
+        with patch("sys.stdin", io.TextIOWrapper(io.BytesIO(json.dumps(request).encode()))), redirect_stdout(output):
+            code = agent_tool_main(review_fn=lambda data: review(data, api=FakeApi(), rpc=fake_rpc))
+        self.assertEqual(code, 0)
+        result = json.loads(output.getvalue())
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("MANDATE_LIMIT_EXCEEDED", result["reason_codes"])
 
     def test_offhours_and_unknown_reference_need_human(self):
         result = review({"provider": "bstock", "notional_usdt": "100",

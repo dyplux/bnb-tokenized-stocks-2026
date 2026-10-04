@@ -27,6 +27,9 @@ def amount(value, field, low, high):
 def validate(request):
     if not isinstance(request, dict):
         raise ValueError("Expected one action request")
+    allowed = {"provider", "notional_usdt", "max_notional_usdt", "max_price_impact_percent"}
+    if set(request) - allowed:
+        raise ValueError("Only action and mandate fields are accepted; never send wallet secrets")
     provider = request.get("provider")
     if provider not in PROVIDERS:
         raise ValueError("Choose NVDAB or NVDAon")

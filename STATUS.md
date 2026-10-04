@@ -7,7 +7,7 @@
 | H-RWA-SAFETY | **PRODUCT_CORE_PROVISIONAL** | [Six observed failures](docs/research/2026-10-04-safety-evidence.md) support the [single-action read-only spec](docs/product/safety-one-page-spec.md). No funded execution, eligibility proof or user-demand claim. |
 | H-RWA-OFFHOURS | **TESTING** | Keep the [Monday protocol](experiments/EXP-RWA-004/monday-open-protocol.md) frozen. It can add a capability, not decide whether the safety core exists. |
 | H-CORPACT | **TESTING / SUPPORTING** | Current on-chain multiplier match is measured; a live pre/post corporate action is still missing. |
-| H-DUAL | **TESTING** | Set and Earn may reuse a genuine rebalancing agent later. No qualifying agent, hire or action exists yet. |
+| H-DUAL | **TESTING** | A [shared policy boundary](docs/product/shared-rebalancing-boundary.md) is prepared for a later genuine rebalancing agent. No qualifying agent, hire or action exists yet. |
 
 | Item | State | Evidence / next gate |
 |---|---|---|
