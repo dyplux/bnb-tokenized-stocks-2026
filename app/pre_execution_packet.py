@@ -23,6 +23,9 @@ def assemble(review, dry_run):
     unsigned_receipt = {key: value for key, value in receipt.items() if key != "receipt_sha256"}
     if not claimed_hash or digest(unsigned_receipt) != claimed_hash:
         reasons.append("POLICY_RECEIPT_INVALID")
+    if (review.get("decision") != receipt.get("decision") or
+            review.get("reason_codes") != receipt.get("reason_codes")):
+        reasons.append("POLICY_RESULT_MISMATCH")
     if review.get("origin") != "LIVE_READ_ONLY" or receipt.get("decision") != "ALLOW":
         reasons.append("POLICY_NOT_ALLOW")
 
@@ -63,7 +66,8 @@ def assemble(review, dry_run):
         "policy": {"decision": receipt.get("decision"),
                    "observed_at": receipt.get("timestamp"),
                    "reason_codes": receipt.get("reason_codes"),
-                   "receipt_sha256": claimed_hash},
+                   "receipt_sha256": claimed_hash,
+                   "receipt": receipt},
         "exact_wallet_trial": {"stage": dry_run.get("stage"),
                                "quote_observed_at": quote.get("observed_at"),
                                "quote_sha256": quote.get("sha256"),

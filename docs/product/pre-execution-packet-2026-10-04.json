@@ -9,20 +9,20 @@
   },
   "boundary": "Separate quotes; no signer, broadcast or approved capital action.",
   "exact_wallet_trial": {
-    "build_observed_at": "2026-10-04T16:15:24.258Z",
-    "build_sha256": "5902276d220c144f79f59642d5891988d82e1847b6c978673c1a06e73af8d8bc",
+    "build_observed_at": "2026-10-04T16:27:45.292Z",
+    "build_sha256": "aad65d9d7761549205487df0b42c1b4cc48f8c28f52b4c7de4c3914de63fefa9",
     "predicted_transaction_status": "FAILED",
-    "quote_observed_at": "2026-10-04T16:15:23.927Z",
-    "quote_sha256": "543eb359529e8b2942697baa3135cf6d9071f7c7df4e4118d79d4cd5dfc8bfdc",
-    "simulation_observed_at": "2026-10-04T16:15:24.734Z",
-    "simulation_sha256": "b8f6d69d5cc0aaaf873dc9d33970cdbda79ce49f2b5538e82281a6d02858136b",
+    "quote_observed_at": "2026-10-04T16:27:44.881Z",
+    "quote_sha256": "c5c2563e1f258e67668ca10aa040e610df4ff560a9342cb2d0d5e3b35eef7269",
+    "simulation_observed_at": "2026-10-04T16:27:45.641Z",
+    "simulation_sha256": "3e8042bf3bc2c3eaa60c46f0ab3da5763f37ec01455068a226b63f14b60321bf",
     "stage": "SIMULATED"
   },
   "execution_authorized": false,
-  "packet_sha256": "4b8877f2959521273351aafdcace8ba10fba98ad61b47369dc700502b9e7a813",
+  "packet_sha256": "1df6f617e92bc6afb165c6d3bf5d1757ad2cdda9c39c0a4f2c5b5c5e8bb0f6e7",
   "policy": {
     "decision": "NEED_HUMAN",
-    "observed_at": "2026-10-04T16:15:22Z",
+    "observed_at": "2026-10-04T16:27:43Z",
     "reason_codes": [
       "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
       "ISSUER_UNVERIFIED",
@@ -30,7 +30,98 @@
       "SIMULATION_UNVERIFIED",
       "USER_ELIGIBILITY_UNKNOWN"
     ],
-    "receipt_sha256": "dea3762bebae8d0525d152df0096dd57f3106c1b428294ee0dd78bfdf699f8f9"
+    "receipt": {
+      "checks": {
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN": "NEED_HUMAN",
+        "ISSUER_UNVERIFIED": "NEED_HUMAN",
+        "MARKET_STATE_UNKNOWN": "NEED_HUMAN",
+        "SIMULATION_UNVERIFIED": "NEED_HUMAN",
+        "USER_ELIGIBILITY_UNKNOWN": "NEED_HUMAN"
+      },
+      "decision": "NEED_HUMAN",
+      "evidence": {
+        "chain_id": "56",
+        "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+        "corporate_action_verified": null,
+        "eligibility_basis": null,
+        "eligibility_checked_at": null,
+        "eligibility_status": "UNKNOWN",
+        "issuer_verified": false,
+        "market_open_state": true,
+        "market_reason": "TRADING",
+        "market_status": null,
+        "onchain_multiplier_block": 125708205,
+        "onchain_multiplier_block_timestamp": "2026-10-04T16:27:42+00:00",
+        "onchain_multiplier_effective_at": 0,
+        "onchain_new_ui_multiplier": "1.000778223752807865",
+        "onchain_ui_multiplier": "1.000778223752807865",
+        "previous_token_to_share_ratio": null,
+        "price_impact_percent": "-0.0001306276",
+        "provider": "bstock",
+        "quote_available": true,
+        "quote_execution_mode": "SWAP",
+        "quote_identity_match": true,
+        "quote_observed_at": "2026-10-04T16:27:43.304Z",
+        "quote_vendor": "LiquidMesh",
+        "reference_age_seconds": null,
+        "reference_age_status": "UNKNOWN",
+        "reference_price_updated_at": null,
+        "reported_reference_price_usd": "234.6374",
+        "simulation_passed": false,
+        "source_observed_at": {
+          "catalog": "2026-10-04T16:27:41.622Z",
+          "price": "2026-10-04T16:27:41.944Z",
+          "quote": "2026-10-04T16:27:43.304Z",
+          "underlying_market": "2026-10-04T16:27:42.250Z"
+        },
+        "source_response_sha256": {
+          "catalog": "856ad965d3699ba6366d7cb79ad57c049de85069453aa7dbb4eaebc0ff9c2b2c",
+          "price": "287cc3652fa95c257015f04d461735cecf8ef83c0a28b4d19d90fc8f0c03c134",
+          "quote": "aaa2d9afb56640ccfbe77d7ed49ec13ce549d8f81431867eb8c02127298a9b5e",
+          "rpc": [
+            "282e8c0f3c8fc04cfbe4cb75c459095c3f3ffd82158138cf45096c3317d267ed",
+            "58a1e5ef36741d9e114e545733c375ffa66092d15b317752a6e5bbbc95211964",
+            "e6f117108e7fa60bd422f358664707b31715917bdee17c6b546db58e4216ad95"
+          ],
+          "underlying_market": "5da0ab9913c1ea235d5901ef0412314d54b9e97a26bd212969b6a2ff5a2addee"
+        },
+        "stock_feed_price_asof": null,
+        "stock_feed_price_usd": null,
+        "ticker": "NVDA",
+        "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
+        "token_price_age_ms": 313,
+        "token_price_usd": "234.82000000",
+        "token_to_share_ratio": "1.000778223752807865"
+      },
+      "intent": {
+        "chain_id": "56",
+        "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+        "notional_usd": "10",
+        "provider": "bstock",
+        "ticker": "NVDA"
+      },
+      "mandate": {
+        "max_eligibility_age_seconds": 3600,
+        "max_notional_usd": "10",
+        "max_onchain_multiplier_age_seconds": 120,
+        "max_price_impact_percent": "0.5",
+        "max_reference_age_seconds": 300,
+        "max_token_price_age_ms": 60000,
+        "require_independent_reference": true,
+        "require_onchain_multiplier": true
+      },
+      "policy_version": "0.6.0",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "SIMULATION_UNVERIFIED",
+        "USER_ELIGIBILITY_UNKNOWN"
+      ],
+      "receipt_sha256": "d7bc521f72a0c31ac0c83e3ff488d3f95dee1a66523fc450f0bfeae2f08fc699",
+      "timestamp": "2026-10-04T16:27:43Z"
+    },
+    "receipt_sha256": "d7bc521f72a0c31ac0c83e3ff488d3f95dee1a66523fc450f0bfeae2f08fc699"
   },
   "reason_codes": [
     "EXACT_WALLET_SIMULATION_NOT_PASSED",
