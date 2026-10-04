@@ -16,6 +16,7 @@ The current read-only safety screen uses signed **RWA Data** (`/tokens`, `/price
 | [Batch URL size](../devex/repros/2026-10-04-rwa-price-url-limit.md) | A 100-address GET permitted by the documented count returned HTTP 414 at about 4,597 characters; 35-address batches worked. | Document a practical URL-length ceiling or add a POST batch variant. |
 | [Quote is not access](../devex/repros/2026-10-04-demo-wallet-dry-run.md) | Read-only quotes and unsigned builds succeeded for a public demo wallet, but both 10 USDT off-chain simulations predicted insufficient-balance failure. No holder or jurisdiction eligibility result accompanied a route. | Provide a documented token-specific self-custody eligibility check and distinguish API success from predicted transaction status. |
 | [Gas field units](../devex/repros/2026-10-04-quote-gas-units.md) | Quote `estimateGasFee=450000` matched unsigned build `gas=450000`, while `gasPrice` was separate. No gas was paid. | State whether quote gas is a limit, fee, or monetary estimate for each route mode. |
+| [Quote lifetime](../devex/repros/2026-10-04-quote-expiry-observation.md) | An exact-wallet NVDAB `SWAP` route had a `quoteId` but no observed expiry field. A fresh pre-execution packet was assembled 0.806 seconds after quote and still blocked on other guards. | Document route validity and expose an explicit expiry or status check; our 60-second internal age cap isn't a provider guarantee. |
 
 ## Numbers and limits
 
