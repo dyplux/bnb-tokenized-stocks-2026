@@ -12,11 +12,16 @@ The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. 
 
 ## Run a fresh check locally
 
-Python 3.9 or newer is sufficient. Set your own `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRET_KEY` in the process environment or a Git-ignored `.env`; see [.env.example](.env.example). No wallet key is needed.
+Python 3.9 or newer is sufficient. Clone the repository and start the read-only screen from its root:
 
 ```sh
+git clone https://github.com/dyplux/bnb-tokenized-stocks-2026.git
+cd bnb-tokenized-stocks-2026
+cp .env.example .env
 python3 app/safety_server.py
 ```
+
+The dated example works without credentials. For a fresh signed check, create your own key and secret in the [Binance Web3 Developer Portal](https://web3.binance.com/en/dev-portal), then fill the two values in the ignored `.env` before selecting **Review action**. The [authentication guide](https://web3.binance.com/en/dev-docs/authentication) documents the signing scheme already implemented by this client. Don't commit or paste the secret. No wallet key is needed.
 
 Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, set maximum spend and price impact, and select **Review action**. The localhost service limits requests to four per minute. It doesn't connect a wallet, sign or broadcast. The read-only quote uses a temporary generated address, so route availability doesn't establish a particular holder's access or exact-wallet execution. The screen shows the contract, evidence times, policy decision and a downloadable receipt. [Full clean-start steps](docs/submission/safety-judge-run.md).
 
