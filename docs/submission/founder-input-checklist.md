@@ -1,28 +1,25 @@
-# Founder inputs before submission
+# Founder inputs before Tokenized Stocks submission
 
-**Prepared:** 2026-10-03. **Sources:** [live form audit](2026-10-01-live-form-audit.md), [DX answer draft](dx-form-draft.md) and [readiness gates](readiness-gates.md). This is a handoff list, not a request to put private values in Git or chat.
+**Checked:** 2026-10-04 UTC. **Deadline:** 2026-10-11 12:00 UTC. This list follows the current Execution Safety product. Enter private values in the official forms, never in Git or chat.
 
-## Product task now
+## Already available to the judge
 
-- The 100 USDT sell-or-borrow task was retired under [D-045](../decisions/decision-log.md). There is no participant to recruit and no 4 October product gate.
-- Review the [new 5 USDC entry-and-immediate-exit check](../product/pre-entry-exit-spec.md) as soon as the working interface is verified. Before any small funded demo, confirm that the specific issuer and route permit your use, and review the exact amount and possible loss. No wallet funding is needed for the read-only demo.
+- The [public repository](https://github.com/dyplux/bnb-tokenized-stocks-2026), [dated judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) and [60-second video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) are accessible without login. The page has two observed read-only decisions and one explicitly synthetic `ALLOW` fixture.
+- The founder reported submitting **Apply as Hacker** on 2026-10-03 without a confirmation email. Don't submit it again solely because no email arrived. Keep any confirmation or account UID private.
+- The [real `ALLOW` audit](real-allow-audit.md) found no eligible, funded purchase that can honestly pass every policy gate today. Mainnet execution remains optional and requires separate exact-transaction approval.
 
-## Registration and team details
+## First-hand answers only the founder can give
 
-- The founder reported that **Apply as Hacker** was submitted on 2026-10-03, without a confirmation email. Do not repeat it merely because no email arrived. Keep any receipt, account UID and eligibility details private; confirm acceptance with the organizers only if needed.
-- Choose one consistent project or team name and contact email for the registration, DX report and final form. Enter the email directly in the forms.
-- Supply the real human team size, most experienced member's Web3 category and any prior Binance Web3 API use. Coding agents aren't human contributors.
+- Choose one final project name and the true human team size. Confirm the team's prior Web3 API experience and most experienced member's Web3 tenure.
+- Estimate the time from first opening the docs to the first successful signed call, plus the time spent creating the working portal key. The successful call is timestamped **2026-10-02 18:27:43.513 UTC**; the two start times weren't recorded.
+- Give actual 1 to 5 ratings for onboarding, documentation and API reliability. State whether `llms.txt` or `llms-full.txt` was given to an agent as one input, whether an official code example was run unchanged, and whether you plan to keep building on the API.
+- Review the factual [DevEx draft](dx-form-current.md) and [53-item answer map](dx-form-safety-answer-map.md). They separate measured calls from first-hand answers. Monday's market-session result can be added only after the [frozen protocol](../../experiments/EXP-RWA-004/monday-open-protocol.md) is scored.
+- Enter contact email and the chosen prize-receiving wallet address or permitted Binance UID directly in the official form. Don't infer the prize address from the unfunded demo wallet.
 
-## First-hand DX answers
+## Submission order
 
-- Provide the approximate time from first opening the docs to the first successful signed call, and the time spent obtaining a working portal key. The successful call was recorded at **2026-10-02 18:27:43.513 UTC**; the starting times weren't measured.
-- Choose onboarding, documentation and API reliability ratings from actual experience. Confirm whether `llms.txt` or `llms-full.txt` was fed to an AI agent and whether any documentation example was run unchanged.
-- Confirm the intention to keep building on the Binance Web3 API after the event. Review the [proposed free-text answers](dx-form-draft.md) for accuracy before submitting the required DX report.
+1. After the Monday observation, review the bounded product claim, [DevEx answers](dx-form-safety-answer-map.md) and [project answers](project-form-safety-answer-map.md). Keep `H-RWA-OFFHOURS` separate from the safety core.
+2. Submit the [official DevEx report](https://forms.gle/EUQ39xf54GHjC2ys5) with your first-hand ratings and private fields. Save its confirmation privately.
+3. Recheck signed-out access to the repo, judge page and video. Submit the [project form](https://forms.gle/yToDUzaDMwWnq6R6A), confirming DevEx submission only after step 2. Save that confirmation privately.
 
-## Final delivery, as soon as the build is ready
-
-- Review the separate repo and authorize its publication, a public demo deployment or judge-run instructions, and any DNS change. These are separate actions; none has happened.
-- Provide a judge-accessible video URL of **four minutes or less**. The current project form requires the URL even though the event page calls the video optional.
-- Enter the prize-receiving wallet address or Binance UID directly in the final form, not in Git. Submit the DX report first, then confirm it in the project form before **2026-10-11 12:00 UTC**.
-
-The project remains private and local until the relevant approval and readiness checks are complete.
+The current read-only demo has no signed trade, verified holder eligibility or funded passing simulation. A later capital action needs a fresh exact-wallet packet, a checked issuer/access basis and explicit approval for that transaction. The public submission can describe the working safety check without inventing execution proof.
