@@ -43,6 +43,7 @@ WEEKEND = ROOT / "data/weekend_2026-10-03_05"
 RAW = MARKET / "raw"
 CHECKPOINT = MARKET / "checkpoint.json"
 HEARTBEAT = MARKET / "heartbeat.json"
+UNDERLYING_WATCH = MARKET / "underlying_market_watch.jsonl"
 
 
 def utc_now():
@@ -412,6 +413,46 @@ def observation_count():
     return sum(len(existing_ids(path)) for path in MARKET.glob("20??-??-??.jsonl"))
 
 
+def capture_underlying_watch(api, chosen, slot, interval, context):
+    """Sample two NVDA market-state responses every 30 minutes through Monday."""
+    epoch = slot * interval
+    day = datetime.fromtimestamp(epoch, timezone.utc).strftime("%Y-%m-%d")
+    if not ("2026-10-04" <= day <= "2026-10-05") or epoch % 1800:
+        return
+    seen = existing_ids(UNDERLYING_WATCH)
+    for row in chosen:
+        if row["ticker"] != "NVDA" or row["provider"] not in ("bstock", "ondo"):
+            continue
+        sample_id = hashlib.sha256(("underlying" + str(slot) + row["contract"]).encode()).hexdigest()[:24]
+        if sample_id in seen:
+            continue
+        try:
+            payload, observed_at, digest = api.get(
+                UNDERLYING_MARKET,
+                [("binanceChainId", "56"), ("tokenContractAddress", row["contract"])],
+                "EXP-RWA-010/WATCH", "NVDA market-state and independent reference timestamp availability",
+                context, allow_error=True,
+            )
+            data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
+            state = data.get("statusInfo") if isinstance(data.get("statusInfo"), dict) else {}
+            market = data.get("marketData") if isinstance(data.get("marketData"), dict) else {}
+            append_jsonl(UNDERLYING_WATCH, {
+                "sample_id": sample_id, "slot": slot, "origin": "LIVE", "observed_at": observed_at,
+                "provider": row["provider"], "ticker": "NVDA", "contract": row["contract"],
+                "business_code": payload.get("code"), "open_state": state.get("openState"),
+                "market_status": state.get("marketStatus"), "reason_code": state.get("reasonCode"),
+                "next_open_time": state.get("nextOpenTime"), "next_close_time": state.get("nextCloseTime"),
+                "derived_reference_price_usd": market.get("referencePrice"),
+                "reference_price_updated_at": None, "reference_age_status": "UNKNOWN",
+                "raw_response_sha256": digest,
+            })
+        except Exception as exc:
+            append_jsonl(MARKET / "underlying_watch_errors.jsonl", {
+                "at": utc_now(), "slot": slot, "provider": row["provider"],
+                "error_type": type(exc).__name__, "message": str(exc)[:160],
+            })
+
+
 def collect_once(api, interval):
     now = datetime.now(timezone.utc)
     slot = int(now.timestamp()) // interval
@@ -499,6 +540,7 @@ def collect_once(api, interval):
                  "missed_slots_since_previous": missed_slots,
                  "last_error": None, "next_due_at_epoch": (slot + 1) * interval}
     write_json(HEARTBEAT, heartbeat)
+    capture_underlying_watch(api, chosen, slot, interval, context)
     print(json.dumps(heartbeat), flush=True)
     return heartbeat
 
