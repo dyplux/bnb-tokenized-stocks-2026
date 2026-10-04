@@ -1,6 +1,6 @@
 # Provisional safety core: one action review
 
-**Decision:** founder promoted `H-RWA-SAFETY` to `PRODUCT_CORE_PROVISIONAL` on 4 October 2026. [Evidence report](../research/2026-10-04-safety-evidence.md). This replaces the retired sell-or-borrow and Exit Check proposals as the active build slice. `H-RWA-OFFHOURS` remains an independent Monday experiment.
+**Decision:** founder froze `H-RWA-SAFETY` as the execution safety product core on 4 October 2026. [Evidence report](../research/2026-10-04-safety-evidence.md). This replaces the retired sell-or-borrow and Exit Check proposals as the active build slice. `H-RWA-OFFHOURS` remains an independent Monday experiment and can add a capability without determining the core.
 
 ## User, trigger and job
 

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dyplux checks one tokenized-equity action against issuer, market, quote and mandate evidence before signing.">
+  <title>Execution safety for tokenized equities | Dyplux</title>
+  <link rel="stylesheet" href="judge.css">
+  <script src="judge.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./" aria-label="Dyplux execution safety home">DYPLUX <span>/</span> EXECUTION SAFETY</a>
+    <span class="site-state">DATED JUDGE PACKET · BNB CHAIN</span>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">ONE PROPOSED ACTION</p>
+      <h1 id="title">A quote can exist while the trade still needs a stop.</h1>
+      <p>Before an agent buys a tokenized equity, Dyplux checks the exact contract, issuer and user access, market state, reference clock, share multiplier, route, simulation and spending mandate. The deterministic policy returns <strong>ALLOW</strong>, <strong>DENY</strong> or <strong>NEED_HUMAN</strong> with a hashed receipt.</p>
+      <div class="intro-links"><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026">Repository and method</a><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/submission/safety-judge-run.md">Run a live check locally</a></div>
+    </section>
+
+    <section class="status" aria-label="Public system status">
+      <div><span class="eyebrow">PUBLISHED STATUS</span><strong>Research collector</strong><small>Last checked 4 Oct 2026, 16:40 UTC</small></div>
+      <p>Running at that check: 2,956 live observations, 40 contracts, zero consecutive failures. This page is a dated snapshot. Its status won't update in your browser.</p>
+      <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/STATUS.md">Full status ↗</a>
+    </section>
+
+    <section class="workspace" aria-labelledby="cases-heading">
+      <div class="case-list">
+        <div class="section-head"><span class="eyebrow">JUDGE RUN / 01</span><h2 id="cases-heading">Two decisions, two evidence levels</h2></div>
+        <button class="case selected" type="button" data-case="observed" aria-pressed="true">
+          <span class="case-type">OBSERVED · 4 OCT 2026</span>
+          <strong>100 USDT into NVDAB</strong>
+          <span>The route exists. Issuer access, the independent stock-reference clock and funded simulation remain unverified.</span>
+          <b class="verdict caution">NEED_HUMAN</b>
+        </button>
+        <button class="case" type="button" data-case="synthetic" aria-pressed="false">
+          <span class="case-type">SYNTHETIC POLICY FIXTURE</span>
+          <strong>10 USDT into TEST</strong>
+          <span>Every required input is supplied as a test fixture. This shows the policy's safe path; no real trade happened.</span>
+          <b class="verdict pass">ALLOW IN FIXTURE</b>
+        </button>
+        <div class="boundary"><strong>Execution boundary</strong><p>There is no buy button here. The real NVDAB action is blocked pending eligible access, a funded same-wallet simulation and specific human approval. No transaction has been signed or broadcast.</p></div>
+      </div>
+
+      <article class="decision" aria-labelledby="decision-title" aria-live="polite">
+        <div class="decision-top"><span id="case-origin" class="eyebrow">LOADING RECEIPT</span><span id="case-time"></span></div>
+        <h2 id="decision-title">Loading the decision</h2>
+        <p id="case-summary"></p>
+        <dl id="evidence" class="evidence"></dl>
+        <h3>Reason codes</h3>
+        <ul id="reasons" class="reasons"></ul>
+        <div class="receipt"><div><span class="eyebrow">SHA-256 RECEIPT</span><code id="receipt-hash">Checking...</code><small id="hash-state"></small></div><a id="receipt-link" href="judge/observed-unsafe.json" download>Download JSON receipt</a></div>
+      </article>
+    </section>
+
+    <section class="method" aria-labelledby="method-title">
+      <div><span class="eyebrow">WHAT THE JUDGE CAN CHECK</span><h2 id="method-title">A narrow claim, with the unknowns intact</h2></div>
+      <ol>
+        <li><strong>Inspect the observed case.</strong> The dated result contains a real signed Binance Web3 quote and a fixed-block multiplier check. Its `NEED_HUMAN` reasons name facts the APIs didn't establish.</li>
+        <li><strong>Verify the receipt hash.</strong> Download the JSON. Remove `receipt_sha256` from `receipt`, serialize the remaining object with sorted keys and compact separators, then calculate SHA-256. The page checks it in your browser too.</li>
+        <li><strong>Run the live path.</strong> Clone the public repository and follow <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/submission/safety-judge-run.md">judge instructions</a>. Your own Binance Web3 API credentials are needed for a fresh signed read. The public page doesn't hold an API key.</li>
+      </ol>
+      <p class="limit">The reported `referencePrice` is derived from token data in the observed API response. `tokenPriceUpdatedAt` dates the token price. Neither establishes when the underlying stock reference last changed. A displayed quote, an `ALLOW` fixture and an API simulation response don't prove eligible access or a completed trade.</p>
+    </section>
+  </main>
+  <footer><span>DYPLUX / BNB CHAIN RESEARCH BUILD</span><span>Policy version 0.6.0 · Snapshot 4 Oct 2026</span><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026">Source ↗</a></footer>
+</body>
+</html>
