@@ -1,29 +1,24 @@
-# Small mainnet demonstration plan
+# Demo wallet: bounded mainnet decision
 
-**Status, 2026-10-03:** plan only. A dedicated, zero-balance wallet exists in the Git-ignored project `.env`. No funds were sent, no transaction was signed and no stock was bought. The founder has no existing bStock holding. This wallet is separate from the Set and Earn campaign.
+**Updated:** 2026-10-04 UTC. **State:** read-only preflight only. The dedicated BNB Chain wallet has zero USDT, zero BNB and zero allowance at the [last fixed-block read](demo-wallet-state-2026-10-04.md). No stock token has been bought, no transaction has been signed, and no approval to spend capital has been given. The wallet and ignored `.env` are separate from Set and Earn.
 
-## Purpose and boundary
+## Action under consideration
 
-The possible trial is one small BNB Smart Chain spot round trip: USDC to NVDAB, then the resulting NVDAB back to USDC. It would test whether the documented buy and exit routes can actually settle for a controlled wallet. It would **not** validate the current product's 100 USDT sell-versus-borrow decision, a profitable strategy, or the usability of a holder's Venus position.
+One spot purchase of the exact NVDAB BNB Chain contract for at most 10 USDT. NVDAB is the [best observed technical target](../submission/demo-asset-selection.md) for the quote, unsigned build and simulation path. Its issuer and user-access basis is still unknown. This action is a possible proof of the [Execution Safety Layer](safety-one-page-spec.md), not a round trip, return target or investment recommendation.
 
-The [5 USDC read-only quote check](../research/2026-10-03-usdc-nvdab-roundtrip-quote.md) returned routes in both directions on 3 October. Those separate estimates expire. The inverse estimate exceeded 5 USDC before any real approvals, gas, slippage, market move or transfer charge. It is not a profit observation or a guarantee of capital recovery.
+## Gate before funding
 
-## Gates before funding
+1. The founder keeps a private backup of the demo wallet under their own control. The key never enters a browser, chat, repository, DevEx record or judge packet.
+2. Obtain a dated official basis for access to this bStock from the founder's jurisdiction and chosen self-custody route. The [issuer access gate](../research/2026-10-04-issuer-access-gate.md) explains why a quote doesn't establish this. If the basis cannot be verified, keep the demo read-only.
+3. Confirm the 10 USDT route's minimum practical amount, exact USDT contract and decimals, approval target, estimated approval gas and swap gas. The 4 October build had a 0.5% slippage tolerance and positive minimum received, but it is dated and cannot be reused.
+4. Only after the access gate passes, fund the dedicated wallet within the founder's stated approximately €10 test budget plus a separately agreed gas amount. A transfer of funds alone is not permission to trade. Funding and transfer costs are not yet measured.
 
-1. Founder backs up `BNB_STOCKS_DEMO_PRIVATE_KEY` from the local `.env` to a private password manager and checks that the backup can recover the public address. Never send the key or recovery material in chat, Git, screenshots or a form.
-2. Apply [D-045](../decisions/decision-log.md): the 100 USDT cash-choice claim was retired after the founder chose a solo demonstration. Decide whether a technical buy and sell serves a newly selected product before moving funds.
-3. Confirm that the founder is eligible to hold and trade this representation, that the contract addresses and decimals remain correct, and that the chosen USDC is the BNB Chain token quoted by the API. A route response alone does not establish eligibility.
-4. Fetch new entry and inverse quotes for a 5 USDC input from the funded wallet address. Record timestamps, route vendor, minimum received, fee units and quote validity. Confirm approval requirements and simulate the exact proposed transactions. Stop if a required step cannot be explained or simulated.
-5. Prepare an action summary for founder review: network, public wallet address, input token and amount, exact spender and approval amount, transaction destination, expected minimum output, gas ceiling, stop conditions and exit plan. Signing and broadcast require separate, specific authorization.
+## Gate before requesting approval
 
-## Proposed funding ceiling
+Run a fresh [same-wallet packet](mainnet-execution-path.md) with one policy quote, unsigned build and off-chain simulation. Require `ALLOW`, a passing simulation, a still-fresh quote, matching build and simulation fingerprints, 0.5% maximum slippage, a minimum output consistent with the quote, a bounded spender and transaction destination, sufficient exact-wallet balance and allowance, and a gas ceiling. Present the exact contract, input, minimum output, spender, transaction target, policy receipt, simulation result, expiry uncertainty, costs and recovery plan to the founder. If any field is unknown or changes, stop and regenerate the packet.
 
-For a technical trial, propose **5 USDC plus at most €2 worth of BNB** for network fees. Keep the total asset value placed in this wallet below **€10 at the moment of funding**. The whole wallet balance can be lost. Purchase, withdrawal and return-transfer fees outside the wallet count as additional costs and must be checked before funding; do not present €10 as a guaranteed all-in loss ceiling. If the transfer minimum or external fees make this size impractical, stop instead of enlarging the trial automatically.
+**Current result:** the 17:49 UTC read-only NVDAB packet passed the local quote/build bound checks but returned `NEED_HUMAN`; its off-chain simulation predicted `FAILED` for the unfunded wallet. It is `BLOCKED`. No signer or broadcast path is enabled. The public [judge packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) is a dated safety demonstration and cannot authorize this wallet.
 
-Use only BNB Smart Chain for these transfers. The founder should send a tiny BNB test transfer first and confirm the receiving address and chain before sending the remaining planned amount. The assistant must not infer consent to spend from the mere presence of funds.
+## After specific human approval
 
-## Execution and recovery
-
-If specifically authorized after the gates above, use exact-amount approvals rather than unlimited allowances, execute one small purchase, record actual receipt and token balance, refresh the exit quote, then execute one sale back to USDC only if the route and minimum output remain acceptable under the founder-approved stop conditions. Revoke residual allowances when feasible. Return any remaining USDC and BNB to an address supplied by the founder through a private channel, after checking the network and transfer fee. A failed or unavailable exit may leave NVDAB in the wallet; do not claim automatic conversion back to USDC.
-
-Record timestamps, public transaction hashes, executed amounts and paid gas in the Developer Experience log. Do not record private keys, signed raw transactions, personal wallet history or unredacted API headers.
+An approved transaction would still need a separate bounded signer with chain 56, one exact wallet, allowlisted token contracts and spender, explicit maximum input, finite validity window, gas ceiling and nonce check. Broadcast once, then record the transaction receipt and fixed-block pre/post token and BNB balances. A revert is a failed attempt, not a fill. An exit route would be a new action with new policy, quote, simulation and approval. Never assume the token can be sold back for the input amount.

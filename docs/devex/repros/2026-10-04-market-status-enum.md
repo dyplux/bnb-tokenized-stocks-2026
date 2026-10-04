@@ -6,4 +6,4 @@
 
 **Impact:** a strict client using the documented enum could reject a valid live response. Unknown/missing statuses must be handled explicitly. The collector preserves the raw enum value in sanitized output rather than silently coercing it to `closed`.
 
-**Suggested documentation correction:** add `offhours` to the documented market status enum, state how it differs from `closed`, `postmarket` and `overnight`, and clarify whether the value applies to token trading or the underlying equity market. Publish a separate as-of timestamp for any independent underlying reference if one exists. The current `referencePrice` documentation describes a value derived from token price, so it can't establish an independent stock-market clock.
+**Suggested documentation correction:** add `offhours` to the documented market status enum, state how it differs from `closed`, `postmarket` and `overnight`, and clarify whether the value applies to token trading or the underlying equity market. Identify the source and as-of time for `referencePrice` if it is meant to represent an independently observed underlying equity price; the inspected response had no such clock.
