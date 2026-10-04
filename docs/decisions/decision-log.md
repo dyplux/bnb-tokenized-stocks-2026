@@ -664,3 +664,13 @@ The [formal safety evidence report](../research/2026-10-04-safety-evidence.md) f
 The founder has frozen **Dyplux Execution Safety Layer for Tokenized Equities** as this hackathon's product core. The [safety evidence report](../research/2026-10-04-safety-evidence.md) supports deterministic review of a specific proposed action. It doesn't prove eligible user access, a successful funded simulation, a completed mainnet trade or user demand.
 
 **Decision:** finish the judge path and a bounded exact-wallet execution protocol. Select the canonical demo representation by issuer access, route, simulation and transaction evidence rather than assuming NVDAB. Keep the 5-minute collector and the [frozen Monday protocol](../../experiments/EXP-RWA-004/monday-open-protocol.md) unchanged. Monday tests an optional off-hours intelligence claim. `H-RWA-SAFETY` remains the core if that claim fails. No transaction may be signed or broadcast before the founder explicitly approves the concrete action and amount.
+
+## D-064: narrow the claim after the ZelCore bStock substitute review
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** positioning narrowed; same-action competitor test remains open
+
+ZelCore's [public bStocks guide and purchase walkthrough](../research/2026-10-04-zelcore-bstocks-substitute.md) already describe self-custodial BSC purchase through Binance Web3, region gating, route selection and a transaction summary. We haven't tested that product with an eligible wallet or established what it shows for independent stock-reference time and multiplier integrity at approval.
+
+**Decision:** don't pitch Dyplux as the first way to buy bStocks without a Binance account, or as the first country check. The product's testable contribution is an explicit pre-sign policy decision with a dated, hash-verifiable receipt for one exact action. Keep originality conditional until a same-action competitor walkthrough proves which safety decision existing flows omit. This doesn't change the mainnet eligibility gate or authorize a trade.
