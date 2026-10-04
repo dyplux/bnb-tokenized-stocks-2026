@@ -1,0 +1,36 @@
+{
+  "build": {
+    "business_code": 0,
+    "business_message": "success",
+    "calldata_bytes": 2564,
+    "calldata_present": true,
+    "calldata_sha256": "1b82c12c088a621a07a0a8ec134e331b34b549d15d7c27087575c4efe520f66f",
+    "execution_mode": "SWAP",
+    "gas_limit": "450000",
+    "gas_price_wei": "60792248",
+    "observed_at": "2026-10-04T13:19:21.355Z",
+    "raw_response_sha256": "d91679bf96ac2367aefb11c88a526ed1ce97e42e8a983b42920b0e508a8bfdb2",
+    "rfq_keys": [],
+    "rfq_present": false,
+    "tx_present": true,
+    "tx_to": "0xB44446b0c8E56988c34f7Ff73Ae904982b5FdDA5",
+    "vendor": "LiquidMesh"
+  },
+  "contract": "0xe81c6bb0266cd68b4f17278531dd03ea1f12da4e",
+  "limit": "Read-only quote/build. No signature, approval, simulation, broadcast, fill, eligibility check or profit claim.",
+  "notional": "100 USDT",
+  "observed_at": "2026-10-04T13:19:20.929Z",
+  "origin": "LIVE",
+  "provider": "bstock",
+  "quote": {
+    "business_code": 0,
+    "business_message": "success",
+    "execution_mode": "SWAP",
+    "raw_response_sha256": "601ed953d96feadb46c8c2c87ccb63a2af7af81c04610b6ac9e71f82694519ac",
+    "route_count": 1,
+    "vendor": "LiquidMesh"
+  },
+  "stage": "BUILD_SUCCEEDED",
+  "ticker": "CBRS",
+  "wallet": "ephemeral_unfunded_not_stored"
+}

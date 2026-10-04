@@ -31,6 +31,7 @@ PRICE = "/api/v1/dex/market/rwa/price"
 UNDERLYING_MARKET = "/api/v1/dex/market/rwa/underlying-market"
 UNDERLYING_PROFILE = "/api/v1/dex/market/rwa/underlying-profile"
 QUOTE = "/api/v1/dex/aggregator/quote"
+SWAP_BUILD = "/api/v1/dex/aggregator/swap"
 TICKERS = {"AAPL", "NVDA", "TSLA", "COIN", "MSTR"}
 CATALOG = ROOT / "data/normalized/rwa_catalog.json"
 CATALOG_PARQUET = ROOT / "data/normalized/rwa_catalog.parquet"
@@ -150,7 +151,7 @@ class Api:
         self.key, self.secret = auth
 
     def get(self, path, params, experiment, expected, context, allow_error=False):
-        if path not in (TOKENS, PRICE, UNDERLYING_MARKET, UNDERLYING_PROFILE, QUOTE):
+        if path not in (TOKENS, PRICE, UNDERLYING_MARKET, UNDERLYING_PROFILE, QUOTE, SWAP_BUILD):
             raise ValueError("endpoint is outside the read-only allowlist")
         query = urlencode(params)
         timestamp = utc_now()
@@ -188,7 +189,7 @@ class Api:
         elif len(body) > 2_000_000:
             error = "response_too_large"
         code = payload.get("code") if isinstance(payload, dict) else None
-        expected_type = dict if path in (UNDERLYING_MARKET, UNDERLYING_PROFILE) else list
+        expected_type = dict if path in (UNDERLYING_MARKET, UNDERLYING_PROFILE, SWAP_BUILD) else list
         valid = (status == 200 and code == 0 and isinstance(payload.get("data"), expected_type)) if isinstance(payload, dict) else False
         if not valid and error is None:
             error = "http_or_business_error" if status != 200 or code != 0 else "schema_mismatch"
@@ -197,7 +198,7 @@ class Api:
             "timestamp": received, "endpoint": path, "method": "GET", "experiment_id": experiment,
             "expected_behavior": expected, "actual_behavior": "success" if valid else "failure",
             "latency_ms": latency, "http_status": status, "business_code": code if isinstance(code, int) else None,
-            "sanitized_request": {k: v for k, v in params if k in ("binanceChainId", "platformId", "tokenContractAddress", "tokenContractAddresses", "fromTokenAddress", "toTokenAddress", "amount")},
+            "sanitized_request": {k: v for k, v in params if k in ("binanceChainId", "platformId", "tokenContractAddress", "tokenContractAddresses", "fromTokenAddress", "toTokenAddress", "amount", "slippagePercent")},
             "sanitized_response": safe_keys(payload), "raw_response_sha256": raw_hash,
             "schema_mismatch": bool(status == 200 and code == 0 and not valid),
             "error": error, "edge_case": "missing_reference_timestamp" if valid and path in (PRICE, UNDERLYING_MARKET) else None,
