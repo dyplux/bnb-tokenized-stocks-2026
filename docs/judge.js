@@ -1,6 +1,6 @@
 const cases = {
   observed: {url: 'judge/observed-unsafe.json', title: 'NEED_HUMAN',
-    summary: 'This dated NVDAB quote returned a route. The policy stopped because issuer access, an independent stock-reference clock and funded simulation weren\'t established.'},
+    summary: 'This dated NVDAB quote returned a route. The policy stopped because market state, issuer access, an independent stock-reference clock and funded simulation weren\'t established.'},
   synthetic: {url: 'judge/synthetic-safe.json', title: 'ALLOW · fixture only',
     summary: 'All inputs were supplied by a synthetic test fixture. It shows the passing policy branch and proves no real access, quote, simulation or trade.'}
 };
@@ -51,9 +51,12 @@ async function showCase(key) {
     row(list, 'Security and representation', `${receipt.intent.ticker} / ${receipt.intent.provider}`);
     row(list, 'BNB Chain contract', receipt.intent.contract);
     row(list, 'Requested amount', `${receipt.intent.notional_usd} USDT`);
-    row(list, 'Market state', evidence.market_status);
-    row(list, 'Independent stock-reference age', evidence.reference_age_status);
-    row(list, 'Issuer and user access', `${evidence.issuer_verified === true ? 'verified' : 'unknown'} / ${evidence.eligibility_status || 'UNKNOWN'}`);
+    row(list, 'Market state', key === 'synthetic' ? 'regular (test input)' : evidence.market_status);
+    row(list, 'Independent stock-reference age', key === 'synthetic'
+      ? `${evidence.reference_age_status} (test input)` : evidence.reference_age_status);
+    row(list, 'Issuer and user access', key === 'synthetic'
+      ? 'ELIGIBLE IN TEST INPUT ONLY; no real access verified'
+      : `${evidence.issuer_verified === true ? 'verified' : 'unknown'} / ${evidence.eligibility_status || 'UNKNOWN'}`);
     row(list, 'Multiplier or share ratio', evidence.token_to_share_ratio);
     row(list, 'On-chain multiplier check', evidence.onchain_multiplier_block == null
       ? 'Fixture only; no chain read' :
@@ -66,7 +69,8 @@ async function showCase(key) {
       : 'NO ROUTE');
     row(list, 'Price impact', evidence.price_impact_percent == null ? null : `${evidence.price_impact_percent}%`);
     row(list, 'Slippage tolerance', 'NOT INCLUDED IN THIS POLICY RECEIPT');
-    row(list, 'Funded simulation passed', evidence.simulation_passed);
+    row(list, 'Funded simulation passed', key === 'synthetic'
+      ? 'true (test input only; no funded transaction)' : evidence.simulation_passed);
     row(list, 'Mandate cap', `${receipt.mandate.max_notional_usd} USDT`);
     const reasons = document.querySelector('#reasons');
     reasons.replaceChildren();
