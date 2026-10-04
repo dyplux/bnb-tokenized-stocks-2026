@@ -111,6 +111,21 @@ class SafetyServiceTests(unittest.TestCase):
         self.assertEqual(result["view"]["multiplier_integrity"], "MATCHED_FIXED_BLOCK")
         self.assertEqual(len(result["receipt"]["receipt_sha256"]), 64)
 
+    def test_exact_wallet_route_context_is_internal_and_bound(self):
+        wallet = "0x" + "a" * 40
+        request = {"provider": "bstock", "notional_usdt": "100",
+                   "max_notional_usdt": "100", "max_price_impact_percent": "0.5"}
+        public = review(request, api=FakeApi(), rpc=fake_rpc)
+        self.assertNotIn("route_context", public)
+        result, context = review(request, api=FakeApi(), rpc=fake_rpc,
+                                 quote_wallet=wallet, return_route_context=True)
+        self.assertEqual(context["wallet"], wallet)
+        self.assertEqual(context["raw_amount"], str(100 * 10**18))
+        self.assertEqual(context["quote_sha256"], result["sources"]["quote"]["sha256"])
+        self.assertEqual(context["route"]["toToken"]["tokenContractAddress"], CONTRACT)
+        with self.assertRaises(ValueError):
+            review(request, api=FakeApi(), rpc=fake_rpc, return_route_context=True)
+
     def test_mandate_denies_even_with_route(self):
         result = review({"provider": "bstock", "notional_usdt": "100",
                          "max_notional_usdt": "20", "max_price_impact_percent": "0.5"},

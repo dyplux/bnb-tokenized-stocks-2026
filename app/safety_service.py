@@ -1,6 +1,7 @@
 """One live, read-only stock-token action review. No wallet signing or broadcast."""
 
 import secrets
+import re
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 
@@ -12,6 +13,7 @@ from scripts.rwa_research import Api, PRICE, QUOTE, TOKENS, UNDERLYING_MARKET, n
 
 EXPERIMENT = "H-RWA-SAFETY/PRODUCT"
 PROVIDERS = {"bstock": "NVDAB", "ondo": "NVDAon"}
+ADDRESS = re.compile(r"0x[0-9a-fA-F]{40}\Z")
 
 
 def amount(value, field, low, high):
@@ -85,8 +87,13 @@ def multiplier(contract, rpc=rpc_batch):
     }
 
 
-def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
+def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info,
+           quote_wallet=None, return_route_context=False):
     provider, notional, limit, impact_limit = validate(request)
+    if quote_wallet is not None and not ADDRESS.fullmatch(quote_wallet):
+        raise ValueError("Invalid public quote wallet address")
+    if return_route_context and quote_wallet is None:
+        raise ValueError("An exact wallet is required for route context")
     api = api or Api()
     errors = []
     context = {"task": "one_NVDA_buy_review", "provider": provider, "origin": "LIVE"}
@@ -192,8 +199,9 @@ def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
                               "sha256": state["rpc_response_sha256"]}
         except Exception as exc:
             errors.append({"source": "rpc_multiplier", "type": type(exc).__name__})
+    route = None
+    wallet = quote_wallet or "0x" + secrets.token_hex(20)
     try:
-        wallet = "0x" + secrets.token_hex(20)
         raw_amount = int(notional * Decimal(10**18))
         payload, at, digest = api.get(
             QUOTE, [("binanceChainId", "56"), ("fromTokenAddress", USDT),
@@ -233,8 +241,17 @@ def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
     evidence["source_observed_at"] = {key: source.get("observed_at") for key, source in sources.items()
                                      if isinstance(source, dict) and source.get("observed_at")}
     receipt = evaluate(intent, evidence, mandate, now=datetime.now(timezone.utc))
-    return {"origin": "LIVE_READ_ONLY", "action": "BUY_NVDA_WITH_USDT",
+    result = {"origin": "LIVE_READ_ONLY", "action": "BUY_NVDA_WITH_USDT",
             "decision": receipt["decision"], "reason_codes": receipt["reason_codes"],
             "view": view, "mandate": mandate, "sources": sources, "errors": errors,
             "receipt": receipt,
             "limits": "No eligibility decision, holder wallet, funded simulation, signature, transaction, fill, or independent stock-reference timestamp."}
+    if not return_route_context:
+        return result
+    return result, {"wallet": wallet, "route": route, "provider": provider,
+                    "ticker": "NVDA", "symbol": target["token_symbol"],
+                    "contract": contract, "raw_amount": str(raw_amount),
+                    "quote_observed_at": (sources["quote"] or {}).get("observed_at"),
+                    "quote_sha256": (sources["quote"] or {}).get("sha256"),
+                    "catalog_observed_at": sources["catalog"]["observed_at"],
+                    "catalog_sha256": sources["catalog"]["sha256"]}
