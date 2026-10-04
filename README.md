@@ -6,7 +6,7 @@ The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. 
 
 ## See the product
 
-- [Public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/): an observed, dated `NEED_HUMAN` case; a clearly marked synthetic `ALLOW` policy fixture; source times, reason codes, receipt downloads and system status. It makes no live signed API request.
+- [Public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/): observed, dated `NEED_HUMAN` and mandate-bound `DENY` cases; a clearly marked synthetic `ALLOW` policy fixture; source times, reason codes, receipt downloads and system status. It makes no live signed API request.
 - [30-second product video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-demo.mp4): a separate, dated read-only run. It shows no trade.
 - [Judge instructions](docs/submission/safety-judge-run.md): run a fresh signed check with your own Binance Web3 API credentials, then try a mandate denial. The public page also works without credentials.
 
@@ -33,6 +33,8 @@ The same read-only decision is available to a local agent through `scripts/safet
 | Sunday route and market-state observations | Monday's preregistered off-hours experiment has no outcome yet and isn't needed to justify the safety core. |
 
 The [demo-asset comparison](docs/submission/demo-asset-selection.md) selects NVDAB for technical preflight because its quote, unsigned build, simulation and multiplier were observed. It **doesn't** clear issuer or user access. A real purchase requires verified eligibility, a funded passing simulation, route-target provenance and explicit approval for one exact transaction. [Execution gates](docs/product/mainnet-execution-path.md) and [submission blockers](docs/submission/blocker-board.md) record what remains.
+
+The [real `ALLOW` audit](docs/submission/real-allow-audit.md) checks the available candidates. None can honestly receive `ALLOW` or `ALLOW_PENDING_SIGNATURE` with today's access and simulation evidence. The synthetic fixture remains labelled as a code-path demonstration. The working read-only safety task can be reviewed without a mainnet trade; the event's small-live-amount direction remains an unmet technical demonstration if no eligible action is approved.
 
 ## Reproduce the research
 

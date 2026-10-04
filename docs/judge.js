@@ -1,9 +1,12 @@
 const cases = {
   observed: {url: 'judge/observed-unsafe.json', title: 'NEED_HUMAN',
     summary: 'This dated NVDAB quote returned a route. The policy stopped because market state, issuer access, an independent stock-reference clock and funded simulation weren\'t established.'},
+  mandate: {url: 'judge/observed-mandate-deny.json', title: 'DENY',
+    summary: 'This dated NVDAB check returned a route, but the proposed 100 USDT purchase exceeded the 20 USDT mandate. Missing evidence remained visible in the receipt.'},
   synthetic: {url: 'judge/synthetic-safe.json', title: 'ALLOW · fixture only',
     summary: 'All inputs were supplied by a synthetic test fixture. It shows the passing policy branch and proves no real access, quote, simulation or trade.'}
 };
+let activeRequest = 0;
 
 function stable(value) {
   if (Array.isArray(value)) return '[' + value.map(stable).join(',') + ']';
@@ -30,16 +33,20 @@ function row(list, label, value) {
 
 async function showCase(key) {
   const selected = cases[key];
+  const requestId = ++activeRequest;
   for (const button of document.querySelectorAll('[data-case]')) {
     const active = button.dataset.case === key;
     button.classList.toggle('selected', active);
     button.setAttribute('aria-pressed', String(active));
   }
   document.querySelector('#decision-title').textContent = 'Loading...';
+  document.querySelector('#hash-state').textContent = 'Checking receipt...';
+  document.querySelector('#receipt-link').removeAttribute('href');
   try {
     const response = await fetch(selected.url, {cache: 'no-store'});
     if (!response.ok) throw new Error('Receipt unavailable');
     const data = await response.json();
+    if (requestId !== activeRequest) return;
     const receipt = data.receipt;
     const evidence = receipt.evidence;
     document.querySelector('#case-origin').textContent = data.origin;
@@ -82,8 +89,10 @@ async function showCase(key) {
     document.querySelector('#receipt-hash').textContent = receipt.receipt_sha256;
     document.querySelector('#receipt-link').href = selected.url;
     const valid = await hashReceipt(receipt) === receipt.receipt_sha256;
+    if (requestId !== activeRequest) return;
     document.querySelector('#hash-state').textContent = valid ? 'Hash matches the downloaded decision body' : 'Hash mismatch. Do not rely on this packet.';
   } catch (error) {
+    if (requestId !== activeRequest) return;
     document.querySelector('#decision-title').textContent = 'Receipt unavailable';
     document.querySelector('#case-summary').textContent = 'The published file could not be loaded. Try the repository link.';
     document.querySelector('#hash-state').textContent = 'No verification completed';
