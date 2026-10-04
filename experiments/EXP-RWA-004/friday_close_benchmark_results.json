@@ -1,0 +1,11 @@
+{
+  "claim_limit": "Session-date close only. Prices are token-derived per-share arithmetic; rights, after-hours benchmark, quote execution and Monday opening outcome remain unverified.",
+  "external_session_date": "2026-10-02",
+  "origin": "LIVE token tape plus separately retrieved Yahoo Finance historical closes",
+  "reference_age_seconds": null,
+  "reference_age_status": "UNKNOWN",
+  "rows": 6,
+  "slot": 5970384,
+  "token_observed_at_first": "2026-10-04T12:00:04.293Z",
+  "token_observed_at_last": "2026-10-04T12:00:04.306Z"
+}

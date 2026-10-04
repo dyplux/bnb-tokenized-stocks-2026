@@ -22,7 +22,7 @@ The screen distinguishes **Both routes quoted**, **Entry route unavailable**, **
 
 - The [current-build observation](docs/research/2026-10-03-exit-check-live-browser.md) records three local read-only runs on 3 October. The [video record](docs/submission/video-record.json) corresponds to one continuous browser capture, with no wallet address or credentials retained.
 - The [34-second video QA](docs/submission/video-qa.md) records an internal technical capture. Video and submission work stopped at [D-049](docs/decisions/decision-log.md), before the product was selected.
-- `python3 -m unittest discover -s tests -q` ran **78 synthetic tests** locally on 4 October, including ten RWA policy checks, five New York session-boundary checks, six market-tape integrity checks and three reference-formula checks. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37200121350) passed on private commit `bc0d5ab` without credentials or live API calls. That run predates the reference-formula check.
+- `python3 -m unittest discover -s tests -q` ran **81 synthetic tests** locally on 4 October, including RWA policy, session-boundary, tape-integrity, reference-formula and external-close arithmetic checks. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions) runs without credentials or live API calls.
 - The [DX field log](docs/dx/field-log.md) separates signed API observations, local integration errors and missing measurements. The [Exit Check spec](docs/product/pre-entry-exit-spec.md) defines the built prototype; the [exact-budget spec](docs/product/exact-budget-stock-spec.md) and [D-051](docs/decisions/decision-log.md) record the newer, unbuilt hypothesis. The [5 USDC Apple route check](docs/research/2026-10-03-aapl-three-representation-route-check.md) records three different provider states and an Ondo USDT minimum follow-up.
 
 ## Live research, separate from the app
@@ -40,6 +40,7 @@ python3 scripts/rwa_research.py start --interval 300 --keep-awake
 python3 scripts/normalize_catalog.py
 python3 scripts/analyze_rwa.py
 python3 scripts/audit_reference_formula.py 2026-10-04
+python3 scripts/compare_friday_close.py --slot 5970384
 ```
 
 `start` detaches the collector; don't run a second copy. `health` exits nonzero if it has stopped or fallen overdue. See the [collector operations](docs/devex/collector-operations.md) for logs, restart behavior and the external SSD reboot limitation. The `LIVE` tape and raw API response store remain local. Frozen fixtures, normalized catalog snapshots and experiment summaries are in this repository. The API provides `tokenPriceUpdatedAt`, while an independent underlying reference timestamp hasn't been observed. The analysis stores reference age as `UNKNOWN`; it doesn't substitute token-price age.

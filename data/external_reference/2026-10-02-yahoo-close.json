@@ -1,0 +1,13 @@
+{
+  "publisher": "Yahoo Finance",
+  "retrieved_at": "2026-10-04T12:03:32Z",
+  "session_date": "2026-10-02",
+  "price_type": "historical_daily_close_usd",
+  "timestamp_status": "SESSION_DATE_ONLY_NO_INDEPENDENT_TRADE_TIMESTAMP",
+  "rows": [
+    {"ticker": "NVDA", "close_usd": "233.95", "source_url": "https://finance.yahoo.com/quote/NVDA/history/"},
+    {"ticker": "TSLA", "close_usd": "370.59", "source_url": "https://finance.yahoo.com/quote/TSLA/history/"},
+    {"ticker": "COIN", "close_usd": "183.00", "source_url": "https://finance.yahoo.com/quote/COIN/history/?p=COIN"}
+  ],
+  "claim_limit": "A dated daily close is an external comparison baseline, not a live underlying quote, executable route, legal-equivalence finding or exact reference timestamp."
+}
