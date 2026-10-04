@@ -80,7 +80,7 @@
 | 50. One time-saving change* | MEASURED, founder review | Publish the country-eligibility endpoint URL and schema, with a self-custody example. Its absence is the current reason an otherwise quotable NVDAB action can't be cleared for an eligible-person mainnet demo. This is a blocker observation, not a measured number of hours lost. |
 | 51. Continue building?* | FOUNDER | Select the actual intention after the final build and Monday measurement. |
 | 52. Why? | FOUNDER | Explain the chosen item 51 answer from firsthand product plans. |
-| 53. Final remarks | MEASURED, founder review | The signed RWA, Trading and Transaction endpoints supplied enough data to build a fail-closed pre-signing receipt. One real dated route returned `NEED_HUMAN` because issuer access, independent stock time and funded simulation weren't established; a separate real route returned `DENY` because 100 USDT exceeded a 20 USDT mandate. The public judge packet shows both receipts and labels its `ALLOW` branch synthetic. |
+| 53. Final remarks | MEASURED, founder review | Review the concise [open-text draft](dx-form-current.md): 611 calls at the fixed cut, four reproducible findings and concrete documentation requests. Add the observed `NEED_HUMAN` and `DENY` receipts if space permits. Monday's regular-session result must be added only after the frozen protocol is scored. |
 
 ## Before submission
 
