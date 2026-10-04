@@ -1,0 +1,28 @@
+{
+  "publisher": "Yahoo Finance",
+  "retrieved_at": null,
+  "session_date": "2026-10-05",
+  "rows": [
+    {
+      "ticker": "COIN",
+      "session_date": "2026-10-05",
+      "open_usd": null,
+      "close_usd": null,
+      "source_url": "https://finance.yahoo.com/quote/COIN/history/"
+    },
+    {
+      "ticker": "NVDA",
+      "session_date": "2026-10-05",
+      "open_usd": null,
+      "close_usd": null,
+      "source_url": "https://finance.yahoo.com/quote/NVDA/history/"
+    },
+    {
+      "ticker": "TSLA",
+      "session_date": "2026-10-05",
+      "open_usd": null,
+      "close_usd": null,
+      "source_url": "https://finance.yahoo.com/quote/TSLA/history/"
+    }
+  ]
+}

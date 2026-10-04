@@ -42,6 +42,8 @@ def main():
             raise SystemExit("duplicate outcome ticker: %s" % ticker)
         if ticker not in {"COIN", "NVDA", "TSLA"} or not item.get("source_url"):
             raise SystemExit("unfrozen ticker or missing direct source URL")
+        if item.get("session_date") != "2026-10-05":
+            raise SystemExit("outcome row has no verified 2026-10-05 session date: %s" % ticker)
         outcomes[ticker] = item
     if not any(positive_decimal(item.get("open_usd")) for item in outcomes.values()):
         raise SystemExit("no dated Monday opening value; don't generate an outcome from missing data")
