@@ -21,7 +21,7 @@ A BNB Chain stock-token buyer or the developer of a trading agent has selected o
 
 1. A clean local judge session selects one NVDA representation and amount, runs one check and sees the exact contract, source time, route mode and receipt without founder guidance.
 2. The screen uses real signed Binance Web3 reads and live BSC reads. It neither broadcasts nor asks for a private key. Its server limits input size and rate.
-3. The policy never treats `offhours`, an undocumented market status, a missing stock-reference timestamp, a successful quote, or an unfunded simulation as proof of execution safety.
+3. The policy never treats `offhours`, an undocumented market status, a missing stock-reference timestamp, a successful quote, or an unfunded simulation as proof of execution safety. It checks the returned route's chain, source token, destination contract and raw input amount against the requested action, and requires positive output before counting the quote.
 4. NVDAB's live multiplier is pinned to a BSC block and compared with the same check's signed catalog ratio. A mismatch denies; unavailable or scheduled state needs human review.
 5. A notional above the user's bound denies even if the API returns a quote. Missing API/RPC data produces a visible error or `NEED_HUMAN`, never a success-looking blank.
 6. Receipt reason codes and evidence hashes can be reproduced from the recorded response fixtures. The README names the exact local command and limitations.

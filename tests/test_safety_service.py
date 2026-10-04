@@ -7,6 +7,7 @@ from contextlib import redirect_stdout
 from unittest.mock import patch
 
 from app.safety_service import multiplier, review, validate
+from app.server import USDT
 from scripts.safety_agent_tool import main as agent_tool_main
 from scripts.rwa_research import PRICE, QUOTE, TOKENS, UNDERLYING_MARKET
 
@@ -27,8 +28,12 @@ class FakeApi:
             data = {"statusInfo": {"marketStatus": "offhours", "openState": True},
                     "marketData": {"referencePrice": "100"}}
         elif path == QUOTE:
+            query = dict(params)
             data = [{"isBest": True, "executionMode": "SWAP", "vendorName": "TestVendor",
-                     "priceImpactPercent": "0.01"}]
+                     "priceImpactPercent": "0.01", "binanceChainId": "56",
+                     "fromToken": {"tokenContractAddress": USDT},
+                     "toToken": {"tokenContractAddress": query["toTokenAddress"]},
+                     "fromTokenAmount": query["amount"], "toTokenAmount": "100000000000000000"}]
         else:
             raise AssertionError("unexpected endpoint")
         return {"code": 0, "data": data}, "2026-10-04T10:10:00.000Z", "synthetic-hash"
@@ -42,6 +47,22 @@ class FakeOndoApi(FakeApi):
                                        "platformId": "ondo", "tokenSymbol": "NVDAon"})
         elif path == PRICE:
             result["data"][0]["tokenContractAddress"] = ONDO_CONTRACT
+        return result, at, digest
+
+
+class FakeWrongQuoteApi(FakeApi):
+    def get(self, path, params, *args, **kwargs):
+        result, at, digest = super().get(path, params, *args, **kwargs)
+        if path == QUOTE:
+            result["data"][0]["toToken"]["tokenContractAddress"] = ONDO_CONTRACT
+        return result, at, digest
+
+
+class FakeZeroOutputQuoteApi(FakeApi):
+    def get(self, path, params, *args, **kwargs):
+        result, at, digest = super().get(path, params, *args, **kwargs)
+        if path == QUOTE:
+            result["data"][0]["toTokenAmount"] = "0"
         return result, at, digest
 
 
@@ -96,6 +117,22 @@ class SafetyServiceTests(unittest.TestCase):
                         api=FakeApi(), rpc=fake_rpc)
         self.assertEqual(result["decision"], "DENY")
         self.assertIn("MANDATE_LIMIT_EXCEEDED", result["reason_codes"])
+
+    def test_mismatched_route_is_not_actionable(self):
+        result = review({"provider": "bstock", "notional_usdt": "100",
+                         "max_notional_usdt": "100", "max_price_impact_percent": "0.5"},
+                        api=FakeWrongQuoteApi(), rpc=fake_rpc)
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("QUOTE_INTENT_MISMATCH", result["reason_codes"])
+        self.assertEqual(result["view"]["route"], "MISMATCH")
+        self.assertFalse(result["receipt"]["evidence"]["quote_identity_match"])
+
+    def test_zero_output_route_is_not_actionable(self):
+        result = review({"provider": "bstock", "notional_usdt": "100",
+                         "max_notional_usdt": "100", "max_price_impact_percent": "0.5"},
+                        api=FakeZeroOutputQuoteApi(), rpc=fake_rpc)
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("QUOTE_INTENT_MISMATCH", result["reason_codes"])
 
     def test_untimed_stock_feed_never_populates_reference_age(self):
         result = review({"provider": "ondo", "notional_usdt": "100",

@@ -42,46 +42,47 @@
       "market_open_state": true,
       "market_reason": "TRADING",
       "market_status": null,
-      "onchain_multiplier_block": 125701075,
-      "onchain_multiplier_block_timestamp": "2026-10-04T15:34:12+00:00",
+      "onchain_multiplier_block": 125704183,
+      "onchain_multiplier_block_timestamp": "2026-10-04T15:57:32+00:00",
       "onchain_multiplier_effective_at": 0,
       "onchain_new_ui_multiplier": "1.000778223752807865",
       "onchain_ui_multiplier": "1.000778223752807865",
       "previous_token_to_share_ratio": null,
-      "price_impact_percent": "0.0005157398",
+      "price_impact_percent": "0.0000000000",
       "provider": "bstock",
       "quote_available": true,
       "quote_execution_mode": "SWAP",
-      "quote_observed_at": "2026-10-04T15:34:13.804Z",
+      "quote_identity_match": true,
+      "quote_observed_at": "2026-10-04T15:57:33.085Z",
       "quote_vendor": "LiquidMesh",
       "reference_age_seconds": null,
       "reference_age_status": "UNKNOWN",
       "reference_price_updated_at": null,
-      "reported_reference_price_usd": "234.687361",
+      "reported_reference_price_usd": "234.667376",
       "simulation_passed": false,
       "source_observed_at": {
-        "catalog": "2026-10-04T15:34:11.958Z",
-        "price": "2026-10-04T15:34:12.282Z",
-        "quote": "2026-10-04T15:34:13.804Z",
-        "underlying_market": "2026-10-04T15:34:12.662Z"
+        "catalog": "2026-10-04T15:57:31.301Z",
+        "price": "2026-10-04T15:57:31.624Z",
+        "quote": "2026-10-04T15:57:33.085Z",
+        "underlying_market": "2026-10-04T15:57:32.010Z"
       },
       "source_response_sha256": {
-        "catalog": "f46d3aacb9b6808dad15ea7dc88e31c3e1cf5b4136f6718e8ac5819abc5f0be8",
-        "price": "94f49fe61c02139f6061c77b93ff72f07cacaf0edebd64f1fb5dcbe336f8599b",
-        "quote": "6b05088956b9ecb4dd1a7c63023f7ccc02d118ca399ad57a35a53fa0fa7790a1",
+        "catalog": "2dc5c14677bccb83504f93a17eab987fa766d808f5f8eeda73fb85fe40f2ed52",
+        "price": "9d744b05a2db7b874bcaada21550cb6abed4bac1590c09d6cb6fe64bd6b7736b",
+        "quote": "7de59b49db1651db4e215356dab7589d2cc4f48c6b0b7c9a4a7ac79d66af304d",
         "rpc": [
-          "2113068ec2310b45909da3fc075f3aae6e57ee3ff7d4feeaf263996e41112e60",
-          "94338394df1699149345ae2a505b44762a143b8c264eebf302818d7e71ea0bfa",
+          "73c43179ef798486f0d4b811bc81d3714b2dcd962df19c35d15c446d0811a58c",
+          "38a78cac3ae1fdf739c3d9fcb1163eb3c42e65acf03608eea406fca81658999e",
           "e6f117108e7fa60bd422f358664707b31715917bdee17c6b546db58e4216ad95"
         ],
-        "underlying_market": "f6ef99a5b88ad39494f4843c195ce11c2ac603ad8a02aeafedcdfc9d99357626"
+        "underlying_market": "e2f306d010ac2120ccba7a3122102245927da775b337df402596b57f7c1e2130"
       },
       "stock_feed_price_asof": null,
       "stock_feed_price_usd": null,
       "ticker": "NVDA",
       "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
-      "token_price_age_ms": 5652,
-      "token_price_usd": "234.87000000",
+      "token_price_age_ms": 26994,
+      "token_price_usd": "234.85000000",
       "token_to_share_ratio": "1.000778223752807865"
     },
     "intent": {
@@ -101,7 +102,7 @@
       "require_independent_reference": true,
       "require_onchain_multiplier": true
     },
-    "policy_version": "0.5.0",
+    "policy_version": "0.6.0",
     "reason_codes": [
       "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
       "ISSUER_UNVERIFIED",
@@ -109,38 +110,38 @@
       "SIMULATION_UNVERIFIED",
       "USER_ELIGIBILITY_UNKNOWN"
     ],
-    "receipt_sha256": "b791ff400cfb8c043705288848ab1666dd4716eaad200304551a472e1db211ff",
-    "timestamp": "2026-10-04T15:34:13Z"
+    "receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+    "timestamp": "2026-10-04T15:57:33Z"
   },
-  "replay_note": "Fixed read-only result captured 2026-10-04. Form inputs do not change this example. Run a live check for a current action.",
+  "replay_note": "Fixed read-only result captured 2026-10-04 under policy 0.6.0. Form inputs do not change this example. Run a live check for a current action.",
   "sources": {
     "catalog": {
-      "observed_at": "2026-10-04T15:34:11.958Z",
-      "sha256": "f46d3aacb9b6808dad15ea7dc88e31c3e1cf5b4136f6718e8ac5819abc5f0be8"
+      "observed_at": "2026-10-04T15:57:31.301Z",
+      "sha256": "2dc5c14677bccb83504f93a17eab987fa766d808f5f8eeda73fb85fe40f2ed52"
     },
     "price": {
-      "observed_at": "2026-10-04T15:34:12.282Z",
-      "sha256": "94f49fe61c02139f6061c77b93ff72f07cacaf0edebd64f1fb5dcbe336f8599b"
+      "observed_at": "2026-10-04T15:57:31.624Z",
+      "sha256": "9d744b05a2db7b874bcaada21550cb6abed4bac1590c09d6cb6fe64bd6b7736b"
     },
     "quote": {
       "business_code": 0,
-      "observed_at": "2026-10-04T15:34:13.804Z",
+      "observed_at": "2026-10-04T15:57:33.085Z",
       "route_count": 1,
-      "sha256": "6b05088956b9ecb4dd1a7c63023f7ccc02d118ca399ad57a35a53fa0fa7790a1"
+      "sha256": "7de59b49db1651db4e215356dab7589d2cc4f48c6b0b7c9a4a7ac79d66af304d"
     },
     "rpc": {
-      "block": 125701075,
-      "block_timestamp": "2026-10-04T15:34:12+00:00",
+      "block": 125704183,
+      "block_timestamp": "2026-10-04T15:57:32+00:00",
       "sha256": [
-        "2113068ec2310b45909da3fc075f3aae6e57ee3ff7d4feeaf263996e41112e60",
-        "94338394df1699149345ae2a505b44762a143b8c264eebf302818d7e71ea0bfa",
+        "73c43179ef798486f0d4b811bc81d3714b2dcd962df19c35d15c446d0811a58c",
+        "38a78cac3ae1fdf739c3d9fcb1163eb3c42e65acf03608eea406fca81658999e",
         "e6f117108e7fa60bd422f358664707b31715917bdee17c6b546db58e4216ad95"
       ]
     },
     "stock_info": null,
     "underlying_market": {
-      "observed_at": "2026-10-04T15:34:12.662Z",
-      "sha256": "f6ef99a5b88ad39494f4843c195ce11c2ac603ad8a02aeafedcdfc9d99357626"
+      "observed_at": "2026-10-04T15:57:32.010Z",
+      "sha256": "e2f306d010ac2120ccba7a3122102245927da775b337df402596b57f7c1e2130"
     }
   },
   "view": {
@@ -151,20 +152,20 @@
     "market_open_state": true,
     "market_status": null,
     "multiplier_integrity": "MATCHED_FIXED_BLOCK",
-    "price_impact_percent": "0.0005157398",
+    "price_impact_percent": "0.0000000000",
     "provider": "bstock",
     "quote_vendor": "LiquidMesh",
     "reference_age_status": "UNKNOWN",
     "reference_price_updated_at": null,
-    "reported_reference_price_usd": "234.687361",
+    "reported_reference_price_usd": "234.667376",
     "representation": "NVDAB",
     "route": "QUOTED",
     "simulation": "NOT_RUN",
     "stock_feed_price_asof": null,
     "stock_feed_price_usd": null,
-    "token_price_age_ms": 5652,
-    "token_price_updated_at": "2026-10-04T15:34:06.630000+00:00",
-    "token_price_usd": "234.87000000",
+    "token_price_age_ms": 26994,
+    "token_price_updated_at": "2026-10-04T15:57:04.630000+00:00",
+    "token_price_usd": "234.85000000",
     "token_to_share_ratio": "1.000778223752807865"
   }
 }

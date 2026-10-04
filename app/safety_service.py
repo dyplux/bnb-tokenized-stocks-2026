@@ -47,6 +47,23 @@ def data_row(payload, contract):
                  str(row.get("tokenContractAddress", "")).lower() == contract), None)
 
 
+def route_matches_action(route, source, destination, raw_amount):
+    if not isinstance(route, dict):
+        return False
+    from_token = route.get("fromToken") or {}
+    to_token = route.get("toToken") or {}
+    try:
+        output = Decimal(str(route.get("toTokenAmount")))
+    except (InvalidOperation, TypeError, ValueError):
+        return False
+    return (str(route.get("binanceChainId")) == "56" and
+            isinstance(from_token, dict) and isinstance(to_token, dict) and
+            str(from_token.get("tokenContractAddress", "")).lower() == source.lower() and
+            str(to_token.get("tokenContractAddress", "")).lower() == destination.lower() and
+            str(route.get("fromTokenAmount")) == str(raw_amount) and
+            output.is_finite() and output > 0)
+
+
 def multiplier(contract, rpc=rpc_batch):
     head, _, _, head_hash = rpc([call("eth_blockNumber", [], 1)], "latest", EXPERIMENT)
     block = head[0]["result"]
@@ -91,6 +108,7 @@ def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
         "market_status": target["market_status"], "market_reason": target["market_reason"],
         "reference_price_updated_at": None, "reference_age_seconds": None,
         "reference_age_status": "UNKNOWN", "quote_available": None,
+        "quote_identity_match": None,
         "simulation_passed": False, "source_response_sha256": catalog_hash,
     }
     sources = {"catalog": {"observed_at": captured_at, "sha256": catalog_hash},
@@ -183,9 +201,10 @@ def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
                     ("userWalletAddress", wallet)],
             EXPERIMENT, "one size-specific read-only USDT buy route", context, allow_error=True)
         routes = payload.get("data") if isinstance(payload.get("data"), list) else []
-        route = next((r for r in routes if isinstance(r, dict) and r.get("isBest") is True),
-                     routes[0] if routes else None)
+        matching = [r for r in routes if route_matches_action(r, USDT, contract, raw_amount)]
+        route = next((r for r in matching if r.get("isBest") is True), matching[0] if matching else None)
         evidence["quote_available"] = bool(route)
+        evidence["quote_identity_match"] = True if route else (False if routes else None)
         if route:
             evidence["price_impact_percent"] = route.get("priceImpactPercent")
             evidence["quote_execution_mode"] = route.get("executionMode")
@@ -195,7 +214,9 @@ def review(request, api=None, rpc=rpc_batch, stock_info=public_stock_info):
                          "quote_vendor": route.get("vendorName"),
                          "price_impact_percent": route.get("priceImpactPercent")})
         else:
-            view["route"] = "NO_ROUTE"
+            view["route"] = "MISMATCH" if routes else "NO_ROUTE"
+            if routes:
+                errors.append({"source": "quote_identity", "type": "RouteIntentMismatch"})
         sources["quote"] = {"observed_at": at, "sha256": digest,
                             "business_code": payload.get("code"), "route_count": len(routes)}
     except Exception as exc:

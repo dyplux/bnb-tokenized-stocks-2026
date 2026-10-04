@@ -17,6 +17,8 @@ class SafetyReplayTests(unittest.TestCase):
         self.assertEqual(data["captured_origin"], "LIVE_READ_ONLY")
         self.assertEqual(data["decision"], "NEED_HUMAN")
         self.assertIn("INDEPENDENT_REFERENCE_TIME_UNKNOWN", data["reason_codes"])
+        self.assertEqual(data["receipt"]["policy_version"], "0.6.0")
+        self.assertTrue(data["receipt"]["evidence"]["quote_identity_match"])
         self.assertIsNone(data["receipt"]["evidence"]["reference_price_updated_at"])
         receipt = dict(data["receipt"])
         expected = receipt.pop("receipt_sha256")

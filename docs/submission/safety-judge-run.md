@@ -2,12 +2,12 @@
 
 **State:** local read-only build, checked 2026-10-04. Use Python 3.9+. A live check requires your own Binance Web3 API key and secret in a Git-ignored `.env` or process environment; the dated example does not. No wallet, Binance account or private key is needed for the screen. The API can change between this note and judging.
 
-If credentials aren't available, click **View dated example from 4 October** after opening the page. This is a fixed NVDAB result captured at 15:34 UTC, with a verifiable receipt hash. It doesn't use the form values, call the live API or establish current market conditions. The steps below exercise the live integration and need valid API credentials.
+If credentials aren't available, click **View dated example from 4 October** after opening the page. This is a fixed NVDAB result captured at 15:57 UTC, with a verifiable receipt hash. It doesn't use the form values, call the live API or establish current market conditions. The steps below exercise the live integration and need valid API credentials.
 
 1. Run `python3 app/safety_server.py` and open `http://127.0.0.1:8001`.
 2. Select **NVDAB**, set the action to **10 USDT** and the mandate to **10 USDT maximum**. Leave price impact at **0.5%**. Select **Review action**.
 3. Read the exact NVDA contract and market state. Compare **token price last updated** with **underlying reference age**. The latter should remain `UNKNOWN` unless an independent timestamp has actually been supplied. Read the fixed-block multiplier, quote mode, access and simulation states.
-4. Open the receipt JSON. It contains `policy_version`, reason codes, source capture times and response hashes. A route quote is evidence of a route response, not holder eligibility. The screen must not offer a sign or buy control.
+4. Open the receipt JSON. It contains `policy_version`, reason codes, source capture times, response hashes and `quote_identity_match`. The policy checks a returned route against chain 56, exact source and destination contracts and the raw requested amount and a positive output. A matching route is still indicative, not proof of holder eligibility or a fill. The screen must not offer a sign or buy control.
 5. Repeat with **NVDAon**. The public stock-info feed can show a distinct stock price, but currently no independent as-of time; its reference age must remain `UNKNOWN`.
 
 **Bounded failure case:** set **100 USDT** as the action and **20 USDT** as the mandate maximum. The policy must return `DENY` with `MANDATE_LIMIT_EXCEEDED` even if an API route appears. If a source fails, the check must expose the missing evidence and not return a success-looking blank result.

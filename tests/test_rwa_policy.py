@@ -24,7 +24,8 @@ class PolicyFixtureTest(unittest.TestCase):
                          "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
                          "reference_price_updated_at": "synthetic", "reference_age_seconds": 10,
                          "reference_age_status": "OBSERVED",
-                         "quote_available": True, "price_impact_percent": "0.1", "simulation_passed": True}
+                         "quote_available": True, "quote_identity_match": True,
+                         "price_impact_percent": "0.1", "simulation_passed": True}
         self.mandate = {"max_token_price_age_ms": 60000, "require_independent_reference": True,
                         "max_reference_age_seconds": 60, "max_notional_usd": "200",
                         "max_price_impact_percent": "1", "max_eligibility_age_seconds": 3600}
@@ -190,6 +191,18 @@ class PolicyFixtureTest(unittest.TestCase):
     def test_no_quote_denies(self):
         self.evidence["quote_available"] = False
         self.assertIn("NO_EXECUTABLE_QUOTE", self.run_policy()["reason_codes"])
+
+    def test_mismatched_route_denies_even_if_one_was_returned(self):
+        self.evidence["quote_identity_match"] = False
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("QUOTE_INTENT_MISMATCH", result["reason_codes"])
+
+    def test_unchecked_route_cannot_allow(self):
+        self.evidence.pop("quote_identity_match")
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("QUOTE_INTENT_UNVERIFIED", result["reason_codes"])
 
     def test_negative_price_impact_above_magnitude_limit_denies(self):
         self.evidence["price_impact_percent"] = "-1.1"

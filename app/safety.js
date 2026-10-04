@@ -19,6 +19,8 @@ const labels = {
   PRICE_IMPACT_LIMIT_EXCEEDED: 'The quoted price impact exceeds your limit.',
   NO_EXECUTABLE_QUOTE: 'The API returned no route for this exact amount and representation.',
   QUOTE_UNVERIFIED: 'A route couldn’t be verified in this check.',
+  QUOTE_INTENT_MISMATCH: 'The returned route doesn’t match the requested chain, tokens and amount, or has no positive output.',
+  QUOTE_INTENT_UNVERIFIED: 'The route identity hasn’t been checked against this action.',
   PRICE_IMPACT_UNKNOWN: 'The quote didn’t establish price impact.',
   SIMULATION_UNVERIFIED: 'A funded user-wallet transaction hasn’t been simulated.',
   TOKEN_PRICE_STALE: 'The token price is older than the 60-second mandate.',
@@ -89,6 +91,8 @@ function render(data) {
        view.multiplier_integrity === 'MATCHED_FIXED_BLOCK' ? 'ok' : 'caution');
   fact(facts, 'Holder eligibility', view.eligibility, 'caution');
   fact(facts, 'Indicative route', `${view.route}${view.execution_mode ? ` · ${view.execution_mode}` : ''}${view.quote_vendor ? ` · ${view.quote_vendor}` : ''} · temporary unfunded wallet`, 'caution');
+  const routeMatch = data.receipt.evidence.quote_identity_match;
+  fact(facts, 'Route-action match', routeMatch === true ? 'MATCHED' : routeMatch === false ? 'MISMATCH' : 'NOT CHECKED', routeMatch === true ? 'ok' : 'caution');
   fact(facts, 'Quoted price impact', view.price_impact_percent === null ? 'UNKNOWN' : `${view.price_impact_percent}%`);
   fact(facts, 'Quote captured at', data.sources.quote?.observed_at || 'UNKNOWN');
   if (data.sources.rpc) fact(facts, 'Multiplier BSC block', `${data.sources.rpc.block} · ${data.sources.rpc.block_timestamp}`);

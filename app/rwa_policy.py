@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 
 
 def number(value):
@@ -164,10 +164,14 @@ def evaluate(intent, evidence, mandate, now=None):
         deny("MANDATE_LIMIT_EXCEEDED")
     impact = number(evidence.get("price_impact_percent"))
     max_impact = number(mandate.get("max_price_impact_percent"))
-    if evidence.get("quote_available") is False:
+    if evidence.get("quote_identity_match") is False:
+        deny("QUOTE_INTENT_MISMATCH")
+    elif evidence.get("quote_available") is False:
         deny("NO_EXECUTABLE_QUOTE")
     elif evidence.get("quote_available") is not True:
         uncertain("QUOTE_UNVERIFIED")
+    elif evidence.get("quote_identity_match") is not True:
+        uncertain("QUOTE_INTENT_UNVERIFIED")
     if impact is None or max_impact is None or max_impact <= 0:
         uncertain("PRICE_IMPACT_UNKNOWN")
     elif abs(impact) > max_impact:
@@ -194,7 +198,7 @@ def evaluate(intent, evidence, mandate, now=None):
             "token_price_age_ms", "token_price_age_calculation", "reference_price_updated_at",
             "reference_age_seconds", "reference_age_status", "token_price_usd",
             "reported_reference_price_usd", "stock_feed_price_usd", "stock_feed_price_asof",
-            "quote_available", "quote_execution_mode", "quote_vendor", "quote_observed_at",
+            "quote_available", "quote_identity_match", "quote_execution_mode", "quote_vendor", "quote_observed_at",
             "price_impact_percent", "simulation_passed", "source_observed_at",
             "source_response_sha256")},
     }

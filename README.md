@@ -14,7 +14,9 @@ python3 app/safety_server.py
 
 Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT and your maximum spend and price-impact bounds. Click **Review action**. The screen shows source capture times, market state, token and independent-reference clocks separately, multiplier, route mode, holder-access gap, simulation gap, reason codes and downloadable JSON receipt. For Ondo, it also reads Binance's public Wallet Skill stock-info feed. That price has no observed stock-feed as-of timestamp, so reference age stays `UNKNOWN`. The server binds only to localhost, accepts four checks per minute and sends no transaction. The [bStock](docs/product/safety-screen-live.png) and [Ondo](docs/product/safety-screen-ondo-live.png) Sunday browser captures are dated observations, not standing service guarantees. The synthetic suite covers this service and the policy, including `offhours` and the untimed stock-feed regression.
 
-Without API credentials, choose **View dated example from 4 October**. It replays one fixed, read-only NVDAB decision captured at 15:34 UTC; form entries don't change the replay. Its receipt hash can be checked offline. It doesn't demonstrate a live API connection or a current market decision.
+Policy version 0.6.0 checks the returned route's chain, source token, destination contract, raw input amount and positive output against the requested action. A synthetic route mismatch denies; one new live NVDAB check matched these four fields but still returned `NEED_HUMAN`. Route identity matching doesn't prove user eligibility, wallet binding, or a fill.
+
+Without API credentials, choose **View dated example from 4 October**. It replays one fixed, read-only NVDAB decision captured at 15:57 UTC; form entries don't change the replay. Its receipt hash can be checked offline. It doesn't demonstrate a live API connection or a current market decision.
 
 The [current judge-run guide](docs/submission/safety-judge-run.md) walks through one live action and a mandate-denial case in a clean local session.
 
