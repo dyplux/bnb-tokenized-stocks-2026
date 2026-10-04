@@ -614,3 +614,13 @@ The [12:51 UTC CBRS probe](../research/2026-10-04-cbrs-displayed-gap-vs-routes.m
 The [backfilled Friday late-session check](../research/2026-10-04-friday-afterhours-sensitivity.md) used historical Yahoo one-minute bars for the same three frozen tickers. For six Sunday token representations, the median absolute gap to a Friday baseline fell from 0.3320% against the regular close to 0.1834% against the last available late-session bar. TSLA bStock changed sign relative to the baseline. These are retrospective external bars, not independently observed issuer reference updates.
 
 **CEO decision:** don't treat a Sunday-versus-16:00-close gap as a newly discovered weekend edge. Keep the pre-registered Monday test unchanged so it can't be adjusted after seeing outcomes, and publish the late-session sensitivity beside it. Reconsider an off-hours product only after Monday's dated result and an amount-specific route demonstrate a distinct user action. The collector and data-quality primitive remain useful regardless of the result.
+
+## D-059: an available quote does not establish user eligibility
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** policy safety correction, no product or live-trade approval
+
+The [issuer-access check](../research/2026-10-04-issuer-access-gate.md) found that Binance's bStocks FAQs make third-party integrators responsible for geographic restrictions and refer to a country-eligibility API without giving us a verified callable path. Our signed quote probes used temporary nonholder addresses. The policy skeleton previously checked issuer identity but had no separate user-access field.
+
+**CEO decision:** policy version 0.3.0 now requires an explicit eligible state with a dated basis inside a caller-specified freshness limit. Ineligible is `DENY`; missing, unverified or stale access is `NEED_HUMAN`. The engine can't establish issuer-recognized permission from a country indication or a quote; the caller remains responsible for validating the evidence. This correction prevents the prototype from returning `ALLOW` solely because its price, market and route fields pass. It doesn't authorize a funded demo.

@@ -2,8 +2,8 @@
   "claim_limit": "A ratio transition is a candidate event, not proof of a split, rebase or issuer notice. No pre-collector history is reconstructed.",
   "contracts": 40,
   "first_observed_at": "2026-10-04T10:22:07.442Z",
-  "last_observed_at": "2026-10-04T12:10:03.457Z",
-  "observations": 796,
+  "last_observed_at": "2026-10-04T13:05:02.635Z",
+  "observations": 1236,
   "origin": "LIVE collector tape",
   "ratio_change_candidates": 0,
   "rows_without_valid_ratio": 0

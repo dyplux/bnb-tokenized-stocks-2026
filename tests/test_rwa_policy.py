@@ -16,6 +16,8 @@ class PolicyFixtureTest(unittest.TestCase):
                        "contract": "0x" + "1" * 40, "notional_usd": "100"}
         self.evidence = {"chain_id": "56", "ticker": "TEST", "provider": "fixture",
                          "contract": self.intent["contract"], "issuer_verified": True,
+                         "eligibility_status": "ELIGIBLE", "eligibility_basis": "synthetic_fixture_only",
+                         "eligibility_checked_at": "2026-10-04T00:00:00Z",
                          "token_to_share_ratio": "1", "previous_token_to_share_ratio": "1",
                          "corporate_action_verified": False, "market_status": "regular", "market_reason": None,
                          "token_price_age_ms": 1000,
@@ -25,7 +27,7 @@ class PolicyFixtureTest(unittest.TestCase):
                          "quote_available": True, "price_impact_percent": "0.1", "simulation_passed": True}
         self.mandate = {"max_token_price_age_ms": 60000, "require_independent_reference": True,
                         "max_reference_age_seconds": 60, "max_notional_usd": "200",
-                        "max_price_impact_percent": "1"}
+                        "max_price_impact_percent": "1", "max_eligibility_age_seconds": 3600}
         self.now = datetime(2026, 10, 4, tzinfo=timezone.utc)
 
     def run_policy(self):

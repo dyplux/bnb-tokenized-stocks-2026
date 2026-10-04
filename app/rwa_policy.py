@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 
 def number(value):
@@ -35,6 +35,34 @@ def reference_freshness_guard(evidence, mandate):
     return None
 
 
+def eligibility_guard(evidence, mandate, now):
+    """Require a dated, caller-verified access decision for this intended user.
+
+    A quote response and a country-level indication don't verify a wallet or person.
+    The caller must validate the issuer's access evidence before setting ELIGIBLE.
+    """
+    status = evidence.get("eligibility_status")
+    if status == "INELIGIBLE":
+        return "USER_INELIGIBLE", "DENY"
+    if status != "ELIGIBLE":
+        return "USER_ELIGIBILITY_UNKNOWN", "NEED_HUMAN"
+    basis = evidence.get("eligibility_basis")
+    checked_at = evidence.get("eligibility_checked_at")
+    max_age = number(mandate.get("max_eligibility_age_seconds"))
+    if not isinstance(basis, str) or not basis.strip() or not isinstance(checked_at, str) or max_age is None or max_age <= 0:
+        return "USER_ELIGIBILITY_PROVENANCE_UNKNOWN", "NEED_HUMAN"
+    try:
+        checked = datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
+        age = (now - checked).total_seconds() if checked.tzinfo is not None else None
+    except (ValueError, TypeError):
+        age = None
+    if age is None or age < 0:
+        return "USER_ELIGIBILITY_PROVENANCE_UNKNOWN", "NEED_HUMAN"
+    if Decimal(str(age)) > max_age:
+        return "USER_ELIGIBILITY_STALE", "NEED_HUMAN"
+    return None
+
+
 def evaluate(intent, evidence, mandate, now=None):
     """Return a fail-closed decision for one planned BSC spot action.
 
@@ -60,6 +88,10 @@ def evaluate(intent, evidence, mandate, now=None):
         deny("TOKEN_IDENTITY_MISMATCH")
     if evidence.get("issuer_verified") is not True:
         uncertain("ISSUER_UNVERIFIED")
+    eligibility_result = eligibility_guard(evidence, mandate, now)
+    if eligibility_result is not None:
+        code, severity = eligibility_result
+        (deny if severity == "DENY" else uncertain)(code)
 
     ratio = number(evidence.get("token_to_share_ratio"))
     previous = number(evidence.get("previous_token_to_share_ratio"))
@@ -116,9 +148,10 @@ def evaluate(intent, evidence, mandate, now=None):
         "intent": {k: intent.get(k) for k in ("chain_id", "ticker", "provider", "contract", "notional_usd")},
         "mandate": {k: mandate.get(k) for k in (
             "max_token_price_age_ms", "require_independent_reference", "max_reference_age_seconds",
-            "max_notional_usd", "max_price_impact_percent")},
+            "max_notional_usd", "max_price_impact_percent", "max_eligibility_age_seconds")},
         "evidence": {k: evidence.get(k) for k in (
-            "chain_id", "ticker", "provider", "contract", "issuer_verified", "token_to_share_ratio",
+            "chain_id", "ticker", "provider", "contract", "issuer_verified",
+            "eligibility_status", "eligibility_basis", "eligibility_checked_at", "token_to_share_ratio",
             "previous_token_to_share_ratio", "corporate_action_verified", "market_status", "market_reason",
             "token_price_age_ms", "token_price_age_calculation", "reference_price_updated_at",
             "reference_age_seconds", "reference_age_status", "quote_available",
