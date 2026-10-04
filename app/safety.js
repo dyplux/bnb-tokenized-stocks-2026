@@ -3,6 +3,18 @@ const submit = document.querySelector('#submit');
 const example = document.querySelector('#example');
 const error = document.querySelector('#form-error');
 let latest = null;
+let requestVersion = 0;
+
+function clearResult() {
+  latest = null;
+  document.querySelector('#empty-state').hidden = false;
+  document.querySelector('#result-state').hidden = true;
+  document.querySelector('#observed').textContent = 'AWAITING CHECK';
+  document.querySelector('.mode').textContent = 'LIVE READ-ONLY CHECK · BSC MAINNET';
+  const replay = document.querySelector('#replay-disclosure');
+  replay.hidden = true;
+  replay.textContent = '';
+}
 
 const labels = {
   ISSUER_UNVERIFIED: 'Issuer rights haven’t been independently verified for this review.',
@@ -110,9 +122,17 @@ function render(data) {
   document.querySelector('#observed').textContent = data.origin;
 }
 
+form.addEventListener('input', () => {
+  requestVersion += 1;
+  clearResult();
+  error.hidden = true;
+});
+
 form.addEventListener('submit', async event => {
   event.preventDefault();
   error.hidden = true;
+  const version = ++requestVersion;
+  clearResult();
   if (!form.reportValidity()) return;
   submit.disabled = true;
   example.disabled = true;
@@ -125,10 +145,12 @@ form.addEventListener('submit', async event => {
     });
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || 'The live check failed.');
-    render(payload);
+    if (version === requestVersion) render(payload);
   } catch (failure) {
-    error.textContent = failure.message;
-    error.hidden = false;
+    if (version === requestVersion) {
+      error.textContent = failure.message;
+      error.hidden = false;
+    }
   } finally {
     submit.disabled = false;
     example.disabled = false;
@@ -138,15 +160,20 @@ form.addEventListener('submit', async event => {
 
 example.addEventListener('click', async () => {
   error.hidden = true;
+  const version = ++requestVersion;
+  clearResult();
   submit.disabled = true;
   example.disabled = true;
   try {
     const response = await fetch('/api/dated-example');
     if (!response.ok) throw new Error('The recorded example is unavailable.');
-    render(await response.json());
+    const payload = await response.json();
+    if (version === requestVersion) render(payload);
   } catch (failure) {
-    error.textContent = failure.message;
-    error.hidden = false;
+    if (version === requestVersion) {
+      error.textContent = failure.message;
+      error.hidden = false;
+    }
   } finally {
     submit.disabled = false;
     example.disabled = false;
