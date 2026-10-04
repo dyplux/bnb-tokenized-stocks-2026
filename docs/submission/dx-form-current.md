@@ -1,6 +1,6 @@
 # Developer Experience Report: current evidence for founder review
 
-**Snapshot:** 2026-10-04 17:25 UTC. This is a draft for the [official DevEx form](https://forms.gle/EUQ39xf54GHjC2ys5), not a submitted answer. The [484-call sanitized metrics export](../devex/2026-10-04-metrics.json), [call log](../devex/raw/2026-10-04.jsonl) and [reproductions](../devex/2026-10-04-evidence-summary.md) are the underlying record. The founder must verify wording, supply their own ratings and private form fields, and revise it after Monday's observations. No wallet, UID, API key or personal email belongs in this file.
+**Metrics cutoff:** 2026-10-04 17:25 UTC; one later wrapped xStock route observation at 18:57 UTC is labelled below and isn't included in those counts. This is a draft for the [official DevEx form](https://forms.gle/EUQ39xf54GHjC2ys5), not a submitted answer. The [484-call sanitized metrics export](../devex/2026-10-04-metrics.json), [call log](../devex/raw/2026-10-04.jsonl) and [reproductions](../devex/2026-10-04-evidence-summary.md) are the underlying record. The founder must verify wording, supply their own ratings and private form fields, and revise it after Monday's observations. No wallet, UID, API key or personal email belongs in this file.
 
 ## What we actually built and called
 
@@ -17,6 +17,7 @@ The current read-only safety screen uses signed **RWA Data** (`/tokens`, `/price
 | [Quote is not access](../devex/repros/2026-10-04-demo-wallet-dry-run.md) | Read-only quotes and unsigned builds succeeded for a public demo wallet, but both 10 USDT off-chain simulations predicted insufficient-balance failure. No holder or jurisdiction eligibility result accompanied a route. | Provide a documented token-specific self-custody eligibility check and distinguish API success from predicted transaction status. |
 | [Gas field units](../devex/repros/2026-10-04-quote-gas-units.md) | Quote `estimateGasFee=450000` matched unsigned build `gas=450000`, while `gasPrice` was separate. No gas was paid. | State whether quote gas is a limit, fee, or monetary estimate for each route mode. |
 | [Quote lifetime](../devex/repros/2026-10-04-quote-expiry-observation.md) | An exact-wallet NVDAB `SWAP` route had a `quoteId` but no observed expiry field. A fresh pre-execution packet was assembled 0.806 seconds after quote and still blocked on other guards. | Document route validity and expose an explicit expiry or status check; our 60-second internal age cap isn't a provider guarantee. |
+| [Wrapped xStock coverage](../research/2026-10-04-xstock-route-fallback.md) | Two public-listed BSC wrapped xStocks had indexed USDT pairs, but signed exact-wallet 10 USDT Binance Web3 quotes for each returned `40374` and zero routes at 18:57 UTC. The indexer isn't proof of an executable route or holder access. | State whether wrapped ERC-4626 xStocks are supported by the aggregator, and distinguish unsupported representation from size-dependent vendor liquidity. |
 
 ## Numbers and limits
 
