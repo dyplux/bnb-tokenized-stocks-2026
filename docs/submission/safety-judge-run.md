@@ -1,6 +1,6 @@
 # Judge run: one stock-token action
 
-**State:** local read-only build, checked 2026-10-04. Use Python 3.9+. A live check requires your own Binance Web3 API key and secret in a Git-ignored `.env` or process environment; the dated example does not. No wallet, Binance account or private key is needed for the screen. The API can change between this note and judging.
+**State:** local read-only build, checked 2026-10-04. Use Python 3.9+. A live check requires your own Binance Web3 API key and secret in a Git-ignored `.env` or process environment; the dated example does not. In a clean no-key checkout, the local page and dated example load, while **Review action** returns HTTP 503 with the credential setup instruction. No wallet, Binance account or private key is needed for the screen. The API can change between this note and judging.
 
 If credentials aren't available, open the [public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) and select either observed case. The 15:57 UTC NVDAB result returns `NEED_HUMAN`; a separate 19:56 UTC read-only request returns `DENY` because 100 USDT exceeds its 20 USDT mandate despite a quoted route. Both are fixed 4 October replays with verifiable receipt hashes. The green `ALLOW` case is a synthetic policy fixture. These examples don't use the local form values, call the live API or establish current market conditions. The steps below exercise the live integration and need valid API credentials.
 

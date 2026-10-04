@@ -83,6 +83,12 @@ class Handler(BaseHTTPRequestHandler):
             self.respond(200, json.dumps(result, ensure_ascii=False).encode())
         except (ValueError, json.JSONDecodeError) as exc:
             self.json_error(400, str(exc)[:160])
+        except RuntimeError as exc:
+            if str(exc) == "missing Binance Web3 credentials in ignored .env":
+                self.json_error(503, "Set BINANCE_WEB3_API_KEY and BINANCE_WEB3_SECRET_KEY in the ignored .env or process environment, then retry.")
+            else:
+                print("Safety check failed: %s" % type(exc).__name__, file=sys.stderr)
+                self.json_error(502, "Live source unavailable. No safety decision was made. Retry later.")
         except Exception as exc:
             print("Safety check failed: %s" % type(exc).__name__, file=sys.stderr)
             self.json_error(502, "Live source unavailable. No safety decision was made. Retry later.")
