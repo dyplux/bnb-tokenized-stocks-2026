@@ -1,0 +1,42 @@
+{
+  "action": {
+    "chain_id": "56",
+    "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "notional_usdt": "10",
+    "provider": "bstock",
+    "side": "BUY",
+    "ticker": "NVDA"
+  },
+  "boundary": "Separate quotes; no signer, broadcast or approved capital action.",
+  "exact_wallet_trial": {
+    "build_observed_at": "2026-10-04T16:15:24.258Z",
+    "build_sha256": "5902276d220c144f79f59642d5891988d82e1847b6c978673c1a06e73af8d8bc",
+    "predicted_transaction_status": "FAILED",
+    "quote_observed_at": "2026-10-04T16:15:23.927Z",
+    "quote_sha256": "543eb359529e8b2942697baa3135cf6d9071f7c7df4e4118d79d4cd5dfc8bfdc",
+    "simulation_observed_at": "2026-10-04T16:15:24.734Z",
+    "simulation_sha256": "b8f6d69d5cc0aaaf873dc9d33970cdbda79ce49f2b5538e82281a6d02858136b",
+    "stage": "SIMULATED"
+  },
+  "execution_authorized": false,
+  "packet_sha256": "4b8877f2959521273351aafdcace8ba10fba98ad61b47369dc700502b9e7a813",
+  "policy": {
+    "decision": "NEED_HUMAN",
+    "observed_at": "2026-10-04T16:15:22Z",
+    "reason_codes": [
+      "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+      "ISSUER_UNVERIFIED",
+      "MARKET_STATE_UNKNOWN",
+      "SIMULATION_UNVERIFIED",
+      "USER_ELIGIBILITY_UNKNOWN"
+    ],
+    "receipt_sha256": "dea3762bebae8d0525d152df0096dd57f3106c1b428294ee0dd78bfdf699f8f9"
+  },
+  "reason_codes": [
+    "EXACT_WALLET_SIMULATION_NOT_PASSED",
+    "EXPLICIT_HUMAN_APPROVAL_MISSING",
+    "POLICY_NOT_ALLOW",
+    "POLICY_QUOTE_NOT_BOUND_TO_EXECUTION"
+  ],
+  "state": "BLOCKED"
+}

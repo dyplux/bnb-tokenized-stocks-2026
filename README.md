@@ -22,6 +22,8 @@ The [current judge-run guide](docs/submission/safety-judge-run.md) walks through
 
 An optional read-only [exact-wallet dry run](docs/devex/repros/2026-10-04-demo-wallet-dry-run.md) uses the **public** `BNB_STOCKS_DEMO_ADDRESS` from the ignored `.env`: `python3 scripts/prepare_exact_wallet_simulation.py --provider bstock`. It requests a 10 USDT quote, unsigned build and off-chain simulation for one address. It can't sign or broadcast. The 4 October trial predicted `FAILED` because the demo address had insufficient USDT; it isn't an eligible funded transaction.
 
+For a single audit packet, run `python3 scripts/prepare_pre_execution_packet.py --provider bstock`. It performs a new policy review and a separate 10 USDT exact-wallet dry run, then writes an ignored local JSON packet. The [dated example](docs/product/pre-execution-packet-2026-10-04.json) was blocked at 16:15 UTC: policy `NEED_HUMAN`, predicted simulation `FAILED`, and no human approval. The policy quote comes from a temporary wallet, so this packet never treats it as authorization for the exact-wallet transaction. It contains no signer or broadcast path.
+
 ## Evidence a reviewer can reproduce
 
 - The [safety evidence](docs/research/2026-10-04-safety-evidence.md) links each observed failure to a source, a product guard and its remaining uncertainty. The [single-action spec](docs/product/safety-one-page-spec.md) names the current user task and acceptance criteria.

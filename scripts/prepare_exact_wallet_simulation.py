@@ -81,6 +81,8 @@ def run(provider="bstock", wallet=None, api=None):
         raise ValueError("Invalid public demo address")
     api = api or Api()
     result = {"origin": "LIVE_READ_ONLY", "provider": provider,
+              "chain_id": "56", "side": "BUY", "source_token": USDT,
+              "notional_usdt": "10",
               "wallet": "public_demo_address_not_retained", "stage": "CATALOG",
               "quote": None, "build": None, "simulation": None,
               "decision": "NOT_APPROVED",
