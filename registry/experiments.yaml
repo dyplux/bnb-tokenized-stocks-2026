@@ -1,10 +1,10 @@
 updated_at: 2026-10-04
 experiments:
   EXP-RWA-001: {state: live_catalog_and_xstock_coverage, output: experiments/EXP-RWA-001/xstock_price_probe_results.json}
-  EXP-RWA-002: {state: measured_math_only, output: experiments/EXP-RWA-002/results.json}
+  EXP-RWA-002: {state: measured_math_only, output: experiments/EXP-RWA-002/results.json, same_cycle_check: experiments/EXP-RWA-002/reference_formula_results.json}
   EXP-RWA-003: {state: collecting, output: data/market_hours/}
-  EXP-RWA-004: {state: collecting_with_first_analysis, output: experiments/EXP-RWA-004/results.json}
+  EXP-RWA-004: {state: collecting_with_first_analysis, output: experiments/EXP-RWA-004/results.json, external_close_comparison: experiments/EXP-RWA-004/friday_close_benchmark_results.json}
   EXP-RWA-008: {state: initial_read_only, output: experiments/EXP-RWA-008/cross_issuer_quotes.csv}
   EXP-RWA-009: {state: corrected_read_only, output: experiments/EXP-RWA-009/quote_depth.csv}
   EXP-RWA-010: {state: three_part_audit_reference_unknown, output: experiments/EXP-RWA-010/results.json}
-  EXP-RWA-011: {state: synthetic_fixture, output: experiments/EXP-RWA-011/corporate_action_fixtures.json}
+  EXP-RWA-011: {state: synthetic_fixture_and_live_profile_without_event_history, output: experiments/EXP-RWA-011/corporate_action_fixtures.json, profile: experiments/EXP-RWA-011/profile_probe.json}
