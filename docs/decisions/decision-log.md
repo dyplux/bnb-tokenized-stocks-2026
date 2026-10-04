@@ -604,3 +604,13 @@ The [pinned source audit](../research/2026-10-04-gateway-substitute-audit.md) fo
 The [12:51 UTC CBRS probe](../research/2026-10-04-cbrs-displayed-gap-vs-routes.md) followed the largest same-ticker raw gap in the 11:00 catalog. A fresh signed price request still showed a 5.25% arithmetic difference, but the cheaper Ondo token's price timestamp was 35.85 hours old. The signed Trading API returned one read-only buy and sell route for CBRSB, and zero routes with business code `40367` for CBRSon on both sides. Those are estimates for an unfunded nonholder; issuer rights and eligibility remain unknown.
 
 **CEO decision:** treat price age and route availability as separate gates. No cross-issuer arbitrage or profit claim survives this Sunday example. The failure may be useful to a user deciding whether a displayed quote can be acted upon, but an incumbent comparison and a verified next action are still required before selecting a product. Repeat the case during regular US trading to learn whether it is a temporary market state or a persistent coverage issue.
+
+## D-058: keep Friday's regular close as the locked test, but show after-hours sensitivity
+
+**Date:** 2026-10-04
+**Owner:** Dyplux
+**Status:** research correction; no product selected
+
+The [backfilled Friday late-session check](../research/2026-10-04-friday-afterhours-sensitivity.md) used historical Yahoo one-minute bars for the same three frozen tickers. For six Sunday token representations, the median absolute gap to a Friday baseline fell from 0.3320% against the regular close to 0.1834% against the last available late-session bar. TSLA bStock changed sign relative to the baseline. These are retrospective external bars, not independently observed issuer reference updates.
+
+**CEO decision:** don't treat a Sunday-versus-16:00-close gap as a newly discovered weekend edge. Keep the pre-registered Monday test unchanged so it can't be adjusted after seeing outcomes, and publish the late-session sensitivity beside it. Reconsider an off-hours product only after Monday's dated result and an amount-specific route demonstrate a distinct user action. The collector and data-quality primitive remain useful regardless of the result.

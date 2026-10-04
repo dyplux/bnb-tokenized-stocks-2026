@@ -1,0 +1,51 @@
+{
+  "claim_limit": "Supplementary historical after-hours bar check; not the preregistered regular-close baseline or an issuer reference clock.",
+  "origin": "BACKFILLED",
+  "rows": [
+    {
+      "bar_interval": "1m",
+      "last_bar_close_usd": "183.2397",
+      "last_bar_time_new_york": "2026-10-02T19:59:50-04:00",
+      "non_null_afterhours_bars": 234,
+      "origin": "BACKFILLED",
+      "publisher": "Yahoo Finance",
+      "raw_response_sha256": "918bf673d710738a3709ec314ca4bb88e88dcaf892249162591e2fe442f19590",
+      "retrieved_at": "2026-10-04T13:02:42Z",
+      "session_date": "2026-10-02",
+      "session_filter": "16:00 to before 20:00 America/New_York",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/COIN?period1=1790970900&period2=1790985900&interval=1m&includePrePost=true",
+      "ticker": "COIN",
+      "timestamp_limit": "Historical one-minute bar timestamp, not a last-trade, issuer reference, or execution clock"
+    },
+    {
+      "bar_interval": "1m",
+      "last_bar_close_usd": "234.2218",
+      "last_bar_time_new_york": "2026-10-02T19:59:58-04:00",
+      "non_null_afterhours_bars": 241,
+      "origin": "BACKFILLED",
+      "publisher": "Yahoo Finance",
+      "raw_response_sha256": "d447bfb7fa3b073d812f8401db2065dacc73df817be6fac4155d5b75ba3d8397",
+      "retrieved_at": "2026-10-04T13:02:43Z",
+      "session_date": "2026-10-02",
+      "session_filter": "16:00 to before 20:00 America/New_York",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1790970900&period2=1790985900&interval=1m&includePrePost=true",
+      "ticker": "NVDA",
+      "timestamp_limit": "Historical one-minute bar timestamp, not a last-trade, issuer reference, or execution clock"
+    },
+    {
+      "bar_interval": "1m",
+      "last_bar_close_usd": "371.4476",
+      "last_bar_time_new_york": "2026-10-02T19:59:59-04:00",
+      "non_null_afterhours_bars": 241,
+      "origin": "BACKFILLED",
+      "publisher": "Yahoo Finance",
+      "raw_response_sha256": "454c8d7465d6b7459e0ab125b80dfe1d0df7396eb61f68428bce2803043ea1ee",
+      "retrieved_at": "2026-10-04T13:02:44Z",
+      "session_date": "2026-10-02",
+      "session_filter": "16:00 to before 20:00 America/New_York",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?period1=1790970900&period2=1790985900&interval=1m&includePrePost=true",
+      "ticker": "TSLA",
+      "timestamp_limit": "Historical one-minute bar timestamp, not a last-trade, issuer reference, or execution clock"
+    }
+  ]
+}
