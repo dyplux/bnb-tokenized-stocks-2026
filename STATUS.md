@@ -1,6 +1,6 @@
 # TOKENIZED STOCKS: OCT 11
 
-**As of:** 2026-10-04 17:17 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 19 hours away. This is the primary workstream. Use the health command for the current collector count.
+**As of:** 2026-10-04 17:24 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 18 hours away. This is the primary workstream. Use the health command for the current collector count.
 
 | Hypothesis | State | Decision boundary |
 |---|---|---|
@@ -33,6 +33,8 @@
 **17:14 UTC pre-execution hardening:** new packets record assembly time and quote age, and explicitly block missing, future or over-60-second quote timestamps. The observed NVDAB route exposed no provider expiry field, so this internal limit isn't described as a guaranteed route lifetime. The historical public 16:58 packet is unchanged. At 17:10 UTC the collector recorded 3,196 LIVE observations, 40 contracts and zero consecutive failures.
 
 **17:17 UTC live packet check:** a new exact-wallet NVDAB quote, unsigned build and off-chain simulation completed; quote age at packet assembly was 0.806 seconds. The policy returned `NEED_HUMAN`, simulation predicted `FAILED` for the unfunded wallet, and the packet stayed `BLOCKED`. [Reproduction and question](docs/devex/repros/2026-10-04-quote-expiry-observation.md). Local 130-test suite, public Python CI and Pages build passed for commit `659715f`; the collector reached 3,236 LIVE rows at 17:15 with zero consecutive failures.
+
+**17:24 UTC independent-source probe:** the [official xStocks price-data API](docs/research/2026-10-04-xstocks-reference-probe.md) is documented as public, but bounded NVDAx and AAPLx requests timed out here. No independent stock timestamp was observed, so `reference_age_status` remains `UNKNOWN`. The collector and Monday score criteria are unchanged.
 
 **14:10 UTC route follow-up:** the earlier AAOI bStock 100 USDT no-route response was not stable: 10, 100 and 1,000 USDT requests later returned routes. MSTR Ondo still returned `40374` at all three sizes. [Evidence and limits](docs/research/2026-10-04-weekend-route-coverage.md). No execution or user access was established.
 
