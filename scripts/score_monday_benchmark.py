@@ -44,6 +44,10 @@ def main():
             raise SystemExit("unfrozen ticker or missing direct source URL")
         if item.get("session_date") != "2026-10-05":
             raise SystemExit("outcome row has no verified 2026-10-05 session date: %s" % ticker)
+        for field in ("open_usd", "close_usd"):
+            value = item.get(field)
+            if value is not None and positive_decimal(value) is None:
+                raise SystemExit("%s %s must be a positive number or explicit null" % (ticker, field))
         outcomes[ticker] = item
     if not any(positive_decimal(item.get("open_usd")) for item in outcomes.values()):
         raise SystemExit("no dated Monday opening value; don't generate an outcome from missing data")
