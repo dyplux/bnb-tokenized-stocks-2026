@@ -18,7 +18,7 @@ Python 3.9 or newer is sufficient. Set your own `BINANCE_WEB3_API_KEY` and `BINA
 python3 app/safety_server.py
 ```
 
-Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, set maximum spend and price impact, and select **Review action**. The localhost service limits requests to four per minute. It doesn't connect a wallet, sign or broadcast. The screen shows the contract, evidence times, policy decision and a downloadable receipt. [Full clean-start steps](docs/submission/safety-judge-run.md).
+Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, set maximum spend and price impact, and select **Review action**. The localhost service limits requests to four per minute. It doesn't connect a wallet, sign or broadcast. The read-only quote uses a temporary generated address, so route availability doesn't establish a particular holder's access or exact-wallet execution. The screen shows the contract, evidence times, policy decision and a downloadable receipt. [Full clean-start steps](docs/submission/safety-judge-run.md).
 
 The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This is an agent-callable tool, **not** a deployed Binance Agentic Wallet or Agent Studio runtime. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
 
