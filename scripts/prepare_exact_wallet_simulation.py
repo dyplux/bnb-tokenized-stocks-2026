@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 from app.server import USDT  # noqa: E402
 from scripts.rwa_research import Api, QUOTE, SWAP_BUILD, TOKENS, normalize, write_json  # noqa: E402
 
-OUT = ROOT / "data/market_hours/exact_wallet_simulation.json"
+OUT = ROOT / "data/market_hours"
 ADDRESS = re.compile(r"0x[0-9a-fA-F]{40}\Z")
 EXPERIMENT = "EXP-RWA-009/EXACT-WALLET-DRY-RUN"
 
@@ -118,7 +118,7 @@ def main():
     parser.add_argument("--provider", choices=("bstock", "ondo"), default="bstock")
     args = parser.parse_args()
     result = run(provider=args.provider)
-    write_json(OUT, result)
+    write_json(OUT / ("exact_wallet_simulation_" + args.provider + ".json"), result)
     print(json.dumps({"stage": result["stage"], "provider": args.provider,
                       "route_count": (result["quote"] or {}).get("route_count"),
                       "build_code": (result["build"] or {}).get("business_code"),
