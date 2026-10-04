@@ -1,76 +1,41 @@
 # Dyplux Execution Safety Layer for Tokenized Equities
 
-The product reviews one proposed tokenized-equity purchase on BNB Chain before signing. The current local screen covers NVDAB and NVDAon. It identifies the exact contract, reads signed Binance RWA data and an amount-specific quote, checks the on-chain bStock multiplier, and returns a deterministic `ALLOW`, `DENY` or `NEED_HUMAN` receipt. A live anonymous check normally returns `NEED_HUMAN` because holder eligibility, an independent underlying-stock reference clock and a funded simulation remain unverified. The [safety evidence](docs/research/2026-10-04-safety-evidence.md), [one-page spec](docs/product/safety-one-page-spec.md), [demo asset comparison](docs/submission/demo-asset-selection.md) and [mainnet path](docs/product/mainnet-execution-path.md) distinguish working reads from unbuilt execution. The founder froze this safety task as the submission core on 4 October; Monday's experiment can add an off-hours capability without changing that decision.
+A stock token can still have a quote when the underlying exchange is closed. Before a person or agent signs a purchase, Dyplux checks the exact token, market state, available price clocks, economic multiplier, route, impact, user mandate and missing access or simulation evidence. The result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
-**Public judge packet:** [open the dated safety review](https://dyplux.github.io/bnb-tokenized-stocks-2026/), [watch the 30-second read-only product demo](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-demo.mp4) or [run a fresh check locally](docs/submission/safety-judge-run.md). The public packet has one observed `NEED_HUMAN` case, one clearly labelled synthetic `ALLOW` policy fixture, source links, system status and downloadable receipts. It holds no API credential and makes no live trading request. The film is a separate 18:28 UTC local request that stopped before signing; the synthetic fixture isn't a funded safe trade.
+The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. It uses signed Binance Web3 RWA Data and Trading API reads, a fixed-block BNB Chain multiplier check for NVDAB, and a deterministic [policy](app/rwa_policy.py). A dated 4 October NVDAB review returned `NEED_HUMAN` despite an available quote: independent stock-reference time, holder eligibility and a funded simulation weren't verified. [Six observed safety findings](docs/research/2026-10-04-safety-evidence.md) explain why these checks exist.
 
-The problem is concrete: a stock-token quote can look actionable while the underlying reference clock is unknown, the market state is undocumented, the displayed spread disappears at the executable route, or the buyer's eligibility has not been checked. Six [dated observations](docs/research/2026-10-04-safety-evidence.md) support the current safety workflow. The Monday open-price experiment remains a separate test and isn't a product claim.
+## See the product
 
-## Run locally
+- [Public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/): an observed, dated `NEED_HUMAN` case; a clearly marked synthetic `ALLOW` policy fixture; source times, reason codes, receipt downloads and system status. It makes no live signed API request.
+- [30-second product video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-demo.mp4): a separate, dated read-only run. It shows no trade.
+- [Judge instructions](docs/submission/safety-judge-run.md): run a fresh signed check with your own Binance Web3 API credentials, then try a mandate denial. The public page also works without credentials.
 
-Python 3.9 or newer is enough; the safety screen has no installed package dependency. Put your own `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRET_KEY` in the process environment or a Git-ignored `.env`. The [template](.env.example) lists these names. No wallet key is used.
+## Run a fresh check locally
+
+Python 3.9 or newer is sufficient. Set your own `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRET_KEY` in the process environment or a Git-ignored `.env`; see [.env.example](.env.example). No wallet key is needed.
 
 ```sh
 python3 app/safety_server.py
 ```
 
-Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT and your maximum spend and price-impact bounds. Click **Review action**. The screen shows source capture times, market state, token and independent-reference clocks separately, multiplier, route mode, holder-access gap, simulation gap, reason codes and downloadable JSON receipt. For Ondo, it also reads Binance's public Wallet Skill stock-info feed. That price has no observed stock-feed as-of timestamp, so reference age stays `UNKNOWN`. The server binds only to localhost, accepts four checks per minute and sends no transaction. The [bStock](docs/product/safety-screen-live.png) and [Ondo](docs/product/safety-screen-ondo-live.png) Sunday browser captures are dated observations, not standing service guarantees. The synthetic suite covers this service and the policy, including `offhours` and the untimed stock-feed regression.
+Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, set maximum spend and price impact, and select **Review action**. The localhost service limits requests to four per minute. It doesn't connect a wallet, sign or broadcast. The screen shows the contract, evidence times, policy decision and a downloadable receipt. [Full clean-start steps](docs/submission/safety-judge-run.md).
 
-Policy version 0.6.0 checks the returned route's chain, source token, destination contract, raw input amount and positive output against the requested action. A synthetic route mismatch denies; one new live NVDAB check matched these four fields but still returned `NEED_HUMAN`. Route identity matching doesn't prove user eligibility, wallet binding, or a fill.
+The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This is an agent-callable tool, **not** a deployed Binance Agentic Wallet or Agent Studio runtime. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
 
-Without API credentials, choose **View dated example from 4 October**. It replays one fixed, read-only NVDAB decision captured at 15:57 UTC; form entries don't change the replay. Its receipt hash can be checked offline. It doesn't demonstrate a live API connection or a current market decision.
+## What the evidence supports
 
-The [current judge-run guide](docs/submission/safety-judge-run.md) walks through one live action and a mandate-denial case in a clean local session.
+| Current evidence | Limit |
+|---|---|
+| Signed Binance Web3 catalog, price and amount-specific route reads for NVDAB and NVDAon | A quote doesn't prove a user may hold or trade the asset. |
+| Fixed-block bStock multiplier read | Current equality doesn't prove a past corporate action or future change. |
+| Exact-wallet 10 USDT quote, unsigned build and off-chain simulation for NVDAB | The demo wallet has no funds; simulation predicted `FAILED`. No transaction was signed. |
+| Five-minute, 40-contract market-hours collection | `tokenPriceUpdatedAt` dates the token price, not the underlying stock reference. Independent reference age remains `UNKNOWN`. |
+| Sunday route and market-state observations | Monday's preregistered off-hours experiment has no outcome yet and isn't needed to justify the safety core. |
 
-Agents can request the same **read-only** decision through `scripts/safety_agent_tool.py`: send a JSON object with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent` on stdin. It returns one JSON result and cannot sign or send a transaction. The [dated tool trial and access gate](docs/product/agentic-wallet-integration-gate.md) distinguish this local adapter from Binance Agentic Wallet, which wasn't installed.
+The [demo-asset comparison](docs/submission/demo-asset-selection.md) selects NVDAB for technical preflight because its quote, unsigned build, simulation and multiplier were observed. It **doesn't** clear issuer or user access. A real purchase requires verified eligibility, a funded passing simulation, route-target provenance and explicit approval for one exact transaction. [Execution gates](docs/product/mainnet-execution-path.md) and [submission blockers](docs/submission/blocker-board.md) record what remains.
 
-An optional read-only [exact-wallet dry run](docs/devex/repros/2026-10-04-demo-wallet-dry-run.md) uses the **public** `BNB_STOCKS_DEMO_ADDRESS` from the ignored `.env`: `python3 scripts/prepare_exact_wallet_simulation.py --provider bstock`. It requests a 10 USDT quote, unsigned build and off-chain simulation for one address. It can't sign or broadcast. The 4 October trial predicted `FAILED` because the demo address had insufficient USDT; it isn't an eligible funded transaction.
+## Reproduce the research
 
-For a single audit packet, run `python3 scripts/prepare_pre_execution_packet.py --provider bstock`. It requests one policy quote for the **public demo wallet** and passes that same in-memory route into unsigned build and off-chain simulation. New packets also compare the built unsigned call with the simulation request and check that the build's slippage and minimum received amount respect the current 0.5% limit. The [16:58 UTC dated packet](docs/product/pre-execution-packet-linked-2026-10-04.json) predates those additional fields; it has matching policy and build quote hashes and remains `BLOCKED`: policy `NEED_HUMAN`, predicted simulation `FAILED`, and no human approval. The local 17:49 rerun exercised the new checks and also stayed `BLOCKED`. Raw API responses remain in the local content-addressed store. The earlier [16:27 packet](docs/product/pre-execution-packet-2026-10-04.json) used two distinct quotes and remains in the record. None has a signer or broadcast path.
+The collector is separate from the product screen. With valid local credentials, `python3 scripts/rwa_research.py health` reports its last success, failure count, observation count and next expected run. [Collector operations](docs/devex/collector-operations.md) explain restart, deduplication and gaps. The local `LIVE` tape and raw responses stay outside Git; [dated normalized results](docs/research/2026-10-04-live-rwa-catalog-and-quotes.md), [DevEx evidence](docs/devex/2026-10-04-evidence-summary.md) and [fixtures](docs/devex/fixtures/) are public. `python3 -m unittest discover -s tests -q` runs the synthetic suite without API credentials.
 
-`python3 scripts/read_demo_wallet_state.py` makes a fixed-block, read-only BNB Chain balance and allowance check for that packet. The [4 October result](docs/product/demo-wallet-state-2026-10-04.md) found zero USDT, zero BNB and zero allowance at the demo address. The build's single-swap gas product was 0.00002439733905 BNB; approval gas is separate. The public summary doesn't retain the address or grant execution authority.
-
-## Evidence a reviewer can reproduce
-
-- The [safety evidence](docs/research/2026-10-04-safety-evidence.md) links each observed failure to a source, a product guard and its remaining uncertainty. The [single-action spec](docs/product/safety-one-page-spec.md) names the current user task and acceptance criteria.
-- The [bStock](docs/product/safety-screen-live.png) and [Ondo](docs/product/safety-screen-ondo-live.png) captures show the current browser surface on 4 October. They are dated read-only observations. [Exact-wallet quote, build and failed simulation](docs/devex/repros/2026-10-04-demo-wallet-dry-run.md) are a separate technical trial without a signature or fill.
-- `python3 -m unittest discover -s tests -q` runs synthetic policy, safety-service, collector, market-hour and data-integrity checks without credentials or live API calls. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions) runs the same suite.
-- The [DevEx evidence summary](docs/devex/2026-10-04-evidence-summary.md) separates API documentation discrepancies from our own integration errors. Reproduction fixtures and raw-response hashes support its observations.
-
-## Live research, separate from the app
-
-On 4 October the project started a read-only five-minute market-hours collector. It samples 40 BNB Chain stock contracts with one signed catalog request and one batched price request per cycle. The initial 11:10 UTC research and 11:40 UTC aligned-window update, catalog grouping, ratio arithmetic and quote checks are described in the [dated research note](docs/research/2026-10-04-live-rwa-catalog-and-quotes.md). The [current status](STATUS.md) distinguishes measured results from unresolved product choices. An existing visual budget prototype remains local and unintegrated.
-
-The [Sunday DevEx summary](docs/devex/2026-10-04-evidence-summary.md) links exact fixtures for the undocumented `offhours` state, a route-documentation conflict and the 100-address GET failure. It also separates our own amount-unit and clock errors from API behavior. The collector keeps adding logged calls; use its dated metrics and raw log for a count at a given time.
-
-The [5 USDC Apple substitute matrix](docs/research/2026-10-04-exact-budget-substitute-matrix.md) compares our dated route check with pinned Yostocks source and PancakeSwap's public Stock Terminal. [D-054](docs/decisions/decision-log.md) pauses the exact-budget standalone build until it demonstrates a permitted user action that existing tools don't already support. A separate [public Binance payload repro](docs/devex/repros/2026-10-04-public-stock-reference-clock.md) shows the reference-source ambiguity without claiming an independent stock-price clock.
-
-A [Sunday sell-side probe](docs/research/2026-10-04-sell-route-sunday.md) returned two indicative NVDA exit quotes and no blocked route for its bounded amount. The [pinned gateway substitute audit](docs/research/2026-10-04-gateway-substitute-audit.md) records why a generic policy/MCP/tape wrapper would overlap OneTicker. One block-pinned APRO NVDAB/USD round has a real update time, but it dates a token oracle, not the underlying stock reference.
-
-With a valid local `.env`, the research commands are:
-
-```sh
-python3 scripts/rwa_research.py health
-python3 scripts/audit_market_tape.py 2026-10-04
-python3 scripts/rwa_research.py start --interval 300 --keep-awake
-python3 scripts/normalize_catalog.py
-python3 scripts/analyze_rwa.py
-python3 scripts/audit_reference_formula.py 2026-10-04
-python3 scripts/compare_friday_close.py --slot 5970384
-python3 scripts/probe_live_policy.py --slot 5970384
-python3 scripts/audit_ratio_transitions.py
-```
-
-`start` detaches the collector; don't run a second copy. `health` exits nonzero if it has stopped or fallen overdue. See the [collector operations](docs/devex/collector-operations.md) for logs, restart behavior and the external SSD reboot limitation. The `LIVE` tape and raw API response store remain local. Frozen fixtures, normalized catalog snapshots and experiment summaries are in this repository. The API provides `tokenPriceUpdatedAt`, while an independent underlying reference timestamp hasn't been observed. The analysis stores reference age as `UNKNOWN`; it doesn't substitute token-price age.
-
-The separate [read-only policy skeleton](app/rwa_policy.py) checks token and issuer identity, caller-verified user eligibility with a dated basis, share-ratio changes, market state, age, quote availability, size, impact and simulation status. It measures independent reference age only when supplied by an independent source; a mandate can explicitly waive that requirement for a task that doesn't use a stock-market reference. A country indication or quote alone can't satisfy the user-eligibility guard. A policy `ALLOW` only means the supplied evidence passed this prototype's checks; it isn't issuer authorization, a trade or an investment recommendation.
-
-## Limits and submission state
-
-The signed-API app remains a read-only localhost prototype. The public [GitHub Pages packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) is a dated snapshot, not a live quote service. The project hasn't bought or sold NVDAB, simulated a funded transaction, proved issuer access for a person or jurisdiction, measured final paid costs or validated later exit availability. Binance's [bStocks FAQ](https://www.binance.com/en/support/faq/detail/f0d41139fadc4790bf9a4c0c7bce2e88) says third-party integrators must enforce geographic restrictions; the endpoint path mentioned there wasn't confirmed in our source review. Public quote hosting is blocked pending that control.
-
-This repository is public and the dated judge packet is deployed. The [official submission section](https://www.bnbchain.org/en/hackathons/tokenized-stocks) permits a deployed link **or** judge-run instructions, while its eligibility section says the repo, demo and deployed link must remain accessible through judging. The project form and Developer Experience Report haven't been submitted. Bell is a separate CoinMarketCap hackathon project; this repository has separate code, credentials and evidence.
-
-Earlier NVDAB sale-versus-Venus-borrow work was retired as the active product. Its original README and method remain in the [research archive](docs/archive/README-before-exit-check.md); the panel still runs at `/venus-scenario` for inspection.
-
-The later Exit Check and exact-budget experiments are also inactive. The [Exit Check observation](docs/research/2026-10-03-exit-check-live-browser.md) records a 5 USDC two-way quote; it did not prove a round-trip fill or profit. Its [former judge instructions](docs/submission/judge-run.md), [video QA](docs/submission/video-qa.md) and [exact-budget spec](docs/product/exact-budget-stock-spec.md) remain available for the decision history. To inspect the archived local interface, run `python3 app/server.py` and open `http://127.0.0.1:8000`.
+The [current status](STATUS.md) separates the Tokenized Stocks submission from Set and Earn. The [decision log](docs/decisions/decision-log.md) records earlier product directions and why they were retired. The public page is a dated packet, not a hosted live API service or an executed stock-token trade.
