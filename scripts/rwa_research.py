@@ -429,6 +429,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("catalog", "once", "loop", "start", "underlying-probe", "profile-probe", "xstocks", "xstocks-shape", "health"))
     parser.add_argument("--interval", type=int, default=300, help="Sampling interval in seconds, minimum 60")
+    parser.add_argument("--keep-awake", action="store_true", help="On macOS, prevent system sleep while the detached collector runs")
     args = parser.parse_args()
     if args.interval < 60:
         parser.error("interval must be at least 60 seconds")
@@ -471,7 +472,14 @@ def main():
             process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "loop", "--interval", str(args.interval)],
                                        cwd=str(ROOT), stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
                                        start_new_session=True)
+        if args.keep_awake and sys.platform == "darwin":
+            with (MARKET / "caffeinate.log").open("a", encoding="utf-8") as log:
+                keeper = subprocess.Popen(["/usr/bin/caffeinate", "-s", "-w", str(process.pid)],
+                                          stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
+                                          start_new_session=True)
+            (MARKET / "caffeinate.pid").write_text(str(keeper.pid) + "\n", encoding="utf-8")
         print(json.dumps({"started_pid": process.pid, "interval_seconds": args.interval,
+                          "keep_awake": bool(args.keep_awake and sys.platform == "darwin"),
                           "health_command": "python3 scripts/rwa_research.py health"}))
         return
     api = Api()

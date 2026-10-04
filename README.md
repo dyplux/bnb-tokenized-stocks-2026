@@ -33,7 +33,7 @@ With a valid local `.env`, the research commands are:
 
 ```sh
 python3 scripts/rwa_research.py health
-python3 scripts/rwa_research.py start --interval 300
+python3 scripts/rwa_research.py start --interval 300 --keep-awake
 python3 scripts/normalize_catalog.py
 python3 scripts/analyze_rwa.py
 ```
