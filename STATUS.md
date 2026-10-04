@@ -1,6 +1,8 @@
 # TOKENIZED STOCKS: OCT 11
 
-**As of:** 2026-10-04 19:45 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 16 hours away. This is the primary workstream. Use the health command for the current collector count.
+**As of:** 2026-10-04 21:25 UTC. Deadline 2026-10-11 12:00 UTC, about 6 days and 14 hours away. This is the primary workstream. Use the health command for the current collector count.
+
+**Submission checkpoint, 21:25 UTC:** The detached collector completed a 40-contract cycle with 5,236 unique `LIVE` rows, zero consecutive failures and 130 complete 40-contract slots. The tape audit found zero recorded gaps, errors or integrity violations; it retains four initial nine-contract slots and four early raw hashes without files as explicit limitations. The separate two-contract underlying watch remains healthy. The frozen Monday protocol and its Friday baselines still match their recorded SHA-256 hashes. Public judge page, 60-second MP4 and README each returned HTTP 200 without login; Python CI and Pages deployment succeeded for `c6d318e`. No real `ALLOW`, funded simulation, eligibility proof or capital transaction has been claimed. The founder's first-hand DevEx answers and Monday outcome remain pending.
 
 | Hypothesis | State | Decision boundary |
 |---|---|---|
