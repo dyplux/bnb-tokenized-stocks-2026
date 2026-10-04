@@ -1,0 +1,25 @@
+{
+  "age_bins": {
+    "NO_PRICE_OR_TIME": 77,
+    "OVER_7D": 36,
+    "UNDER_1H": 2,
+    "UNDER_24H": 1,
+    "UNDER_7D": 14
+  },
+  "captured_at_range": [
+    "2026-10-04T10:56:55.724Z",
+    "2026-10-04T10:56:56.730Z"
+  ],
+  "claim_limit": "A returned row can contain null price and timestamp. Token-price time isn't an independent underlying-reference time. No ratio or executable route was established by this probe.",
+  "independent_reference_age_observations": 0,
+  "median_token_price_age_hours_if_present": 404.63,
+  "raw_response_sha256": [
+    "3b4c01367d92c8c9755b48e8cc9aa7eae7c511f6a53fff010c287a0f2986016e",
+    "2a6045957874d92069d9a576dd329c433791b57bcd9509225763ab4cbcbd00d7",
+    "fe04c9aa4a2841612cc19e5bf599ee9fca9cb7620e6bedce94cca72aebf2daf0",
+    "71c1e83ae2380e9eef4940e7168aa0e2e597bf8b43e66ac20261ff0ca0835e5c"
+  ],
+  "requested": 130,
+  "returned": 130,
+  "with_price_and_token_timestamp": 53
+}

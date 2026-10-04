@@ -1,0 +1,102 @@
+"""Deterministic, read-only RWA execution policy. Never signs a transaction."""
+
+import hashlib
+import json
+from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
+
+VERSION = "0.1.0"
+
+
+def number(value):
+    try:
+        candidate = Decimal(str(value))
+        return candidate if candidate.is_finite() else None
+    except (InvalidOperation, TypeError, ValueError):
+        return None
+
+
+def evaluate(intent, evidence, mandate, now=None):
+    """Return a fail-closed decision for one planned BSC spot action.
+
+    Required evidence is intentionally strict. Missing values produce NEED_HUMAN.
+    ALLOW means policy checks passed, not that a trade has executed or is profitable.
+    """
+    now = now or datetime.now(timezone.utc)
+    reasons, checks = [], {}
+
+    def deny(code):
+        reasons.append(code)
+        checks[code] = "DENY"
+
+    def uncertain(code):
+        reasons.append(code)
+        checks[code] = "NEED_HUMAN"
+
+    if str(intent.get("chain_id")) != "56" or str(evidence.get("chain_id")) != "56":
+        deny("CHAIN_MISMATCH")
+    if not intent.get("ticker") or intent.get("ticker") != evidence.get("ticker"):
+        deny("ASSET_IDENTITY_MISMATCH")
+    if intent.get("provider") != evidence.get("provider") or intent.get("contract", "").lower() != evidence.get("contract", "").lower():
+        deny("TOKEN_IDENTITY_MISMATCH")
+    if evidence.get("issuer_verified") is not True:
+        uncertain("ISSUER_UNVERIFIED")
+
+    ratio = number(evidence.get("token_to_share_ratio"))
+    previous = number(evidence.get("previous_token_to_share_ratio"))
+    if ratio is None or ratio <= 0:
+        uncertain("SHARE_RATIO_UNKNOWN")
+    elif previous is not None and ratio != previous:
+        if evidence.get("corporate_action_verified") is not True:
+            deny("UNVERIFIED_RATIO_CHANGE")
+        else:
+            uncertain("CORPORATE_ACTION_REVIEW")
+    if evidence.get("market_status") in ("pause", "halted") or evidence.get("market_reason") == "ASSET_PAUSED":
+        deny("ASSET_PAUSED")
+    elif evidence.get("market_status") in ("closed", "offhours", "overnight"):
+        uncertain("UNDERLYING_MARKET_NOT_REGULAR")
+    elif evidence.get("market_status") != "regular":
+        uncertain("MARKET_STATE_UNKNOWN")
+
+    price_age = evidence.get("token_price_age_ms")
+    max_age = mandate.get("max_token_price_age_ms")
+    if not isinstance(price_age, int) or not isinstance(max_age, int) or max_age <= 0:
+        uncertain("TOKEN_PRICE_AGE_UNKNOWN")
+    elif price_age > max_age:
+        deny("TOKEN_PRICE_STALE")
+    if evidence.get("independent_reference_timestamp") is None:
+        uncertain("INDEPENDENT_REFERENCE_TIME_UNKNOWN")
+
+    requested = number(intent.get("notional_usd"))
+    limit = number(mandate.get("max_notional_usd"))
+    if requested is None or requested <= 0 or limit is None or limit <= 0:
+        uncertain("MANDATE_AMOUNT_UNKNOWN")
+    elif requested > limit:
+        deny("MANDATE_LIMIT_EXCEEDED")
+    impact = number(evidence.get("price_impact_percent"))
+    max_impact = number(mandate.get("max_price_impact_percent"))
+    if evidence.get("quote_available") is False:
+        deny("NO_EXECUTABLE_QUOTE")
+    elif evidence.get("quote_available") is not True:
+        uncertain("QUOTE_UNVERIFIED")
+    if impact is None or max_impact is None:
+        uncertain("PRICE_IMPACT_UNKNOWN")
+    elif impact > max_impact:
+        deny("PRICE_IMPACT_LIMIT_EXCEEDED")
+    if evidence.get("simulation_passed") is not True:
+        uncertain("SIMULATION_UNVERIFIED")
+
+    decision = "DENY" if "DENY" in checks.values() else ("NEED_HUMAN" if reasons else "ALLOW")
+    receipt = {
+        "policy_version": VERSION, "timestamp": now.isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "decision": decision, "reason_codes": sorted(set(reasons)), "checks": checks,
+        "intent": {k: intent.get(k) for k in ("chain_id", "ticker", "provider", "contract", "notional_usd")},
+        "evidence": {k: evidence.get(k) for k in (
+            "chain_id", "ticker", "provider", "contract", "issuer_verified", "token_to_share_ratio",
+            "previous_token_to_share_ratio", "corporate_action_verified", "market_status", "market_reason",
+            "token_price_age_ms", "independent_reference_timestamp", "quote_available",
+            "price_impact_percent", "simulation_passed", "source_response_sha256")},
+    }
+    encoded = json.dumps(receipt, sort_keys=True, separators=(",", ":"), default=str).encode()
+    receipt["receipt_sha256"] = hashlib.sha256(encoded).hexdigest()
+    return receipt

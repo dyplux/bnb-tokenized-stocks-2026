@@ -1,0 +1,22 @@
+{
+  "claim_limit": "Read-only short-lived quote estimates from an ephemeral nonholder; no settled execution, final fee or exit route is proved.",
+  "contracts": [
+    "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "0xe87afb3076aeb0f9b14e368de8145ae6a2826a14"
+  ],
+  "fills_observed": 0,
+  "holder_eligibility_verified": false,
+  "input_units_verified_count": 8,
+  "quote_count": 8,
+  "reported_price_impact_range_pct": [
+    "0.0004685048",
+    "0.0030489031"
+  ],
+  "route_count": 8,
+  "sizes_usdc": [
+    10,
+    100,
+    1000,
+    10000
+  ]
+}

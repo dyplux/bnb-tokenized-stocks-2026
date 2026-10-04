@@ -6,5 +6,13 @@ node_modules/
 dist/
 build/
 coverage/
+.deps/
+data/market_hours/*.log
+data/market_hours/*.pid
+data/market_hours/*.jsonl
+data/market_hours/*.json
+data/market_hours/*.lock
+data/market_hours/raw/
+data/weekend_2026-10-03_05/
 *.pem
 auth.json

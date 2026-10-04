@@ -1,0 +1,9 @@
+# RWA market-status enum mismatch
+
+**Observed:** 2026-10-04 10:43:40 UTC, signed read-only `GET /api/v1/dex/market/rwa/tokens?binanceChainId=56`, HTTP 200 and business code 0. The current [RWA Data reference](https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data) lists `premarket`, `regular`, `postmarket`, `overnight`, `closed` and `pause`. In the complete 488-row BNB Chain response, 31 Ondo rows reported `statusInfo.marketStatus=offhours`. The [request fixture](../fixtures/2026-10-04-rwa-tokens-offhours-request.json) names every affected asset and includes the response hash. The [raw response fixture](../fixtures/2026-10-04-rwa-tokens-offhours-raw.json) is the exact JSON response body, SHA-256 `50f48008c0cd931a7a5a627a2802d091f6caa457b0400d00a73262f4851673d4`, with no request headers or secrets. The response body was captured by the collector's read-only signed call.
+
+**Reproduce:** with a permitted Binance Web3 API key in the ignored `.env`, run `python3 scripts/rwa_research.py catalog`; filter BSC rows where `market_status` is `offhours` and compare with the documented enum. This command makes one signed read. It doesn't trade.
+
+**Impact:** a strict client using the documented enum could reject a valid live response. Unknown/missing statuses must be handled explicitly. The collector preserves the raw enum value in sanitized output rather than silently coercing it to `closed`.
+
+**Suggested documentation correction:** add `offhours` to the documented market status enum, state how it differs from `closed`, `postmarket` and `overnight`, and clarify whether the value applies to token trading or the underlying equity market. Publish a separate as-of timestamp for any independent underlying reference if one exists. The current `referencePrice` documentation describes a value derived from token price, so it can't establish an independent stock-market clock.

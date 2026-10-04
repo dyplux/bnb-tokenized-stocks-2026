@@ -1,0 +1,208 @@
+{
+  "method": "GET",
+  "endpoint": "/api/v1/dex/market/rwa/tokens",
+  "query": {
+    "binanceChainId": "56"
+  },
+  "authorization": "signed; credentials and signature omitted",
+  "captured_at": "2026-10-04T10:43:40.316Z",
+  "response_fixture": "docs/devex/fixtures/2026-10-04-rwa-tokens-offhours-raw.json",
+  "response_sha256": "50f48008c0cd931a7a5a627a2802d091f6caa457b0400d00a73262f4851673d4",
+  "documented_enum": [
+    "premarket",
+    "regular",
+    "postmarket",
+    "overnight",
+    "closed",
+    "pause"
+  ],
+  "observed_enum": "offhours",
+  "affected_assets": [
+    {
+      "ticker": "MSTR",
+      "symbol": "MSTRon",
+      "contract": "0x7313ea16493b2f55054df0131a3a14b043ec8992",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "CRCL",
+      "symbol": "CRCLon",
+      "contract": "0x992879cd8ce0c312d98648875b5a8d6d042cbf34",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "IBIT",
+      "symbol": "IBITon",
+      "contract": "0x68b07cef227cea1b2b6683921c8c825cd5c69ec7",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "STRC",
+      "symbol": "STRCon",
+      "contract": "0x71e9dc9debc18650bd2342b93623b88c2ad00c89",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "ETHA",
+      "symbol": "ETHAon",
+      "contract": "0x04b16ff1f9673146f68aa5d5f57aa45adcf068e1",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "COIN",
+      "symbol": "COINon",
+      "contract": "0xf8589b526fdd65f7f301c605a6e04f0f1b4b3620",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "TQQQ",
+      "symbol": "TQQQon",
+      "contract": "0xe42cfb20e00912409b77a602b5bdcff3c7acc5f4",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "AVGO",
+      "symbol": "AVGOon",
+      "contract": "0x0ed2e3180edf393e6bf8db124bd15ddd54de150a",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "INTC",
+      "symbol": "INTCon",
+      "contract": "0xa528caaa2f96090e379d43f90834c75df54d6e74",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "ORCL",
+      "symbol": "ORCLon",
+      "contract": "0x03e4bd1ea53f1da84513da0319d1f03dd1bbcf93",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "MRVL",
+      "symbol": "MRVLon",
+      "contract": "0x1501ec83ffef405b4331cc4f73277a40fb0c627d",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "SKHY",
+      "symbol": "SKHYon",
+      "contract": "0x4268f2bfb23a7496504aa5ed1ee325248586299f",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "GLW",
+      "symbol": "GLWon",
+      "contract": "0x25a4dbae9a0cd8c75656d6b50ffdf4900cc20d8f",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "TSM",
+      "symbol": "TSMon",
+      "contract": "0xc37042a7a4fa510d8884a433762ab87257b91965",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "QQQ",
+      "symbol": "QQQon",
+      "contract": "0x0cde6936d305d5b34667fc46425e852efd73559a",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "ARM",
+      "symbol": "ARMon",
+      "contract": "0x527c6436e1eaa4f2065cde4090f798cb5d031dd6",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "GOOGL",
+      "symbol": "GOOGLon",
+      "contract": "0x091fc7778e6932d4009b087b191d1ee3bac5729a",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "AMZN",
+      "symbol": "AMZNon",
+      "contract": "0x4553cfe1c09f37f38b12dc509f676964e392f8fc",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "TSLA",
+      "symbol": "TSLAon",
+      "contract": "0x2494b603319d4d9f9715c9f4496d9e0364b59d93",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "META",
+      "symbol": "METAon",
+      "contract": "0xd7df5863a3e742f0c767768cdfcb63f09e0422f6",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "NVDA",
+      "symbol": "NVDAon",
+      "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "SPY",
+      "symbol": "SPYon",
+      "contract": "0x6a708ead771238919d85930b5a0f10454e1c331a",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "SPCX",
+      "symbol": "SPCXon",
+      "contract": "0xd0a58bc9d88d3ff48c0294cb7e45937d0e41a928",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "MSFT",
+      "symbol": "MSFTon",
+      "contract": "0x6bfe75d1ad432050ea973c3a3dcd88f02e2444c3",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "AMD",
+      "symbol": "AMDon",
+      "contract": "0x9f16e46c73b43bdb70861247d537bee4ea18f639",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "GLD",
+      "symbol": "GLDon",
+      "contract": "0xfa9a1e901085e269f6d428f79cd5252d8b919344",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "AAPL",
+      "symbol": "AAPLon",
+      "contract": "0x390a684ef9cade28a7ad0dfa61ab1eb3842618c4",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "SNDK",
+      "symbol": "SNDKon",
+      "contract": "0x4fd67cb8cfedc718bac984b5936abe3330d0a2a4",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "SLV",
+      "symbol": "SLVon",
+      "contract": "0x8b872732b07be325a8803cdb480d9d20b6f8d11b",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "DRAM",
+      "symbol": "DRAMon",
+      "contract": "0x087b5761b161429013d41ea54cd2fb6022a21564",
+      "provider": "ondo"
+    },
+    {
+      "ticker": "MU",
+      "symbol": "MUon",
+      "contract": "0x8b6acf6041a81567f012ff6a4c6d96d5818d74bf",
+      "provider": "ondo"
+    }
+  ]
+}

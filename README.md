@@ -22,8 +22,23 @@ The screen distinguishes **Both routes quoted**, **Entry route unavailable**, **
 
 - The [current-build observation](docs/research/2026-10-03-exit-check-live-browser.md) records three local read-only runs on 3 October. The [video record](docs/submission/video-record.json) corresponds to one continuous browser capture, with no wallet address or credentials retained.
 - The [34-second video QA](docs/submission/video-qa.md) records an internal technical capture. Video and submission work stopped at [D-049](docs/decisions/decision-log.md), before the product was selected.
-- `python3 -m unittest discover -s tests -q` ran **54 synthetic tests** locally. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37157834389) passed on private commit `45f0e0e` without credentials or live API calls.
+- `python3 -m unittest discover -s tests -q` ran **59 synthetic tests** locally on 4 October, including five new RWA policy checks. The [GitHub Python workflow](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37157834389) passed on earlier private commit `45f0e0e` without credentials or live API calls. That run predates the new research code.
 - The [DX field log](docs/dx/field-log.md) separates signed API observations, local integration errors and missing measurements. The [Exit Check spec](docs/product/pre-entry-exit-spec.md) defines the built prototype; the [exact-budget spec](docs/product/exact-budget-stock-spec.md) and [D-051](docs/decisions/decision-log.md) record the newer, unbuilt hypothesis. The [5 USDC Apple route check](docs/research/2026-10-03-aapl-three-representation-route-check.md) records three different provider states and an Ondo USDT minimum follow-up.
+
+## Live research, separate from the app
+
+On 4 October the project started a read-only five-minute market-hours collector. It samples 40 BNB Chain stock contracts with one signed catalog request and one batched price request per cycle. The first 156 unique rows, catalog grouping, ratio arithmetic and quote checks are described in the [dated research note](docs/research/2026-10-04-live-rwa-catalog-and-quotes.md). The [current status](STATUS.md) distinguishes measured results from unresolved product choices. An existing visual budget prototype remains local and unintegrated.
+
+With a valid local `.env`, the research commands are:
+
+```sh
+python3 scripts/rwa_research.py health
+python3 scripts/rwa_research.py start --interval 300
+python3 scripts/normalize_catalog.py
+python3 scripts/analyze_rwa.py
+```
+
+`start` detaches the collector; don't run a second copy. `health` exits nonzero if it has stopped or fallen overdue. See the [collector operations](docs/devex/collector-operations.md) for logs, restart behavior and the external SSD reboot limitation. The `LIVE` tape and raw API response store remain local. Frozen fixtures, normalized catalog snapshots and experiment summaries are in this repository. The API provides `tokenPriceUpdatedAt`, while an independent underlying reference timestamp hasn't been observed. The analysis stores reference age as `UNKNOWN`; it doesn't substitute token-price age.
 
 ## Limits and submission state
 

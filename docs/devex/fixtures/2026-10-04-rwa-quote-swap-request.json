@@ -1,0 +1,14 @@
+{
+  "method": "GET",
+  "endpoint": "/api/v1/dex/aggregator/quote",
+  "query": {
+    "binanceChainId": "56",
+    "fromTokenAddress": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    "toTokenAddress": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "amount": "10000000000000000000",
+    "userWalletAddress": "ephemeral nonholder, omitted"
+  },
+  "captured_at": "2026-10-04T10:53:50.647Z",
+  "raw_response_sha256": "3490bd8510993795a19591e174a5b4d9512dad736e709639ca37e0fb60e78b4c",
+  "response_fixture": "docs/devex/fixtures/2026-10-04-rwa-quote-swap-raw.json"
+}

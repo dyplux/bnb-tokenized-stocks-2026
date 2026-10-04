@@ -1,0 +1,14 @@
+{
+  "updated_at": "2026-10-04",
+  "sources": [
+    {"id": "binance-web3-rwa-docs", "kind": "official_documentation", "url": "https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/rwa-data", "accessed_at": "2026-10-04", "use": "API schema, fields, signed endpoints"},
+    {"id": "binance-web3-auth", "kind": "official_documentation", "url": "https://web3.binance.com/en/dev-docs/authentication", "accessed_at": "2026-10-04", "use": "HMAC request authentication"},
+    {"id": "binance-web3-trading", "kind": "official_documentation", "url": "https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/trading-api", "accessed_at": "2026-10-03", "use": "Read-only quote schema and error codes"},
+    {"id": "binance-public-xstocks", "kind": "public_endpoint", "url": "https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/rwa/stock/detail/list/ai?type=2", "accessed_at": "2026-10-04", "use": "Candidate BSC xStock listings, separate from signed API"},
+    {"id": "bnb-hackathon", "kind": "official_event", "url": "https://www.bnbchain.org/en/hackathons/tokenized-stocks", "accessed_at": "2026-10-03", "use": "Event criteria and deadline"},
+    {"id": "nasdaq-hours", "kind": "primary_market_schedule", "url": "https://www.nasdaq.com/market-activity/stock-market-holiday-schedule", "accessed_at": "2026-10-04", "use": "Weekday core equity session context, not token venue hours"},
+    {"id": "ondo-stocks", "kind": "issuer_product_documentation", "url": "https://ondo.finance/ondo-stocks", "accessed_at": "2026-10-04", "use": "Ondo trading and mint/redemption hours; corporate-action handling"},
+    {"id": "crowdstrike-split", "kind": "issuer_announcement", "url": "https://ir.crowdstrike.com/news-releases/news-release-details/crowdstrike-reports-first-quarter-fiscal-year-2027-financial", "accessed_at": "2026-10-04", "use": "Four-for-one split effective 2026-07-02"},
+    {"id": "netflix-split", "kind": "issuer_announcement", "url": "https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2025/Netflix-Announces-Ten-For-One-Stock-Split/default.aspx", "accessed_at": "2026-10-04", "use": "Ten-for-one split effective 2025-11-17"}
+  ]
+}

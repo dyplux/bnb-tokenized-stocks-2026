@@ -1,0 +1,75 @@
+{
+  "observations": [
+    {
+      "captured_at": "2026-10-04T10:48:42.304Z",
+      "endpoint": "/api/v1/dex/market/rwa/underlying-market",
+      "provider": "bstock",
+      "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+      "status_info": {
+        "openState": true,
+        "marketStatus": null,
+        "reasonCode": "TRADING",
+        "reasonMsg": null,
+        "nextOpenTime": null,
+        "nextCloseTime": null
+      },
+      "market_data_keys": [
+        "amplitude",
+        "avgDailyVolume1Y",
+        "dividendYield",
+        "high52W",
+        "latestDividend",
+        "low52W",
+        "marketCap",
+        "pbRatio",
+        "peRatioTTM",
+        "referencePrice",
+        "totalShares",
+        "turnoverRate",
+        "volumeShares24H"
+      ],
+      "reference_price_updated_at": null,
+      "reference_age_seconds": null,
+      "reference_age_status": "UNKNOWN",
+      "response_sha256": "9ce77cd701319a8cf86e48431ac022f7043e437ceeec3f6089feeb473f53d602",
+      "server_response_timestamp": 1791110922242,
+      "server_response_timestamp_is_reference_timestamp": false
+    },
+    {
+      "captured_at": "2026-10-04T10:48:42.604Z",
+      "endpoint": "/api/v1/dex/market/rwa/underlying-market",
+      "provider": "ondo",
+      "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+      "status_info": {
+        "openState": true,
+        "marketStatus": "offhours",
+        "reasonCode": "TRADING",
+        "reasonMsg": null,
+        "nextOpenTime": 1791158700000,
+        "nextCloseTime": 1791158100000
+      },
+      "market_data_keys": [
+        "amplitude",
+        "avgDailyVolume1Y",
+        "dividendYield",
+        "high52W",
+        "latestDividend",
+        "low52W",
+        "marketCap",
+        "pbRatio",
+        "peRatioTTM",
+        "referencePrice",
+        "totalShares",
+        "turnoverRate",
+        "volumeShares24H"
+      ],
+      "reference_price_updated_at": null,
+      "reference_age_seconds": null,
+      "reference_age_status": "UNKNOWN",
+      "response_sha256": "abe8dfbc58a5efd939c89362c4e7274922d720a9e0e47940aa3471fa9d0b27f4",
+      "server_response_timestamp": 1791110922542,
+      "server_response_timestamp_is_reference_timestamp": false
+    }
+  ],
+  "claim_limit": "Two NVDA weekend probes. Server response time is not an independent reference-price timestamp."
+}

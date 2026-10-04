@@ -1,0 +1,45 @@
+{
+  "status": "SYNTHETIC_FIXTURES_NOT_LIVE_EVENTS",
+  "description": "Counterexamples for raw token-price comparison and policy guards. No fixture claims a real issuer action or trade.",
+  "cases": [
+    {
+      "id": "token_split_2_for_1",
+      "before": {"token_price_usd": "200", "token_to_share_ratio": "2"},
+      "after": {"token_price_usd": "100", "token_to_share_ratio": "1"},
+      "naive_raw_price_change_percent": "-50",
+      "normalized_per_share_before_usd": "100",
+      "normalized_per_share_after_usd": "100",
+      "policy_reason_without_verified_action": "UNVERIFIED_RATIO_CHANGE"
+    },
+    {
+      "id": "rebase_10_for_1",
+      "before": {"token_price_usd": "500", "token_to_share_ratio": "10"},
+      "after": {"token_price_usd": "50", "token_to_share_ratio": "1"},
+      "naive_raw_price_change_percent": "-90",
+      "normalized_per_share_before_usd": "50",
+      "normalized_per_share_after_usd": "50",
+      "policy_reason_without_verified_action": "UNVERIFIED_RATIO_CHANGE"
+    },
+    {
+      "id": "underlying_stock_split_2_for_1",
+      "description": "Two shares replace one; the stock reference per share halves while one token still represents the same total company exposure in this synthetic example.",
+      "before": {"token_price_usd": "200", "token_to_share_ratio": "1"},
+      "after": {"token_price_usd": "200", "token_to_share_ratio": "2"},
+      "normalized_per_share_before_usd": "200",
+      "normalized_per_share_after_usd": "100",
+      "policy_reason_without_verified_action": "UNVERIFIED_RATIO_CHANGE"
+    },
+    {
+      "id": "multiplier_change_unknown_unit",
+      "before": {"token_price_usd": "120", "token_to_share_ratio": "1"},
+      "after": {"token_price_usd": "60", "token_to_share_ratio": null},
+      "policy_reason": "SHARE_RATIO_UNKNOWN"
+    },
+    {
+      "id": "trading_halt",
+      "market_status": "pause",
+      "market_reason": "ASSET_PAUSED",
+      "policy_reason": "ASSET_PAUSED"
+    }
+  ]
+}

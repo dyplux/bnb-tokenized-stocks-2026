@@ -1,0 +1,35 @@
+updated_at: 2026-10-04
+tasks:
+  - id: RWA-001
+    owner: coordinator
+    state: done
+    task: Start signed, sanitized RWA market-hours collector.
+    evidence: data/market_hours/heartbeat.json
+  - id: RWA-002
+    owner: coordinator
+    state: done
+    task: Confirm detached collector survives terminal activity and captures multiple UTC slots without duplicate rows.
+    evidence: data/market_hours/2026-10-04.jsonl
+  - id: RWA-003
+    owner: coordinator
+    state: done_with_reference_unknown
+    task: Verify 18-decimal USDC quote input and audit independent reference timestamp availability.
+    evidence: experiments/EXP-RWA-010/results.json
+  - id: RWA-004
+    owner: coordinator
+    state: queued
+    task: Reconstruct one real split or dividend event from issuer and chain sources.
+  - id: RWA-005
+    owner: coordinator
+    state: initial_probe_done
+    task: Compare same-input cross-issuer quotes, then reject spread framing until rights, sell route and costs are proved.
+    evidence: experiments/EXP-RWA-008/cross_issuer_quotes.csv
+  - id: RWA-006
+    owner: coordinator
+    state: queued
+    task: Select one user task and integrate policy receipt into a thin local app slice.
+  - id: RWA-007
+    owner: coordinator
+    state: done
+    task: Measure signed API price coverage and timestamp quality for 130 public xStock listings.
+    evidence: experiments/EXP-RWA-001/xstock_price_probe_results.json
