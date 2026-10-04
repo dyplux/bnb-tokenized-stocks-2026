@@ -84,6 +84,10 @@ They do not support an automatic safety verdict, an arbitrage claim, an off-hour
 
 ## Next verification gates
 
+**Later Sunday tape addendum, 15:00 UTC:** the refreshed [EXP-RWA-010 result](../../experiments/EXP-RWA-010/results.json) counted 2,156 LIVE rows. All 2,156 still lacked an independent stock-reference-age observation. Across 228 same-ticker, same-minute provider pairs, nine bStock token timestamps exceeded 60 seconds and zero Ondo timestamps did. This extends the observation period; it doesn't change the frozen earlier counts above or establish a trading signal.
+
+The [EXP-RWA-002 ratio audit](../../experiments/EXP-RWA-002/share_ratio_audit.csv) now pairs each of the 40 monitored contracts' latest token price with the ratio from the same collector cycle. All 40 ratio capture hashes and timestamps are present. For NVDA at 15:00, the signed catalog was captured at 15:00:02.091 UTC and the token price sample at 15:00:02.489 UTC. The earlier 11:00 catalog ratio remains a labelled baseline, not the ratio used for current per-share arithmetic. This fixes a mixed-time calculation in the research output; it doesn't establish legal equivalence or a stock-market reference.
+
 1. Obtain a permitted, independently timestamped underlying-equity benchmark with source, venue, market session, data rights, and as-of semantics. Keep it separate from `tokenPriceUpdatedAt`, APRO's token-oracle time, and server response time.
 2. Re-run the 40-contract tape through a regular US session and the next opening benchmark. Explain `offhours`, `openState`, and next-open/close fields for each relevant venue. Preserve Saturday and Sunday gaps as gaps.
 3. Repeat the same asset, side, and amount with a consenting eligible holder or an explicitly authorized test wallet. Record eligibility basis, balance, allowance, quote, route mode, simulation, gas units, final fee, broadcast, and fill. Do not infer eligibility from a quote.

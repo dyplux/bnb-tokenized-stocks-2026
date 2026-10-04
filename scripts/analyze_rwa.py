@@ -33,6 +33,11 @@ def decimal(value):
         return None
 
 
+def ratio_from_price_cycle(price_row):
+    """Use the catalog ratio collected with a price, never a later/earlier baseline."""
+    return decimal(price_row.get("token_to_share_ratio")) if price_row else None
+
+
 def age_distribution(values):
     """Describe observed token-clock ages; this says nothing about stock reference age."""
     ordered = sorted(values)
@@ -163,6 +168,14 @@ def main():
     (reference / "results.json").write_text(json.dumps(results, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
+    manifest_times = {}
+    manifest_path = MARKET / "raw/manifest.jsonl"
+    if manifest_path.exists():
+        with manifest_path.open(encoding="utf-8") as stream:
+            for line in stream:
+                entry = json.loads(line)
+                if entry.get("endpoint") == "/api/v1/dex/market/rwa/tokens":
+                    manifest_times[entry.get("sha256")] = entry.get("captured_at")
     latest = {}
     for row in samples:
         latest[row["contract"]] = row
@@ -170,19 +183,21 @@ def main():
     for row in catalog["rows"]:
         price_row = latest.get(row["contract"])
         price = decimal(price_row.get("token_price_usd")) if price_row else None
-        ratio = decimal(row.get("token_to_share_ratio"))
+        ratio = ratio_from_price_cycle(price_row)
+        ratio_hash = price_row.get("catalog_sha256") if price_row else None
         per_share = price / ratio if price is not None and ratio is not None and ratio > 0 else None
         audit.append({
             "captured_at": catalog["captured_at"], "source": row["source"], "ticker": row["ticker"],
             "provider": row["provider"], "contract": row["contract"], "decimals": row.get("decimals"),
             "token_to_share_ratio": str(ratio) if ratio is not None else None,
-            "ratio_captured_at": catalog["captured_at"], "ratio_source_sha256": catalog["raw_response_sha256"],
+            "baseline_catalog_ratio": row.get("token_to_share_ratio"),
+            "ratio_captured_at": manifest_times.get(ratio_hash), "ratio_source_sha256": ratio_hash,
             "listed_multiplier_raw": row.get("listed_multiplier_raw"),
             "token_price_usd_latest": str(price) if price is not None else None,
             "price_observed_at": price_row.get("observed_at") if price_row else None,
             "price_response_sha256": price_row.get("price_response_sha256") if price_row else None,
             "per_share_math_usd": str(per_share) if per_share is not None else None,
-            "normalization_state": "mixed_time_arithmetic_not_equivalence" if per_share is not None else "ratio_or_price_unverified",
+            "normalization_state": "same_collector_cycle_arithmetic_not_equivalence" if per_share is not None else "ratio_or_price_unverified",
             "rights_and_corporate_action_verified": False,
         })
     write_csv(ROOT / "experiments/EXP-RWA-002/share_ratio_audit.csv", list(audit[0]) if audit else [], audit)
