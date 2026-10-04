@@ -1,0 +1,11 @@
+# Agentic Wallet and Wallet Skills integration gate
+
+**Checked:** 2026-10-04. **Decision:** no Agentic Wallet login or installer in this build. A read-only local policy tool may later be offered to an agent, but execution authority remains deterministic and human gated.
+
+The [official Agentic Wallet installation guide](https://developers.binance.com/en/docs/products/agentic-wallet/quickstart/install-agentic-wallet), modified 2 October 2026, requires a Binance account and an MPC wallet created in the Binance App before Agentic Wallet creation. The founder has said that a Binance account is unavailable to them in their jurisdiction. A BNB Chain self-custody address and Binance Web3 API key do not satisfy that documented prerequisite. We have not installed `baw`, signed in, created an MPC wallet, or tested Agentic Wallet execution.
+
+The [official Wallet Skills overview](https://developers.binance.com/en/docs/products/wallet-skills/overview) lists read-only tokenized-securities information and a separate read/write Agentic Wallet skill. The [stock-trading guide](https://developers.binance.com/en/docs/products/agentic-wallet/use-cases/trading/stock-trading) already documents ticker resolution, status checks, quote, confirmation and order status. Repeating that flow would add little to the current safety task. The observed gap is the fail-closed evidence decision before confirmation: independent reference clock, holder eligibility, economic scaling, route mode, impact and simulation.
+
+The local [safety service](../../app/safety_service.py) is a callable JSON-producing read-only primitive around the deterministic [policy](../../app/rwa_policy.py). It can become a model tool or Wallet Skill companion after its response schema and failure behavior are stable. An agent may request a check and explain the receipt, but it cannot override a `DENY` or `NEED_HUMAN` decision, claim eligibility from a route or invoke a signer. No special-prize integration claim is made from this preparatory work.
+
+**Next technical gate:** document and try a read-only tool contract in a clean agent environment, comparing its output with the browser for the same request. If official Agentic Wallet access remains unavailable, keep the integration optional and don't claim the Agentic Wallet prize.

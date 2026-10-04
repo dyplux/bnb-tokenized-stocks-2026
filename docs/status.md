@@ -1,6 +1,6 @@
 # Project status
 
-**Current checkpoint:** [STATUS.md](../STATUS.md) holds the live health command and the latest two-program status. The 40-contract, five-minute collector is running. [D-054 to D-059](decisions/decision-log.md) record why the exact-budget interface, a blocked-exit pitch, a generic gateway, a Sunday cross-issuer spread and a Friday-close trading-edge claim haven't cleared the product gate. The deterministic policy now requires dated user-access evidence. No submission product has been selected. The dated block below is retained as the 3 October checkpoint.
+**Current checkpoint:** [STATUS.md](../STATUS.md) holds the live health command and the latest two-program status. The 40-contract, five-minute collector is running. On 4 October the founder provisionally promoted `H-RWA-SAFETY` to the product core; a one-action local live screen now calls the deterministic policy. The [evidence](research/2026-10-04-safety-evidence.md) and [spec](product/safety-one-page-spec.md) define its limits. No final submission claim or funded trade exists. [D-054 to D-059](decisions/decision-log.md) record earlier rejected directions. The dated block below is retained as the 3 October checkpoint.
 
 ## Historical checkpoint, 3 October
 

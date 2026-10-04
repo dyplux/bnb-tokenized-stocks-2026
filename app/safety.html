@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stock-token action review · Dyplux</title>
+  <link rel="stylesheet" href="/safety.css">
+  <script src="/safety.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><span class="brand">DYPLUX <span class="mark">/</span> RWA SAFETY</span><span class="mode">LIVE READ-ONLY CHECK · BSC MAINNET</span></header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow">ONE ACTION. ONE DECISION RECEIPT.</p>
+      <h1>Check a stock-token action before signing.</h1>
+      <p class="lede">Choose an NVDA representation and a USDT amount. The check examines live market data, a size-specific route and the evidence your mandate requires. It never connects a wallet or sends a trade.</p>
+    </div>
+    <div class="workspace">
+      <form id="check-form" class="panel" novalidate>
+        <div class="panel-head"><span>01 / ACTION</span><span>BUY · USDT → NVDA</span></div>
+        <fieldset>
+          <legend>Representation</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="provider" value="bstock" checked><span><strong>NVDAB</strong><small>bStock · BNB Chain</small></span></label>
+            <label class="choice"><input type="radio" name="provider" value="ondo"><span><strong>NVDAon</strong><small>Ondo · BNB Chain</small></span></label>
+          </div>
+        </fieldset>
+        <div class="fields">
+          <label>Amount to review <span>USDT</span><input name="notional_usdt" type="number" min="10" max="1000" step="0.01" value="100" required></label>
+          <label>Maximum permitted spend <span>USDT</span><input name="max_notional_usdt" type="number" min="1" max="1000" step="0.01" value="100" required></label>
+          <label>Maximum price impact <span>%</span><input name="max_price_impact_percent" type="number" min="0.001" max="5" step="0.001" value="0.5" required></label>
+        </div>
+        <p class="helper">This local check uses live signed Binance Web3 reads and a public BSC read. Four checks per minute. No private key, approval or order.</p>
+        <button type="submit" id="submit">Review action <span aria-hidden="true">↗</span></button>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+      </form>
+      <section class="panel result" aria-labelledby="result-heading">
+        <div class="panel-head"><span>02 / DECISION</span><span id="observed">AWAITING CHECK</span></div>
+        <div id="empty-state" class="empty"><span class="empty-symbol" aria-hidden="true">◇</span><h2 id="result-heading">Evidence appears here</h2><p>Run one check to see what the available data supports, what it cannot prove, and the next action.</p></div>
+        <div id="result-state" hidden aria-live="polite">
+          <div class="verdict"><p class="eyebrow">POLICY RESULT</p><h2 id="decision"></h2><p id="decision-context"></p></div>
+          <div class="reason-block"><h3>Why</h3><ul id="reasons"></ul></div>
+          <div class="evidence-block"><h3>Evidence</h3><dl id="facts"></dl></div>
+          <div class="next"><h3>Next step</h3><p id="next-step"></p></div>
+          <div class="receipt"><span id="receipt-hash"></span><button type="button" id="download">Download receipt JSON</button></div>
+        </div>
+      </section>
+    </div>
+    <p class="footnote">The route check uses a temporary unfunded address. A returned quote isn't proof of issuer eligibility, execution, settlement or a current underlying stock reference. A policy result reviews only the evidence available at the recorded time.</p>
+  </main>
+  <footer><span>DYPLUX / RESEARCH BUILD</span><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026">Source and method ↗</a></footer>
+</body>
+</html>

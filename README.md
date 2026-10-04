@@ -1,12 +1,22 @@
-# Dyplux tokenized-stock research prototype
+# Dyplux RWA Safety: provisional tokenized-stock action review
 
-**Product decision still open.** The current local interface is an Exit Check research tool: it asks Binance Web3 for a NVDAB entry quote, then an inverse quote on the estimated NVDAB amount for a chosen USDC amount and public BNB Chain address. It makes no trade. [D-051](docs/decisions/decision-log.md) retired Exit Check as the proposed submission product. The current [exact-budget product spec](docs/product/exact-budget-stock-spec.md) asks what a person with a particular stablecoin and amount can try when a stock token's route is unavailable, below minimum or quoted. That spec has no interface or verified executable route yet. Neither task is presented as a finished consumer product.
+**Current product core is provisional.** The new local safety screen reviews one proposed NVDA token purchase on BNB Smart Chain before signing. It identifies the exact bStock or Ondo contract, reads signed Binance RWA data and an amount-specific quote, checks the on-chain bStock multiplier, and returns a deterministic `ALLOW`, `DENY` or `NEED_HUMAN` receipt. A live anonymous check normally returns `NEED_HUMAN` because holder eligibility, an independent underlying-stock reference clock and a funded simulation remain unverified. The [safety evidence](docs/research/2026-10-04-safety-evidence.md), [one-page spec](docs/product/safety-one-page-spec.md) and [mainnet path](docs/product/mainnet-execution-path.md) distinguish working reads from unbuilt execution.
+
+The former Exit Check is a separate archived research interface. It asks Binance Web3 for a NVDAB entry quote and an inverse quote on the estimated NVDAB amount. It makes no trade. [D-051](docs/decisions/decision-log.md) retired it as the proposed submission product. The [exact-budget spec](docs/product/exact-budget-stock-spec.md) is also inactive.
 
 On Saturday 3 October 2026 at 22:05 UTC, the local app returned both directions for 5 USDC. The entry estimate was **0.021265631210341636 NVDAB**; the immediate inverse estimate was **5.001168101976778857 USDC** at BNB metadata block **125561266**. Those are separate, expiring quotes. The inverse amount above 5 USDC isn't profit: approval, gas, slippage, eligibility and execution weren't verified. See the [sanitized record](docs/submission/video-record.json) and [observation](docs/research/2026-10-03-exit-check-live-browser.md).
 
 ## Run locally
 
-Python 3.9 or newer is enough; the app has no installed package dependency.
+Python 3.9 or newer is enough; the safety screen has no installed package dependency. Put your own `BINANCE_WEB3_API_KEY` and `BINANCE_WEB3_SECRET_KEY` in the process environment or a Git-ignored `.env`. The [template](.env.example) lists these names. No wallet key is used.
+
+```sh
+python3 app/safety_server.py
+```
+
+Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT and your maximum spend and price-impact bounds. Click **Review action**. The screen shows the source capture times, market state, token and independent-reference clocks separately, multiplier, route mode, holder-access gap, simulation gap, reason codes and downloadable JSON receipt. It binds only to localhost, accepts four checks per minute and sends no transaction. The [live Sunday browser capture](docs/product/safety-screen-live.png) is a dated observation, not a standing service guarantee. [Twenty-five focused tests](tests/test_safety_service.py) cover this service and the policy, including the `offhours` fail-closed regression.
+
+The older Exit Check remains available separately:
 
 ```sh
 python3 app/server.py

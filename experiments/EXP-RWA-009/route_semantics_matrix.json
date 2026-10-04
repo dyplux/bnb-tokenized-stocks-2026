@@ -1,0 +1,210 @@
+{
+  "catalog_observed_at": "2026-10-04T14:34:06.813Z",
+  "catalog_response_sha256": "377540ce5b531440fa872f19a6e1436241c5336561f8bc42563073cfb2c093c4",
+  "experiment": "EXP-RWA-009/ROUTE-MODE",
+  "last_observed_at": "2026-10-04T14:34:17.598Z",
+  "limit": "A quote mode is only a response field. No eligibility, holder balance, final route cost, build, simulation, signature, trade or documentation defect is established.",
+  "origin": "LIVE_READ_ONLY",
+  "price_observed_at": "2026-10-04T14:34:07.141Z",
+  "price_response_sha256": "6830530170152070d10ba9832146db32a452f679186cff48f62738833d9d8615",
+  "requested_session_label": "weekend",
+  "rows": [
+    {
+      "business_code": 0,
+      "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "100_USDT",
+      "market_observed_at": "2026-10-04T14:34:07.446Z",
+      "market_status": null,
+      "market_status_response_sha256": "eb3d1829f9613599f43dadc481fa3642562ed7dba3ee0fa912b77d4a79f51d54",
+      "observed_at": "2026-10-04T14:34:07.761Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_input_amount": "100000000000000000000",
+      "raw_response_sha256": "e7fad49f6a61820091c4ecc07dea4d83289fdb39f487c73ca918dc0b94cabe2b",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "BUY",
+      "ticker": "NVDA",
+      "token_price_for_sizing": "234.81000000",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "about_100_USDT_of_token",
+      "market_observed_at": "2026-10-04T14:34:07.446Z",
+      "market_status": null,
+      "market_status_response_sha256": "eb3d1829f9613599f43dadc481fa3642562ed7dba3ee0fa912b77d4a79f51d54",
+      "observed_at": "2026-10-04T14:34:08.909Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_input_amount": "425876240364550061",
+      "raw_response_sha256": "904387e4c73efc1f5ad7eb5878fe1059d44b03c9dd8f63683de6828f5ff93c67",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "SELL",
+      "ticker": "NVDA",
+      "token_price_for_sizing": "234.81000000",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "100_USDT",
+      "market_observed_at": "2026-10-04T14:34:10.058Z",
+      "market_status": "offhours",
+      "market_status_response_sha256": "1ebfe8f846997a30dd393ba5e18abc7d62d30341225484238c92416d64784c0f",
+      "observed_at": "2026-10-04T14:34:10.593Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_input_amount": "100000000000000000000",
+      "raw_response_sha256": "91d4a6f50c25d283f77e78c518cf11d0c18a04e803f211f17b9df9c6d7b1586d",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "BUY",
+      "ticker": "NVDA",
+      "token_price_for_sizing": "235.358006280861783459",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "about_100_USDT_of_token",
+      "market_observed_at": "2026-10-04T14:34:10.058Z",
+      "market_status": "offhours",
+      "market_status_response_sha256": "1ebfe8f846997a30dd393ba5e18abc7d62d30341225484238c92416d64784c0f",
+      "observed_at": "2026-10-04T14:34:11.900Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_input_amount": "424884632480554514",
+      "raw_response_sha256": "0c23db90a020829dde0e24a58e17dad77d9125d9d5f2ff0720c4b2d1d5f4727a",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "SELL",
+      "ticker": "NVDA",
+      "token_price_for_sizing": "235.358006280861783459",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "contract": "0x5b1910eaad6450e50f816082aa078c41f10c292f",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "100_USDT",
+      "market_observed_at": "2026-10-04T14:34:13.101Z",
+      "market_status": null,
+      "market_status_response_sha256": "c0cebad1c5207353fb0639aed4b4412cacc4bfacb1b511c45ead747843c213f5",
+      "observed_at": "2026-10-04T14:34:13.414Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_input_amount": "100000000000000000000",
+      "raw_response_sha256": "2fced973828f3ddbab2a4bec57caa1850d2437b089cab3d2adbb273eebab4a31",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "BUY",
+      "ticker": "TSLA",
+      "token_price_for_sizing": "372.60000000",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "contract": "0x5b1910eaad6450e50f816082aa078c41f10c292f",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "about_100_USDT_of_token",
+      "market_observed_at": "2026-10-04T14:34:13.101Z",
+      "market_status": null,
+      "market_status_response_sha256": "c0cebad1c5207353fb0639aed4b4412cacc4bfacb1b511c45ead747843c213f5",
+      "observed_at": "2026-10-04T14:34:14.543Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "bstock",
+      "raw_input_amount": "268384326355340848",
+      "raw_response_sha256": "e7fdab5b56abcd6699291b199991d7f8732c1dd836760104934ab53f0e454968",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "SELL",
+      "ticker": "TSLA",
+      "token_price_for_sizing": "372.60000000",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 0,
+      "contract": "0x2494b603319d4d9f9715c9f4496d9e0364b59d93",
+      "execution_modes": [
+        "SWAP"
+      ],
+      "input": "100_USDT",
+      "market_observed_at": "2026-10-04T14:34:15.623Z",
+      "market_status": "offhours",
+      "market_status_response_sha256": "a9ed56e5558c011bebd970fb3115e2c21c93eced63be41a523cd9a52bf41f009",
+      "observed_at": "2026-10-04T14:34:16.247Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_input_amount": "100000000000000000000",
+      "raw_response_sha256": "6d55a25fc70ac8aaeb012db84e105bc55b6238fc5684d935f896ed2cafebbf0b",
+      "requested_session_label": "weekend",
+      "route_count": 1,
+      "side": "BUY",
+      "ticker": "TSLA",
+      "token_price_for_sizing": "372.915",
+      "vendors": [
+        "LiquidMesh"
+      ]
+    },
+    {
+      "business_code": 40374,
+      "contract": "0x2494b603319d4d9f9715c9f4496d9e0364b59d93",
+      "execution_modes": [],
+      "input": "about_100_USDT_of_token",
+      "market_observed_at": "2026-10-04T14:34:15.623Z",
+      "market_status": "offhours",
+      "market_status_response_sha256": "a9ed56e5558c011bebd970fb3115e2c21c93eced63be41a523cd9a52bf41f009",
+      "observed_at": "2026-10-04T14:34:17.598Z",
+      "open_state": true,
+      "origin": "LIVE",
+      "provider": "ondo",
+      "raw_input_amount": "268157623050829277",
+      "raw_response_sha256": "ce3d11fe7b3b59cfb48babf867b9230d5b1a60df3804f290c827459aeb023882",
+      "requested_session_label": "weekend",
+      "route_count": 0,
+      "side": "SELL",
+      "ticker": "TSLA",
+      "token_price_for_sizing": "372.915",
+      "vendors": []
+    }
+  ],
+  "wallet": "temporary_unfunded_not_retained"
+}
