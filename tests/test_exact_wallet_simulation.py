@@ -52,6 +52,8 @@ class ExactWalletBoundaryTests(unittest.TestCase):
         self.assertEqual(api.calls, [SWAP_BUILD, "simulation"])
         self.assertTrue(outcome["quote"]["bound_to_policy"])
         self.assertEqual(outcome["simulation"]["predicted_transaction_status"], "SUCCESS")
+        self.assertEqual(outcome["build"]["unsigned_tx_fingerprint"],
+                         outcome["simulation"]["unsigned_tx_fingerprint"])
         self.assertEqual(outcome["decision"], "NOT_APPROVED")
         with self.assertRaises(ValueError):
             run(provider="bstock", wallet="0x" + "b" * 40, api=api, route_context=context)

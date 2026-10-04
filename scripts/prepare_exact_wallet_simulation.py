@@ -49,6 +49,14 @@ def token_address(token):
     return str(token.get("tokenContractAddress", "")).lower() if isinstance(token, dict) else ""
 
 
+def unsigned_tx_fingerprint(chain_id, tx):
+    """Hash the exact unsigned EVM call without retaining wallet or calldata."""
+    fields = {"chain_id": str(chain_id), "from": tx["from"].lower(),
+              "to": tx["to"].lower(), "value": str(tx.get("value") or "0"),
+              "data": tx["data"].lower()}
+    return hashlib.sha256(json.dumps(fields, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
 def route_base_matches(route, source, destination, raw_amount):
     return (isinstance(route, dict) and str(route.get("binanceChainId")) == "56" and
             token_address(route.get("fromToken")) == source.lower() and
@@ -161,18 +169,22 @@ def run(provider="bstock", wallet=None, api=None, route_context=None):
                        "unsigned_tx_present": bool(tx), "quote_build_intent_match": exact,
                        "tx_to": tx.get("to") if exact else None,
                        "calldata_sha256": hashlib.sha256(tx["data"].encode()).hexdigest() if exact else None,
+                       "unsigned_tx_fingerprint": unsigned_tx_fingerprint("56", tx) if exact else None,
                        "sha256": digest}
     result["stage"] = "BUILD"
     if build.get("code") != 0 or data.get("executionMode") != "SWAP" or not exact:
         return result
+    simulation_request = {"binanceChainId": "56", "evmTx": {"from": wallet, "to": tx["to"],
+                                                          "value": tx.get("value") or "0", "data": tx["data"]}}
     simulation, at, digest = api.post_simulation(
-        {"binanceChainId": "56", "evmTx": {"from": wallet, "to": tx["to"],
-                                          "value": tx.get("value") or "0", "data": tx["data"]}},
+        simulation_request,
         EXPERIMENT, "off-chain simulation of exact unsigned transaction",
         {"provider": provider, "step": "simulation"}, allow_error=True)
     outcome = simulation.get("data") if isinstance(simulation.get("data"), dict) else {}
     result["simulation"] = {"observed_at": at, "api_business_code": simulation.get("code"),
                             "predicted_transaction_status": outcome.get("status"),
+                            "unsigned_tx_fingerprint": unsigned_tx_fingerprint(
+                                simulation_request["binanceChainId"], simulation_request["evmTx"]),
                             "fail_reason": outcome.get("failReason"), "sha256": digest}
     result["stage"] = "SIMULATED"
     return result

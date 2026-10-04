@@ -58,6 +58,10 @@ def assemble(review, dry_run, now=None):
         reasons.append("EXACT_WALLET_BUILD_UNVERIFIED")
     if simulation.get("api_business_code") != 0 or simulation.get("predicted_transaction_status") != "SUCCESS":
         reasons.append("EXACT_WALLET_SIMULATION_NOT_PASSED")
+    build_tx = build.get("unsigned_tx_fingerprint")
+    simulation_tx = simulation.get("unsigned_tx_fingerprint")
+    if not build_tx or build_tx != simulation_tx:
+        reasons.append("SIMULATION_TRANSACTION_NOT_BOUND_TO_BUILD")
 
     source_quote = (review.get("sources") or {}).get("quote") or {}
     receipt_sources = (receipt.get("evidence") or {}).get("source_response_sha256") or {}
@@ -101,6 +105,7 @@ def assemble(review, dry_run, now=None):
                                "quote_sha256": quote.get("sha256"),
                                "build_observed_at": build.get("observed_at"),
                                "build_sha256": build.get("sha256"),
+                               "unsigned_tx_fingerprint": build_tx,
                                "simulation_observed_at": simulation.get("observed_at"),
                                "simulation_sha256": simulation.get("sha256"),
                                "predicted_transaction_status": simulation.get("predicted_transaction_status")},

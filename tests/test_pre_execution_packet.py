@@ -25,8 +25,10 @@ def examples():
                "quote": {"business_code": 0, "intent_match": True,
                          "bound_to_policy": True, "sha256": "same-quote-hash",
                          "observed_at": "2026-10-04T10:00:00Z"},
-               "build": {"business_code": 0, "quote_build_intent_match": True},
-               "simulation": {"api_business_code": 0, "predicted_transaction_status": "SUCCESS"}}
+               "build": {"business_code": 0, "quote_build_intent_match": True,
+                         "unsigned_tx_fingerprint": "same-unsigned-tx"},
+               "simulation": {"api_business_code": 0, "predicted_transaction_status": "SUCCESS",
+                              "unsigned_tx_fingerprint": "same-unsigned-tx"}}
     return review, dry_run
 
 
@@ -58,6 +60,15 @@ class PreExecutionPacketTests(unittest.TestCase):
         review, trial = examples()
         trial["quote"]["sha256"] = "another-quote"
         self.assertIn("POLICY_QUOTE_NOT_BOUND_TO_EXECUTION",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+
+    def test_different_or_missing_simulated_transaction_blocks(self):
+        review, trial = examples()
+        trial["simulation"]["unsigned_tx_fingerprint"] = "another-unsigned-tx"
+        self.assertIn("SIMULATION_TRANSACTION_NOT_BOUND_TO_BUILD",
+                      assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
+        trial["simulation"].pop("unsigned_tx_fingerprint")
+        self.assertIn("SIMULATION_TRANSACTION_NOT_BOUND_TO_BUILD",
                       assemble(review, trial, now=ASSEMBLY_TIME)["reason_codes"])
 
     def test_stale_quote_is_explicitly_blocked(self):
