@@ -1,6 +1,6 @@
 # Project status
 
-**Current checkpoint:** [STATUS.md](../STATUS.md), updated 2026-10-04 12:35 UTC. The 40-contract, five-minute collector is running. [D-054](decisions/decision-log.md) paused the standalone exact-budget interface, [D-055](decisions/decision-log.md) found no blocked NVDA sell route in the bounded Sunday probe, and [D-056](decisions/decision-log.md) rejected a generic policy gateway because OneTicker already covers much of it. No submission product has been selected. The dated block below is retained as the 3 October checkpoint.
+**Current checkpoint:** [STATUS.md](../STATUS.md) holds the live health command and the latest two-program status. The 40-contract, five-minute collector is running. [D-054 to D-059](decisions/decision-log.md) record why the exact-budget interface, a blocked-exit pitch, a generic gateway, a Sunday cross-issuer spread and a Friday-close trading-edge claim haven't cleared the product gate. The deterministic policy now requires dated user-access evidence. No submission product has been selected. The dated block below is retained as the 3 October checkpoint.
 
 ## Historical checkpoint, 3 October
 

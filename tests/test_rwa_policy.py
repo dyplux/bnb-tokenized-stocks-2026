@@ -38,6 +38,24 @@ class PolicyFixtureTest(unittest.TestCase):
         self.assertEqual(result["decision"], "ALLOW")
         self.assertEqual(len(result["receipt_sha256"]), 64)
 
+    def test_quote_without_user_access_needs_human(self):
+        self.evidence["eligibility_status"] = "UNKNOWN"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("USER_ELIGIBILITY_UNKNOWN", result["reason_codes"])
+
+    def test_explicit_user_ineligibility_denies(self):
+        self.evidence["eligibility_status"] = "INELIGIBLE"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("USER_INELIGIBLE", result["reason_codes"])
+
+    def test_stale_user_access_needs_human(self):
+        self.evidence["eligibility_checked_at"] = "2026-10-03T20:00:00Z"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("USER_ELIGIBILITY_STALE", result["reason_codes"])
+
     def test_live_api_missing_reference_time_needs_human(self):
         self.evidence["reference_price_updated_at"] = None
         self.evidence["reference_age_status"] = "UNKNOWN"
