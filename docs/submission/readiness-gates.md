@@ -1,5 +1,7 @@
 # Submission readiness gates
 
+**Historical checkpoint:** this 3 October Exit Check and Venus gate record is superseded by the [current Execution Safety packet](final-review-packet.md) and [blocker board](blocker-board.md). Its old states aren't current submission gates.
+
 **Checked:** 2026-10-03. **Deadline:** 2026-10-11 12:00 UTC, per the [official event page](https://www.bnbchain.org/en/hackathons/tokenized-stocks). This is an internal checklist, not a claim that an entry has been submitted. Recheck the [live forms](2026-10-01-live-form-audit.md) before sending anything.
 
 **Decision update:** [D-045](../decisions/decision-log.md) retired the 100 USDT sell-or-borrow claim. [D-048](../decisions/decision-log.md) approved a bounded read-only pre-entry exit prototype immediately. The old holder and Venus product rows below are historical evidence, not active gates. Only the official 11 October lock is a calendar deadline.
