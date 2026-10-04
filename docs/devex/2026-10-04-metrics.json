@@ -3,81 +3,81 @@
   "endpoints": [
     {
       "business_code_counts": {
-        "0": 84,
+        "0": 92,
         "40367": 2,
         "40374": 9
       },
-      "calls": 95,
+      "calls": 103,
       "endpoint": "/api/v1/dex/aggregator/quote",
       "http_status_counts": {
-        "200": 95
+        "200": 103
       },
       "max_latency_ms": 757.14,
-      "median_latency_ms": 332.15,
+      "median_latency_ms": 329.67,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 650.83,
+      "p95_latency_ms_nearest_rank": 648.75,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 5
+        "0": 8
       },
-      "calls": 5,
+      "calls": 8,
       "endpoint": "/api/v1/dex/aggregator/swap",
       "http_status_counts": {
-        "200": 5
+        "200": 8
       },
       "max_latency_ms": 423.83,
-      "median_latency_ms": 340.02,
+      "median_latency_ms": 336.99,
       "method": "GET",
       "p95_latency_ms_nearest_rank": 423.83,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 92,
+        "0": 109,
         "None": 1
       },
-      "calls": 93,
+      "calls": 110,
       "endpoint": "/api/v1/dex/market/rwa/price",
       "http_status_counts": {
-        "200": 92,
+        "200": 109,
         "414": 1
       },
       "max_latency_ms": 670.79,
-      "median_latency_ms": 299.92,
+      "median_latency_ms": 299.95,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 397.45,
+      "p95_latency_ms_nearest_rank": 391.34,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 93
+        "0": 113
       },
-      "calls": 93,
+      "calls": 113,
       "endpoint": "/api/v1/dex/market/rwa/tokens",
       "http_status_counts": {
-        "200": 93
+        "200": 113
       },
       "max_latency_ms": 3925.65,
-      "median_latency_ms": 2207.47,
+      "median_latency_ms": 2197.0,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 3746.25,
+      "p95_latency_ms_nearest_rank": 3735.57,
       "schema_mismatches": 0
     },
     {
       "business_code_counts": {
-        "0": 18
+        "0": 27
       },
-      "calls": 18,
+      "calls": 27,
       "endpoint": "/api/v1/dex/market/rwa/underlying-market",
       "http_status_counts": {
-        "200": 18
+        "200": 27
       },
       "max_latency_ms": 386.74,
-      "median_latency_ms": 300.75,
+      "median_latency_ms": 302.67,
       "method": "GET",
-      "p95_latency_ms_nearest_rank": 386.74,
+      "p95_latency_ms_nearest_rank": 384.41,
       "schema_mismatches": 0
     },
     {
@@ -97,15 +97,15 @@
     },
     {
       "business_code_counts": {
-        "0": 4
+        "0": 7
       },
-      "calls": 4,
+      "calls": 7,
       "endpoint": "/api/v1/dex/pre-transaction/simulate",
       "http_status_counts": {
-        "200": 4
+        "200": 7
       },
       "max_latency_ms": 479.78,
-      "median_latency_ms": 374.73,
+      "median_latency_ms": 370.26,
       "method": "POST",
       "p95_latency_ms_nearest_rank": 479.78,
       "schema_mismatches": 0
@@ -140,15 +140,15 @@
     },
     {
       "business_code_counts": {},
-      "calls": 21,
+      "calls": 36,
       "endpoint": "https://bsc-dataseed.bnbchain.org",
       "http_status_counts": {
-        "200": 21
+        "200": 36
       },
       "max_latency_ms": 371.55,
-      "median_latency_ms": 241.07,
+      "median_latency_ms": 240.66,
       "method": "POST eth_call JSON-RPC batch",
-      "p95_latency_ms_nearest_rank": 360.29,
+      "p95_latency_ms_nearest_rank": 362.53,
       "schema_mismatches": 0
     },
     {
@@ -169,6 +169,6 @@
   ],
   "method": "append-only sanitized call ledger, not a controlled load benchmark",
   "note": "Business rejections can be expected task outcomes; HTTP 200 isn't a successful quote or transaction. No request header, API key or wallet private key is included.",
-  "request_count": 339,
-  "snapshot_last_logged_at": "2026-10-04T15:20:03.339Z"
+  "request_count": 414,
+  "snapshot_last_logged_at": "2026-10-04T16:20:03.149Z"
 }
