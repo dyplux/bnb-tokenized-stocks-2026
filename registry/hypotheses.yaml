@@ -2,7 +2,7 @@ updated_at: 2026-10-04
 hypotheses:
   - id: H-RWA-OFFHOURS
     claim: Off-hours tokenized-equity data predicts a useful next-open decision after costs.
-    state: unproven
+    state: TESTING
     counterevidence: docs/research/2026-10-01-weekend-reopen-screen.md
     current_measurement: experiments/EXP-RWA-004/results.json
     external_daily_close_comparison: experiments/EXP-RWA-004/friday_close_benchmark_results.json
@@ -10,16 +10,24 @@ hypotheses:
     promote_if: Repeatable out-of-sample result using synchronized executable quotes and costs.
   - id: H-RWA-SAFETY
     claim: Freshness, share normalization and liquidity checks prevent materially misleading RWA actions.
-    state: collecting
-    evidence: experiments/EXP-RWA-010/results.json
+    state: PRODUCT_CORE_PROVISIONAL
+    evidence: docs/research/2026-10-04-safety-evidence.md
     additional_evidence: experiments/EXP-RWA-001/xstock_price_probe_results.json
     formula_check: experiments/EXP-RWA-002/reference_formula_results.json
     live_policy_probe: experiments/EXP-RWA-010/live_policy_probe.json
     counterevidence: First-party tools already expose some route and market state checks.
-    promote_if: A distinct user task and at least one observed preventable failure survive incumbent comparison.
+    promote_if: A clean judge can complete one exact-action review and a distinct user task survives incumbent comparison.
   - id: H-RWA-CORPACT
+    alias: H-CORPACT
     claim: Corporate-action state can create false raw-price signals that a deterministic guard can block.
-    state: synthetic_fixture_only
+    state: TESTING_SUPPORTING
     evidence: experiments/EXP-RWA-011/corporate_action_fixtures.json
     live_profile_limit: experiments/EXP-RWA-011/profile_probe.json
+    current_onchain_check: experiments/EXP-RWA-011/onchain_multiplier_audit.json
     promote_if: A real dated issuer action with before/after token ratio and source evidence is reconstructed.
+  - id: H-DUAL
+    claim: One genuine BSC rebalancing agent can reuse the RWA safety core for Set and Earn without distorting the October submission.
+    state: TESTING
+    evidence: docs/research/2026-10-04-safety-evidence.md
+    blocker: No ERC-8004 identity, listed agent, completed independent hire or on-chain rebalancing action has been observed.
+    promote_if: A real rebalancing task, safe execution path and independent marketplace use are demonstrated.

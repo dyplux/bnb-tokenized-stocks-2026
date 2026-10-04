@@ -156,6 +156,18 @@ class PolicyFixtureTest(unittest.TestCase):
         self.assertEqual(result["decision"], "DENY")
         self.assertIn("ASSET_PAUSED", result["reason_codes"])
 
+    def test_observed_undocumented_offhours_never_defaults_open(self):
+        self.evidence["market_status"] = "offhours"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("UNDERLYING_MARKET_NOT_REGULAR", result["reason_codes"])
+
+    def test_unrecognized_market_state_never_defaults_open(self):
+        self.evidence["market_status"] = "future_api_enum"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("MARKET_STATE_UNKNOWN", result["reason_codes"])
+
     def test_no_quote_denies(self):
         self.evidence["quote_available"] = False
         self.assertIn("NO_EXECUTABLE_QUOTE", self.run_policy()["reason_codes"])
