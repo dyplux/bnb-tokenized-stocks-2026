@@ -1,9 +1,9 @@
 const cases = {
-  observed: {url: 'judge/observed-unsafe.json', title: 'NEED_HUMAN',
+  observed: {url: 'judge/observed-unsafe.json', decision: 'NEED_HUMAN', title: 'NEED_HUMAN',
     summary: 'This dated NVDAB quote returned a route. The policy stopped because market state, issuer access, an independent stock-reference clock and funded simulation weren\'t established.'},
-  mandate: {url: 'judge/observed-mandate-deny.json', title: 'DENY',
+  mandate: {url: 'judge/observed-mandate-deny.json', decision: 'DENY', title: 'DENY',
     summary: 'This dated NVDAB check returned a route, but the proposed 100 USDT purchase exceeded the 20 USDT mandate. Missing evidence remained visible in the receipt.'},
-  synthetic: {url: 'judge/synthetic-safe.json', title: 'ALLOW · fixture only',
+  synthetic: {url: 'judge/synthetic-safe.json', decision: 'ALLOW', title: 'ALLOW · fixture only',
     summary: 'All inputs were supplied by a synthetic test fixture. It shows the passing policy branch and proves no real access, quote, simulation or trade.'}
 };
 let activeRequest = 0;
@@ -40,6 +40,12 @@ async function showCase(key) {
     button.setAttribute('aria-pressed', String(active));
   }
   document.querySelector('#decision-title').textContent = 'Loading...';
+  document.querySelector('#case-origin').textContent = 'LOADING RECEIPT';
+  document.querySelector('#case-time').textContent = '';
+  document.querySelector('#case-summary').textContent = '';
+  document.querySelector('#evidence').replaceChildren();
+  document.querySelector('#reasons').replaceChildren();
+  document.querySelector('#receipt-hash').textContent = '';
   document.querySelector('#hash-state').textContent = 'Checking receipt...';
   document.querySelector('#receipt-link').removeAttribute('href');
   try {
@@ -48,6 +54,13 @@ async function showCase(key) {
     const data = await response.json();
     if (requestId !== activeRequest) return;
     const receipt = data.receipt;
+    if (!receipt || receipt.decision !== selected.decision ||
+        !receipt.evidence || !Array.isArray(receipt.reason_codes) ||
+        typeof receipt.receipt_sha256 !== 'string' ||
+        await hashReceipt(receipt) !== receipt.receipt_sha256) {
+      throw new Error('Receipt failed verification');
+    }
+    if (requestId !== activeRequest) return;
     const evidence = receipt.evidence;
     document.querySelector('#case-origin').textContent = data.origin;
     document.querySelector('#case-time').textContent = receipt.timestamp;
@@ -88,14 +101,12 @@ async function showCase(key) {
     }
     document.querySelector('#receipt-hash').textContent = receipt.receipt_sha256;
     document.querySelector('#receipt-link').href = selected.url;
-    const valid = await hashReceipt(receipt) === receipt.receipt_sha256;
-    if (requestId !== activeRequest) return;
-    document.querySelector('#hash-state').textContent = valid ? 'Hash matches the downloaded decision body' : 'Hash mismatch. Do not rely on this packet.';
+    document.querySelector('#hash-state').textContent = 'Hash matches the downloaded decision body';
   } catch (error) {
     if (requestId !== activeRequest) return;
-    document.querySelector('#decision-title').textContent = 'Receipt unavailable';
-    document.querySelector('#case-summary').textContent = 'The published file could not be loaded. Try the repository link.';
-    document.querySelector('#hash-state').textContent = 'No verification completed';
+    document.querySelector('#decision-title').textContent = 'Receipt unavailable or unverified';
+    document.querySelector('#case-summary').textContent = 'This decision could not be verified. Try the repository link.';
+    document.querySelector('#hash-state').textContent = 'No verified decision available';
   }
 }
 
