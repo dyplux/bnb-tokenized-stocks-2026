@@ -1,0 +1,53 @@
+{
+  "claim_limit": "Profile fields are a snapshot; no historical ratio change is proved.",
+  "endpoint": "/api/v1/dex/market/rwa/underlying-profile",
+  "origin": "LIVE",
+  "summaries": [
+    {
+      "candidate_event_or_reference_time_fields": {},
+      "captured_at": "2026-10-04T11:21:20.339Z",
+      "contract": "0xe6837794fbc6dd024733a1a31f86061296fa2752",
+      "data_keys": [
+        "assetType",
+        "binanceChainId",
+        "companyInfo",
+        "platformId",
+        "protections",
+        "tokenContractAddress",
+        "tokenToShareRatio",
+        "underlyingFullName",
+        "underlyingTicker"
+      ],
+      "protection_keys": [
+        "dailyAttestationReport",
+        "monthlyAttestationReport"
+      ],
+      "raw_response_sha256": "01d29439c3f04a5838c28318615927e9291fc6424367f988257bf908a804c8b8",
+      "ticker": "CRWD",
+      "token_to_share_ratio": "4"
+    },
+    {
+      "candidate_event_or_reference_time_fields": {},
+      "captured_at": "2026-10-04T11:21:20.644Z",
+      "contract": "0x7048f5227b032326cc8dbc53cf3fddd947a2c757",
+      "data_keys": [
+        "assetType",
+        "binanceChainId",
+        "companyInfo",
+        "platformId",
+        "protections",
+        "tokenContractAddress",
+        "tokenToShareRatio",
+        "underlyingFullName",
+        "underlyingTicker"
+      ],
+      "protection_keys": [
+        "dailyAttestationReport",
+        "monthlyAttestationReport"
+      ],
+      "raw_response_sha256": "6418f08b54d4ef189b48a1d3b3cdf7766183e9f402712d2b03ae44f06c2ba39d",
+      "ticker": "NFLX",
+      "token_to_share_ratio": "10"
+    }
+  ]
+}

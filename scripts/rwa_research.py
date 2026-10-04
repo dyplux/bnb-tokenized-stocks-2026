@@ -29,6 +29,7 @@ PUBLIC_XSTOCKS = "https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/
 TOKENS = "/api/v1/dex/market/rwa/tokens"
 PRICE = "/api/v1/dex/market/rwa/price"
 UNDERLYING_MARKET = "/api/v1/dex/market/rwa/underlying-market"
+UNDERLYING_PROFILE = "/api/v1/dex/market/rwa/underlying-profile"
 QUOTE = "/api/v1/dex/aggregator/quote"
 TICKERS = {"AAPL", "NVDA", "TSLA", "COIN", "MSTR"}
 CATALOG = ROOT / "data/normalized/rwa_catalog.json"
@@ -139,7 +140,7 @@ class Api:
         self.key, self.secret = auth
 
     def get(self, path, params, experiment, expected, context, allow_error=False):
-        if path not in (TOKENS, PRICE, UNDERLYING_MARKET, QUOTE):
+        if path not in (TOKENS, PRICE, UNDERLYING_MARKET, UNDERLYING_PROFILE, QUOTE):
             raise ValueError("endpoint is outside the read-only allowlist")
         query = urlencode(params)
         timestamp = utc_now()
@@ -177,7 +178,7 @@ class Api:
         elif len(body) > 2_000_000:
             error = "response_too_large"
         code = payload.get("code") if isinstance(payload, dict) else None
-        expected_type = dict if path == UNDERLYING_MARKET else list
+        expected_type = dict if path in (UNDERLYING_MARKET, UNDERLYING_PROFILE) else list
         valid = (status == 200 and code == 0 and isinstance(payload.get("data"), expected_type)) if isinstance(payload, dict) else False
         if not valid and error is None:
             error = "http_or_business_error" if status != 200 or code != 0 else "schema_mismatch"
@@ -426,7 +427,7 @@ def collect_once(api, interval):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("catalog", "once", "loop", "start", "underlying-probe", "xstocks", "xstocks-shape", "health"))
+    parser.add_argument("command", choices=("catalog", "once", "loop", "start", "underlying-probe", "profile-probe", "xstocks", "xstocks-shape", "health"))
     parser.add_argument("--interval", type=int, default=300, help="Sampling interval in seconds, minimum 60")
     args = parser.parse_args()
     if args.interval < 60:
@@ -502,6 +503,28 @@ def main():
                               "raw_response_sha256": digest, "data_keys": sorted(data),
                               "market_data_keys": sorted(market_data), "status_info": data.get("statusInfo"),
                               "candidate_timestamp_fields": {k: v for k, v in market_data.items() if "time" in k.lower() or "updated" in k.lower()}}))
+    elif args.command == "profile-probe":
+        rows = json.loads(CATALOG.read_text(encoding="utf-8"))["rows"]
+        targets = [row for row in rows if row["ticker"] in ("CRWD", "NFLX") and row["provider"] == "ondo"]
+        if len(targets) != 2:
+            raise RuntimeError("expected exactly two issuer-event profile targets")
+        summaries = []
+        for row in targets:
+            payload, at, digest = api.get(UNDERLYING_PROFILE,
+                [("binanceChainId", "56"), ("tokenContractAddress", row["contract"])],
+                "EXP-RWA-011", "underlying profile and any dated corporate action fields", "event_profile_probe")
+            data = payload["data"]
+            protections = data.get("protections") or {}
+            summaries.append({"captured_at": at, "ticker": row["ticker"], "contract": row["contract"],
+                              "raw_response_sha256": digest, "data_keys": sorted(data),
+                              "protection_keys": sorted(protections), "token_to_share_ratio": data.get("tokenToShareRatio"),
+                              "candidate_event_or_reference_time_fields": {k: v for k, v in data.items()
+                                                                            if any(word in k.lower() for word in ("action", "event", "updated", "timestamp", "reference"))}})
+        output = ROOT / "experiments/EXP-RWA-011/profile_probe.json"
+        write_json(output, {"origin": "LIVE", "endpoint": UNDERLYING_PROFILE, "summaries": summaries,
+                            "claim_limit": "Profile fields are a snapshot; no historical ratio change is proved."})
+        print(json.dumps({"profiles": len(summaries), "output": str(output.relative_to(ROOT)),
+                          "data_keys": {x["ticker"]: x["data_keys"] for x in summaries}}))
     elif args.command == "once":
         collect_once(api, args.interval)
     else:
