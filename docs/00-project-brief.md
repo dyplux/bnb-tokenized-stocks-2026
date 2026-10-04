@@ -10,7 +10,7 @@
 
 ## User task
 
-A self-custodial BNB Chain user proposes one bounded spot tokenized-equity action. Before signing, the tool checks the exact security, representation, market state, reference-time evidence, current bStock multiplier where relevant, holder-access evidence, an amount-specific route, simulation and the user's mandate. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a dated receipt. The [one-page spec](product/safety-one-page-spec.md) defines the current read-only slice.
+A self-custodial BNB Chain user proposes one bounded spot tokenized-equity action. The current read-only screen checks the exact security, representation, market state, reference-time evidence, current bStock multiplier where relevant, holder-access evidence, an amount-specific route and the user's mandate. It records simulation as unverified and returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a dated receipt. A separate local packet attempts an exact-wallet unsigned build and off-chain simulation. The [one-page spec](product/safety-one-page-spec.md) defines this slice.
 
 The need is supported by six [dated technical observations](research/2026-10-04-safety-evidence.md), including missing independent stock-reference time, an undocumented `offhours` state and a displayed cross-issuer gap without a corresponding executable route. These don't prove user demand, a safe funded trade or financial benefit. [D-063](decisions/decision-log.md) records the founder's decision to freeze the safety layer as the product core. Earlier Exit Check and exact-budget ideas are retained as research history, not the active submission.
 
