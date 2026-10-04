@@ -141,10 +141,13 @@ def main():
             "captured_at": catalog["captured_at"], "source": row["source"], "ticker": row["ticker"],
             "provider": row["provider"], "contract": row["contract"], "decimals": row.get("decimals"),
             "token_to_share_ratio": str(ratio) if ratio is not None else None,
+            "ratio_captured_at": catalog["captured_at"], "ratio_source_sha256": catalog["raw_response_sha256"],
             "listed_multiplier_raw": row.get("listed_multiplier_raw"),
             "token_price_usd_latest": str(price) if price is not None else None,
+            "price_observed_at": price_row.get("observed_at") if price_row else None,
+            "price_response_sha256": price_row.get("price_response_sha256") if price_row else None,
             "per_share_math_usd": str(per_share) if per_share is not None else None,
-            "normalization_state": "math_only_not_equivalence" if per_share is not None else "ratio_or_price_unverified",
+            "normalization_state": "mixed_time_arithmetic_not_equivalence" if per_share is not None else "ratio_or_price_unverified",
             "rights_and_corporate_action_verified": False,
         })
     write_csv(ROOT / "experiments/EXP-RWA-002/share_ratio_audit.csv", list(audit[0]) if audit else [], audit)
