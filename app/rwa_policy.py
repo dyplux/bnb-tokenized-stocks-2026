@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 
 def number(value):
@@ -14,6 +14,25 @@ def number(value):
         return candidate if candidate.is_finite() else None
     except (InvalidOperation, TypeError, ValueError):
         return None
+
+
+def reference_freshness_guard(evidence, mandate):
+    """Return a reason and severity for an independently timed reference.
+
+    A token-price timestamp never satisfies this guard. Callers can explicitly
+    waive the independent reference when their mandate doesn't use one.
+    """
+    if mandate.get("require_independent_reference") is False:
+        return None
+    if evidence.get("reference_price_updated_at") is None or evidence.get("reference_age_status") != "OBSERVED":
+        return "INDEPENDENT_REFERENCE_TIME_UNKNOWN", "NEED_HUMAN"
+    age = number(evidence.get("reference_age_seconds"))
+    limit = number(mandate.get("max_reference_age_seconds"))
+    if age is None or age < 0 or limit is None or limit <= 0:
+        return "INDEPENDENT_REFERENCE_AGE_UNKNOWN", "NEED_HUMAN"
+    if age > limit:
+        return "INDEPENDENT_REFERENCE_STALE", "DENY"
+    return None
 
 
 def evaluate(intent, evidence, mandate, now=None):
@@ -66,8 +85,10 @@ def evaluate(intent, evidence, mandate, now=None):
         uncertain("TOKEN_PRICE_AGE_UNKNOWN")
     elif price_age > max_age:
         deny("TOKEN_PRICE_STALE")
-    if evidence.get("reference_price_updated_at") is None or evidence.get("reference_age_status") != "OBSERVED":
-        uncertain("INDEPENDENT_REFERENCE_TIME_UNKNOWN")
+    reference_result = reference_freshness_guard(evidence, mandate)
+    if reference_result is not None:
+        code, severity = reference_result
+        (deny if severity == "DENY" else uncertain)(code)
 
     requested = number(intent.get("notional_usd"))
     limit = number(mandate.get("max_notional_usd"))
@@ -93,6 +114,9 @@ def evaluate(intent, evidence, mandate, now=None):
         "policy_version": VERSION, "timestamp": now.isoformat(timespec="seconds").replace("+00:00", "Z"),
         "decision": decision, "reason_codes": sorted(set(reasons)), "checks": checks,
         "intent": {k: intent.get(k) for k in ("chain_id", "ticker", "provider", "contract", "notional_usd")},
+        "mandate": {k: mandate.get(k) for k in (
+            "max_token_price_age_ms", "require_independent_reference", "max_reference_age_seconds",
+            "max_notional_usd", "max_price_impact_percent")},
         "evidence": {k: evidence.get(k) for k in (
             "chain_id", "ticker", "provider", "contract", "issuer_verified", "token_to_share_ratio",
             "previous_token_to_share_ratio", "corporate_action_verified", "market_status", "market_reason",

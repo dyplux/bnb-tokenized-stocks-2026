@@ -20,9 +20,11 @@ class PolicyFixtureTest(unittest.TestCase):
                          "corporate_action_verified": False, "market_status": "regular", "market_reason": None,
                          "token_price_age_ms": 1000,
                          "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
-                         "reference_price_updated_at": "synthetic", "reference_age_status": "OBSERVED",
+                         "reference_price_updated_at": "synthetic", "reference_age_seconds": 10,
+                         "reference_age_status": "OBSERVED",
                          "quote_available": True, "price_impact_percent": "0.1", "simulation_passed": True}
-        self.mandate = {"max_token_price_age_ms": 60000, "max_notional_usd": "200",
+        self.mandate = {"max_token_price_age_ms": 60000, "require_independent_reference": True,
+                        "max_reference_age_seconds": 60, "max_notional_usd": "200",
                         "max_price_impact_percent": "1"}
         self.now = datetime(2026, 10, 4, tzinfo=timezone.utc)
 
@@ -40,6 +42,25 @@ class PolicyFixtureTest(unittest.TestCase):
         result = self.run_policy()
         self.assertEqual(result["decision"], "NEED_HUMAN")
         self.assertIn("INDEPENDENT_REFERENCE_TIME_UNKNOWN", result["reason_codes"])
+
+    def test_stale_independent_reference_denies(self):
+        self.evidence["reference_age_seconds"] = 61
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "DENY")
+        self.assertIn("INDEPENDENT_REFERENCE_STALE", result["reason_codes"])
+
+    def test_missing_reference_age_needs_human_even_with_timestamp(self):
+        self.evidence["reference_age_seconds"] = None
+        self.assertIn("INDEPENDENT_REFERENCE_AGE_UNKNOWN", self.run_policy()["reason_codes"])
+
+    def test_reference_requirement_can_be_explicitly_waived(self):
+        self.mandate["require_independent_reference"] = False
+        self.evidence["reference_price_updated_at"] = None
+        self.evidence["reference_age_seconds"] = None
+        self.evidence["reference_age_status"] = "UNKNOWN"
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "ALLOW")
+        self.assertFalse(any(code.startswith("INDEPENDENT_REFERENCE_") for code in result["reason_codes"]))
 
     def test_legacy_token_age_without_observation_clock_needs_human(self):
         self.evidence.pop("token_price_age_calculation")
