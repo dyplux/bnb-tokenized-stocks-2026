@@ -32,6 +32,7 @@ UNDERLYING_MARKET = "/api/v1/dex/market/rwa/underlying-market"
 UNDERLYING_PROFILE = "/api/v1/dex/market/rwa/underlying-profile"
 QUOTE = "/api/v1/dex/aggregator/quote"
 SWAP_BUILD = "/api/v1/dex/aggregator/swap"
+SIMULATE = "/api/v1/dex/pre-transaction/simulate"
 TICKERS = {"AAPL", "NVDA", "TSLA", "COIN", "MSTR"}
 CATALOG = ROOT / "data/normalized/rwa_catalog.json"
 CATALOG_PARQUET = ROOT / "data/normalized/rwa_catalog.parquet"
@@ -205,6 +206,72 @@ class Api:
             "workaround": None, "documentation_issue": "RWA response has no independent reference timestamp" if valid and path in (PRICE, UNDERLYING_MARKET) else None,
             "suggested_improvement": "Expose reference source and as-of timestamp separately" if valid and path in (PRICE, UNDERLYING_MARKET) else None,
             "market_context": context, "secret_scan": "allowlist_only_no_headers_or_raw_body",
+        }
+        serialized = json.dumps(record)
+        if self.key in serialized or self.secret in serialized or "X-OC-SIGN" in serialized:
+            raise RuntimeError("DevEx secret scan rejected record")
+        append_jsonl(DEVEX / (received[:10] + ".jsonl"), record)
+        if not valid and not allow_error:
+            raise ApiError("API %s failed: HTTP %s, business %s, %s" % (path, status, code, error), status, code, retry_after)
+        return payload if isinstance(payload, dict) else {}, received, raw_hash
+
+    def post_simulation(self, body_obj, experiment, expected, context, allow_error=False):
+        """Call only the documented off-chain simulation endpoint; never broadcast."""
+        path = SIMULATE
+        if body_obj.get("binanceChainId") != "56" or set(body_obj) != {"binanceChainId", "evmTx"}:
+            raise ValueError("simulation request must contain BSC evmTx only")
+        tx = body_obj["evmTx"]
+        if not isinstance(tx, dict) or not all(tx.get(k) for k in ("from", "to", "data")):
+            raise ValueError("simulation requires unsigned from, to and calldata")
+        body = json.dumps(body_obj, separators=(",", ":"), ensure_ascii=False).encode()
+        timestamp = utc_now()
+        signature = base64.b64encode(hmac.new(
+            self.secret.encode(), (timestamp + "POST" + "/build" + path).encode() + body,
+            hashlib.sha256,
+        ).digest()).decode("ascii")
+        request = Request(BASE + path, data=body, headers={
+            "X-OC-APIKEY": self.key, "X-OC-TIMESTAMP": timestamp,
+            "X-OC-SIGN": signature, "X-OC-NONCE": secrets.token_hex(16),
+            "Content-Type": "application/json", "Accept": "application/json",
+        }, method="POST")
+        started = time.monotonic()
+        status, response_body, error, retry_after = None, b"", None, None
+        try:
+            with build_opener(NoRedirect()).open(request, timeout=20) as response:
+                status, response_body = response.status, response.read(2_000_001)
+        except HTTPError as exc:
+            status, retry_after = exc.code, exc.headers.get("Retry-After")
+            response_body = exc.read(2_000_001)
+        except (URLError, TimeoutError, OSError) as exc:
+            error = type(exc).__name__
+        received = utc_now()
+        payload = None
+        if response_body and len(response_body) <= 2_000_000:
+            try:
+                payload = json.loads(response_body.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                error = "invalid_json"
+        elif len(response_body) > 2_000_000:
+            error = "response_too_large"
+        code = payload.get("code") if isinstance(payload, dict) else None
+        valid = status == 200 and code == 0 and isinstance(payload.get("data"), dict) if isinstance(payload, dict) else False
+        if not valid and error is None:
+            error = "http_or_business_error" if status != 200 or code != 0 else "schema_mismatch"
+        raw_hash = retain_raw(response_body, path, received, experiment, self.key, self.secret)
+        record = {
+            "timestamp": received, "endpoint": path, "method": "POST", "experiment_id": experiment,
+            "expected_behavior": expected, "actual_behavior": "success" if valid else "failure",
+            "latency_ms": round((time.monotonic() - started) * 1000, 2),
+            "http_status": status, "business_code": code if isinstance(code, int) else None,
+            "sanitized_request": {"binanceChainId": "56", "evmTx": {
+                "to": tx["to"], "value": tx.get("value", "0"),
+                "calldata_bytes": (len(tx["data"]) - 2) // 2,
+                "calldata_sha256": hashlib.sha256(tx["data"].encode()).hexdigest()}},
+            "sanitized_response": safe_keys(payload), "raw_response_sha256": raw_hash,
+            "schema_mismatch": bool(status == 200 and code == 0 and not valid),
+            "error": error, "edge_case": None, "workaround": None,
+            "documentation_issue": None, "suggested_improvement": None,
+            "market_context": context, "secret_scan": "allowlist_only_no_headers_or_calldata",
         }
         serialized = json.dumps(record)
         if self.key in serialized or self.secret in serialized or "X-OC-SIGN" in serialized:

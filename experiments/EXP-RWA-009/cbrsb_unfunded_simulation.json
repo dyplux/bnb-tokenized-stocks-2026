@@ -1,0 +1,33 @@
+{
+  "asset": "CBRSB",
+  "build": {
+    "business_code": 0,
+    "business_message": "success",
+    "execution_mode": "SWAP",
+    "observed_at": "2026-10-04T13:21:16.253Z",
+    "raw_response_sha256": "f16a6dd47bd54b286dd0022bfed788eb976e41a7f1042eb70094b682a4e6e42d",
+    "tx_present": true
+  },
+  "limit": "Off-chain simulation with unfunded ephemeral wallet. No approval, signature, broadcast or fill; no eligibility or investment conclusion.",
+  "notional": "100 USDT",
+  "observed_at": "2026-10-04T13:21:15.877Z",
+  "origin": "LIVE",
+  "quote": {
+    "business_code": 0,
+    "execution_mode": "SWAP",
+    "raw_response_sha256": "a9c687e912193bc86f40f36946721e856f9b6736d67ad5c113d1fed82b7d965f",
+    "route_count": 1
+  },
+  "simulation": {
+    "allowance_change_count": 0,
+    "balance_change_count": 0,
+    "business_code": 0,
+    "business_message": "success",
+    "calldata_sha256": "7e906b789f5a8966bad37a76e3f83ed77b4c774f854a2b6dcc31bc9d1f0d3774",
+    "fail_reason": "execution reverted: BEP20: transfer amount exceeds balance",
+    "observed_at": "2026-10-04T13:21:16.736Z",
+    "predicted_status": "FAILED",
+    "raw_response_sha256": "d9739fb0143d91111b5763ab297984a740c53c99100fd045e5a61fef4633474a"
+  },
+  "wallet": "ephemeral_unfunded_not_stored"
+}
