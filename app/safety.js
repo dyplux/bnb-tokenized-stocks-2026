@@ -79,6 +79,7 @@ function render(data) {
   fact(facts, 'Security', `${view.canonical_security} / ${view.representation} · ${view.provider}`);
   fact(facts, 'BSC contract', view.contract);
   fact(facts, 'Market state', view.market_status || 'UNKNOWN', view.market_status === 'regular' ? 'ok' : 'caution');
+  fact(facts, 'Open-state flag', view.market_open_state === null ? 'UNKNOWN' : `${view.market_open_state} · not proof of regular session`, 'caution');
   fact(facts, 'Token price', view.token_price_usd === null ? 'UNKNOWN' : `$${view.token_price_usd}`);
   fact(facts, 'Token price clock', view.token_price_updated_at ? `${view.token_price_updated_at} · ${view.token_price_age_ms} ms old` : 'UNKNOWN');
   fact(facts, 'Reported reference', view.reported_reference_price_usd === null ? 'UNKNOWN' : `$${view.reported_reference_price_usd} · source time unknown`, 'caution');
