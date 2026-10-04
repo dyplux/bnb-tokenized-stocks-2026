@@ -1,5 +1,7 @@
 # Developer Experience Report answer draft
 
+**Superseded for the current product.** This file describes the retired Exit Check stage and contains old call counts and now-invalid statements such as no nonzero business codes. Use the [current safety-product evidence draft](dx-form-current.md) and the live DevEx log when preparing the official form. Keep this file only for historical reconstruction.
+
 **Prepared:** 2026-10-02; updated 2026-10-03 after the current-build browser check. For the [official DX form](https://forms.gle/EUQ39xf54GHjC2ys5). This is a copy aid, not a submitted report. The [live form audit](2026-10-01-live-form-audit.md) and [field log](../dx/field-log.md) are the evidence record. Recheck every field before submission. `FOUNDER` means the answer requires first-hand input or a private value. `LATER` means the build still needs an observation. No key, UID, wallet address or private contact belongs in this file.
 
 ## 1. Submission details
