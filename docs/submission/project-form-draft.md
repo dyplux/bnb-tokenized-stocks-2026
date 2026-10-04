@@ -1,4 +1,6 @@
-# Project submission draft
+# Superseded project submission draft
+
+This document is retained for the [historical 3 October checkpoint](../status.md). Use the [current safety-build answer map](project-form-safety-answer-map.md) for the form. The map has the public film URL, both observed dated decisions and the separately labelled synthetic fixture. Do not copy the older answers below into the submission.
 
 **Prepared:** 2026-10-04. **Status:** internal draft for the frozen safety core. No build form has been submitted from this file. Recheck every claim against the final build before submission; Monday only decides whether an optional off-hours finding is added.
 
@@ -10,7 +12,7 @@
 | Telegram | Optional; founder decides. |
 | Tracks | Main Tokenized Stocks track. Claim the Agentic Wallet or Agent Studio special only after a working qualifying integration exists. |
 | Public repository URL | `https://github.com/dyplux/bnb-tokenized-stocks-2026`, public and accessible without sign-in on 4 October. |
-| Demo video URL | Pending. The older Exit Check clip shows a retired flow and mustn't be submitted for this product. |
+| Demo video URL | Superseded by the public current-product film in the [answer map](project-form-safety-answer-map.md). |
 | Deployed link or judge instructions | [Public dated judge packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) and [local live judge-run guide](safety-judge-run.md). Chrome desktop and mobile checks passed on 4 October. The public page doesn't call the signed API; it labels the safe policy branch synthetic. |
 | DX report | Submit the factual [current draft](dx-form-current.md) after the Monday market-state observations and founder-only fields are checked. |
 
