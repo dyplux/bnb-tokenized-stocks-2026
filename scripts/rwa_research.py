@@ -288,7 +288,7 @@ def xstocks_catalog(api):
     return result
 
 
-def catalog(api):
+def catalog(api, persist=True):
     payload, at, raw_hash = api.get(TOKENS, [("binanceChainId", "56")], "EXP-RWA-001",
                           "BSC RWA token list with contract, ratio and status", "catalog")
     rows = [row for item in payload["data"] if (row := normalize(item)) is not None]
@@ -306,8 +306,11 @@ def catalog(api):
         "raw_response_sha256": raw_hash,
         "rows": rows,
     }
-    write_json(CATALOG, result)
-    write_catalog_parquet(rows)
+    if persist:
+        write_json(CATALOG, result)
+        write_catalog_parquet(rows)
+    else:
+        write_json(MARKET / "catalog_latest.json", result)
     return result
 
 
@@ -347,7 +350,7 @@ def collect_once(api, interval):
             previous_slot = json.loads(heartbeat_path.read_text(encoding="utf-8")).get("last_success_slot")
         except (OSError, json.JSONDecodeError):
             pass
-    catalog_state = catalog(api)
+    catalog_state = catalog(api, persist=False)
     chosen = [row for row in catalog_state["rows"] if row["asset_type"] == 1 and
               (row["provider"] == "bstock" or (row["provider"] == "ondo" and row["ticker"] in TICKERS))]
     addresses = sorted({row["contract"] for row in chosen})
@@ -372,12 +375,14 @@ def collect_once(api, interval):
     for row in chosen:
         price = prices.get(row["contract"], {})
         updated = price.get("tokenPriceUpdatedAt")
-        age = max(0, int(now.timestamp() * 1000) - updated) if isinstance(updated, int) and updated > 0 else None
+        observed_at = utc_now()
+        observed_ms = int(datetime.fromisoformat(observed_at.replace("Z", "+00:00")).timestamp() * 1000)
+        age = observed_ms - updated if isinstance(updated, int) and updated > 0 else None
         sample_id = hashlib.sha256((str(slot) + row["contract"]).encode()).hexdigest()[:24]
         if sample_id in seen and (weekend_target is None or sample_id in weekend_seen):
             continue
         sample = {
-            "sample_id": sample_id, "origin": "LIVE", "observed_at": utc_now(), "slot": slot,
+            "sample_id": sample_id, "origin": "LIVE", "observed_at": observed_at, "slot": slot,
             "experiment_ids": ["EXP-RWA-003", "EXP-RWA-004", "EXP-RWA-010"],
             "chain_id": "56", "provider": row["provider"], "ticker": row["ticker"],
             "contract": row["contract"], "token_to_share_ratio": row["token_to_share_ratio"],
@@ -385,6 +390,8 @@ def collect_once(api, interval):
             "token_price_usd": price.get("tokenPrice"),
             "derived_reference_price_usd": price.get("referencePrice"),
             "token_price_updated_at": updated, "token_price_updated_at_ms": updated, "token_price_age_ms": age,
+            "token_price_age_status": "UNKNOWN" if age is None else ("FUTURE_TIMESTAMP" if age < 0 else "OBSERVED"),
+            "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
             "reference_price_updated_at": None, "reference_age_seconds": None,
             "reference_age_status": "UNKNOWN",
             "independent_reference_timestamp": None, "independent_reference_age_ms": None,
@@ -447,7 +454,7 @@ def main():
                           "contracts_sampled": checkpoint.get("contracts_sampled") or heartbeat.get("selected_contracts"),
                           "next_expected_run": datetime.fromtimestamp(due, timezone.utc).isoformat() if due else None,
                           "overdue": overdue, "state": heartbeat.get("state")}))
-        if not alive or overdue:
+        if not alive or overdue or heartbeat.get("consecutive_failures", 0) > 0:
             raise SystemExit(1)
         return
     if args.command == "start":

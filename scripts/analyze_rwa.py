@@ -45,10 +45,14 @@ def main():
     freshness = []
     ages_by_status = defaultdict(list)
     market_review = Counter()
+    future_token_timestamps = 0
     for row in samples:
-        age = row.get("token_price_age_ms")
         status = row.get("market_status") or "unknown"
         observed = datetime.fromisoformat(row["observed_at"].replace("Z", "+00:00"))
+        token_updated = row.get("token_price_updated_at_ms")
+        age = int(observed.timestamp() * 1000) - token_updated if isinstance(token_updated, int) else None
+        if isinstance(age, int) and age < 0:
+            future_token_timestamps += 1
         ny = observed.astimezone(ZoneInfo("America/New_York"))
         weekday_core = ny.weekday() < 5 and (9, 30) <= (ny.hour, ny.minute) < (16, 0)
         core_state = "within_weekday_core_hours" if weekday_core else "outside_weekday_core_hours"
@@ -58,13 +62,14 @@ def main():
             "POTENTIAL_CONFLICT" if status == "regular" and core_state == "weekend_core_closed" else
             "PLAUSIBLE_NOT_PROVEN" if core_state == "weekend_core_closed" else "CALENDAR_AND_VENUE_UNVERIFIED")
         market_review[(core_state, status, review)] += 1
-        if isinstance(age, int):
+        if isinstance(age, int) and age >= 0:
             ages_by_status[status].append(age)
         freshness.append({
             "observed_at": row["observed_at"], "origin": row["origin"], "ticker": row["ticker"],
             "provider": row["provider"], "contract": row["contract"], "market_status": status,
             "token_price_updated_at_ms": row.get("token_price_updated_at_ms"),
-            "token_price_age_ms": age,
+            "token_price_age_ms": age, "legacy_collector_token_price_age_ms": row.get("token_price_age_ms"),
+            "token_price_age_status": "UNKNOWN" if age is None else ("FUTURE_TIMESTAMP" if age < 0 else "OBSERVED"),
             "token_price_updated_at": row.get("token_price_updated_at", row.get("token_price_updated_at_ms")),
             "reference_price_updated_at": row.get("reference_price_updated_at"),
             "reference_age_seconds": row.get("reference_age_seconds"),
@@ -78,7 +83,8 @@ def main():
     reference = ROOT / "experiments/EXP-RWA-010"
     write_csv(reference / "reference_freshness.csv", list(freshness[0]) if freshness else [
         "observed_at", "origin", "ticker", "provider", "contract", "market_status",
-        "token_price_updated_at_ms", "token_price_age_ms", "token_price_updated_at",
+        "token_price_updated_at_ms", "token_price_age_ms", "legacy_collector_token_price_age_ms",
+        "token_price_age_status", "token_price_updated_at",
         "reference_price_updated_at", "reference_age_seconds", "reference_age_status",
         "core_hours_context", "market_state_review", "independent_reference_timestamp",
         "independent_reference_age_ms", "reference_semantics", "raw_price_response_sha256"], freshness)
@@ -91,8 +97,10 @@ def main():
             "unknown_reference_age_rows": sum(row.get("reference_age_seconds") is None for row in samples),
             "documented_field_available": False,
         },
-        "token_price_freshness": {"median_age_ms_by_api_market_status": {k: int(median(v)) for k, v in ages_by_status.items()},
-                                  "with_timestamp": sum(row.get("token_price_updated_at_ms") is not None for row in samples)},
+        "token_price_freshness": {"age_calculation": "observed_at minus tokenPriceUpdatedAt, recomputed from raw timestamps for every row",
+                                  "median_nonnegative_age_ms_by_api_market_status": {k: int(median(v)) for k, v in ages_by_status.items()},
+                                  "with_timestamp": sum(row.get("token_price_updated_at_ms") is not None for row in samples),
+                                  "future_timestamp_rows": future_token_timestamps},
         "market_state_correctness": {"basis": "Nasdaq weekday core hours, 09:30 to 16:00 ET; no security-specific halt or holiday validation",
                                      "review_counts": [{"core_hours_context": k[0], "api_status": k[1],
                                                         "review": k[2], "count": v} for k, v in sorted(market_review.items())],

@@ -60,11 +60,13 @@ def evaluate(intent, evidence, mandate, now=None):
 
     price_age = evidence.get("token_price_age_ms")
     max_age = mandate.get("max_token_price_age_ms")
-    if not isinstance(price_age, int) or not isinstance(max_age, int) or max_age <= 0:
+    if evidence.get("token_price_age_calculation") != "observed_at_minus_tokenPriceUpdatedAt":
+        uncertain("TOKEN_PRICE_AGE_PROVENANCE_UNKNOWN")
+    if not isinstance(price_age, int) or price_age < 0 or not isinstance(max_age, int) or max_age <= 0:
         uncertain("TOKEN_PRICE_AGE_UNKNOWN")
     elif price_age > max_age:
         deny("TOKEN_PRICE_STALE")
-    if evidence.get("independent_reference_timestamp") is None:
+    if evidence.get("reference_price_updated_at") is None or evidence.get("reference_age_status") != "OBSERVED":
         uncertain("INDEPENDENT_REFERENCE_TIME_UNKNOWN")
 
     requested = number(intent.get("notional_usd"))
@@ -94,7 +96,8 @@ def evaluate(intent, evidence, mandate, now=None):
         "evidence": {k: evidence.get(k) for k in (
             "chain_id", "ticker", "provider", "contract", "issuer_verified", "token_to_share_ratio",
             "previous_token_to_share_ratio", "corporate_action_verified", "market_status", "market_reason",
-            "token_price_age_ms", "independent_reference_timestamp", "quote_available",
+            "token_price_age_ms", "token_price_age_calculation", "reference_price_updated_at",
+            "reference_age_seconds", "reference_age_status", "quote_available",
             "price_impact_percent", "simulation_passed", "source_response_sha256")},
     }
     encoded = json.dumps(receipt, sort_keys=True, separators=(",", ":"), default=str).encode()

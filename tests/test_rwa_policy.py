@@ -18,7 +18,9 @@ class PolicyFixtureTest(unittest.TestCase):
                          "contract": self.intent["contract"], "issuer_verified": True,
                          "token_to_share_ratio": "1", "previous_token_to_share_ratio": "1",
                          "corporate_action_verified": False, "market_status": "regular", "market_reason": None,
-                         "token_price_age_ms": 1000, "independent_reference_timestamp": "synthetic",
+                         "token_price_age_ms": 1000,
+                         "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
+                         "reference_price_updated_at": "synthetic", "reference_age_status": "OBSERVED",
                          "quote_available": True, "price_impact_percent": "0.1", "simulation_passed": True}
         self.mandate = {"max_token_price_age_ms": 60000, "max_notional_usd": "200",
                         "max_price_impact_percent": "1"}
@@ -33,10 +35,21 @@ class PolicyFixtureTest(unittest.TestCase):
         self.assertEqual(len(result["receipt_sha256"]), 64)
 
     def test_live_api_missing_reference_time_needs_human(self):
-        self.evidence["independent_reference_timestamp"] = None
+        self.evidence["reference_price_updated_at"] = None
+        self.evidence["reference_age_status"] = "UNKNOWN"
         result = self.run_policy()
         self.assertEqual(result["decision"], "NEED_HUMAN")
         self.assertIn("INDEPENDENT_REFERENCE_TIME_UNKNOWN", result["reason_codes"])
+
+    def test_legacy_token_age_without_observation_clock_needs_human(self):
+        self.evidence.pop("token_price_age_calculation")
+        result = self.run_policy()
+        self.assertEqual(result["decision"], "NEED_HUMAN")
+        self.assertIn("TOKEN_PRICE_AGE_PROVENANCE_UNKNOWN", result["reason_codes"])
+
+    def test_future_token_timestamp_needs_human(self):
+        self.evidence["token_price_age_ms"] = -1000
+        self.assertIn("TOKEN_PRICE_AGE_UNKNOWN", self.run_policy()["reason_codes"])
 
     def test_corporate_action_fixture_rejects_unverified_ratio_change(self):
         fixtures = json.loads((ROOT / "experiments/EXP-RWA-011/corporate_action_fixtures.json").read_text())

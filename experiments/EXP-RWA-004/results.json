@@ -1,0 +1,12 @@
+{
+  "claim_limit": "Short Sunday window, token prices only. No independent stock reference, fills, prediction or repeatability across weekends.",
+  "contract_count": 40,
+  "contracts_with_at_least_10_samples": 9,
+  "date_utc": "2026-10-04",
+  "first_observed_at": "2026-10-04T10:22:07.442Z",
+  "independent_reference_age_observations": 0,
+  "last_observed_at": "2026-10-04T11:15:03.946Z",
+  "median_observed_token_price_range_pct_for_10_sample_set": "0.05966841409879384562928866726",
+  "origin": "LIVE",
+  "token_price_timestamp_changed_count": 9
+}

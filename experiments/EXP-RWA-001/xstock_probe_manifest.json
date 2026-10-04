@@ -1,0 +1,25 @@
+{
+  "origin": "LIVE",
+  "batches": [
+    {
+      "captured_at": "2026-10-04T10:56:55.724Z",
+      "sha256": "3b4c01367d92c8c9755b48e8cc9aa7eae7c511f6a53fff010c287a0f2986016e",
+      "fixture": "docs/devex/fixtures/2026-10-04-xstock-price-3b4c01367d92.json"
+    },
+    {
+      "captured_at": "2026-10-04T10:56:56.032Z",
+      "sha256": "2a6045957874d92069d9a576dd329c433791b57bcd9509225763ab4cbcbd00d7",
+      "fixture": "docs/devex/fixtures/2026-10-04-xstock-price-2a6045957874.json"
+    },
+    {
+      "captured_at": "2026-10-04T10:56:56.427Z",
+      "sha256": "fe04c9aa4a2841612cc19e5bf599ee9fca9cb7620e6bedce94cca72aebf2daf0",
+      "fixture": "docs/devex/fixtures/2026-10-04-xstock-price-fe04c9aa4a28.json"
+    },
+    {
+      "captured_at": "2026-10-04T10:56:56.730Z",
+      "sha256": "71c1e83ae2380e9eef4940e7168aa0e2e597bf8b43e66ac20261ff0ca0835e5c",
+      "fixture": "docs/devex/fixtures/2026-10-04-xstock-price-71c1e83ae238.json"
+    }
+  ]
+}

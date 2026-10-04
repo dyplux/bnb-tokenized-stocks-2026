@@ -1,0 +1,7 @@
+# Collector token-price age clock correction
+
+**Found:** on 4 October during EXP-RWA-010, the first collector version subtracted `tokenPriceUpdatedAt` from the cycle's start time. The price response arrived after the catalog request, so this clock could predate the token update. The code clamped negative differences to zero. A zero in those early normalized rows could therefore mean a clock-order error rather than a fresh price.
+
+**Correction:** subsequent rows calculate `token_price_age_ms = observed_at - tokenPriceUpdatedAt` and preserve a negative value with `token_price_age_status=FUTURE_TIMESTAMP` if one occurs. `scripts/analyze_rwa.py` recomputes age for every old and new row from the retained raw token timestamp and `observed_at`; it includes the legacy stored age in a separate column for audit. Earlier append-only rows weren't rewritten. At the 11:05 UTC analysis of 276 rows, none had a future token timestamp after recomputation. The median recomputed age was 1.992 seconds for rows with API status `offhours` and 5.005 seconds for rows with unknown status. Provider and status are confounded here, so those medians don't establish market-reference freshness or a provider-quality ranking.
+
+**Verification:** run `python3 scripts/analyze_rwa.py` and inspect `experiments/EXP-RWA-010/results.json` and `reference_freshness.csv`. A reference timestamp remains unavailable in the observed API responses, regardless of this collector correction.

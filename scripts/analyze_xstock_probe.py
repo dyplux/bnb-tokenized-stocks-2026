@@ -2,7 +2,6 @@
 """Reproduce the bounded xStock price coverage probe from retained raw bodies."""
 
 import csv
-import gzip
 import hashlib
 import json
 from collections import Counter
@@ -11,23 +10,17 @@ from pathlib import Path
 from statistics import median
 
 ROOT = Path(__file__).resolve().parents[1]
-HASHES = (
-    "3b4c01367d92c8c9755b48e8cc9aa7eae7c511f6a53fff010c287a0f2986016e",
-    "2a6045957874d92069d9a576dd329c433791b57bcd9509225763ab4cbcbd00d7",
-    "fe04c9aa4a2841612cc19e5bf599ee9fca9cb7620e6bedce94cca72aebf2daf0",
-    "71c1e83ae2380e9eef4940e7168aa0e2e597bf8b43e66ac20261ff0ca0835e5c",
-)
+MANIFEST = ROOT / "experiments/EXP-RWA-001/xstock_probe_manifest.json"
 
 
 def main():
-    manifest = [json.loads(line) for line in (ROOT / "data/market_hours/raw/manifest.jsonl").read_text().splitlines()]
-    by_hash = {x["sha256"]: x for x in manifest}
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))["batches"]
     catalog = json.loads((ROOT / "data/normalized/rwa_catalog.json").read_text())
     listed = {x["contract"]: x for x in catalog["rows"] if x["provider"] == "xstocks_public_listing"}
     rows = []
-    for digest in HASHES:
-        entry = by_hash[digest]
-        body = gzip.open(ROOT / entry["path"], "rb").read()
+    for entry in manifest:
+        digest = entry["sha256"]
+        body = (ROOT / entry["fixture"]).read_bytes()
         if hashlib.sha256(body).hexdigest() != digest:
             raise RuntimeError("raw response hash mismatch")
         payload = json.loads(body)
@@ -60,7 +53,7 @@ def main():
     result = {"captured_at_range": [min(x["observed_at"] for x in rows), max(x["observed_at"] for x in rows)],
               "requested": len(listed), "returned": len(rows), "with_price_and_token_timestamp": len(ages),
               "age_bins": dict(bins), "median_token_price_age_hours_if_present": round(median(ages) / 3600, 2),
-              "raw_response_sha256": list(HASHES), "independent_reference_age_observations": 0,
+              "raw_response_sha256": [x["sha256"] for x in manifest], "independent_reference_age_observations": 0,
               "claim_limit": "A returned row can contain null price and timestamp. Token-price time isn't an independent underlying-reference time. No ratio or executable route was established by this probe."}
     (output / "xstock_price_probe_results.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps(result))

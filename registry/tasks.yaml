@@ -17,8 +17,9 @@ tasks:
     evidence: experiments/EXP-RWA-010/results.json
   - id: RWA-004
     owner: coordinator
-    state: queued
-    task: Reconstruct one real split or dividend event from issuer and chain sources.
+    state: source_event_found_before_after_missing
+    task: Reconstruct one real split or dividend event with before-and-after token ratio from issuer and chain sources.
+    evidence: experiments/EXP-RWA-011/real_event_audit.md
   - id: RWA-005
     owner: coordinator
     state: initial_probe_done
