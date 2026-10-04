@@ -8,7 +8,7 @@
 - Sunday anchor: five-minute collector slot `5970384`, starting 2026-10-04 12:00 UTC. Compare bStock and Ondo representations separately, then group by canonical ticker. Per-share token value is `tokenPrice / tokenToShareRatio`, with the ratio and price from that slot's logged sources. A ticker pair is not presumed legally equivalent.
 - Prior benchmark: Yahoo Finance's 2026-10-02 daily **regular-session close** for each ticker. It has a session date, not a tick-level update timestamp. Friday after-hours are missing from this protocol and can explain part of any apparent Sunday gap.
 - Outcome benchmark: the 2026-10-05 US regular-session **open** and **close**, from dated historical rows at [NVDA](https://finance.yahoo.com/quote/NVDA/history/), [TSLA](https://finance.yahoo.com/quote/TSLA/history/) and [COIN](https://finance.yahoo.com/quote/COIN/history/). Record the retrieval time, exact row date, source URL and any unavailable or revised value. Cross-check against an exchange or issuer source if the value is disputed. Don't invent an intraday trade timestamp from a daily row.
-- Session clock: America/New_York under [Nasdaq's published regular hours](https://www.nasdaq.com/market-activity). Holiday and security-specific halt status need separate confirmation before calling 2026-10-05 a normal opening.
+- Session clock: America/New_York under [Nasdaq's published regular hours](https://www.nasdaq.com/market-activity). [Nasdaq's 2026 holiday schedule](https://www.nasdaq.com/market-activity/stock-market-holiday-schedule) doesn't list 5 October as a holiday or early close. A security-specific halt or later schedule change still needs confirmation before calling an observed opening normal.
 
 ## Fixed comparisons
 
@@ -30,3 +30,5 @@ Then report the median absolute Sunday-to-open residual across available rows an
 - The independent underlying reference-update time remains `null/UNKNOWN` unless a separate source gives an actual dated update. A daily open or close date isn't the Binance feed's reference clock.
 
 **Output target after the session:** `monday_open_benchmark.csv`, `monday_open_results.json` and a short findings note with every excluded row. Keep the Sunday LIVE tape and later historical benchmarks distinct.
+
+The [scoring script](../../scripts/score_monday_benchmark.py) is ready but hasn't been run. Feed it a JSON file with `publisher`, `retrieved_at`, `session_date=2026-10-05`, and dated `rows` for the three frozen tickers. Each row needs a direct `source_url` and any available `open_usd` and `close_usd`. The script refuses an all-missing opening and preserves individual missing rows as null. Inspect the source rows before running it; the script validates structure and arithmetic, not whether a publisher's historical price is correct.
