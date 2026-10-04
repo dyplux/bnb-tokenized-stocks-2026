@@ -7,8 +7,8 @@
     "MISSING_OR_INVALID": 0
   },
   "date_utc": "2026-10-04",
-  "first_observed_at": "2026-10-04T11:55:02.552Z",
+  "first_observed_at": "2026-10-04T16:00:02.627Z",
   "formula": "token_price_usd / token_to_share_ratio",
-  "last_observed_at": "2026-10-04T11:55:02.571Z",
-  "slot": 5970383
+  "last_observed_at": "2026-10-04T16:00:02.644Z",
+  "slot": 5970432
 }
