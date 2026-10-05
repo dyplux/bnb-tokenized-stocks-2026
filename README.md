@@ -1,8 +1,12 @@
 # Dyplux Execution Safety Layer for Tokenized Equities
 
-A stock token can still have a quote when the underlying exchange is closed. Before a person or agent signs a purchase, Dyplux checks the exact token, market state, available price clocks, economic multiplier, route, impact, user mandate and missing access or simulation evidence. The result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
+**Before an autonomous agent signs a tokenized-stock purchase, Dyplux checks the evidence needed to authorize it and fails closed when critical state is unknown.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
-The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. It uses signed Binance Web3 RWA Data and Trading API reads, a fixed-block BNB Chain multiplier check for NVDAB, and a deterministic [policy](app/rwa_policy.py). A dated 4 October NVDAB review returned `NEED_HUMAN` despite an available quote: independent stock-reference time, holder eligibility and a funded simulation weren't verified. [Six observed safety findings](docs/research/2026-10-04-safety-evidence.md) explain why these checks exist.
+**[Live judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) · [60-second evidence video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) · [Judge guide, 60 seconds to 15 minutes](JUDGE.md)**
+
+A stock token can still have a quote when the underlying exchange is closed. In the observed NVDAB case, an amount-specific route existed, but independent underlying-reference time, individual holder eligibility and a funded passing simulation weren't verified. Dyplux returned `NEED_HUMAN`. A second observed request exceeded its 20 USDT mandate and returned `DENY`. [View both receipts](docs/submission/safety-judge-run.md). The green `ALLOW` is a synthetic policy fixture.
+
+The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. It uses signed Binance Web3 RWA Data and Trading API reads, a fixed-block BNB Chain multiplier check for NVDAB, and a deterministic [policy](app/rwa_policy.py). [Six observed safety findings](docs/research/2026-10-04-safety-evidence.md) explain why these checks exist. The [architecture and Built with BNB Chain proof table](JUDGE.md#3-minutes) connect each integration to code and observed evidence.
 
 ## See the product
 

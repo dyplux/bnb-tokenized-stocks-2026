@@ -2,11 +2,8 @@ name: Monday open public fallback
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '47 12 5 10 *'
-    - cron: '07 13 5 10 *'
-    - cron: '09 20 5 10 *'
-    - cron: '27 20 5 10 *'
+# EXPERIMENT COMPLETE. SCHEDULE RETIRED AFTER 2026-10-05 CAPTURE.
+# Manual dispatch remains available to reproduce the public fallback process.
 
 permissions:
   contents: read

@@ -66,6 +66,19 @@ class FakeZeroOutputQuoteApi(FakeApi):
         return result, at, digest
 
 
+class FakeSourceFailureApi(FakeApi):
+    def __init__(self, failed_path, failure):
+        self.failed_path = failed_path
+        self.failure = failure
+
+    def get(self, path, params, *args, **kwargs):
+        if path == self.failed_path:
+            if isinstance(self.failure, Exception):
+                raise self.failure
+            return self.failure, "2026-10-04T10:10:00.000Z", "synthetic-malformed-hash"
+        return super().get(path, params, *args, **kwargs)
+
+
 def fake_rpc(calls, block, experiment):
     methods = [row["method"] for row in calls]
     if methods == ["eth_blockNumber"]:
@@ -77,6 +90,20 @@ def fake_rpc(calls, block, experiment):
 
 
 class SafetyServiceTests(unittest.TestCase):
+    def test_source_failures_never_return_allow(self):
+        request = {"provider": "bstock", "notional_usdt": "100",
+                   "max_notional_usdt": "100", "max_price_impact_percent": "0.5"}
+        cases = ((PRICE, TimeoutError("synthetic timeout")),
+                 (PRICE, RuntimeError("synthetic 5xx")),
+                 (PRICE, {"data": "malformed"}),
+                 (UNDERLYING_MARKET, RuntimeError("synthetic 5xx")),
+                 (QUOTE, RuntimeError("synthetic 5xx")))
+        for path, failure in cases:
+            with self.subTest(path=path, failure=type(failure).__name__):
+                result = review(request, api=FakeSourceFailureApi(path, failure), rpc=fake_rpc)
+                self.assertNotEqual(result["decision"], "ALLOW")
+                self.assertTrue(result["errors"])
+
     def test_invalid_amount_never_calls_api(self):
         with self.assertRaises(ValueError):
             validate({"provider": "bstock", "notional_usdt": "NaN",

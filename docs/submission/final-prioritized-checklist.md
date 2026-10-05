@@ -13,3 +13,5 @@
 | Optional | Pursue a tiny mainnet action only after verified eligibility, a funded passing exact-wallet simulation and approval of that specific packet | Founder and Dyplux | Transaction and pre/post receipt, if the gates are actually met; absence doesn't invalidate the safety product |
 
 The [blocker board](blocker-board.md) tracks optional execution and integrations separately. No Agentic Wallet or Agent Studio special-prize integration is claimed without a working implementation.
+
+The [founder-only checklist](founder-input-checklist.md) separates private and first-hand form actions. The [custom-domain plan](custom-domain-transition.md) keeps the GitHub Pages URL available during any later move to `rwa.dyplux.com`. The [current workflow incident record](2026-10-05-final-commit-ci.md) distinguishes a pre-runner cancellation from a failed test or build step.

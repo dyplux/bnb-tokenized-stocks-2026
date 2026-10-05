@@ -38,6 +38,7 @@ class PolicyFixtureTest(unittest.TestCase):
         result = self.run_policy()
         self.assertEqual(result["decision"], "ALLOW")
         self.assertEqual(len(result["receipt_sha256"]), 64)
+        self.assertEqual(result, self.run_policy())
 
     def test_quote_without_user_access_needs_human(self):
         self.evidence["eligibility_status"] = "UNKNOWN"

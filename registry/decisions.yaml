@@ -1,0 +1,29 @@
+updated_at: 2026-10-05
+decisions:
+  - id: D-RWA-001
+    date: 2026-10-05
+    status: CURRENT
+    scope: tokenized-stocks-2026
+    decision: Deterministic pre-signing execution safety is the product core.
+    reason: Observed route and data conditions can leave critical evidence unresolved.
+    evidence: [docs/research/2026-10-04-safety-evidence.md, docs/submission/frozen-claims-2026-10-05.md]
+    supersedes: []
+    do_not_claim: [real_allow, verified_holder_eligibility, mainnet_trade]
+  - id: D-RWA-002
+    date: 2026-10-05
+    status: CURRENT
+    scope: tokenized-stocks-2026
+    decision: H-RWA-OFFHOURS is SAFETY_ONLY.
+    reason: Preregistered promotion gate was not met; TSLA missed directional outcome.
+    evidence: [experiments/EXP-RWA-004/monday-open-protocol.md, experiments/EXP-RWA-004/monday-findings.md]
+    supersedes: [provisional_offhours_intelligence]
+    do_not_claim: [predictive_alpha, profitable_spread, monday_open_forecast]
+  - id: D-DUAL-001
+    date: 2026-10-05
+    status: CURRENT
+    scope: set-and-earn-2026
+    decision: Reuse the safety kernel only within a genuine independently executing rebalancing agent.
+    reason: A read-only safety tool does not satisfy the campaign's on-chain action requirement.
+    evidence: [docs/knowledge/programs/set-and-earn-2026.md]
+    supersedes: []
+    do_not_claim: [set_and_earn_qualification, listed_agent, completed_hires]

@@ -2,6 +2,8 @@
 
 **Frozen:** 2026-10-05, after the US regular session close. See the [Monday findings](../../experiments/EXP-RWA-004/monday-findings.md) and the [judge packet](final-review-packet.md).
 
+**Product claim:** Dyplux is a pre-signing execution safety layer for autonomous tokenized-equity agents. The current implementation reviews one proposed action read-only and returns a deterministic decision receipt. It doesn't execute an autonomous trade.
+
 ## Claims supported by observed evidence
 
 - Dyplux reviews one proposed BNB Chain tokenized-equity action before signing. Its deterministic policy returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a dated receipt.
