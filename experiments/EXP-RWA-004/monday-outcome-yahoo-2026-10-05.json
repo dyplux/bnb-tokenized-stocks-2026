@@ -1,0 +1,53 @@
+{
+  "normalization": "USD cents from Yahoo daily-chart floating values; original values and raw hashes retained per row",
+  "price_type": "historical_daily_regular_session_open_close_usd",
+  "publisher": "Yahoo Finance",
+  "reference_age_status": "UNKNOWN",
+  "reference_price_updated_at": null,
+  "retrieved_at": "2026-10-05T20:09:47.486Z",
+  "rows": [
+    {
+      "close_usd": "188.22",
+      "open_usd": "187.14",
+      "raw_response_sha256": "d0753f749dc4407758d75343d8b063f85b4ec9f0297690ce984f5ba71173a7c8",
+      "retrieval_url": "https://query1.finance.yahoo.com/v8/finance/chart/COIN?range=5d&interval=1d",
+      "retrieved_at": "2026-10-05T20:09:47.486Z",
+      "session_date": "2026-10-05",
+      "source_close_raw": "188.22000122070312",
+      "source_exchange_timezone": "America/New_York",
+      "source_open_raw": "187.13999938964844",
+      "source_session_timestamp": 1791207000,
+      "source_url": "https://finance.yahoo.com/quote/COIN/history/",
+      "ticker": "COIN"
+    },
+    {
+      "close_usd": "238.90",
+      "open_usd": "236.07",
+      "raw_response_sha256": "3761998b2a9519ad661dd697bab9a2089b30fdb998f2f0059da6c5e0632b5346",
+      "retrieval_url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?range=5d&interval=1d",
+      "retrieved_at": "2026-10-05T20:09:46.790Z",
+      "session_date": "2026-10-05",
+      "source_close_raw": "238.89999389648438",
+      "source_exchange_timezone": "America/New_York",
+      "source_open_raw": "236.07000732421875",
+      "source_session_timestamp": 1791207000,
+      "source_url": "https://finance.yahoo.com/quote/NVDA/history/",
+      "ticker": "NVDA"
+    },
+    {
+      "close_usd": "378.73",
+      "open_usd": "368.80",
+      "raw_response_sha256": "702f21adbf074c82fb063b5a861d1451a8adb2b14eafc4530de34696a3212899",
+      "retrieval_url": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=5d&interval=1d",
+      "retrieved_at": "2026-10-05T20:09:47.096Z",
+      "session_date": "2026-10-05",
+      "source_close_raw": "378.7300109863281",
+      "source_exchange_timezone": "America/New_York",
+      "source_open_raw": "368.79998779296875",
+      "source_session_timestamp": 1791207000,
+      "source_url": "https://finance.yahoo.com/quote/TSLA/history/",
+      "ticker": "TSLA"
+    }
+  ],
+  "session_date": "2026-10-05"
+}

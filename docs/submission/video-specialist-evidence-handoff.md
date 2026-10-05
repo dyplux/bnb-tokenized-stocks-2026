@@ -1,6 +1,6 @@
 # Video specialist evidence handoff
 
-**Prepared:** 2026-10-04 UTC. **State:** source inventory ready; final claims await the frozen Monday experiment. The existing 60-second film is the verified public fallback. This file records evidence and source locations for the later submission video.
+**Prepared:** 2026-10-04 UTC. **Updated:** 2026-10-05 after the market close. **State:** claims frozen; source inventory ready. The existing 60-second film is the verified public fallback. This file records evidence and source locations for the later submission video.
 
 ## Source material
 
@@ -14,7 +14,8 @@
 | Original capture archive | `/Volumes/SSD500/Dyplux/execution-safety-live-capture-source.zip` | SHA-256 `a53002415784f950b1e1c16f43f78b5f1e2c4986155f5a47a0c259ee4dbc2c63`; ZIP integrity checked on 2026-10-04 |
 | Composite film project | `/Volumes/SSD500/Dyplux/execution-safety-judge-video-source/` | `frames-app/`, separate denial stills and truth record, `video.html`, renderer and final frames |
 | Composite project archive | `/Volumes/SSD500/Dyplux/execution-safety-judge-demo-source.zip` | SHA-256 `e14aca69f3df76390563b3ec8f7bc480d8a843f5ef89089d792fcea2765df0d3`; archive integrity checked on 2026-10-04; raw WebM is in the separate original capture project |
-| Factual four-minute script | [final-four-minute-narrative.md](final-four-minute-narrative.md) | Draft screen order and 358 spoken words; final off-hours claim pending |
+| Factual four-minute script | [final-four-minute-narrative.md](final-four-minute-narrative.md) | Draft screen order; final off-hours sentence reflects `SAFETY_ONLY` |
+| Frozen Monday outcome and claim limits | [Findings](../../experiments/EXP-RWA-004/monday-findings.md) and [claim set](frozen-claims-2026-10-05.md) | 2026-10-05 daily rows and unchanged scorer; no predictive edge |
 
 ## What the footage shows
 
@@ -27,6 +28,6 @@ The public [synthetic `ALLOW` fixture](../judge/synthetic-safe.json) demonstrate
 
 ## Claim freeze gate
 
-The Monday off-hours hypothesis remains under the [preregistered protocol](../../experiments/EXP-RWA-004/monday-open-protocol.md). After its verified inputs are available, run the unchanged scorer and classify the result as `PROMOTE`, `SAFETY_ONLY` or `KILL`. Attach the dated result and update only the narrative sentences directly affected by it. The safety product and its observed `NEED_HUMAN` and `DENY` cases stand independently of that result.
+The unchanged [preregistered scorer](../../scripts/score_monday_benchmark.py) produced the [Monday benchmark](../../experiments/EXP-RWA-004/monday_open_results.json). Classification is `SAFETY_ONLY`: two of three independent tickers matched Sunday direction, TSLA missed, and execution prerequisites weren't shown. The final script changes only the off-hours sentence. The safety product and its observed `NEED_HUMAN` and `DENY` cases stand independently of the result.
 
-The final video may be handed to the specialist after the claim set is frozen. Preserve the two capture dates and the replay label when reusing footage. See [film QA](safety-judge-video-qa.md) for frame, audio and public-download checks.
+The claim set is frozen, so the final video may be handed to the specialist. Preserve the two capture dates and the replay label when reusing footage. See [film QA](safety-judge-video-qa.md) for frame, audio and public-download checks.

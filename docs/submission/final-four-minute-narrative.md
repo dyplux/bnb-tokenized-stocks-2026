@@ -30,11 +30,11 @@
 
 **Screen:** the synthetic `ALLOW` fixture label, blocker board and status. End on the two observed decisions.
 
-**Narration:** "The green ALLOW example is a labelled test fixture. It shows the policy branch, not a completed purchase. The demo wallet's unfunded simulation predicted failure, and no transaction was signed or broadcast. A real purchase needs verified access, a funded passing simulation, route-target review and approval for that exact transaction. Monday's preregistered market-open comparison may add an off-hours finding. The current product gives an agent a dated reason to stop before signing."
+**Narration:** "The green ALLOW example is a labelled test fixture. It shows the policy branch, not a completed purchase. The demo wallet's unfunded simulation predicted failure, and no transaction was signed or broadcast. A real purchase needs verified access, a funded passing simulation, route-target review and approval for that exact transaction. In the frozen Sunday-to-Monday check, TSLA opened against the Sunday direction; the result supports safety checks, not a trading edge. The current product gives an agent a dated reason to stop before signing."
 
 ## Evidence and edit boundary
 
 - The two observed decisions are [dated receipt files](../judge/observed-unsafe.json) and [mandate denial](../judge/observed-mandate-deny.json). The green branch is [synthetic](../judge/synthetic-safe.json).
 - The 611-call cutoff is [fixed at 19:35 UTC](../devex/2026-10-04-metrics.json); do not present it as a current total when recording later.
-- If Monday adds an off-hours finding, replace only the final two sentences of the last narration block. Do not rewrite the product problem or change the frozen [Monday protocol](../../experiments/EXP-RWA-004/monday-open-protocol.md).
+- The [Monday finding](../../experiments/EXP-RWA-004/monday-findings.md) is `SAFETY_ONLY`. The final narration block contains the only off-hours claim changed after scoring. Do not rewrite the product problem or change the frozen protocol.
 - If no capital action is approved, keep the no-trade sentence. Never show a synthetic receipt or off-chain simulation as a fill.

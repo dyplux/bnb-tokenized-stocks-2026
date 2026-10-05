@@ -41,7 +41,7 @@ With your own API credentials configured as above, the result contains `decision
 | Fixed-block bStock multiplier read | Current equality doesn't prove a past corporate action or future change. |
 | Exact-wallet 10 USDT quote, unsigned build and off-chain simulation for NVDAB | The demo wallet has no funds; simulation predicted `FAILED`. No transaction was signed. |
 | Five-minute, 40-contract market-hours collection | `tokenPriceUpdatedAt` dates the token price, not the underlying stock reference. Independent reference age remains `UNKNOWN`. |
-| Sunday route and market-state observations | Monday's preregistered off-hours experiment has no outcome yet and isn't needed to justify the safety core. |
+| [Frozen Sunday-to-Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) | Two of three independent tickers matched Sunday direction; TSLA missed. `SAFETY_ONLY` supports an off-hours guard, not a predictive trading claim. |
 
 The [demo-asset comparison](docs/submission/demo-asset-selection.md) selects NVDAB for technical preflight because its quote, unsigned build, simulation and multiplier were observed. It **doesn't** clear issuer or user access. A real purchase requires verified eligibility, a funded passing simulation, route-target provenance and explicit approval for one exact transaction. [Execution gates](docs/product/mainnet-execution-path.md) and [submission blockers](docs/submission/blocker-board.md) record what remains.
 

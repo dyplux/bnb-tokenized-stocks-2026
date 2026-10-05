@@ -28,7 +28,7 @@ No funded stock-token transaction, verified holder eligibility, passing funded s
 
 ## Remaining submission sequence
 
-1. Keep the [Monday market-open protocol](../../experiments/EXP-RWA-004/monday-open-protocol.md) and scorer frozen. After verified 5 October historical rows are available, classify the separate off-hours hypothesis as `PROMOTE`, `SAFETY_ONLY` or `KILL`. Update only claims affected by that result.
+1. Use the [Monday findings](../../experiments/EXP-RWA-004/monday-findings.md) and [frozen claims](frozen-claims-2026-10-05.md): `H-RWA-OFFHOURS=SAFETY_ONLY`. Keep the Sunday anchor, protocol and scorer frozen; no directional edge enters the submission.
 2. Recheck the final README, public page, video and receipt URLs without login. The existing 60-second film is a fallback. The [video evidence handoff](video-specialist-evidence-handoff.md) provides clean footage and hashes to the specialist after the claim set is frozen.
 3. Founder reviews the [53-item DX answer map](dx-form-safety-answer-map.md), supplies private and subjective fields directly, and submits the [Developer Experience Report](https://forms.gle/EUQ39xf54GHjC2ys5). Keep a non-sensitive record of completion.
 4. Founder confirms the final project name, contact and prize wallet or UID privately, then uses the [current project answer map](project-form-safety-answer-map.md) to submit the [project form](https://forms.gle/yToDUzaDMwWnq6R6A). Its DX confirmation must reflect an actual submitted report. Do not select an Agentic Wallet or Agent Studio special prize without a working integration.

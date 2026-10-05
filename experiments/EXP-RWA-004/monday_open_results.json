@@ -1,0 +1,37 @@
+{
+  "available_open_rows": 6,
+  "by_ticker": {
+    "COIN": {
+      "issuer_values_usd": {
+        "bstock": "185.34",
+        "ondo": "185.425"
+      },
+      "sunday_issuer_range_usd": "0.085"
+    },
+    "NVDA": {
+      "issuer_values_usd": {
+        "bstock": "234.4775240213070421207932610",
+        "ondo": "234.825"
+      },
+      "sunday_issuer_range_usd": "0.3474759786929578792067390"
+    },
+    "TSLA": {
+      "issuer_values_usd": {
+        "bstock": "371.36",
+        "ondo": "371.665"
+      },
+      "sunday_issuer_range_usd": "0.305"
+    }
+  },
+  "claim_limit": "One weekend, three dependent underlyings, external session-date bars, no Friday after-hours baseline, trade fill or issuer-reference timestamp. No predictive alpha or executable profit is established.",
+  "direction_match_rows": 4,
+  "direction_mismatch_rows": 2,
+  "independent_underlyings": 3,
+  "median_absolute_sunday_to_open_residual_pct": "0.730106755008913306054842130",
+  "outcome_retrieved_at": "2026-10-05T20:09:47.486Z",
+  "outcome_session_date": "2026-10-05",
+  "outcome_source": "Yahoo Finance",
+  "reference_age_status": "UNKNOWN",
+  "reference_price_updated_at": null,
+  "sample_rows": 6
+}

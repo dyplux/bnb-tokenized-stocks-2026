@@ -1,12 +1,13 @@
-updated_at: 2026-10-04
+updated_at: 2026-10-05
 hypotheses:
   - id: H-RWA-OFFHOURS
     claim: Off-hours tokenized-equity data predicts a useful next-open decision after costs.
-    state: TESTING
+    state: SAFETY_ONLY
     counterevidence: docs/research/2026-10-01-weekend-reopen-screen.md
-    current_measurement: experiments/EXP-RWA-004/results.json
+    current_measurement: experiments/EXP-RWA-004/monday_open_results.json
+    decision_record: experiments/EXP-RWA-004/monday-findings.md
     external_daily_close_comparison: experiments/EXP-RWA-004/friday_close_benchmark_results.json
-    limitation: Three Friday daily closes give dated cross-source differences, but no exact independent quote timestamp, after-hours comparison, executable Sunday spread or Monday outcome.
+    limitation: One frozen weekend matched the Monday open direction for two of three independent tickers; TSLA missed. The six-row median absolute residual was 0.7301%. No repeat weekend, comparable Friday after-hours baseline, verified access, costed executable route or fill establishes predictive edge.
     promote_if: Repeatable out-of-sample result using synchronized executable quotes and costs.
   - id: H-RWA-SAFETY
     claim: Freshness, share normalization and liquidity checks prevent materially misleading RWA actions.
