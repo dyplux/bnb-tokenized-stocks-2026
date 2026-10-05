@@ -6,7 +6,7 @@ Last verified: 2026-10-05. Scope: October 2026 BNB Tokenized Stocks submission. 
 
 Dyplux is a deterministic pre-signing safety layer for a proposed tokenized-equity purchase. It checks whether the evidence permits the action, then returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
 
-Open the [public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/). Inspect the **observed NVDAB NEED_HUMAN** case, then the **observed mandate DENY** case. Download each receipt and follow [receipt verification](#verify-a-receipt). The green ALLOW example is a **synthetic policy fixture**.
+Open the [public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/). Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The green ALLOW example is a **synthetic policy fixture**.
 
 ## 3 minutes
 
@@ -53,4 +53,4 @@ For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining 
 
 **Not claimed:** real ALLOW, verified individual holder eligibility, funded passing simulation, signed/broadcast trade, predictive alpha, Agent Studio or Agentic Wallet deployment. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) classified the off-hours hypothesis `SAFETY_ONLY`.
 
-`SUBMISSION_SHA`: pending final freeze. `SUBMISSION_TAG`: pending final freeze.
+The research claim set was frozen on 5 October. The final submitted artifact hasn't been frozen: `SUBMISSION_SHA` and `SUBMISSION_TAG` remain pending.
