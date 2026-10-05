@@ -398,8 +398,24 @@ def loop(public=False):
             time.sleep(1)
         else: time.sleep(min(10,max(1,START-t)))
     expected=[slot_text(START+i*60) for i in range(25)]
-    incomplete=[stamp for stamp in expected if stamp not in slot_success or slot_success[stamp].get("yahoo",0)<3 or slot_success[stamp].get("binance_public_dynamic",0)<6]
-    atomic(folder/"finished.json",{"origin":"FALLBACK","finished_at":now(),"window_end":datetime.fromtimestamp(END,timezone.utc).isoformat(),"public_slots":slot_success,"expected_slot_count":len(expected),"incomplete_slots":incomplete,"alert":"one or more scheduled public slots missing or partial" if incomplete else None})
+    if public:
+        incomplete=[stamp for stamp in expected if stamp not in slot_success or slot_success[stamp].get("yahoo",0)<3 or slot_success[stamp].get("binance_public_dynamic",0)<6]
+        summary={"public_slots":slot_success,"expected_slot_count":len(expected),"incomplete_slots":incomplete,
+                 "alert":"one or more scheduled public slots missing or partial" if incomplete else None}
+    else:
+        completed={}
+        try:
+            for line in (folder/"slots.jsonl").read_text(encoding="utf-8").splitlines():
+                row=json.loads(line)
+                if row.get("scheduled_at") in expected:
+                    completed[row["scheduled_at"]]=row.get("complete") is True
+        except (OSError,ValueError):
+            pass
+        incomplete=[stamp for stamp in expected if not completed.get(stamp)]
+        summary={"local_complete_slot_count":len(expected)-len(incomplete),"expected_slot_count":len(expected),
+                 "incomplete_slots":incomplete,"alert":"one or more local signed slots missing or partial" if incomplete else None}
+    atomic(folder/"finished.json",{"origin":"FALLBACK","finished_at":now(),
+        "window_end":datetime.fromtimestamp(END,timezone.utc).isoformat(),**summary})
     if public and incomplete: raise SystemExit(1)
 
 def main():
@@ -448,7 +464,24 @@ def main():
     public_preflight=public_summary.get("yahoo_tickers_responded",0)>=3 and public_summary.get("public_dynamic_contracts_responded",0)>=6
     preflight_ready=local_preflight
     ready=bool(preflight_ready and fallback_running and health["collector_pid_alive"] and health["watchdog_alive"] and health["latest_complete_slot"] is not None and health["seconds_since_last_successful_observation"] is not None and health["seconds_since_last_successful_observation"]<=600 and health["underlying_watch_age_seconds"] is not None and health["underlying_watch_age_seconds"]<=2100)
+    expected_slots={slot_text(START+i*60) for i in range(25)}
+    complete_slots=set()
+    try:
+        for line in (MONDAY/"slots.jsonl").read_text(encoding="utf-8").splitlines():
+            row=json.loads(line)
+            if row.get("complete") is True and row.get("scheduled_at") in expected_slots:
+                complete_slots.add(row["scheduled_at"])
+    except (OSError,ValueError):
+        pass
+    local_capture_complete=(time.time()>=END and complete_slots==expected_slots and
+                            not (MONDAY/"errors.jsonl").exists() and not (MONDAY/"gaps.jsonl").exists())
     points=["Mac mini power/network/filesystem for PRIMARY and local fallback","Binance Web3 API availability and credentials for local capture","single local runtime/process for fallback","Yahoo Finance availability for credential-free public path","GitHub Actions schedule/runner availability if public-loop is used"]
-    print(json.dumps({"MONDAY_OPEN_READY":"YES" if ready else "NO","preflight_ready_local":local_preflight,"public_preflight_ready_in_this_runtime":public_preflight,"local_fallback_process_alive":fallback_running,"primary_health":health,"fallback_health":fallback,"single_points_of_failure":points},indent=2,sort_keys=True))
-    if not ready: raise SystemExit(1)
+    print(json.dumps({"MONDAY_OPEN_READY":"YES" if ready else "NO",
+                      "MONDAY_LOCAL_CAPTURE_COMPLETE":"YES" if local_capture_complete else "NO",
+                      "window_state":"CLOSED" if time.time()>=END else "SCHEDULED" if time.time()<START else "OPEN",
+                      "local_complete_slots":len(complete_slots),"local_expected_slots":len(expected_slots),
+                      "preflight_ready_local":local_preflight,"public_preflight_ready_in_this_runtime":public_preflight,
+                      "local_fallback_process_alive":fallback_running,"primary_health":health,"fallback_health":fallback,
+                      "single_points_of_failure":points},indent=2,sort_keys=True))
+    if not ready and time.time()<END: raise SystemExit(1)
 if __name__=="__main__": main()
