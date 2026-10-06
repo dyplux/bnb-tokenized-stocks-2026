@@ -1,10 +1,10 @@
-# Judge guide: Dyplux Execution Safety Layer for Tokenized Equities
+# Judge guide: Praeva by Dyplux
 
-Last verified: 2026-10-05. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [frozen claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
+Brand updated: 2026-10-06. Evidence last verified: 2026-10-05. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [frozen claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
 
 ## 60 seconds
 
-Dyplux is a deterministic pre-signing safety layer for a proposed tokenized-equity purchase. It checks whether the evidence permits the action, then returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
+Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
 
 Open the [public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/). Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The green ALLOW example is a **synthetic policy fixture**.
 
@@ -17,7 +17,7 @@ flowchart LR
     A[User or agent intent] --> E[Evidence collection]
     E --> B[Binance Web3 signed reads]
     E --> C[BSC fixed-block read]
-    B --> P[Deterministic Dyplux policy]
+    B --> P[Deterministic Praeva policy]
     C --> P
     P --> D[ALLOW / DENY / NEED_HUMAN]
     D --> R[SHA-256 decision receipt]
@@ -33,13 +33,15 @@ An AI agent may propose an intent. The deterministic policy controls the decisio
 | Transaction build and simulation | Exact-wallet unsigned preflight | [packet script](scripts/prepare_pre_execution_packet.py) | [linked packet](docs/product/pre-execution-packet-linked-2026-10-04.json), predicted failure |
 | BNB Smart Chain RPC and bStock | Fixed-block multiplier check | [safety service](app/safety_service.py) | [multiplier audit](experiments/EXP-RWA-011/onchain_multiplier_audit.json) |
 | Ondo | Separate representation and market evidence | [safety service](app/safety_service.py) | [matched-ticker audit](experiments/EXP-RWA-010/results.json) |
-| Dyplux policy and receipt | Fail-closed verdict and hash | [policy](app/rwa_policy.py) | [observed cases](docs/submission/safety-judge-run.md) |
+| Praeva policy and receipt | Fail-closed verdict and hash | [policy](app/rwa_policy.py) | [observed cases](docs/submission/safety-judge-run.md) |
 
 Four actionable DevEx findings: [undocumented `offhours`](docs/devex/repros/2026-10-04-market-status-enum.md), [100-address request HTTP 414](docs/devex/repros/2026-10-04-rwa-price-url-limit.md), [RFQ/SWAP wording inconsistency](docs/devex/repros/2026-10-04-rwa-swap-route.md), and [no independent underlying reference clock in inspected fields](docs/devex/repros/2026-10-04-independent-reference-clock.md). The [DevEx summary](docs/devex/2026-10-04-evidence-summary.md) separates API observations from Dyplux bugs.
 
 ## 15 minutes
 
 Follow the [clean-start judge instructions](docs/submission/safety-judge-run.md) with Python 3.9+. The public replay and unit tests need no API secret; a fresh signed review needs the judge's own Binance Web3 key. Run `python3 -m unittest discover -s tests -q`. Inspect the [policy](app/rwa_policy.py), [quote/build/simulation packet](docs/product/pre-execution-packet-linked-2026-10-04.json), [fixed-block multiplier audit](experiments/EXP-RWA-011/onchain_multiplier_audit.json), [Monday preregistration](experiments/EXP-RWA-004/monday-open-protocol.md) and [negative result](experiments/EXP-RWA-004/monday-findings.md).
+
+The [competitive positioning](docs/product/competitive-positioning.md) compares Praeva's narrow RWA evidence task with adjacent product categories. It doesn't claim universal novelty.
 
 ### Verify a receipt
 

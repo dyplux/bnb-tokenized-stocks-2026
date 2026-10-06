@@ -2,11 +2,11 @@
 
 **Frozen:** 2026-10-05, after the US regular session close. See the [Monday findings](../../experiments/EXP-RWA-004/monday-findings.md) and the [judge packet](final-review-packet.md).
 
-**Product claim:** Dyplux is a pre-signing execution safety layer for autonomous tokenized-equity agents. The current implementation reviews one proposed action read-only and returns a deterministic decision receipt. It doesn't execute an autonomous trade.
+**Product name approved 2026-10-06:** Praeva by Dyplux. **Product claim:** Praeva is a deterministic pre-signing safety layer for autonomous tokenized-equity agents. The current implementation reviews one proposed action read-only and returns a deterministic decision receipt. It doesn't execute an autonomous trade. This name update doesn't alter the 5 October evidence freeze.
 
 ## Claims supported by observed evidence
 
-- Dyplux reviews one proposed BNB Chain tokenized-equity action before signing. Its deterministic policy returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a dated receipt.
+- Praeva reviews one proposed BNB Chain tokenized-equity action before signing. Its deterministic policy returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a dated receipt.
 - A signed route was available for a dated NVDAB read-only review, while issuer stock-reference time, holder eligibility and funded simulation remained unverified. The observed outcome was `NEED_HUMAN`.
 - A separate read-only 100 USDT request under a 20 USDT mandate returned a route and was denied with `MANDATE_LIMIT_EXCEEDED`.
 - The Sunday-to-Monday benchmark covered NVDA, TSLA and COIN, with two provider representations each. Sunday direction matched the 5 October open for two of three independent tickers; TSLA did not. The six-row median absolute residual was 0.7301%. Classification: `H-RWA-OFFHOURS = SAFETY_ONLY`.

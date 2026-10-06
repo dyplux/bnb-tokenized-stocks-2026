@@ -1,6 +1,6 @@
 # Video specialist evidence handoff
 
-**Prepared:** 2026-10-04 UTC. **Updated:** 2026-10-05 after the market close. **State:** claims frozen; source inventory ready. The existing 60-second film is the verified public fallback. This file records evidence and source locations for the later submission video.
+**Prepared:** 2026-10-04 UTC. **Brand updated:** 2026-10-06. **State:** claims frozen; source inventory ready. The existing 60-second film is the verified public fallback. This file records evidence and source locations for the later submission video.
 
 ## Source material
 
@@ -33,7 +33,7 @@ The public [synthetic `ALLOW` fixture](../judge/synthetic-safe.json) demonstrate
 
 The unchanged [preregistered scorer](../../scripts/score_monday_benchmark.py) produced the [Monday benchmark](../../experiments/EXP-RWA-004/monday_open_results.json). Classification is `SAFETY_ONLY`: two of three independent tickers matched Sunday direction, TSLA missed, and execution prerequisites weren't shown. The final script changes only the off-hours sentence. The safety product and its observed `NEED_HUMAN` and `DENY` cases stand independently of the result.
 
-**Product sentence to preserve:** “Dyplux is a pre-signing execution safety layer for autonomous tokenized-equity agents.” The Monday finding supports off-hours uncertainty as a safety input. It doesn't support predictive alpha.
+**Product name and sentence approved 2026-10-06:** Praeva by Dyplux. “Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't.” Subtitle: “Pre-signing safety for autonomous tokenized-equity agents.” Older footage may show the former working name; preserve its dated provenance. The Monday finding supports off-hours uncertainty as a safety input. It doesn't support predictive alpha.
 
 **Claims prohibited in narration, titles and captions:** predicted Monday open; trading edge or profit; executable arbitrage or fill; independently verified underlying stock-reference age; verified holder eligibility; passing funded simulation; real `ALLOW`; signed or broadcast stock-token trade; deployed Agentic Wallet or Agent Studio runtime. The green `ALLOW` example is synthetic. The two observed decisions are read-only. The 611-call DevEx number is a fixed 4 October 19:35 UTC research and local-build cut, not user traffic.
 

@@ -1,5 +1,7 @@
 # BNB Agent Studio: bounded spike, not a deployment claim
 
+**Historical plan as of 2026-10-05.** The local spike has since [passed fixed-case parity](agent-studio-local-feasibility.md). Use the [EXP-STUDIO-002 remote gate](agent-studio-remote-gate.md) for current next steps. No deployed Studio claim follows from local parity.
+
 Last verified: 2026-10-05. Scope: optional $2,000 special after core submission gates. Canonical owner/source: [official Studio architecture](https://docs.bnbchain.org/developer-kit/bnbchain-studio/architecture/), [quickstart](https://docs.bnbchain.org/developer-kit/bnbchain-studio/quickstart/), [local package inspection](agent-studio-feasibility.md). Supersedes: none. Status: NEEDS_REVALIDATION before implementation.
 
 **Timebox:** 6 to 10 engineering hours only after the public judge path and final DevEx are stable. No Studio special-prize claim before real remote proof.

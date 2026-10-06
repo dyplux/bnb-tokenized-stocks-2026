@@ -1,4 +1,4 @@
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 decisions:
   - id: D-RWA-001
     date: 2026-10-05
@@ -18,6 +18,15 @@ decisions:
     evidence: [experiments/EXP-RWA-004/monday-open-protocol.md, experiments/EXP-RWA-004/monday-findings.md]
     supersedes: [provisional_offhours_intelligence]
     do_not_claim: [predictive_alpha, profitable_spread, monday_open_forecast]
+  - id: D-RWA-003
+    date: 2026-10-06
+    status: CURRENT
+    scope: tokenized-stocks-2026
+    decision: The final product name is Praeva by Dyplux; the repository slug remains unchanged.
+    reason: Founder-approved naming and RWA-specific positioning.
+    evidence: [PROJECT_CONTEXT.md, docs/product/competitive-positioning.md]
+    supersedes: [working_name_dyplux_execution_safety_layer]
+    do_not_claim: [universal_category_novelty, predictive_alpha, deployed_agent_studio]
   - id: D-DUAL-001
     date: 2026-10-05
     status: CURRENT

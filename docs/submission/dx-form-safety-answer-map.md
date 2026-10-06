@@ -8,7 +8,7 @@
 
 | Item | State | Answer or founder action |
 |---|---|---|
-| 2. Project name* | FOUNDER | Use the final safety-product name, identical in the registration, DevEx and project forms. Current repo working name: Dyplux Execution Safety Layer for Tokenized Equities. |
+| 2. Project name* | FOUNDER | Enter **Praeva**, the founder-approved product name. Brand: **Praeva by Dyplux**. Use the same name in the project form. The public repository slug remains unchanged. |
 | 3. Contact email* | FOUNDER | Enter privately in the form; keep it out of Git. |
 | 4. Public repository URL* | MEASURED | `https://github.com/dyplux/bnb-tokenized-stocks-2026`. Check signed-out access again at submission. |
 | 5. Web3 API modules/tools used* | MEASURED | Select **RWA Data API**, **Trading API** and **Transaction API**. These have signed observed calls. Earlier separate research also used General/Market and DeFi reads; select those only if reporting every development call, with that distinction. Do not select Agentic Wallet, Wallet Skills or Agent Studio as integrated products. A public endpoint described by Wallet Skills was called directly, but the skill wasn't installed. |

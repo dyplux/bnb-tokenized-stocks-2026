@@ -1,10 +1,14 @@
-# Dyplux Execution Safety Layer for Tokenized Equities
+# Praeva
 
-**Before an autonomous agent signs a tokenized-stock purchase, Dyplux checks the evidence needed to authorize it and fails closed when critical state is unknown.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
+**by Dyplux**
+
+Pre-signing safety for autonomous tokenized-equity agents.
+
+**Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
 **[Live judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) · [60-second evidence video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) · [Judge guide, 60 seconds to 15 minutes](JUDGE.md)**
 
-A stock token can still have a quote when the underlying exchange is closed. In the observed NVDAB case, an amount-specific route existed, but independent underlying-reference time, individual holder eligibility and a funded passing simulation weren't verified. Dyplux returned `NEED_HUMAN`. A second observed request exceeded its 20 USDT mandate and returned `DENY`. [View both receipts](docs/submission/safety-judge-run.md). The green `ALLOW` is a synthetic policy fixture.
+A stock token can still have a quote when the underlying exchange is closed. In the observed NVDAB case, an amount-specific route existed, but independent underlying-reference time, individual holder eligibility and a funded passing simulation weren't verified. Praeva returned `NEED_HUMAN`. A second observed request exceeded its 20 USDT mandate and returned `DENY`. [View both receipts](docs/submission/safety-judge-run.md). The green `ALLOW` is a synthetic policy fixture.
 
 The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. It uses signed Binance Web3 RWA Data and Trading API reads, a fixed-block BNB Chain multiplier check for NVDAB, and a deterministic [policy](app/rwa_policy.py). [Six observed safety findings](docs/research/2026-10-04-safety-evidence.md) explain why these checks exist. The [architecture and Built with BNB Chain proof table](JUDGE.md#3-minutes) connect each integration to code and observed evidence.
 
@@ -50,6 +54,8 @@ With your own API credentials configured as above, the result contains `decision
 The [demo-asset comparison](docs/submission/demo-asset-selection.md) selects NVDAB for technical preflight because its quote, unsigned build, simulation and multiplier were observed. It **doesn't** clear issuer or user access. A real purchase requires verified eligibility, a funded passing simulation, route-target provenance and explicit approval for one exact transaction. [Execution gates](docs/product/mainnet-execution-path.md) and [submission blockers](docs/submission/blocker-board.md) record what remains.
 
 The [real `ALLOW` audit](docs/submission/real-allow-audit.md) checks the available candidates. None can honestly receive `ALLOW` or `ALLOW_PENDING_SIGNATURE` with today's access and simulation evidence. The synthetic fixture remains labelled as a code-path demonstration. The working read-only safety task can be reviewed without a mainnet trade; the event's small-live-amount direction remains an unmet technical demonstration if no eligible action is approved.
+
+Praeva sits between a proposed action and a separate signer. Its [competitive positioning](docs/product/competitive-positioning.md) distinguishes that RWA evidence task from a router, wallet, trading agent or generic policy engine. It doesn't claim to have invented agent safety.
 
 ## Reproduce the research
 

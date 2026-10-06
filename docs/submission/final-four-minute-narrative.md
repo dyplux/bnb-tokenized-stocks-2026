@@ -1,12 +1,12 @@
 # Judge demo narrative, maximum four minutes
 
-**Prepared:** 2026-10-04 UTC. **Length:** 358 spoken words, about 3 minutes at 120 words per minute, leaving up to one minute for screen transitions. This is a script and screen order, not a rendered video or a mainnet execution claim. The [60-second film](safety-judge-video-qa.md) combines an 18:28 UTC live local read-only capture with a separate 19:56 UTC dated replay.
+**Prepared:** 2026-10-04 UTC. **Brand updated:** 2026-10-06. **Length:** 361 spoken words, about 3 minutes at 120 words per minute, leaving up to one minute for screen transitions. This is a script and screen order, not a rendered video or a mainnet execution claim. The [60-second film](safety-judge-video-qa.md) combines an 18:28 UTC live local read-only capture with a separate 19:56 UTC dated replay.
 
 ## 0:00 to 0:30, one action
 
 **Screen:** the public [judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/), with the proposed NVDAB purchase visible.
 
-**Narration:** "A tokenized stock can show a route while the exchange behind the underlying share is closed. The route answers one question: can this swap be quoted right now? It doesn't tell an agent whether the stock reference is fresh, whether this buyer may hold the token, or whether the proposed action fits the buyer's limit. Dyplux checks those conditions before a signature."
+**Narration:** "A tokenized stock can show a route while the exchange behind the underlying share is closed. The route answers one question: can this swap be quoted right now? It doesn't tell an agent whether the stock reference is fresh, whether this buyer may hold the token, or whether the proposed action fits the buyer's limit. Praeva by Dyplux checks those conditions before a signature."
 
 ## 0:30 to 1:25, the observed uncertainty
 
@@ -18,7 +18,7 @@
 
 **Screen:** select the 19:56 UTC observed `DENY` case. Highlight 100 USDT requested, 20 USDT mandate, `MANDATE_LIMIT_EXCEEDED`, and the quoted route.
 
-**Narration:** "Here's a second live read-only request. The user proposed 100 USDT and set a 20 USDT spending limit. Binance Web3 returned a route. Dyplux still denied the action because the limit was exceeded. This isn't a model deciding whether a trade feels safe. A deterministic rule stopped it, and the receipt preserves the evidence and the exact rule."
+**Narration:** "Here's a second live read-only request. The user proposed 100 USDT and set a 20 USDT spending limit. Binance Web3 returned a route. Praeva still denied the action because the limit was exceeded. A deterministic rule stopped it, and the receipt preserves the evidence and the exact rule."
 
 ## 2:05 to 2:45, what the code does
 

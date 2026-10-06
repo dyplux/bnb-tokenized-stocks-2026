@@ -4,7 +4,7 @@
 
 | Item | Current answer or action | State |
 |---|---|---|
-| 1. Team or project name | Use the final name consistently across registration, DX and project forms. Working name: **Dyplux Execution Safety Layer for Tokenized Equities**. | Founder confirms |
+| 1. Team or project name | **Praeva**. Brand: **Praeva by Dyplux**. Use the same name in the DevEx and project forms; keep the repository URL unchanged. | Founder enters in form |
 | 2. Contact email | Enter privately in the form. | Founder |
 | 3. Wallet address (ERC-20) | Enter a founder-controlled receiving address or the UID permitted by the form description. Don't assume the unfunded demo wallet is the correct prize recipient. | Founder |
 | 4. Telegram handle | Optional; founder decides. | Founder |
@@ -17,13 +17,13 @@
 
 ## Item 5: bounded description
 
-> Dyplux Execution Safety checks one proposed tokenized-equity purchase on BNB Chain before a person or agent signs. The current screen reviews NVDAB and NVDAon with signed Binance Web3 RWA Data and Trading API reads, plus a fixed-block BNB Chain multiplier check for NVDAB. A separate Transaction API research path builds an unsigned swap and runs an off-chain simulation for an exact wallet. A deterministic policy checks contract identity, market state, token-price age, independently timed stock-reference evidence, issuer and user access, route, price impact, simulation and the user's spending mandate. It returns `ALLOW`, `DENY` or `NEED_HUMAN`, reason codes and a SHA-256 receipt. In one dated live 100 USDT NVDAB review, a route was quoted but the independent stock-reference clock, holder eligibility and funded simulation weren't verified, so the real decision was `NEED_HUMAN`. A separate live 100 USDT request exceeded a 20 USDT mandate and returned `DENY` despite an available route. The public page labels both as dated replays and shows a separate synthetic `ALLOW` policy fixture. No stock-token transaction has been signed or filled by this build.
+> Praeva by Dyplux checks one proposed tokenized-equity purchase on BNB Chain before a person or agent signs. The current screen reviews NVDAB and NVDAon with signed Binance Web3 RWA Data and Trading API reads, plus a fixed-block BNB Chain multiplier check for NVDAB. A separate Transaction API research path builds an unsigned swap and runs an off-chain simulation for an exact wallet. A deterministic policy checks contract identity, market state, token-price age, independently timed stock-reference evidence, issuer and user access, route, price impact, simulation and the user's spending mandate. It returns `ALLOW`, `DENY` or `NEED_HUMAN`, reason codes and a SHA-256 receipt. In one dated live 100 USDT NVDAB review, a route was quoted but the independent stock-reference clock, holder eligibility and funded simulation weren't verified, so the real decision was `NEED_HUMAN`. A separate live 100 USDT request exceeded a 20 USDT mandate and returned `DENY` despite an available route. The public page labels both as dated replays and shows a separate synthetic `ALLOW` policy fixture. No stock-token transaction has been signed or filled by this build.
 
 The film shows an 18:28 UTC local read-only request and a separate 19:56 UTC public dated replay. The public packet's first observed receipt is from 15:57 UTC. The text above must be updated if a funded, eligible mainnet execution is later completed, and it must never imply one before a transaction hash and before/after verification exist.
 
 ## Submission order
 
-1. Founder checks eligibility, final name and private form fields.
+1. Founder checks eligibility and private form fields, and enters the approved name Praeva.
 2. Review [DX answers](dx-form-safety-answer-map.md), add actual Monday data after the frozen experiment, and submit the mandatory DX form.
 3. Recheck the public repository, video and judge links without login.
 4. Submit this project form and save a non-sensitive submission receipt. No receipt exists yet.

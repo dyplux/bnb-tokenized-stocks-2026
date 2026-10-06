@@ -1,5 +1,7 @@
 # BNB Agent Studio feasibility for the safety core
 
+**Historical inspection record.** The later [EXP-STUDIO-001 local result](agent-studio-local-feasibility.md) supersedes this file's statements about an unimplemented adapter. Remote deployment, identity and payment remain unproved; see [EXP-STUDIO-002](agent-studio-remote-gate.md).
+
 **Checked:** 2026-10-04. **State:** official path mapped; no package installed, agent deployed, identity registered, paid job, or special-prize claim.
 
 ## Task that could warrant an agent
