@@ -1,6 +1,6 @@
 # Project submission form: current safety build
 
-**Public form rechecked:** 2026-10-04 UTC. The [project form](https://forms.gle/yToDUzaDMwWnq6R6A) still has ten items. Its video URL and Developer Experience Report confirmation are required. This is a **founder copy aid**, not a submitted form or proof of a mainnet fill. Keep the contact email and receiving wallet or UID out of Git. Website and video were founder-approved on 2026-10-06; publication and live URL verification remain with root.
+**Public form rechecked:** 2026-10-04 UTC. The [project form](https://forms.gle/yToDUzaDMwWnq6R6A) still has ten items. Its video URL and Developer Experience Report confirmation are required. This is a **founder copy aid**, not a submitted form or proof of a mainnet fill. Keep the contact email and receiving wallet or UID out of Git. Website and video were founder-approved and published on 2026-10-06. Both URLs were verified without login; form submission is still unconfirmed.
 
 | Item | Current answer or action | State |
 |---|---|---|
@@ -11,7 +11,7 @@
 | 5. What did you build? | Use the bounded description below, then refresh only if the shipped build changes. | Draft, founder review |
 | 6. Tracks | Select **Main track: Tokenized Stocks Products & Agents**. The local read-only policy tool isn't a deployed Agentic Wallet, Wallet Skill or Agent Studio integration, so don't select either special prize at the current build. | Current build |
 | 7. Public repository URL | `https://github.com/dyplux/bnb-tokenized-stocks-2026` | Public, recheck at submission |
-| 8. Demo video URL | `https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4` | Founder-approved final 63-second film; root verifies live URL before publication. Original [60-second fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains available. |
+| 8. Demo video URL | `https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4` | Final 63-second film published and verified without login on 2026-10-06. Original [60-second fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains available. |
 | 9. Deployed link or judge instructions | `https://praeva.dyplux.com`; retain `https://dyplux.github.io/bnb-tokenized-stocks-2026/` as fallback. For a fresh signed read, use the [local judge guide](safety-judge-run.md) with the judge's own Binance Web3 API credentials. | Root verifies live URLs; no hosted signed API key |
 | 10. Developer Experience Report | Tick **Yes, I have submitted it** only after the separate DX form is actually sent and its receipt is saved privately. | Not submitted in this record |
 
