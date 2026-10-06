@@ -8,7 +8,7 @@ Pre-signing safety for autonomous tokenized-equity agents.
 
 **Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
-**[Live judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) · [60-second evidence video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) · [Judge guide, 60 seconds to 15 minutes](JUDGE.md)**
+**[Primary website](https://praeva.dyplux.com) · [final 63-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) · [GitHub Pages fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/) · [original 60-second fallback video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) · [Judge guide, 60 seconds to 15 minutes](JUDGE.md)**
 
 A stock token can still have a quote when the underlying exchange is closed. In the observed NVDAB case, an amount-specific route existed, but independent underlying-reference time, individual holder eligibility and a funded passing simulation weren't verified. Praeva returned `NEED_HUMAN`. A second observed request exceeded its 20 USDT mandate and returned `DENY`. [View both receipts](docs/submission/safety-judge-run.md). The green `ALLOW` is a synthetic policy fixture.
 
@@ -16,8 +16,8 @@ The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. 
 
 ## See the product
 
-- [Public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/): observed, dated `NEED_HUMAN` and mandate-bound `DENY` cases; a clearly marked synthetic `ALLOW` policy fixture; source times, reason codes, receipt downloads and system status. It makes no live signed API request.
-- [60-second two-case product video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4): an 18:28 UTC live local read-only capture and a separate 19:56 UTC dated replay. The first returned `NEED_HUMAN`; the second returned `DENY` when a 100 USDT request exceeded a 20 USDT mandate. No trade was signed.
+- [Primary website](https://praeva.dyplux.com): current destination for the observed, dated `NEED_HUMAN` and mandate-bound `DENY` cases, a clearly marked synthetic `ALLOW` policy fixture, source times, reason codes, receipt downloads. The fallback also exposes its system status. It makes no live signed API request. The [GitHub Pages judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback.
+- [Final 63-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4): current primary submission film. The [original 60-second two-case film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains available as fallback and documents its historical capture boundary. No trade was signed.
 - [Judge instructions](docs/submission/safety-judge-run.md): run a fresh signed check with your own Binance Web3 API credentials, then try a mandate denial. The public page also works without credentials.
 
 ## Run a fresh check locally

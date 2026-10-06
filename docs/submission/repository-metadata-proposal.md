@@ -4,9 +4,9 @@ Brand updated: 2026-10-06. Evidence last verified: 2026-10-05. Scope: proposal o
 
 | Field | Proposed value | Gate |
 |---|---|---|
-| Description | `Praeva — pre-signing safety for autonomous tokenized-equity agents on BNB Chain.` | Founder-approved wording; GitHub metadata has not been changed. |
-| Homepage | Current GitHub Pages judge URL | Set `https://praeva.dyplux.com` only after that host exists and passes HTTPS checks. Keep GitHub Pages as fallback. |
-| Topics | `bnb-chain`, `tokenized-stocks`, `rwa`, `ai-agents`, `binance-web3`, `execution-safety` | Suggested descriptors; GitHub metadata has not been changed. |
+| Description | `Praeva — pre-signing safety for autonomous tokenized-equity agents on BNB Chain.` | Applied to GitHub metadata on 2026-10-06. |
+| Homepage | `https://praeva.dyplux.com` | Published and verified over HTTPS on 2026-10-06. Keep `https://dyplux.github.io/bnb-tokenized-stocks-2026/` as fallback. |
+| Topics | `bnb-chain`, `tokenized-stocks`, `rwa`, `ai-agents`, `binance-web3`, `execution-safety` | Applied to GitHub metadata on 2026-10-06. |
 | Social preview | One screenshot of the real observed `NEED_HUMAN` case, with dated label | Avoid synthetic ALLOW as hero proof. |
 | License | No license is currently declared | Founder decides; don't assign a license by inference. |
 | Release/tag | Exact final submission SHA and tag after freeze gates | No premature release. |

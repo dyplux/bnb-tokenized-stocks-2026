@@ -8,11 +8,11 @@ Brand updated: 2026-10-06. Evidence last verified: 2026-10-05. Scope: October 20
 
 Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
 
-Open the [public judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/). Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The green ALLOW example is a **synthetic policy fixture**.
+Open the [Praeva website](https://praeva.dyplux.com). The [GitHub Pages judge packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback. Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The ALLOW example is a **synthetic policy fixture**.
 
 ## 3 minutes
 
-[Watch the current 60-second evidence film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4). It is the public fallback, not the final submission film. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
+[Watch the current 63-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4). The original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains the public fallback. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
 
 ```mermaid
 flowchart LR

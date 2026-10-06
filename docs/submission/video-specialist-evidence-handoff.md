@@ -1,6 +1,6 @@
 # Video specialist evidence handoff
 
-**Prepared:** 2026-10-04 UTC. **Brand updated:** 2026-10-06. **State:** claims frozen; source inventory ready. The existing 60-second film is the verified public fallback. This file records evidence and source locations for the later submission video.
+**Prepared:** 2026-10-04 UTC. **Brand updated:** 2026-10-06. **State:** claims frozen; final 63-second film founder-approved on 2026-10-06. Website and video are public; URLs were verified without login on 6 October 2026. The existing 60-second film remains the verified public fallback.
 
 ## Source material
 
@@ -8,12 +8,12 @@
 |---|---|---|
 | Public judge page | https://dyplux.github.io/bnb-tokenized-stocks-2026/ | Dated examples and judge instructions |
 | Public repository | https://github.com/dyplux/bnb-tokenized-stocks-2026 | Code, receipts and reproducibility steps |
+| Final 63-second founder-selected film | https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4 | SHA-256 `e5f35e8a07c5537aa56022f4db75ad0c0fd6a980799cbbaeec13abdc58967d32`; founder-approved 2026-10-06; public URL verified 2026-10-06 |
 | Public 60-second fallback | https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4 | SHA-256 `d4d3530e120477fa73d8dd9d4a2938f4ca8872ca00f03ee6ac35c2147795a6e4` |
-| Original 18:28 UTC capture | `/Volumes/SSD500/Dyplux/execution-safety-video-source/real-safety-flow.webm` | SHA-256 `70d899564c4f74279f2e3a8eeefd9bd31ad81c10d84d022bf855314739858c7c` |
-| Original capture project | `/Volumes/SSD500/Dyplux/execution-safety-video-source/` | WebM, raw stills, first truth record, capture and render scripts |
-| Original capture archive | `/Volumes/SSD500/Dyplux/execution-safety-live-capture-source.zip` | SHA-256 `a53002415784f950b1e1c16f43f78b5f1e2c4986155f5a47a0c259ee4dbc2c63`; ZIP integrity checked on 2026-10-04 |
-| Composite film project | `/Volumes/SSD500/Dyplux/execution-safety-judge-video-source/` | `frames-app/`, separate denial stills and truth record, `video.html`, renderer and final frames |
-| Composite project archive | `/Volumes/SSD500/Dyplux/execution-safety-judge-demo-source.zip` | SHA-256 `e14aca69f3df76390563b3ec8f7bc480d8a843f5ef89089d792fcea2765df0d3`; archive integrity checked on 2026-10-04; raw WebM is in the separate original capture project |
+| Private source inventory | Original capture and composite project files, archives and local paths are intentionally omitted from this public coordination file. | Preserve the historical hashes and use the existing public truth records below for public verification. |
+| Historical original capture hash | Private source inventory | SHA-256 `70d899564c4f74279f2e3a8eeefd9bd31ad81c10d84d022bf855314739858c7c` |
+| Historical original capture archive hash | Private source inventory | SHA-256 `a53002415784f950b1e1c16f43f78b5f1e2c4986155f5a47a0c259ee4dbc2c63`; ZIP integrity checked on 2026-10-04 |
+| Historical composite project archive hash | Private source inventory | SHA-256 `e14aca69f3df76390563b3ec8f7bc480d8a843f5ef89089d792fcea2765df0d3`; archive integrity checked on 2026-10-04 |
 | Factual four-minute script | [final-four-minute-narrative.md](final-four-minute-narrative.md) | Draft screen order; final off-hours sentence reflects `SAFETY_ONLY` |
 | Frozen Monday outcome and claim limits | [Findings](../../experiments/EXP-RWA-004/monday-findings.md) and [claim set](frozen-claims-2026-10-05.md) | 2026-10-05 daily rows and unchanged scorer; no predictive edge |
 | Final judge page and DevEx | [Public page](https://dyplux.github.io/bnb-tokenized-stocks-2026/), [DevEx summary](../devex/2026-10-04-evidence-summary.md), [form draft](dx-form-current.md) | Show source times, reason codes, reproducible API findings and the read-only boundary |
@@ -37,4 +37,4 @@ The unchanged [preregistered scorer](../../scripts/score_monday_benchmark.py) pr
 
 **Claims prohibited in narration, titles and captions:** predicted Monday open; trading edge or profit; executable arbitrage or fill; independently verified underlying stock-reference age; verified holder eligibility; passing funded simulation; real `ALLOW`; signed or broadcast stock-token trade; deployed Agentic Wallet or Agent Studio runtime. The green `ALLOW` example is synthetic. The two observed decisions are read-only. The 611-call DevEx number is a fixed 4 October 19:35 UTC research and local-build cut, not user traffic.
 
-The claim set is frozen, so the final video may be handed to the specialist. Preserve the two capture dates and the replay label when reusing footage. See [film QA](safety-judge-video-qa.md) for frame, audio and public-download checks.
+The claim set is frozen, and the final video is founder-approved. Preserve the two capture dates and the replay label when reusing footage. See [film QA](safety-judge-video-qa.md) for frame, audio and public-download checks. The current public video was verified after publication.
