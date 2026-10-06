@@ -1,8 +1,8 @@
 # Project brief
 
-**Updated:** 2026-10-04 UTC
+**Updated:** 2026-10-06. Brand and frozen Monday outcome updated; dated source evidence is unchanged.
 
-**Product core:** Dyplux Execution Safety Layer for Tokenized Equities
+**Product core:** Praeva by Dyplux, a deterministic pre-signing safety layer for autonomous tokenized-equity agents.
 
 **Owner:** Dyplux
 
@@ -20,7 +20,7 @@ The local [one-action screen](../app/safety.html) uses signed Binance Web3 RWA a
 
 An exact-wallet 10 USDT NVDAB preflight has returned an unsigned build and an off-chain simulation, but the demo wallet has zero USDT and BNB, and the simulation predicted `FAILED`. The user's issuer access and independent stock-reference time remain unverified. No transaction has been signed or broadcast. [Asset selection](submission/demo-asset-selection.md), the [bounded execution protocol](product/mainnet-execution-path.md), and the [blocker board](submission/blocker-board.md) hold the current gate.
 
-The five-minute, 40-contract Sunday collector stays active. Monday's [preregistered market-open experiment](../experiments/EXP-RWA-004/monday-open-protocol.md) tests a possible off-hours addition. Its result doesn't decide whether the safety core exists. Current collector health and the second hackathon are in [STATUS.md](../STATUS.md).
+The five-minute, 40-contract collector is separate from the frozen experiment. Monday's [preregistered market-open experiment](../experiments/EXP-RWA-004/monday-open-protocol.md) concluded [SAFETY_ONLY](../experiments/EXP-RWA-004/monday-findings.md): off-hours uncertainty supports the safety review, with no predictive-alpha claim. Current collector health and the second hackathon are in [STATUS.md](../STATUS.md).
 
 ## Submission boundary
 
