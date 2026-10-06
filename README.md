@@ -4,6 +4,8 @@
 
 Pre-signing safety for autonomous tokenized-equity agents.
 
+**Praeva by Dyplux** is the final product brand. Earlier dated artifacts, including the [frozen claims](docs/submission/frozen-claims-2026-10-05.md), may refer to **Dyplux Execution Safety Layer**. Their original historical state is preserved.
+
 **Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
 **[Live judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) · [60-second evidence video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) · [Judge guide, 60 seconds to 15 minutes](JUDGE.md)**

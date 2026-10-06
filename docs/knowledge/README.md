@@ -4,6 +4,8 @@ Brand updated: 2026-10-06. Evidence last verified: 2026-10-05. Scope: reusable k
 
 Praeva is the Tokenized Stocks product built by Dyplux. Its current claim is RWA-specific deterministic evidence review and authorization before signing. Generic agent-security products exist; distinguish category novelty from the [implementation and evidence](../product/competitive-positioning.md). The repository slug and GitHub Pages URL remain unchanged. `praeva.dyplux.com` is a planned domain only.
 
+**Praeva by Dyplux** is the final product brand. Earlier dated artifacts may refer to **Dyplux Execution Safety Layer**. The [5 October frozen claims](../submission/frozen-claims-2026-10-05.md) preserve that historical name and remain unchanged by branding updates.
+
 | Class | Read | Rule |
 |---|---|---|
 | CANONICAL | [product thesis](product-thesis.md), [architecture](technical-architecture.md), [evidence model](evidence-model.md), [security](security-wallet-policy.md), [failure modes](failure-modes.md) | Use for current safety decisions; verify underlying dated evidence before an external claim. |

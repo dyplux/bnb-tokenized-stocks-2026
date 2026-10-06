@@ -2,6 +2,8 @@
 
 Brand updated: 2026-10-06. Evidence last verified: 2026-10-05. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [frozen claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
 
+**Praeva by Dyplux** is the final product brand. Earlier dated artifacts may refer to **Dyplux Execution Safety Layer**; the frozen claims and original evidence retain their historical wording.
+
 ## 60 seconds
 
 Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
