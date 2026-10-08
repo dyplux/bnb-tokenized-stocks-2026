@@ -1,0 +1,74 @@
+{
+  "receipt_sha256": "61a263590d3bae053b6d3d670b80e2f324ae903b249a5ccca05e2706cb5b18f1",
+  "kernel_sha256": "58037f676a8dfe7511cd256fcab34533bf1dfa0a70af33e6af86ec7354336556",
+  "files": [
+    {
+      "path": "AGENT-INVOCATION-TRACE.md",
+      "sha256": "8b2fb82cdf5f278a9c41e85f4a3c5daebcb8ac03e1e82809fc1ddbdd5ca7a01b"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e439a667cad7efd782a4743f72a66b2a51d275a1094c9a2fc74ee909587da3e1"
+    },
+    {
+      "path": "capture/api1.body.bin",
+      "sha256": "d38c718e61d784f3bb90f1e595d34fe5eb2c9d6005169def134c234c3a57394a"
+    },
+    {
+      "path": "capture/api1.transport.json",
+      "sha256": "26780fc9d020104f790c5457567011bbdb6d2d7440555176e02ffddaa08a4899"
+    },
+    {
+      "path": "capture/api4.body.bin",
+      "sha256": "ca2a9c56285a23387651e7f0255535745b7cc04a19ca2ece3adfad49f4bcb33f"
+    },
+    {
+      "path": "capture/api4.transport.json",
+      "sha256": "6d294be7aeae79e613f368feb7dad86dcebe5473087fdf0d1967d8404894d1c3"
+    },
+    {
+      "path": "capture/api5.body.bin",
+      "sha256": "1fb3f9ce188f62db2110c39790fc30a8b024bb9f71deb625db318e1b93813103"
+    },
+    {
+      "path": "capture/api5.transport.json",
+      "sha256": "8c1ce152028af88c2adcae291d0681c789b16d911a97fade5abf207a23c2d8fd"
+    },
+    {
+      "path": "capture/request-count.json",
+      "sha256": "4ab8dfc24698396805ac6e402934c234966d46d8d32e264cf6eddf1bac5b0b36"
+    },
+    {
+      "path": "policy-input.json",
+      "sha256": "b535b536420bde22aad8f9f013c4517d4b8cdf6d3482661b4ce241d104b43870"
+    },
+    {
+      "path": "proof-result.json",
+      "sha256": "317e59279271beceb651f7a548c04ed52e615fdbc7e6e848617b43b5a3863606"
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "6f27b83f2349b3def80c60b70e403dd72d7a701bd2b5c95a18bca8ea8ab317d9"
+    },
+    {
+      "path": "skill-provenance.json",
+      "sha256": "8fa944f281689eceb91a2cf0d898e687c6c53e40220229c433cf30d15fce80f1"
+    },
+    {
+      "path": "skill_capture.py",
+      "sha256": "bd372e1a46f9c9260d050e8427a8b77c283f6706ba922393143bda4d2712b0e3"
+    },
+    {
+      "path": "skill_policy.py",
+      "sha256": "01b1ab585c291acf7ffe276cc376cafd6619807cdff711a20950f71487683800"
+    },
+    {
+      "path": "test_skill_proof.py",
+      "sha256": "6a4e2f9e8339d8adc15fbf760de7dd96fa3b390fdb3884e658b36c1c4b990860"
+    },
+    {
+      "path": "verify_proof.py",
+      "sha256": "e1a621670aa45c3baa88d1772d4d3b48205b428f186278560a01add9e59cfeb7"
+    }
+  ]
+}

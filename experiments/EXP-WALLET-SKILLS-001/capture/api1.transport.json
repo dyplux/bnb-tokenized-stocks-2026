@@ -1,0 +1,13 @@
+{
+  "body_bytes": 254889,
+  "body_sha256": "d38c718e61d784f3bb90f1e595d34fe5eb2c9d6005169def134c234c3a57394a",
+  "complete_body": true,
+  "content_type": "application/json;charset=UTF-8",
+  "final_url": "https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/rwa/stock/detail/list/ai?type=1",
+  "method": "GET",
+  "received_at": "2026-10-08T23:28:29.436Z",
+  "redirect_followed": false,
+  "request_url": "https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/rwa/stock/detail/list/ai?type=1",
+  "started_at": "2026-10-08T23:28:28.955Z",
+  "status": 200
+}

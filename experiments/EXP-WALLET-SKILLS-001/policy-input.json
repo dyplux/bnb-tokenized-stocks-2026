@@ -1,0 +1,49 @@
+{
+  "evaluation_clock": "2026-10-08T23:28:30.167Z",
+  "evidence": {
+    "chain_id": "56",
+    "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+    "eligibility_status": "UNKNOWN",
+    "issuer_verified": false,
+    "market_open_state": true,
+    "market_reason": "TRADING",
+    "market_status": "postmarket",
+    "price_impact_percent": null,
+    "provider": "ondo",
+    "quote_available": null,
+    "quote_identity_match": null,
+    "reference_age_seconds": null,
+    "reference_age_status": "UNKNOWN",
+    "reference_price_updated_at": null,
+    "simulation_passed": null,
+    "source_observed_at": "2026-10-08T23:28:30.167Z",
+    "source_response_sha256": {
+      "api1": "d38c718e61d784f3bb90f1e595d34fe5eb2c9d6005169def134c234c3a57394a",
+      "api4": "ca2a9c56285a23387651e7f0255535745b7cc04a19ca2ece3adfad49f4bcb33f",
+      "api5": "1fb3f9ce188f62db2110c39790fc30a8b024bb9f71deb625db318e1b93813103"
+    },
+    "stock_feed_price_asof": null,
+    "stock_feed_price_usd": "231.16",
+    "ticker": "NVDA",
+    "token_price_age_calculation": null,
+    "token_price_age_ms": null,
+    "token_price_usd": "231.422148865942981608",
+    "token_to_share_ratio": "1.0017152487959898"
+  },
+  "intent": {
+    "chain_id": "56",
+    "contract": "0xa9ee28c80f960b889dfbd1902055218cba016f75",
+    "notional_usd": "10",
+    "provider": "ondo",
+    "ticker": "NVDA"
+  },
+  "mandate": {
+    "max_eligibility_age_seconds": 60,
+    "max_notional_usd": 20,
+    "max_price_impact_percent": 2,
+    "max_reference_age_seconds": 60,
+    "max_token_price_age_ms": 60000,
+    "require_independent_reference": true,
+    "require_onchain_multiplier": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-08T23:19:21.111Z",
+  "repo": "https://github.com/binance/binance-skills-hub",
+  "commit": "9960c675387bd27f8866645b83693c1fa87242f6",
+  "url": "https://raw.githubusercontent.com/binance/binance-skills-hub/9960c675387bd27f8866645b83693c1fa87242f6/skills/binance-web3/binance-tokenized-securities-info/SKILL.md",
+  "sha256": "9331ea094a9862a27c1e9bdb578b430450294f5230f5085cfceaed141217f008",
+  "bytes": 31033,
+  "install_scope": "Isolated private agent environment, no global install or baw",
+  "provider_requests": 0
+}

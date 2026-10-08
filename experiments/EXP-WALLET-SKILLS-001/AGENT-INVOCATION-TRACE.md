@@ -1,0 +1,9 @@
+# Official skill invocation trace
+
+Captured 8 October 2026 UTC, 9 October in Lisbon. The official Binance skill was installed only in an isolated coding-agent environment, pinned to commit `9960c675387bd27f8866645b83693c1fa87242f6` and SHA-256 `9331ea094a9862a27c1e9bdb578b430450294f5230f5085cfceaed141217f008`.
+
+An AI coding agent read the skill and followed its API 1 token-resolution, API 5 dynamic-data and API 4 asset-status workflow for Ondo NVDAon on BNB Chain, chain 56. The first attempt's sandbox lacked network access and made zero provider calls. A corrected environment completed three public GETs. Parent review then added strict redirect rejection, response bounds, multi-source consistency and raw-byte capture; three additional GETs produced this reviewed packet. Total provider calls: six. No wallet, secret, authentication, signature, transaction or paid inference was used.
+
+The captured source fields went to the unchanged policy v0.6.0 at the recorded capture clock, for a proposed 10 USDT assessment under a 20 USDT mandate. The policy returned NEED_HUMAN with unresolved reference time, eligibility, issuer validation, quote, price impact and simulation. Token-price age remains unknown; retrieval time isn't a source-price clock. The observed untimed stock feed price is retained separately. The observed postmarket value is preserved; this policy version reports MARKET_STATE_UNKNOWN for that value.
+
+The original network failure and initial capture remain historical private records. This public subset contains only reviewed transport attestations, public body bytes, input, receipt and reproducible offline checks. Raw body retention describes HTTP entity bytes, not full wire framing or independent issuer verification. Evidence hashes prove consistency against the recorded manifest; they don't authenticate a source whose body and manifest were both changed.

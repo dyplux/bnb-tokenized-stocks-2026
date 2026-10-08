@@ -76,7 +76,7 @@ For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining 
 
 **SYNTHETIC:** ALLOW and corporate-action regression fixtures.
 
-**NOT CLAIMED:** stock-token purchase, real purchase ALLOW, passing funded SPYon swap simulation, predictive alpha, paid B402 seller, Agentic Wallet/Wallet Skills, paid inference/explanation, the complete self-funding loop or original same-process continuity. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
+**NOT CLAIMED:** stock-token purchase, real purchase ALLOW, passing funded SPYon swap simulation, predictive alpha, paid B402 seller, Agentic Wallet, paid inference/explanation, the complete self-funding loop or original same-process continuity. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
 
 The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The final submission SHA/tag, approved replacement video and genuine form confirmations remain pending.
 
@@ -91,3 +91,7 @@ A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a fi
 Covenant / StockGuard overlap exists. Praeva's strongest distinction in this build is evidence sufficiency, provenance, freshness and authorization prerequisites before a separate signer. The receipt doesn't cryptographically enforce that signer's behavior or certify universal tokenized-stock safety.
 
 Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The separate Studio chain stops at USD 1 provider account credit, before API key allocation.
+
+## Wallet Skills dated addition, 9 October
+
+[Official Wallet Skills read-only proof](docs/submission/wallet-skills-evidence-2026-10-09.md) records Ondo NVDAon public reads followed by NEED_HUMAN from the unchanged kernel. Run `python3 experiments/EXP-WALLET-SKILLS-001/verify_proof.py` without credentials or network. No Agentic Wallet execution or stock-token trade is claimed. The video and Studio packet retain their earlier dates.

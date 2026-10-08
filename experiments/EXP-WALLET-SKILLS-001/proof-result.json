@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-08T23:28:30.173Z",
+  "decision": "NEED_HUMAN",
+  "fixed_clock_replay": "PASS",
+  "frozen_kernel_sha256": "58037f676a8dfe7511cd256fcab34533bf1dfa0a70af33e6af86ec7354336556",
+  "limitations": [
+    "Read-only Wallet Skills proof, not Agentic Wallet execution or stock trade",
+    "No independently timed stock quote, user eligibility, executable quote or funded simulation",
+    "No prize qualification/win guarantee"
+  ],
+  "methods": [
+    "GET"
+  ],
+  "original_worker_capture_preserved": true,
+  "paid_inference": 0,
+  "prior_agent_provider_calls": 3,
+  "public_writes": 0,
+  "raw_saved_before_parse": true,
+  "reason_codes": [
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+    "ISSUER_UNVERIFIED",
+    "MARKET_STATE_UNKNOWN",
+    "PRICE_IMPACT_UNKNOWN",
+    "QUOTE_UNVERIFIED",
+    "SIMULATION_UNVERIFIED",
+    "TOKEN_PRICE_AGE_PROVENANCE_UNKNOWN",
+    "TOKEN_PRICE_AGE_UNKNOWN",
+    "USER_ELIGIBILITY_UNKNOWN"
+  ],
+  "receipt_hash": "61a263590d3bae053b6d3d670b80e2f324ae903b249a5ccca05e2706cb5b18f1",
+  "redirects_followed": 0,
+  "review_capture_provider_calls": 3,
+  "signatures": 0,
+  "status": "PASS_LIVE_READ_ONLY_PROOF",
+  "total_provider_calls": 6,
+  "transactions": 0,
+  "wallet_material_accessed": false
+}
