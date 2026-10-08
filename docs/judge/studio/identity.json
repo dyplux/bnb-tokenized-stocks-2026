@@ -1,0 +1,18 @@
+{
+  "classification": "PROVEN_TESTNET_IDENTITY",
+  "checked_at": "2026-10-07T20:46:30.786Z",
+  "chain_id": 97,
+  "agent_id": 2574,
+  "registry": "0x8004a818bfb912233c491871b3d84c89a494bd9e",
+  "owner": "0x766d6e0b01eba86d6e69bac436d37f7fec15b102",
+  "transaction_hash": "0x725975968a68bc3af35d2958b645add79477ff66e9d643e99c7f92a62fddaf6b",
+  "transaction_url": "https://testnet.bscscan.com/tx/0x725975968a68bc3af35d2958b645add79477ff66e9d643e99c7f92a62fddaf6b",
+  "receipt_status": "SUCCESS",
+  "block_number": 135464338,
+  "gas_used": "575527",
+  "effective_gas_price_wei": "100000000",
+  "actual_fee_tbnb": "0.0000575527",
+  "broadcast_attempts": 1,
+  "stable_card": "https://agent.praeva.dyplux.com/.well-known/agent-card.json",
+  "scope": "Fixed dated tokenized-equity safety replay; testnet identity only."
+}

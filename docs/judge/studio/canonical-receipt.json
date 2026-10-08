@@ -1,0 +1,91 @@
+{
+  "checks": {
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN": "NEED_HUMAN",
+    "ISSUER_UNVERIFIED": "NEED_HUMAN",
+    "MARKET_STATE_UNKNOWN": "NEED_HUMAN",
+    "SIMULATION_UNVERIFIED": "NEED_HUMAN",
+    "USER_ELIGIBILITY_UNKNOWN": "NEED_HUMAN"
+  },
+  "decision": "NEED_HUMAN",
+  "evidence": {
+    "chain_id": "56",
+    "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "corporate_action_verified": null,
+    "eligibility_basis": null,
+    "eligibility_checked_at": null,
+    "eligibility_status": "UNKNOWN",
+    "issuer_verified": false,
+    "market_open_state": true,
+    "market_reason": "TRADING",
+    "market_status": null,
+    "onchain_multiplier_block": 125704183,
+    "onchain_multiplier_block_timestamp": "2026-10-04T15:57:32+00:00",
+    "onchain_multiplier_effective_at": 0,
+    "onchain_new_ui_multiplier": "1.000778223752807865",
+    "onchain_ui_multiplier": "1.000778223752807865",
+    "previous_token_to_share_ratio": null,
+    "price_impact_percent": "0.0000000000",
+    "provider": "bstock",
+    "quote_available": true,
+    "quote_execution_mode": "SWAP",
+    "quote_identity_match": true,
+    "quote_observed_at": "2026-10-04T15:57:33.085Z",
+    "quote_vendor": "LiquidMesh",
+    "reference_age_seconds": null,
+    "reference_age_status": "UNKNOWN",
+    "reference_price_updated_at": null,
+    "reported_reference_price_usd": "234.667376",
+    "simulation_passed": false,
+    "source_observed_at": {
+      "catalog": "2026-10-04T15:57:31.301Z",
+      "price": "2026-10-04T15:57:31.624Z",
+      "quote": "2026-10-04T15:57:33.085Z",
+      "underlying_market": "2026-10-04T15:57:32.010Z"
+    },
+    "source_response_sha256": {
+      "catalog": "2dc5c14677bccb83504f93a17eab987fa766d808f5f8eeda73fb85fe40f2ed52",
+      "price": "9d744b05a2db7b874bcaada21550cb6abed4bac1590c09d6cb6fe64bd6b7736b",
+      "quote": "7de59b49db1651db4e215356dab7589d2cc4f48c6b0b7c9a4a7ac79d66af304d",
+      "rpc": [
+        "73c43179ef798486f0d4b811bc81d3714b2dcd962df19c35d15c446d0811a58c",
+        "38a78cac3ae1fdf739c3d9fcb1163eb3c42e65acf03608eea406fca81658999e",
+        "e6f117108e7fa60bd422f358664707b31715917bdee17c6b546db58e4216ad95"
+      ],
+      "underlying_market": "e2f306d010ac2120ccba7a3122102245927da775b337df402596b57f7c1e2130"
+    },
+    "stock_feed_price_asof": null,
+    "stock_feed_price_usd": null,
+    "ticker": "NVDA",
+    "token_price_age_calculation": "observed_at_minus_tokenPriceUpdatedAt",
+    "token_price_age_ms": 26994,
+    "token_price_usd": "234.85000000",
+    "token_to_share_ratio": "1.000778223752807865"
+  },
+  "intent": {
+    "chain_id": "56",
+    "contract": "0x02fca66c1d1afb4e2a7884261eb00f63598a7436",
+    "notional_usd": "100",
+    "provider": "bstock",
+    "ticker": "NVDA"
+  },
+  "mandate": {
+    "max_eligibility_age_seconds": 3600,
+    "max_notional_usd": "100",
+    "max_onchain_multiplier_age_seconds": 120,
+    "max_price_impact_percent": "0.5",
+    "max_reference_age_seconds": 300,
+    "max_token_price_age_ms": 60000,
+    "require_independent_reference": true,
+    "require_onchain_multiplier": true
+  },
+  "policy_version": "0.6.0",
+  "reason_codes": [
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+    "ISSUER_UNVERIFIED",
+    "MARKET_STATE_UNKNOWN",
+    "SIMULATION_UNVERIFIED",
+    "USER_ELIGIBILITY_UNKNOWN"
+  ],
+  "receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+  "timestamp": "2026-10-04T15:57:33Z"
+}

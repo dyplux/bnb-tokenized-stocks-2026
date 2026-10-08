@@ -1,0 +1,35 @@
+{
+  "classification": "PROVEN_SANITIZED_DATED_PROVIDER_ACCOUNT_CREDIT",
+  "checked_at": "2026-10-08T10:58:30.954Z",
+  "account_endpoint": "https://llm.pieverse.io/v1/me",
+  "deposit_endpoint": "https://llm.pieverse.io/v1/me/deposits?limit=10",
+  "authentication": "SIWE account session, credentials omitted",
+  "account_wallet": "0xB383EA96bE5689BF1DAe4125A3d35241D32ceba8",
+  "account_credit_usd": 1,
+  "matched_deposit": {
+    "tx_hash": "0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b",
+    "log_index": 306,
+    "chain_id": 56,
+    "token_address": "0xce24439f2d9c6a2289f741120fe202248b666666",
+    "amount_usd": 1,
+    "from_address": "0xb383ea96be5689bf1dae4125a3d35241d32ceba8",
+    "status": "credited",
+    "confirmed_at": "2026-10-08T10:26:38.761Z"
+  },
+  "provider_account_topup_attributed": "YES",
+  "attribution_basis": "Authenticated B383 account credit plus provider deposit matching the original transaction, U token, sender, chain, amount and onchain Transfer log index 306.",
+  "account_balance_before": "UNKNOWN",
+  "measured_account_balance_delta_usd": null,
+  "api_key_credit_usd": 0,
+  "usage_last_7_days": {
+    "total_cost_usd": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+  },
+  "allocation_executed": false,
+  "account_response_raw_sha256": "6a262d19fcf8a3bb9b30573691140da82dbb450a52187459bbca634897456a6e",
+  "deposit_response_raw_sha256": "7ca9316315288c0da82f4fc755aaa0a887221774ed8b6b8148abc1c4480cb140",
+  "provider_observation_reproduction": "Account authentication is required to refresh these observations; identifiers and key hashes are excluded.",
+  "helper_original_derived_status": "UNKNOWN because the read helper required the literal status confirmed; the saved provider response reported credited.",
+  "public_classification_basis": "Independent offline comparison of the preserved provider response to the successful onchain receipt; no payment guard changed."
+}

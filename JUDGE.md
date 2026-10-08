@@ -1,24 +1,24 @@
 # Judge guide: Praeva by Dyplux
 
-Brand updated: 2026-10-06. Evidence last verified: 2026-10-05. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [frozen claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
+Brand updated: 2026-10-06. Dated evidence continuation: 2026-10-08. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [current claims](docs/submission/claims-2026-10-08.md), [frozen research claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
 
 **Praeva by Dyplux** is the final product brand. Earlier dated artifacts may refer to **Dyplux Execution Safety Layer**; the frozen claims and original evidence retain their historical wording.
 
 ## 60 seconds
 
-Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
+Praeva is a deterministic RWA evidence-sufficiency and authorization review immediately before a separate privileged signer. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
 
-Open the [Praeva website](https://praeva.dyplux.com). The [GitHub Pages judge packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback. Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The ALLOW example is a **synthetic policy fixture**.
+Open the [assessment console](https://praeva.dyplux.com/console/). Select **Observed NEED_HUMAN**, **Observed DENY** or **Synthetic ALLOW**; each keeps its origin, dates, verdict and receipt visible. The managed replay uses captured remote proof, the SPYon denial is a real historical preflight, and ALLOW is synthetic. The [Praeva website](https://praeva.dyplux.com) remains the product entry point. The [GitHub Pages judge packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback. Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The ALLOW example is a **synthetic policy fixture**.
 
 ## 3 minutes
 
-[Watch the current 63-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4). The original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains the public fallback. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
+[Watch the published 63-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4). The original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains the public fallback. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
 
 ```mermaid
 flowchart LR
     A[User or agent intent] --> E[Evidence collection]
     E --> B[Binance Web3 signed reads]
-    E --> C[BSC fixed-block read]
+    E --> C[BNB Chain fixed-block read]
     B --> P[Deterministic Praeva policy]
     C --> P
     P --> D[ALLOW / DENY / NEED_HUMAN]
@@ -39,6 +39,14 @@ An AI agent may propose an intent. The deterministic policy controls the decisio
 
 Four actionable DevEx findings: [undocumented `offhours`](docs/devex/repros/2026-10-04-market-status-enum.md), [100-address request HTTP 414](docs/devex/repros/2026-10-04-rwa-price-url-limit.md), [RFQ/SWAP wording inconsistency](docs/devex/repros/2026-10-04-rwa-swap-route.md), and [no independent underlying reference clock in inspected fields](docs/devex/repros/2026-10-04-independent-reference-clock.md). The [DevEx summary](docs/devex/2026-10-04-evidence-summary.md) separates API observations from Dyplux bugs.
 
+## Agent Studio and one-shot credit-payment proof
+
+Open the [compact Studio evidence guide](docs/submission/agent-studio-evidence.md). It links ERC-8004 Agent ID **2574 on chain 97**, the [stable card](https://agent.praeva.dyplux.com/.well-known/agent-card.json), three dated managed requests, receipt parity and the [one 1 U x402 settlement](https://bscscan.com/tx/0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b).
+
+Authenticated provider evidence attributed **USD 1 account credit** to that same transaction. API key credit and usage remain zero; allocation and paid inference haven't occurred. The original runtime's HTTP wait aborted and it later exited through OOM. Its verdict and receipt remained unchanged, with explanation authority `NONE`.
+
+The managed trial expires **9 October 18:48:44 UTC** and currently declares OAuth for requests. The stored console case needs no credentials. A separate VPS fallback has its own backend label and parity proof; verify the actual scheduled switch and active stable card through judging.
+
 ## 15 minutes
 
 Follow the [clean-start judge instructions](docs/submission/safety-judge-run.md) with Python 3.9+. The public replay and unit tests need no API secret; a fresh signed review needs the judge's own Binance Web3 key. Run `python3 -m unittest discover -s tests -q`. Inspect the [policy](app/rwa_policy.py), [quote/build/simulation packet](docs/product/pre-execution-packet-linked-2026-10-04.json), [fixed-block multiplier audit](experiments/EXP-RWA-011/onchain_multiplier_audit.json), [Monday preregistration](experiments/EXP-RWA-004/monday-open-protocol.md) and [negative result](experiments/EXP-RWA-004/monday-findings.md).
@@ -47,14 +55,39 @@ The [competitive positioning](docs/product/competitive-positioning.md) compares 
 
 ### Verify a receipt
 
-For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining object with sorted keys, compact separators and UTF-8, then SHA-256 hash those bytes. This is the exact algorithm in [rwa_policy.py](app/rwa_policy.py). A hash proves the receipt hasn't changed under that canonicalization; it doesn't certify the upstream API, eligibility or execution.
+Run from the repository root with Python 3.9+ and no API key or network request:
+
+```sh
+python3 scripts/verify_receipt.py docs/judge/observed-unsafe.json
+python3 scripts/verify_receipt.py docs/judge/observed-unsafe.json --expected-sha256 63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db
+```
+
+`INTEGRITY_MATCH` checks canonical consistency; it isn't authenticity. An externally trusted expected hash pins the compared bytes. An edited receipt with a recomputed embedded hash doesn't prove origin. `REPLAY_MATCH` uses the unchanged same policy kernel at the saved timestamp; it isn't an independently implemented policy. Missing saved context returns `REPLAY_UNAVAILABLE`, without reconstructed inputs. Integrity and replay are printed separately.
+
+Exit 0 means match or an explicitly reported integrity-only/unavailable replay. Exit 2 means invalid receipt, 3 means mismatch, and 4 means unsupported policy version. Inspect the reported states as well as the exit code.
+
+For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining object with sorted keys, compact separators and UTF-8, then SHA-256 hash those bytes. This is the exact algorithm in [rwa_policy.py](app/rwa_policy.py). A match shows canonical byte integrity against the compared hash. A modified receipt can be rehashed; origin isn't established without an externally trusted expected hash. It doesn't certify the upstream API, eligibility or execution.
 
 ### Claim boundary
 
-**Real:** signed RWA and Trading reads, routes, fixed-block RPC, unsigned builds, unsuccessful unfunded simulation predictions, observed `NEED_HUMAN` and mandate `DENY`.
+**PROVEN:** signed RWA/Trading reads, fixed-block multiplier, observed NEED_HUMAN/DENY, testnet identity, dated managed replay/parity, one autonomous x402 settlement and provider account credit.
 
-**Synthetic:** the green `ALLOW` fixture and corporate-action regression fixtures.
+**PARTIAL:** the self-funding sequence reached provider account credit; API key credit and usage remain zero.
 
-**Not claimed:** real ALLOW, verified individual holder eligibility, funded passing simulation, signed/broadcast trade, predictive alpha, Agent Studio or Agentic Wallet deployment. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) classified the off-hours hypothesis `SAFETY_ONLY`.
+**SYNTHETIC:** ALLOW and corporate-action regression fixtures.
 
-The research claim set was frozen on 5 October. The final submitted artifact hasn't been frozen: `SUBMISSION_SHA` and `SUBMISSION_TAG` remain pending.
+**NOT CLAIMED:** stock-token purchase, real purchase ALLOW, passing funded SPYon swap simulation, predictive alpha, paid B402 seller, Agentic Wallet/Wallet Skills, paid inference/explanation, the complete self-funding loop or original same-process continuity. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
+
+The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The final submission SHA/tag, approved replacement video and genuine form confirmations remain pending.
+
+### Dated external-reference limits
+
+The [8 October availability note](docs/submission/external-link-qa-2026-10-08.md) identifies historical third-party 404 references, explorer access restrictions and the bounded anonymous check scope. Those restrictions don't replace the retained onchain receipt or policy-hash verification. Final public rollout QA remains separate.
+
+## Evidence sufficiency and authority
+
+A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a first-class result: required evidence or authorization prerequisites are unresolved, so a human must resolve them before a separate signer may act. It doesn't authorize a trade. `DENY` records a policy violation; the demonstrated `ALLOW` is synthetic.
+
+Covenant / StockGuard overlap exists. Praeva's strongest distinction in this build is evidence sufficiency, provenance, freshness and authorization prerequisites before a separate signer. The receipt doesn't cryptographically enforce that signer's behavior or certify universal tokenized-stock safety.
+
+Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The separate Studio chain stops at USD 1 provider account credit, before API key allocation.

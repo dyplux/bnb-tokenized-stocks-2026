@@ -2,7 +2,7 @@
 
 **Recorded and rendered:** 2026-10-04 UTC. **Product state shown:** real local, read-only safety check. **Public film:** [execution-safety-demo.mp4](../media/execution-safety-demo.mp4).
 
-The source folder is `/Volumes/SSD500/Dyplux/execution-safety-video-source/`. It contains the Chrome recording, stills, sanitized [truth record](safety-video-record.json), `video.html` with a deterministic `render(t)` path, `render.py`, generated music source, 720 rendered frames, the final MP4 and a dense contact sheet. A local source archive and a convenient MP4 copy sit directly in `/Volumes/SSD500/Dyplux/`; they aren't public repository assets.
+The source folder is `private local archive`. It contains the Chrome recording, stills, sanitized [truth record](safety-video-record.json), `video.html` with a deterministic `render(t)` path, `render.py`, generated music source, 720 rendered frames, the final MP4 and a dense contact sheet. A local source archive and a convenient MP4 copy sit directly in `private local archive`; they aren't public repository assets.
 
 The source archive is `execution-safety-demo-source.zip`, 115 MB. Its SHA-256 is `0293a83181de91a7f32bf8e1d1a7c10288a8e9f04efe67499184c3c562194aa5`; archive integrity passed `unzip -tq`.
 

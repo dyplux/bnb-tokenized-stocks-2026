@@ -1,5 +1,8 @@
 # EXP-STUDIO-002: minimum credible remote gate
 
+**Historical record, 6 October 2026.** The original content below retains its dated local/plan scope. For current integration evidence, use the [7/8 October Studio proof](../submission/agent-studio-evidence.md) and [current claims](../submission/claims-2026-10-08.md). Those establish a dated managed replay and testnet identity; one autonomous x402 settlement and provider account credit are separate facts. Paid inference/full loop and stock-token execution remain unclaimed.
+
+
 **Prepared:** 2026-10-06. **State:** plan only. No account, wallet, credential, runtime, identity, payment or on-chain action is authorized by this document.
 
 ## Target proof

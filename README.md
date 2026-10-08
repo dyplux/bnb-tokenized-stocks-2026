@@ -2,13 +2,13 @@
 
 **by Dyplux**
 
-Pre-signing safety for autonomous tokenized-equity agents.
+Deterministic RWA evidence and authorization review before a separate signer.
 
 **Praeva by Dyplux** is the final product brand. Earlier dated artifacts, including the [frozen claims](docs/submission/frozen-claims-2026-10-05.md), may refer to **Dyplux Execution Safety Layer**. Their original historical state is preserved.
 
-**Praeva verifies whether an autonomous tokenized-equity agent has enough evidence to sign, and fails closed when it doesn't.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
+**Praeva is a deterministic RWA evidence-sufficiency and authorization review immediately before a separate privileged signer.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
-**[Primary website](https://praeva.dyplux.com) · [final 63-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) · [GitHub Pages fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/) · [original 60-second fallback video](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) · [Judge guide, 60 seconds to 15 minutes](JUDGE.md)**
+**[Try the assessment console](https://praeva.dyplux.com/console/) · [Website](https://praeva.dyplux.com/) · [Stable agent card](https://agent.praeva.dyplux.com/.well-known/agent-card.json) · [Judge guide](JUDGE.md) · [Published 63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) · [GitHub Pages fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/)**
 
 A stock token can still have a quote when the underlying exchange is closed. In the observed NVDAB case, an amount-specific route existed, but independent underlying-reference time, individual holder eligibility and a funded passing simulation weren't verified. Praeva returned `NEED_HUMAN`. A second observed request exceeded its 20 USDT mandate and returned `DENY`. [View both receipts](docs/submission/safety-judge-run.md). The green `ALLOW` is a synthetic policy fixture.
 
@@ -16,9 +16,21 @@ The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. 
 
 ## See the product
 
+- [Assessment console](https://praeva.dyplux.com/console/): three labelled captured cases, a dated managed-runtime NVDAB `NEED_HUMAN` replay, a real historical SPYon `DENY`, and a synthetic `ALLOW` policy test. It shows proposal, evidence, ordered reasons and receipt without a wallet or API credential.
+
 - [Primary website](https://praeva.dyplux.com): current destination for the observed, dated `NEED_HUMAN` and mandate-bound `DENY` cases, a clearly marked synthetic `ALLOW` policy fixture, source times, reason codes, receipt downloads. The fallback also exposes its system status. It makes no live signed API request. The [GitHub Pages judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback.
-- [Final 63-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4): current primary submission film. The [original 60-second two-case film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains available as fallback and documents its historical capture boundary. No trade was signed.
+- [Published 63-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4): the published 6 October film; the final submission replacement remains subject to separate review. The [original 60-second two-case film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains available as fallback and documents its historical capture boundary. No trade was signed.
 - [Judge instructions](docs/submission/safety-judge-run.md): run a fresh signed check with your own Binance Web3 API credentials, then try a mandate denial. The public page also works without credentials.
+
+## Agent Studio proof, 7 and 8 October 2026
+
+ERC-8004 Agent ID **2574** is registered on **BNB Chain testnet, chain 97**, with a [stable agent card](https://agent.praeva.dyplux.com/.well-known/agent-card.json). Three remote managed-runtime requests returned the canonical fixed NVDAB replay; an invalid task failed closed. Policy v0.6.0 receipt: `63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db`.
+
+A separate one-shot mainnet proof autonomously initiated one x402 top-up. Exactly **1 U** settled in [transaction `0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b`](https://bscscan.com/tx/0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b). One quote, one EIP-3009 payment signature and one paid dispatch occurred, with no economic retry. Authenticated provider evidence later attributed **USD 1 account credit** to the same transaction.
+
+The HTTP payment wait timed out; the original runtime later exited through OOM. API key credit and usage remain zero. Allocation, paid inference, paid explanation and the complete self-funding loop aren't claimed. The deterministic verdict and receipt stayed unchanged, and spending switches and VPS secrets were removed. [Compact dated Studio proof](docs/submission/agent-studio-evidence.md) and [current claim buckets](docs/submission/claims-2026-10-08.md).
+
+The managed trial expires **9 October 2026, 18:48:44 UTC**. Its requests require OAuth. The console serves the captured proof without credentials; a separately labelled VPS fallback has its own parity evidence. Root verifies the scheduled switch and stable card through judging.
 
 ## Run a fresh check locally
 
@@ -35,7 +47,7 @@ The dated example works without credentials. For a fresh signed check, create yo
 
 Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, set maximum spend and price impact, and select **Review action**. The localhost service limits requests to four per minute. It doesn't connect a wallet, sign or broadcast. The read-only quote uses a temporary generated address, so route availability doesn't establish a particular holder's access or exact-wallet execution. The screen shows the contract, evidence times, policy decision and a downloadable receipt. [Full clean-start steps](docs/submission/safety-judge-run.md).
 
-The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This is an agent-callable tool, **not** a deployed Binance Agentic Wallet or Agent Studio runtime. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
+The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This adapter runs locally over stdin/stdout. The separate Agent Studio runtime serves the fixed dated replay described above. Binance Agentic Wallet and Wallet Skills remain unclaimed. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
 
 ```sh
 printf '%s\n' '{"provider":"bstock","notional_usdt":"10","max_notional_usdt":"10","max_price_impact_percent":"0.5"}' | python3 scripts/safety_agent_tool.py
@@ -49,7 +61,8 @@ With your own API credentials configured as above, the result contains `decision
 |---|---|
 | Signed Binance Web3 catalog, price and amount-specific route reads for NVDAB and NVDAon | A quote doesn't prove a user may hold or trade the asset. |
 | Fixed-block bStock multiplier read | Current equality doesn't prove a past corporate action or future change. |
-| Exact-wallet 10 USDT quote, unsigned build and off-chain simulation for NVDAB | The demo wallet has no funds; simulation predicted `FAILED`. No transaction was signed. |
+| Exact-wallet 10 USDT quote, unsigned build and off-chain simulation for NVDAB | The 4 October packet was unfunded at capture and its simulation predicted `FAILED`. No stock transaction was signed. |
+| 7 October SPYon direct-route capture, shown in the console | The funded wallet had zero router allowance; the independent SPY reference was stale and the simulation failed. No stock-token purchase occurred. The provider adapter remains private. |
 | Five-minute, 40-contract market-hours collection | `tokenPriceUpdatedAt` dates the token price, not the underlying stock reference. Independent reference age remains `UNKNOWN`. |
 | [Frozen Sunday-to-Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) | Two of three independent tickers matched Sunday direction; TSLA missed. `SAFETY_ONLY` supports an off-hours guard, not a predictive trading claim. |
 
@@ -63,4 +76,21 @@ Praeva sits between a proposed action and a separate signer. Its [competitive po
 
 The collector is separate from the product screen. With valid local credentials, `python3 scripts/rwa_research.py health` reports its last success, failure count, observation count and next expected run. [Collector operations](docs/devex/collector-operations.md) explain restart, deduplication and gaps. The local `LIVE` tape and raw responses stay outside Git; [dated normalized results](docs/research/2026-10-04-live-rwa-catalog-and-quotes.md), [DevEx evidence](docs/devex/2026-10-04-evidence-summary.md) and [fixtures](docs/devex/fixtures/) are public. `python3 -m unittest discover -s tests -q` runs the synthetic suite without API credentials.
 
-The [current status](STATUS.md) separates the Tokenized Stocks submission from Set and Earn. The [decision log](docs/decisions/decision-log.md) records earlier product directions and why they were retired. The public page is a dated packet, not a hosted live API service or an executed stock-token trade.
+The [current status](STATUS.md) separates the Tokenized Stocks submission from Set and Earn. The [decision log](docs/decisions/decision-log.md) records earlier product directions and why they were retired. The console presents captured cases, while the stable agent endpoint executes a fixed dated replay. Fresh signed market reviews use local credentials. No stock-token trade was executed.
+
+## Evidence sufficiency and authority
+
+A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a first-class result: required evidence or authorization prerequisites are unresolved, so a human must resolve them before a separate signer may act. It doesn't authorize a trade. `DENY` records a policy violation; the demonstrated `ALLOW` is synthetic.
+
+Covenant / StockGuard overlap exists. Praeva's strongest distinction in this build is evidence sufficiency, provenance, freshness and authorization prerequisites before a separate signer. The receipt doesn't cryptographically enforce that signer's behavior or certify universal tokenized-stock safety.
+
+Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The separate Studio chain stops at USD 1 provider account credit, before API key allocation.
+
+## Verify captured receipts offline
+
+```sh
+python3 scripts/verify_receipt.py docs/judge/observed-unsafe.json
+python3 scripts/verify_receipt.py docs/judge/observed-unsafe.json --expected-sha256 63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db
+```
+
+No API key or network request is needed. The verifier prints canonical integrity and saved-input replay separately. Integrity isn't authenticity; a trusted external expected hash pins bytes. Replay uses the same unchanged policy kernel, so it isn't an independent policy implementation. Missing saved context returns `REPLAY_UNAVAILABLE`. [States and exit codes](JUDGE.md#verify-a-receipt).

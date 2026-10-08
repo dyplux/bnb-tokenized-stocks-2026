@@ -1,0 +1,54 @@
+{
+  "classification": "SANITIZED_PUBLICATION_CANDIDATE_NOT_PUBLISHED",
+  "assembled_at": "2026-10-08T15:07:24.889839+00:00",
+  "project": "Praeva by Dyplux",
+  "public_repository_baseline": "0b2d59e78cdd8ee9b58c9c569b57ce07399ddbd5",
+  "files": [
+    {
+      "file": "canonical-receipt.json",
+      "sha256": "c9bb584bf667e47a9b2e1abfd77521e007b3eed15eb136fdabaa717c28c96263",
+      "bytes": 3397
+    },
+    {
+      "file": "identity.json",
+      "sha256": "ff274729b748465139d46553f42590921a8a2ddd17aaffdaee42cc594245b011",
+      "bytes": 814
+    },
+    {
+      "file": "managed-replay.json",
+      "sha256": "6cf52388727a9b6363c1de3e66413f1fc747c6be69270d9c6077f9b56b5a2024",
+      "bytes": 3280
+    },
+    {
+      "file": "provider-credit.json",
+      "sha256": "7d9a0c6761918ff8058e6cc8ce370371fe74e76100443abb157a18b0100ba66c",
+      "bytes": 1936
+    },
+    {
+      "file": "runtime-boundary.json",
+      "sha256": "6fe62b02b448094f71d3f0fcbaae69e5cf5248b409039ae812b67c5120000d42",
+      "bytes": 1662
+    },
+    {
+      "file": "x402-settlement.json",
+      "sha256": "5520140cf51faa84d35297d637ed8f9687ab2658ebc72a3f54cb831ec5977e8d",
+      "bytes": 2723
+    }
+  ],
+  "excluded": "Provider account identifiers, API keys and their hashes, auth/session/cookie material, SIWE and payment signatures, payment envelopes, keystores/passwords, local filesystem paths and private operational archives.",
+  "publication_authorized": false,
+  "manifest_version": 3,
+  "documents": [
+    {
+      "file": "docs/submission/agent-studio-evidence.md",
+      "sha256": "e3689ab4198ae486ce6cdfa98f47331bf718d3a3ea4206844f4bc490e83e2846",
+      "bytes": 5132
+    },
+    {
+      "file": "docs/submission/claims-2026-10-08.md",
+      "sha256": "d617f99fab2fe733de0a90e3ec9318bdefd9c6021c5f79917fb57c47888eb358",
+      "bytes": 2044
+    }
+  ],
+  "self_hash_record": "manifest.json SHA-256 is recorded in the external publication inventory to avoid a circular self-hash."
+}

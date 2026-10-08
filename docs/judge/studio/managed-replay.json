@@ -1,0 +1,88 @@
+{
+  "classification": "PROVEN_DATED_MANAGED_RUNTIME_REPLAY",
+  "frozen_at": "2026-10-07T19:44:00Z",
+  "deployment_timestamp": "2026-10-07T19:09:09Z",
+  "managed_card_url": "https://bnbagent-api.bnbchain.world/v1/rt/01M4BW95DTJJWXVMVXW88PJYQ3/.well-known/agent-card.json",
+  "managed_a2a_url": "https://bnbagent-api.bnbchain.world/v1/rt/01M4BW95DTJJWXVMVXW88PJYQ3/a2a",
+  "managed_trial_expires_at": "2026-10-09T18:48:44.000Z",
+  "stable_card_url": "https://agent.praeva.dyplux.com/.well-known/agent-card.json",
+  "managed_requests_require_authentication": true,
+  "canonical_decision": "NEED_HUMAN",
+  "ordered_reason_codes": [
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+    "ISSUER_UNVERIFIED",
+    "MARKET_STATE_UNKNOWN",
+    "SIMULATION_UNVERIFIED",
+    "USER_ELIGIBILITY_UNKNOWN"
+  ],
+  "policy_version": "0.6.0",
+  "receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+  "sequential_canonical_requests": 3,
+  "requests": [
+    {
+      "kind": "canonical",
+      "jsonrpc_request_id": "canonical-1",
+      "http_status": 200,
+      "decision": "NEED_HUMAN",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "SIMULATION_UNVERIFIED",
+        "USER_ELIGIBILITY_UNKNOWN"
+      ],
+      "policy_version": "0.6.0",
+      "reported_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+      "recomputed_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db"
+    },
+    {
+      "kind": "canonical",
+      "jsonrpc_request_id": "canonical-2",
+      "http_status": 200,
+      "decision": "NEED_HUMAN",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "SIMULATION_UNVERIFIED",
+        "USER_ELIGIBILITY_UNKNOWN"
+      ],
+      "policy_version": "0.6.0",
+      "reported_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+      "recomputed_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db"
+    },
+    {
+      "kind": "canonical",
+      "jsonrpc_request_id": "canonical-3",
+      "http_status": 200,
+      "decision": "NEED_HUMAN",
+      "reason_codes": [
+        "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+        "ISSUER_UNVERIFIED",
+        "MARKET_STATE_UNKNOWN",
+        "SIMULATION_UNVERIFIED",
+        "USER_ELIGIBILITY_UNKNOWN"
+      ],
+      "policy_version": "0.6.0",
+      "reported_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+      "recomputed_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db"
+    },
+    {
+      "kind": "invalid",
+      "jsonrpc_request_id": "invalid-1",
+      "http_status": 200,
+      "reason_codes": [
+        "TASK_NOT_ALLOWLISTED"
+      ]
+    },
+    {
+      "kind": "commerce",
+      "jsonrpc_request_id": "commerce-1",
+      "http_status": 200,
+      "error": "READONLY_SKILL_DISABLED"
+    }
+  ],
+  "scope": "Managed execution of the fixed dated 4 October NVDAB replay. No live market-data capture or stock-token trade.",
+  "remote_request_window_start": "2026-10-07T19:10:35.816Z",
+  "remote_request_window_end": "2026-10-07T19:11:07.433Z"
+}

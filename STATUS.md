@@ -1,3 +1,11 @@
+# Tokenized Stocks submission
+
+**8 October 2026 checkpoint:** The [console](https://praeva.dyplux.com/console/) is accessible. Dated Studio evidence establishes a managed fixed replay, ERC-8004 Agent ID 2574 on chain 97, and one 1 U mainnet x402 settlement. Authenticated provider ledger evidence attributes USD 1 account credit to that transaction. API key credit and usage remain zero; allocation, paid inference, paid explanation and the complete self-funding loop haven't occurred. The original payment runtime exited through OOM; budget, renewal and VPS wallet/API-key material were removed. No stock-token purchase was executed. [Current claims](docs/submission/claims-2026-10-08.md), [compact Studio proof](docs/submission/agent-studio-evidence.md).
+
+Final video selection, DevEx and project-form confirmations, actual fallback switch verification and exact submission SHA/tag remain separate gates. The managed trial expires 9 October at 18:48:44 UTC. Current summaries below dated 6 October or earlier retain their original operational state.
+
+## Historical operational entries
+
 # TOKENIZED STOCKS: OCT 11
 
 **6 October publication checkpoint:** The founder-approved standalone [Praeva website](https://praeva.dyplux.com) and [final 63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) are public without login. The film SHA-256 is `e5f35e8a07c5537aa56022f4db75ad0c0fd6a980799cbbaeec13abdc58967d32`. Public QA passed all six viewport widths, the three dated/synthetic case verifications, downloads and native video playback/seek. Public Lighthouse measured 100 in performance, accessibility, best practices and SEO. Only the praeva CNAME was added; the eight pre-existing DNS records were unchanged. GitHub Pages remains the fallback. Product code, frozen claims, experiments and judge receipts are unchanged. The publication's [Python CI](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37536958787) and [Pages fallback deployment](https://github.com/dyplux/bnb-tokenized-stocks-2026/actions/runs/37536958391) passed at `3a443cf`; the following knowledge-only checkpoint triggers the same checks. No form submission, capital action, identity registration or Agent Studio change occurred in this publication task. Earlier dated entries below preserve their original operational state.

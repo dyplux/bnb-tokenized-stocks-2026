@@ -1,5 +1,8 @@
 # EXP-STUDIO-001: local feasibility result
 
+**Historical record, 5 October 2026.** The original content below retains its dated local/plan scope. For current integration evidence, use the [7/8 October Studio proof](../submission/agent-studio-evidence.md) and [current claims](../submission/claims-2026-10-08.md). Those establish a dated managed replay and testnet identity; one autonomous x402 settlement and provider account credit are separate facts. Paid inference/full loop and stock-token execution remain unclaimed.
+
+
 **Checked:** 2026-10-05 UTC. **Status:** LOCAL FEASIBILITY PASS. **Public integration claim:** none.
 
 The isolated `exp-studio-001` branch at local commit `574a9cc7ad0b373035ca83e1d8e6d4e0460bc6c8` contains the emitted BNB Agent Studio 0.0.14 scaffold, a TypeScript `runWork` adapter, the byte-identical version 0.6.0 Dyplux Python policy, one dated fixed fixture and an A2A/dispatch parity harness. The branch has **not** been pushed or merged. Its full report remains in that local worktree and isn't a public judge artifact.

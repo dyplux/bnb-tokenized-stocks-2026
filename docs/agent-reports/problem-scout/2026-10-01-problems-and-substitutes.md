@@ -22,7 +22,7 @@ Li o manual local, `REPORT.md`, `PRODUCT-PLAN.md` e o texto do lead Grok. Verifi
 - Jupiter acrescenta verificação de autenticidade, limit orders e compras recorrentes para xStocks. [Jupiter Academy](https://academy.jup.ag/lessons/xstocks-on-jupiter), verificado em 2026-10-01.
 - Base oferece Coinbase Tokenized Stocks, contratos públicos, trading 24/7 e composição em lending, collateral e DEXs. [Base](https://brand.base.org/stocks), verificado em 2026-10-01.
 - Robinhood Chain expõe API pública para preço, bid/ask, multiplicador, corporate actions e capacidades de trading por activo. [Robinhood APIs](https://docs.robinhood.com/chain/stock-token-apis/), verificado em 2026-10-01.
-- O relatório local mediu uma diferença grande entre contratos com o mesmo ticker na BNB Chain. A série registou 129 967 swaps para NVDAB e 3 para NVDAX no corte consultado. Isto é actividade indexada, não compradores únicos, pessoas ou liquidez executável. [evidência local](research/bstocks-hackathon-2026/results/2026-09-30-p3-nvda-swaps-five-ecosystems.md).
+- O relatório local mediu uma diferença grande entre contratos com o mesmo ticker na BNB Chain. A série registou 129 967 swaps para NVDAB e 3 para NVDAX no corte consultado. Isto é actividade indexada, não compradores únicos, pessoas ou liquidez executável. evidência local retida num arquivo privado, fora deste repositório público.
 
 # inferences
 

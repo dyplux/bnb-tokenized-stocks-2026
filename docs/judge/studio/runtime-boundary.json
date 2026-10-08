@@ -1,0 +1,39 @@
+{
+  "classification": "PARTIAL_SELF_FUNDING_PROOF",
+  "checked_at": "2026-10-08T10:41:50.961772+00:00",
+  "deterministic_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+  "canonical_receipt_parity": "PASS",
+  "observed_kernel_receipts": 2,
+  "paid_explanation": {
+    "status": "UNAVAILABLE",
+    "authority": "NONE",
+    "reason": "EXPLANATION_MODEL_UNAVAILABLE"
+  },
+  "paid_inference_request_count": 0,
+  "api_key_credit_after_usd": 0,
+  "recorded_usage_cost_usd": 0,
+  "provider_account_credit_usd_as_of_phase4d": 1,
+  "allocation_executed": false,
+  "original_payment_http_response_captured": false,
+  "journal_status": "AMBIGUOUS_RECONCILIATION_ONLY",
+  "journal_reason": "ABORT_AFTER_SIGNING_BEGAN",
+  "original_runtime_oom_killed": true,
+  "original_runtime_finished_at": "2026-10-08T10:31:12.535239798Z",
+  "original_runtime_exit_code": 137,
+  "runtime_restart_count": 0,
+  "post_payment_runtime_request": "NOT_EXECUTED_RUNTIME_OOM",
+  "same_process_continuity_proven": false,
+  "full_self_funding_loop_proven": false,
+  "cleanup": {
+    "budget_off": true,
+    "auto_topup_off": true,
+    "payment_capable_container_stopped": true,
+    "prior_preflight_container_stopped": true,
+    "vps_wallet_material_and_api_key_removed": true,
+    "secret_tmpfs_empty": true,
+    "spent_signature_and_envelope_removed": true
+  },
+  "public_product_changes_during_execution": false,
+  "other_wallet_material_accessed": false,
+  "boundary": "Autonomous top-up, onchain settlement and provider account credit are proven. Paid inference, paid explanation, original same-process continuity and the complete loop remain unproven."
+}

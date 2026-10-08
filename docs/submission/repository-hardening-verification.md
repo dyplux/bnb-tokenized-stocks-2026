@@ -17,7 +17,7 @@ Last verified: 2026-10-05 22:00 UTC. Scope: local commit `e1c2582ab0592811eaf9df
 
 ## Full Git history scan
 
-`git rev-list --objects --all` plus `git cat-file --batch` scanned 1,531 text/small blobs across all reachable commits. Two MP4 blobs over 3 MB were excluded from text regex matching and identified separately. Patterns included Cloudflare, Binance, GitHub and OpenAI token formats, PEM private keys, private/secret/seed assignments, Bearer headers, UID assignments, personal emails and `/Users/kitra/` paths. **No credential or UID pattern matched.** Two historical blobs contained a local personal path: old `docs/status.md` and `docs/submission/video-qa.md`. They remain in history; no rewrite or credential rotation is indicated by this regex result alone. A scanner miss remains possible.
+`git rev-list --objects --all` plus `git cat-file --batch` scanned 1,531 text/small blobs across all reachable commits. Two MP4 blobs over 3 MB were excluded from text regex matching and identified separately. Patterns included Cloudflare, Binance, GitHub and OpenAI token formats, PEM private keys, private/secret/seed assignments, Bearer headers, UID assignments, personal emails and local user-directory paths. **No credential or UID pattern matched.** Two historical blobs contained a local personal path: old `docs/status.md` and `docs/submission/video-qa.md`. They remain in history; no rewrite or credential rotation is indicated by this regex result alone. A scanner miss remains possible.
 
 ## External gate
 
