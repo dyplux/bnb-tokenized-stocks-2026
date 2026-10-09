@@ -1,6 +1,6 @@
 # Judge guide: Praeva by Dyplux
 
-Brand updated: 2026-10-06. Dated evidence continuation: 2026-10-08. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [current claims](docs/submission/claims-2026-10-08.md), [frozen research claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
+Brand updated: 2026-10-06. Dated evidence continuation: 2026-10-09. Scope: October 2026 BNB Tokenized Stocks submission. Canonical owner/source: [current claims](docs/submission/claims-2026-10-09.md), [final proof](docs/submission/final-proof-2026-10-09.md), [frozen research claims](docs/submission/frozen-claims-2026-10-05.md) and [Monday findings](experiments/EXP-RWA-004/monday-findings.md). Supersedes: none. Status: CURRENT.
 
 **Praeva by Dyplux** is the final product brand. Earlier dated artifacts may refer to **Dyplux Execution Safety Layer**; the frozen claims and original evidence retain their historical wording.
 
@@ -8,11 +8,11 @@ Brand updated: 2026-10-06. Dated evidence continuation: 2026-10-08. Scope: Octob
 
 Praeva is a deterministic RWA evidence-sufficiency and authorization review immediately before a separate privileged signer. It returns `ALLOW`, `DENY` or `NEED_HUMAN` with reason codes and a SHA-256 receipt.
 
-Open the [assessment console](https://praeva.dyplux.com/console/). Select **Observed NEED_HUMAN**, **Observed DENY** or **Synthetic ALLOW**; each keeps its origin, dates, verdict and receipt visible. The managed replay uses captured remote proof, the SPYon denial is a real historical preflight, and ALLOW is synthetic. The [Praeva website](https://praeva.dyplux.com) remains the product entry point. The [GitHub Pages judge packet](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback. Inspect the **observed NVDAB NEED_HUMAN** case and its [JSON receipt](docs/judge/observed-unsafe.json), then the **observed mandate DENY** case and its [JSON receipt](docs/judge/observed-mandate-deny.json). Follow [receipt verification](#verify-a-receipt). The ALLOW example is a **synthetic policy fixture**.
+Open the [assessment console](https://praeva.dyplux.com/console/). Select **Observed NEED_HUMAN**, **Observed DENY** or **Synthetic ALLOW**; each keeps its origin, dates, verdict and receipt visible. The 9 October live SPYon purchase is a separate [root proof packet](docs/submission/final-proof-2026-10-09.md), not a replacement for the static console cases. The [Praeva website](https://praeva.dyplux.com) remains the product entry point. Inspect the [NVDAB receipt](docs/judge/observed-unsafe.json) and [historical mandate DENY receipt](docs/judge/observed-mandate-deny.json). The console ALLOW example is a **synthetic policy fixture**.
 
 ## 3 minutes
 
-[Watch the current 120-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final-v2.mp4). The historical [63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) and original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remain preserved. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
+[Watch the current 120-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final-v2.mp4). It predates the 9 October SPYon purchase and does not show it. The historical [63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) and original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remain preserved.
 
 ```mermaid
 flowchart LR
@@ -43,7 +43,7 @@ Four actionable DevEx findings: [undocumented `offhours`](docs/devex/repros/2026
 
 Open the [compact Studio evidence guide](docs/submission/agent-studio-evidence.md). It links ERC-8004 Agent ID **2574 on chain 97**, the [stable card](https://agent.praeva.dyplux.com/.well-known/agent-card.json), three dated managed requests, receipt parity and the [one 1 U x402 settlement](https://bscscan.com/tx/0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b).
 
-Authenticated provider evidence attributed **USD 1 account credit** to that same transaction. On 8 October, one founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and the semantics are unknown. The original runtime's HTTP wait aborted and it later exited through OOM, so same-process continuity isn't proven. A new wallet-free recovery at 08:11 UTC on 9 October returned the canonical receipt, but explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. Paid inference and full self-funding remain unproven.
+Authenticated provider evidence attributed **USD 1 account credit** to that same transaction. On 8 October, one founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and the semantics are unknown. The original runtime's HTTP wait aborted and it later exited through OOM, so same-process continuity isn't proven. A new wallet-free recovery at 08:11 UTC on 9 October returned the canonical receipt, but explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. At that 08:11 checkpoint, paid inference was unproven. The later [accepted paid explanation and same-new-process continuation](docs/submission/final-proof-2026-10-09.md) are proven as operator-assisted recovery. Original OOM-process continuity and the fully autonomous original loop remain unproven.
 
 The managed trial expires **9 October 18:48:44 UTC**. The [final managed capture](docs/judge/studio/last-managed-2026-10-09.json) precedes the [verified VPS fallback switch](docs/judge/studio/fallback-switch-2026-10-09.json) at 09:39 UTC. The stable `/a2a` endpoint is now anonymous and returns the fixed dated replay; an invalid task fails closed. This VPS transport is separate from the dated managed-runtime proof.
 
@@ -70,15 +70,15 @@ For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining 
 
 ### Claim boundary
 
-**PROVEN:** signed RWA/Trading reads, fixed-block multiplier, observed NEED_HUMAN/DENY, testnet identity, dated managed replay/parity, one autonomous x402 settlement and provider account credit.
+**PROVEN:** signed RWA/Trading reads, fixed-block multiplier, observed NEED_HUMAN/DENY, testnet identity, dated managed replay/parity, one autonomous x402 settlement, provider account credit, one operator-authorized SPYon purchase and one new-process recovered paid explanation.
 
-**PARTIAL:** settlement and account credit are proven. A separate allocation reported USD 1 key credit; the new wallet-free recovery returned no paid explanation. The complete self-funding loop remains unproven.
+**PARTIAL:** settlement and account credit are proven. The recovered explanation succeeded in a new operator-assisted, key-funded process. Original process continuity, autonomous paid explanation and the complete self-funding loop remain unproven.
 
 **SYNTHETIC:** ALLOW and corporate-action regression fixtures.
 
-**NOT CLAIMED:** stock-token purchase, real purchase ALLOW, passing funded SPYon swap simulation, predictive alpha, paid B402 seller, Agentic Wallet, paid inference/explanation, the complete self-funding loop or original same-process continuity. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
+**NOT CLAIMED:** general autonomous trading, universal signer enforcement, production-feed guarantee, predictive alpha, paid B402 seller, Agentic Wallet, Wallet Skills execution, complete original-process self-funding or original same-process continuity. One bounded operator-authorized SPYon purchase and one new-process paid explanation are documented in the [9 October proof](docs/submission/final-proof-2026-10-09.md). The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
 
-The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The 120-second v2 is public and the founder confirmed DevEx submission. Fallback verification passed. The final SHA/tag is recorded separately; project-form submission remains reserved for the founder.
+The original 5 October research claim set stays frozen. The 9 October live proof and recovered explanation are dated separately. The 120-second v2 predates the live purchase. The founder confirmed DevEx submission; project-form submission remains reserved for the founder.
 
 ### Dated external-reference limits
 
@@ -86,12 +86,12 @@ The [8 October availability note](docs/submission/external-link-qa-2026-10-08.md
 
 ## Evidence sufficiency and authority
 
-A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a first-class result: required evidence or authorization prerequisites are unresolved, so a human must resolve them before a separate signer may act. It doesn't authorize a trade. `DENY` records a policy violation; the demonstrated `ALLOW` is synthetic.
+A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a first-class result: required evidence or authorization prerequisites are unresolved, so a human must resolve them before a separate signer may act. It doesn't authorize a trade. `DENY` records a policy violation; the console `ALLOW` fixture is synthetic; the separate9October purchase has an observed core/direct ALLOW.
 
 Covenant / StockGuard overlap exists. Praeva's strongest distinction in this build is evidence sufficiency, provenance, freshness and authorization prerequisites before a separate signer. The receipt doesn't cryptographically enforce that signer's behavior or certify universal tokenized-stock safety.
 
-Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The linked 8 October Studio package records the chain through USD 1 provider account credit. The later allocation and unsuccessful 9 October recovery are dated separately above.
+Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The linked 8 October Studio package records the chain through USD 1 provider account credit. The later allocation, failed08:11UTC recovery and successful13:03UTC operator-assisted recovery are dated separately above.
 
-## Wallet Skills dated addition, 9 October
+## 9 October proof fast path
 
-[Official Wallet Skills read-only proof](docs/submission/wallet-skills-evidence-2026-10-09.md) records Ondo NVDAon public reads followed by NEED_HUMAN from the unchanged kernel. Run `python3 experiments/EXP-WALLET-SKILLS-001/verify_proof.py` without credentials or network. No Agentic Wallet execution or stock-token trade is claimed. The video and Studio packet retain their earlier dates.
+[Final proof packet](docs/submission/final-proof-2026-10-09.md) links the live SPYon JSON, current proof manifest and recovered Studio explanation. [Official Wallet Skills read-only proof](docs/submission/wallet-skills-evidence-2026-10-09.md) still records Ondo NVDAon public reads followed by `NEED_HUMAN`. Run `python3 experiments/EXP-WALLET-SKILLS-001/verify_proof.py` without credentials or network. No Agentic Wallet execution is claimed. The video and static console cases retain their earlier dates.

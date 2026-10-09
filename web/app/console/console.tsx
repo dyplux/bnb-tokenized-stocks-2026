@@ -274,10 +274,12 @@ export default function Console() {
             <div><span>ERC-8004 identity</span><strong>Agent ID 2574 · testnet</strong><a href="https://agent.praeva.dyplux.com/.well-known/agent-card.json" target="_blank" rel="noreferrer">Stable Agent Card ↗</a></div>
             <div><span>x402 settlement</span><strong>1 U confirmed · 8 Oct 2026</strong><a href="https://bscscan.com/tx/0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b" target="_blank" rel="noreferrer">Inspect settlement ↗</a></div>
             <div><span>Wallet Skills</span><strong>Ondo read-only · 9 Oct 2026</strong><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/850c053354a47e9f4ba10edcfd73a5796addd311/docs/submission/wallet-skills-evidence-2026-10-09.md" target="_blank" rel="noreferrer">Inspect skill proof ↗</a></div>
+            <div><span>Mainnet stock demo</span><strong>10 USDT → SPYon · 9 Oct 2026</strong><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/submission/final-proof-2026-10-09.md" target="_blank" rel="noreferrer">Inspect execution proof ↗</a></div>
+            <div><span>Recovered paid runtime</span><strong>Explanation · authority NONE</strong><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/judge/studio/recovered-explanation-2026-10-09.json" target="_blank" rel="noreferrer">Inspect recovered request ↗</a></div>
           </div>
-          <p className={styles.context}>The original 8 October payment run didn't demonstrate paid explanation or uninterrupted post-settlement continuity. Wallet Skills adds read-only evidence, not Agentic Wallet execution.</p>
+          <p className={styles.context}>The 9 October recovered request produced paid explanation and same-new-process continuation. Recovery was operator-assisted; the original payment process was OOM-killed. Wallet Skills evidence covers reads, with no official Agentic Wallet execution claim.</p>
         </section>
-        <p className={styles.boundary}>Praeva returns a decision before a separate signer acts. These cases include no authorized trade. The SPYon route and replay evidence are historical snapshots.</p>
+        <p className={styles.boundary}>Praeva returns a decision before a separate signer acts. These three recorded cases include no authorized trade. The separate 9 October live purchase proof is linked above. The preset evidence remains historical.</p>
       </main>
       <footer className="site-footer"><span>Praeva by Dyplux</span><nav aria-label="Footer"><a href="/">Product</a><a href="https://github.com/dyplux/bnb-tokenized-stocks-2026" target="_blank" rel="noreferrer">Source</a></nav></footer>
     </>

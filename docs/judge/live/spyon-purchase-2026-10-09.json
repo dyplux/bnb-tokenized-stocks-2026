@@ -1,0 +1,199 @@
+{
+  "checked_at": "2026-10-09T16:25:57.671064+00:00",
+  "classification": "OBSERVED_MAINNET_SPOT_EXECUTION",
+  "chain_id": 56,
+  "provider": "Ondo",
+  "asset": "SPYon",
+  "underlying": "SPY",
+  "input_token": {
+    "symbol": "USDT",
+    "contract": "0x55d398326f99059fF775485246999027B3197955",
+    "decimals": 18
+  },
+  "output_token": {
+    "symbol": "SPYon",
+    "contract": "0x6a708EAD771238919D85930b5a0f10454E1C331a",
+    "decimals": 18
+  },
+  "wallet": "0xf6afd791ef80b524018c9e21b53a6661616e06b7",
+  "input_amount_raw": "10000000000000000000",
+  "received_amount_raw": "12666722432517425",
+  "minimum_output_raw": "12603388820354837",
+  "slippage_bps": 50,
+  "route": {
+    "router": "0x1b81D678ffb9C0263b24A97847620C99d213eB14",
+    "factory": "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865",
+    "pool": "0x3b31ad84092cefefc71f71a8f84aace37aca3ee1",
+    "pool_fee_tier": 2500,
+    "provenance": "VERIFIED",
+    "router_code_sha256": "4697892c533f4b891875765d28fc24cfccf579834f41644c139e7a4986a08566",
+    "factory_code_sha256": "d897214b5c44a04cf1e9be8546eaa60afd4bf29ad9ab17c16db40fa6c2c89d00",
+    "quoter_code_sha256": "06feb5fff95f42876e3b8ddc4011c55118977088810330d11e217b00dfc16041",
+    "pool_code_sha256": "d94d1c0d582cdb9fdaae469390182cf6d4d56c9fd825f82e763570525ec3c85c",
+    "price_impact_including_fee_percent": "0.6738954468790726735114220900"
+  },
+  "policy_receipt": {
+    "checks": {},
+    "core_decision": "ALLOW",
+    "core_receipt_sha256": "a85ba3af67a344b0e1e43b6d39deaf1ff03ae4fd241f24db6d50ec5c6a1ef65a",
+    "decision": "ALLOW",
+    "dex_venue_access": "SUPPORTED",
+    "documentary_asset_access": "SUPPORTED",
+    "person_access": "SUPPORTED",
+    "policy_version": "direct-pancake-private-0.1.0",
+    "reason_codes": [],
+    "receipt_sha256": "32be5df99d8d2e5e8150f8e598801d5bda7c88a0dd8b762f6499df621267ebf7",
+    "route_evidence_sha256": "74e41777f4663ecb1a0dea9d9880678a12eb1f78cb482d1cd2c429cc855a0892",
+    "route_provenance": "VERIFIED",
+    "timestamp": "2026-10-09T16:22:53Z",
+    "token_transfer_access": "SUPPORTED"
+  },
+  "simulation": {
+    "rpc": "PASS_REAL_STATE_NO_OVERRIDE",
+    "binance_transaction_api": "SUCCESS",
+    "request_canonical_sha256": "bebb9f5f19efaa77bc51de4d678b4781ce0b133a448f9683190b82b3a197dea8",
+    "raw_response_sha256": "7255721bd525076f4fb435ad776393f053056de57cf57d774b2730025b752683",
+    "source_quote_age_seconds_at_decision": 3.652601,
+    "token_price_age_ms_at_decision": 4098
+  },
+  "reference": {
+    "source": "Yahoo Finance SPY quote metadata via chart endpoint",
+    "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1m&range=1d",
+    "source_timestamp": "2026-10-09T16:22:50Z",
+    "timestamp_precision": "second",
+    "raw_sha256": "1924444f7d91211449a75ad3d6a0b1fd224582e3f08563525b4732720be8d882",
+    "quote_time_field": "chart.result[0].meta.regularMarketTime",
+    "quote_price_field": "chart.result[0].meta.regularMarketPrice",
+    "candle_timestamps_used": false,
+    "limitation": "Undocumented public Yahoo chart transport; provider-reported quote time, no consolidated-feed or redistribution guarantee."
+  },
+  "approval": {
+    "hash": "0x29d8cd792b6b511efd350635e3a2cc875d7c2478c2152d6d340aabc449b89965",
+    "block": 126666774,
+    "gas_used": 46194,
+    "gas_price_wei": 50000000,
+    "fee_wei": "2309700000000"
+  },
+  "swap": {
+    "hash": "0xd7c7587446ee0da063fb47c3deff6094abe76cefb5b1d63dd7e58a17dee7c34b",
+    "block": 126667097,
+    "gas_used": 223797,
+    "gas_price_wei": 50000000,
+    "fee_wei": "11189850000000"
+  },
+  "signature_count": 2,
+  "broadcast_count": 2,
+  "economic_retry_count": 0,
+  "aggregate_gas_fee_wei": "13499550000000",
+  "allowance_after_raw": "0",
+  "native_nonce_after": 2,
+  "transfer_logs": [
+    {
+      "phase": "swap",
+      "token": "0x6a708ead771238919d85930b5a0f10454e1c331a",
+      "from": "0x3b31ad84092cefefc71f71a8f84aace37aca3ee1",
+      "to": "0xf6afd791ef80b524018c9e21b53a6661616e06b7",
+      "amount_raw": "12666722432517425",
+      "log_index": 462
+    },
+    {
+      "phase": "swap",
+      "token": "0x55d398326f99059ff775485246999027b3197955",
+      "from": "0xf6afd791ef80b524018c9e21b53a6661616e06b7",
+      "to": "0x3b31ad84092cefefc71f71a8f84aace37aca3ee1",
+      "amount_raw": "10000000000000000000",
+      "log_index": 463
+    }
+  ],
+  "claim_boundary": "One operator-authorized purchase, not general autonomous trading or universal signer enforcement. Private wrapper version0.1.0 is not directly supported by public0.6.0 receipt replay CLI; core hash is reported separately.",
+  "chain_receipts": {
+    "approval": {
+      "transactionHash": "0x29d8cd792b6b511efd350635e3a2cc875d7c2478c2152d6d340aabc449b89965",
+      "blockHash": "0xf8eb2a60b70c191da309abdc40b26cf229adbe3556182b2672b096c6cc83142a",
+      "blockNumber": "0x78cc816",
+      "status": "0x1",
+      "from": "0xf6afd791ef80b524018c9e21b53a6661616e06b7",
+      "to": "0x55d398326f99059ff775485246999027b3197955",
+      "gasUsed": "0xb472",
+      "effectiveGasPrice": "0x2faf080",
+      "token_logs": [
+        {
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "topics": [
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+            "0x000000000000000000000000f6afd791ef80b524018c9e21b53a6661616e06b7",
+            "0x0000000000000000000000001b81d678ffb9c0263b24a97847620c99d213eb14"
+          ],
+          "data": "0x0000000000000000000000000000000000000000000000008ac7230489e80000",
+          "blockNumber": "0x78cc816",
+          "transactionHash": "0x29d8cd792b6b511efd350635e3a2cc875d7c2478c2152d6d340aabc449b89965",
+          "transactionIndex": "0x3f",
+          "blockHash": "0xf8eb2a60b70c191da309abdc40b26cf229adbe3556182b2672b096c6cc83142a",
+          "blockTimestamp": "0x6ac9144e",
+          "logIndex": "0x27f",
+          "removed": false
+        }
+      ]
+    },
+    "swap": {
+      "transactionHash": "0xd7c7587446ee0da063fb47c3deff6094abe76cefb5b1d63dd7e58a17dee7c34b",
+      "blockHash": "0x6ef42cfab2c4b5ad807ca169c8768d3ab5f6d64501535eb4edd1fd18d5639034",
+      "blockNumber": "0x78cc959",
+      "status": "0x1",
+      "from": "0xf6afd791ef80b524018c9e21b53a6661616e06b7",
+      "to": "0x1b81d678ffb9c0263b24a97847620c99d213eb14",
+      "gasUsed": "0x36a35",
+      "effectiveGasPrice": "0x2faf080",
+      "token_logs": [
+        {
+          "address": "0x6a708ead771238919d85930b5a0f10454e1c331a",
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x0000000000000000000000003b31ad84092cefefc71f71a8f84aace37aca3ee1",
+            "0x000000000000000000000000f6afd791ef80b524018c9e21b53a6661616e06b7"
+          ],
+          "data": "0x000000000000000000000000000000000000000000000000002d0051230f0531",
+          "blockNumber": "0x78cc959",
+          "transactionHash": "0xd7c7587446ee0da063fb47c3deff6094abe76cefb5b1d63dd7e58a17dee7c34b",
+          "transactionIndex": "0x47",
+          "blockHash": "0x6ef42cfab2c4b5ad807ca169c8768d3ab5f6d64501535eb4edd1fd18d5639034",
+          "blockTimestamp": "0x6ac914e0",
+          "logIndex": "0x1ce",
+          "removed": false
+        },
+        {
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x000000000000000000000000f6afd791ef80b524018c9e21b53a6661616e06b7",
+            "0x0000000000000000000000003b31ad84092cefefc71f71a8f84aace37aca3ee1"
+          ],
+          "data": "0x0000000000000000000000000000000000000000000000008ac7230489e80000",
+          "blockNumber": "0x78cc959",
+          "transactionHash": "0xd7c7587446ee0da063fb47c3deff6094abe76cefb5b1d63dd7e58a17dee7c34b",
+          "transactionIndex": "0x47",
+          "blockHash": "0x6ef42cfab2c4b5ad807ca169c8768d3ab5f6d64501535eb4edd1fd18d5639034",
+          "blockTimestamp": "0x6ac914e0",
+          "logIndex": "0x1cf",
+          "removed": false
+        },
+        {
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "topics": [
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+            "0x000000000000000000000000f6afd791ef80b524018c9e21b53a6661616e06b7",
+            "0x0000000000000000000000001b81d678ffb9c0263b24a97847620c99d213eb14"
+          ],
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "blockNumber": "0x78cc959",
+          "transactionHash": "0xd7c7587446ee0da063fb47c3deff6094abe76cefb5b1d63dd7e58a17dee7c34b",
+          "transactionIndex": "0x47",
+          "blockHash": "0x6ef42cfab2c4b5ad807ca169c8768d3ab5f6d64501535eb4edd1fd18d5639034",
+          "blockTimestamp": "0x6ac914e0",
+          "logIndex": "0x1d0",
+          "removed": false
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-09T19:03:52.972071+00:00",
+  "classification": "SANITIZED_CURRENT_PROOF_SUBSET",
+  "files": [
+    {
+      "path": "docs/judge/live/spyon-purchase-2026-10-09.json",
+      "sha256": "1a551c05fc12072801546bde1b53aae22a2f488d508107116e40a09feabeeb2a"
+    },
+    {
+      "path": "docs/judge/studio/recovered-explanation-2026-10-09.json",
+      "sha256": "bf7fce05b9097d054ea84123467a761cc24698d621e8e3b61d9a24b8a9aeb37a"
+    }
+  ],
+  "boundaries": {
+    "main_spot_execution": "PROVEN_ONE10USDT_PURCHASE",
+    "studio_paid_recovery": "PROVEN_OPERATOR_ASSISTED",
+    "original_oom_process_continuity": "NOT_PROVEN",
+    "wallet_skills": "PROVEN_READS_NOT_AGENTIC_WALLET_EXECUTION",
+    "project_submitted": "NOT_SUBMITTED_FOUNDER_RESERVED"
+  }
+}

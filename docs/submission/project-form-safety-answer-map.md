@@ -1,6 +1,6 @@
 # Project submission form: current Praeva evidence
 
-**Public form checked:** 8 October 2026, 11:09 UTC. This is a founder copy aid. No form was filled or submitted. The [official project form](https://forms.gle/yToDUzaDMwWnq6R6A) has ten fields; its video URL and genuine Developer Experience submission confirmation are required. Personal fields belong in the form, outside Git.
+**Public form checked:** 9 October 2026. This is a founder copy aid. No form was filled or submitted. The [official project form](https://forms.gle/yToDUzaDMwWnq6R6A) has ten fields; its video URL and genuine Developer Experience submission confirmation are required. Personal fields belong in the form, outside Git.
 
 | Item | Candidate answer or action | Gate |
 |---|---|---|
@@ -19,17 +19,17 @@
 
 Praeva by Dyplux is a deterministic pre-sign safety layer for autonomous tokenized-equity agents and the people reviewing their proposed actions. It checks asset identity, market state, price and reference clocks, issuer and holder access, route, simulation and a spending mandate. The result is ALLOW, DENY or NEED_HUMAN, with ordered reasons, policy version and a SHA-256 receipt.
 
-The working integration uses Binance Web3 RWA Data and Trading APIs for NVDAB and NVDAon, a fixed-block BNB Chain bStock multiplier check, and a separate Transaction API unsigned-build/simulation preflight. The public console gives judges three labelled stored examples: a managed NVDAB NEED_HUMAN replay, a real SPYon DENY capture and a synthetic ALLOW policy test. The SPYon preflight preserves the stale independent SPY reference and missing allowance failures. No stock-token purchase was executed.
+The working integration uses Binance Web3 RWA Data and Trading APIs for NVDAB and NVDAon, a fixed-block BNB Chain bStock multiplier check, and a separate Transaction API preflight. The public console gives judges three labelled stored examples: a managed NVDAB `NEED_HUMAN` replay, a historical SPYon `DENY` capture and a synthetic `ALLOW` policy test. Separately, the [9 October proof](final-proof-2026-10-09.md) records one operator-authorized 10 USDT SPYon purchase with real-state RPC and Binance checks passed.
 
 The Agent Studio lane registered ERC-8004 Agent ID 2574 on BNB Chain testnet and served the fixed dated assessment in a managed runtime. Three sequential requests matched the local canonical receipt, and an invalid task failed closed. A stable agent card and separate VPS fallback keep the runtime boundary explicit.
 
-A separate authorized one-shot proof autonomously initiated an x402 top-up: one quote, one EIP-3009 signature, one paid dispatch and exactly 1 U settled on mainnet, with no economic retry. Authenticated Pieverse ledger evidence attributed USD 1 account credit to the same transaction. API key credit and usage remain zero. Paid inference, paid explanation and the complete self-funding loop aren't claimed. The payment wait timed out and the original runtime later exited through OOM; the deterministic verdict and receipt remained unchanged, and spending switches and VPS secrets were removed.
+A separate authorized one-shot proof autonomously initiated an x402 top-up: one quote, one EIP-3009 signature, one paid dispatch and exactly 1 U settled on mainnet, with no economic retry. Authenticated Pieverse ledger evidence attributed USD 1 account credit to the same transaction. A later new-process operator-assisted, key-funded explanation succeeded with paid usage. Original process continuity, autonomous paid explanation and the complete self-funding loop remain unclaimed. Spending switches and VPS secrets were removed.
 
 ## Submission boundary and order
 
-The [current claims](claims-2026-10-08.md) distinguish proven facts, partial self-funding, synthetic tests and unclaimed outcomes. The [compact Studio pack](agent-studio-evidence.md) records identity, dated managed parity, one autonomous 1 U settlement and provider account credit. Allocation and paid inference remain unexecuted.
+The [current claims](claims-2026-10-09.md) distinguish proven facts, partial proof, synthetic and historical cases, and unclaimed outcomes. The [final proof](final-proof-2026-10-09.md) records the live SPYon purchase and recovered explanation. The [compact Studio pack](agent-studio-evidence.md) records identity, dated managed parity, one autonomous 1 U settlement, provider account credit and the new-process explanation boundary.
 
-The official main track directs builders to demonstrate a small live mainnet tokenized-stock action. No stock-token purchase or passing funded SPYon swap simulation is established. The 1 U credit payment is a separate Studio proof; it doesn't establish or waive that stock-execution direction. The main-track eligibility/scoring consequence remains the organizers' decision.
+The official main track directs builders to demonstrate a small live mainnet tokenized-stock action. The 9 October SPYon packet documents one operator-authorized action with a private-wrapper `ALLOW`, real-state RPC pass and Binance success. It does not establish general autonomous trading or guarantee the main-track result. The eligibility and scoring consequence remains the organizers' decision.
 
 1. Review current first-hand DevEx answers and private founder fields.
 2. Publish only the separately approved repo/site/evidence changes and the selected existing 120-second v2 film. Local render and content QA are complete; publication requires separate approval.

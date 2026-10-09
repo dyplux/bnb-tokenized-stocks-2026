@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-09T13:06:08.361151+00:00",
+  "classification": "OBSERVED_OPERATOR_ASSISTED_RECOVERED_INFERENCE",
+  "model": "meta-llama/llama-4-scout",
+  "http_status": 200,
+  "model_attempts": 1,
+  "model_dispatches": 1,
+  "paid_explanation": "AVAILABLE",
+  "authority": "NONE",
+  "text": "The safety findings for the NVDA tokenized-equity replay are pending due to unknown reference time, unverified issuer, unknown market state, unverified simulation, and unknown user eligibility.",
+  "provider_usage_before": {
+    "prompt_tokens": 190,
+    "completion_tokens": 192,
+    "cost_usd": 0.000268
+  },
+  "provider_usage_after": {
+    "prompt_tokens": 287,
+    "completion_tokens": 229,
+    "cost_usd": 0.00028900000000000003
+  },
+  "provider_usage_delta": {
+    "prompt_tokens": 97,
+    "completion_tokens": 37,
+    "cost_usd_reported_rounded_9dp": "0.000021000"
+  },
+  "requests_in_same_new_process": 2,
+  "second_model_calls": 0,
+  "second_request_reason": "ONE_INFERENCE_LIMIT",
+  "first_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+  "second_receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+  "cleanup": "PASS_INDEPENDENTLY_RECHECKED",
+  "budget_enabled": false,
+  "auto_topup_enabled": false,
+  "wallet_present": false,
+  "new_x402_payment": false,
+  "claim_boundary": "Operator-assisted recovered key-funded explanation and continuation in a new runtime proven. Original OOM process continuity and original fully autonomous loop remain unproven."
+}

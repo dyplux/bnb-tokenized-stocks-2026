@@ -240,20 +240,20 @@ function Architecture() {
         </span>
       </div>
       <div className="section-intro">
-        <h3>Dated Studio proof, 7 and 8 October 2026</h3>
+        <h3>Verified execution and runtime proofs, 9 October 2026</h3>
         <p>
-          ERC-8004 identity on BNB Chain TESTNET (Agent 2574, chain 97),
-          public Agent Card, three managed replay requests, then a separate
-          mainnet payment runtime: one x402 quote, one EIP-3009 authorization,
-          ONE paid dispatch, 1 U MAINNET settlement and USD 1 provider account
-          credit. STOP before API key allocation.
+          A separate bounded mainnet demo spent 10 USDT and received
+          0.012666722432517425 SPYon. The core returned ALLOW after real
+          RPC and Binance Transaction API simulations passed. One limited
+          approval, one swap and no economic retry. <a href="https://github.com/dyplux/bnb-tokenized-stocks-2026/blob/main/docs/submission/final-proof-2026-10-09.md">Inspect the dated proof</a>.
         </p>
         <p>
-          Allocation hasn't executed. Paid inference, the full recovered loop
-          and original same-process continuation remain unproved. The HTTP wait
-          timed out and the original runtime later exited through OOM.
-          Account credit remains untouched; this dated proof doesn't establish
-          current managed-runtime availability.
+          Agent Studio evidence includes testnet Agent ID 2574, dated managed
+          replay and a 1 U mainnet x402 settlement. A later operator-assisted
+          recovery produced a paid explanation with authority NONE and served
+          another request in the same new process. The original process was
+          OOM-killed; uninterrupted original self-funding remains unproven.
+          The console cases and 120-second film predate these latest proofs.
         </p>
       </div>
     </section>
