@@ -1,0 +1,67 @@
+{
+  "classification": "DATED_REAL_READONLY_DIRECT_ROUTE",
+  "source_file_sha256": "70c41c34224254052198c35c0cb1475a61736560fdac8fa7d7b125a6dfdb57e1",
+  "source_file_publication": "private evidence source; this copy excludes founder statements, wallet balances, RPC payloads and calldata",
+  "asset": "SPYon",
+  "action": "10 USDT to SPYon secondary self-custodial proposal",
+  "chain": "BNB Chain",
+  "block": 126296361,
+  "block_timestamp": "2026-10-07T18:01:00.000Z",
+  "independent_reference": {
+    "source": "Nasdaq public SPY ETF quote display API",
+    "source_url": "https://api.nasdaq.com/api/quote/SPY/info?assetclass=etf",
+    "price_usd": "777.30",
+    "source_timestamp": "2026-10-07T17:58:00Z",
+    "retrieved_at": "2026-10-07T17:59:02.049763Z",
+    "age_seconds_at_decision": 191.671889,
+    "market_status": "Open",
+    "session": "CORE",
+    "raw_sha256": "d38e1b266937044d17cb69c1f2715a5c42ad0bea4835d9a8ec42c2416f256f78",
+    "timestamp_precision": "minute"
+  },
+  "route": {
+    "venue": "PancakeSwap V3 direct contract",
+    "provenance": "VERIFIED",
+    "quote_timestamp": "2026-10-07T18:01:03.905Z",
+    "quote_block": 126296361,
+    "input_amount_raw": "10000000000000000000",
+    "quoted_output_raw": "12723523793126927",
+    "minimum_output_raw": "12659906174161292",
+    "official_manifest": {
+      "retrieved_at": "2026-10-07T18:00:59.542Z",
+      "sha256": "cd72575c75643cc55e500963b2a94451e64166a84ce15a57412ce9737d48ad05",
+      "url": "https://raw.githubusercontent.com/pancakeswap/pancake-v3-contracts/main/deployments/bscMainnet.json"
+    },
+    "simulation_status": "FAILED_MISSING_ALLOWANCE"
+  },
+  "simulation": {
+    "status": "FAILED_MISSING_ALLOWANCE",
+    "requires_approval": true,
+    "requires_funding": false,
+    "state_override_used": false
+  },
+  "receipt": {
+    "checks": {
+      "DIRECT_SIMULATION_UNVERIFIED": "NEED_HUMAN",
+      "INDEPENDENT_REFERENCE_STALE": "DENY",
+      "SIMULATION_UNVERIFIED": "NEED_HUMAN"
+    },
+    "core_decision": "DENY",
+    "core_receipt_sha256": "3cbe2af738013d0c30a11aef741b7bc37783671f7739489652a975376dced2b2",
+    "decision": "DENY",
+    "dex_venue_access": "SUPPORTED",
+    "documentary_asset_access": "SUPPORTED",
+    "person_access": "SUPPORTED",
+    "policy_version": "direct-pancake-private-0.1.0",
+    "reason_codes": [
+      "DIRECT_SIMULATION_UNVERIFIED",
+      "INDEPENDENT_REFERENCE_STALE",
+      "SIMULATION_UNVERIFIED"
+    ],
+    "receipt_sha256": "e49dcbae647a51c6c2bd3187cc5380936ac56544f37d120e144db3ef24df4acc",
+    "route_evidence_sha256": "2c86c098268c38e9f4ae5d3b64b5084c44fffb6faf77b889531aa2a52bd5c96c",
+    "route_provenance": "VERIFIED",
+    "timestamp": "2026-10-07T18:01:11Z",
+    "token_transfer_access": "SUPPORTED"
+  }
+}

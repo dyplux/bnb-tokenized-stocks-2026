@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Praeva mark: the proposed action (line) stops at the gate (bar) before the boundary (ring). -->
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#b7e38f" stroke-width="10"/>
+  <path d="M30 100 H112" fill="none" stroke="#b7e38f" stroke-width="12" stroke-linecap="round"/>
+  <path d="M132 58 V142" fill="none" stroke="#efc481" stroke-width="14" stroke-linecap="round"/>
+</svg>

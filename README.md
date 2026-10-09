@@ -32,6 +32,26 @@ The HTTP payment wait timed out; the original runtime later exited through OOM, 
 
 The managed trial expires **9 October 2026, 18:48:44 UTC**. Its requests require OAuth. The console serves the captured proof without credentials; a separately labelled VPS fallback has its own parity evidence. Root verifies the scheduled switch and stable card through judging.
 
+## Download and open the console
+
+The repository now includes the published frontend source in [web/](web/README.md) and its prebuilt static console. Python 3.9+ is sufficient; Node and API credentials aren't needed to inspect the recorded cases.
+
+```sh
+python3 scripts/run_console.py
+```
+
+This opens `http://127.0.0.1:8937/console/` in your browser. macOS users can try `Start-Praeva.command`; Windows users can try `Start-Praeva.bat` with Python installed. The launchers aren't signed installers. Both videos remain online rather than being duplicated in the checkout. The five evidence JSON files and receipt bytes are unchanged.
+
+## Connect an AI agent
+
+[Configure the local MCP server](docs/product/use-praeva-with-an-ai-agent.md) for three read-only tools: replay a dated case, verify receipt JSON offline, or explicitly request a fresh NVDAB/NVDAon assessment with your own Binance Web3 credentials. Python starts the stdio server; it has no signer, transaction or payment tool.
+
+```sh
+python3 scripts/praeva_mcp.py
+```
+
+Your MCP client launches that process and sends protocol requests; it isn't a chat terminal. Terminal-based agents can still use the JSON-in/JSON-out command below.
+
 ## Run a fresh check locally
 
 Python 3.9 or newer is sufficient. Clone the repository and start the read-only screen from its root:
@@ -49,7 +69,7 @@ Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, se
 
 The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This adapter runs locally over stdin/stdout. The separate Agent Studio runtime serves the fixed dated replay described above. Binance Agentic Wallet remains unclaimed. A later [official read-only Wallet Skills proof](docs/submission/wallet-skills-evidence-2026-10-09.md) is dated 9 October; it preserves unresolved evidence and the same kernel. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
 
-For a local agent prompt, stdin/stdout example and offline receipt check, see [Use Praeva with an AI agent](docs/product/use-praeva-with-an-ai-agent.md). This is a local tool path, not a native MCP integration.
+For a local agent prompt, stdin/stdout example and offline receipt check, see [Use Praeva with an AI agent](docs/product/use-praeva-with-an-ai-agent.md). The guide covers the MCP server and the original local stdin/stdout tool.
 
 ```sh
 printf '%s\n' '{"provider":"bstock","notional_usdt":"10","max_notional_usdt":"10","max_price_impact_percent":"0.5"}' | python3 scripts/safety_agent_tool.py

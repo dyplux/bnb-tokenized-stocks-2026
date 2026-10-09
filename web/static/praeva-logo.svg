@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="760" height="200">
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#b7e38f" stroke-width="10"/>
+  <path d="M30 100 H112" fill="none" stroke="#b7e38f" stroke-width="12" stroke-linecap="round"/>
+  <path d="M132 58 V142" fill="none" stroke="#efc481" stroke-width="14" stroke-linecap="round"/>
+  <text x="230" y="138" font-family="Inter, sans-serif" font-weight="900" font-size="128" letter-spacing="-5" fill="#e8efeb">praeva</text>
+</svg>
