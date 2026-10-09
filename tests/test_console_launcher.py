@@ -2,6 +2,7 @@
 import http.client
 import os
 import pathlib
+import re
 import subprocess
 import socket
 import sys
@@ -55,7 +56,9 @@ class ConsoleLauncherTests(unittest.TestCase):
         response, body = self.request("GET", "/console/")
         self.assertEqual(response.status, 200)
         self.assertIn(b"Assessment console", body)
-        response, body = self.request("GET", "/_next/static/chunks/app/console/page-83748ad0937aa2d8.js")
+        chunks = re.findall(rb'src="([^" ]*/_next/static/chunks/app/console/page-[^" ]+\.js)"', body)
+        self.assertEqual(len(chunks), 1, "rendered console must reference its current app chunk")
+        response, body = self.request("GET", chunks[0].decode("ascii"))
         self.assertEqual(response.status, 200)
         self.assertGreater(len(body), 1000)
         response, body = self.request("GET", "/console-evidence/managed-replay.json")
