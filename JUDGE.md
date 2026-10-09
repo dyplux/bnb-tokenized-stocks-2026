@@ -45,7 +45,7 @@ Open the [compact Studio evidence guide](docs/submission/agent-studio-evidence.m
 
 Authenticated provider evidence attributed **USD 1 account credit** to that same transaction. On 8 October, one founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and the semantics are unknown. The original runtime's HTTP wait aborted and it later exited through OOM, so same-process continuity isn't proven. A new wallet-free recovery at 08:11 UTC on 9 October returned the canonical receipt, but explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. Paid inference and full self-funding remain unproven.
 
-The managed trial expires **9 October 18:48:44 UTC** and currently declares OAuth for requests. The stored console case needs no credentials. A separate VPS fallback has its own backend label and parity proof; verify the actual scheduled switch and active stable card through judging.
+The managed trial expires **9 October 18:48:44 UTC**. The [final managed capture](docs/judge/studio/last-managed-2026-10-09.json) precedes the [verified VPS fallback switch](docs/judge/studio/fallback-switch-2026-10-09.json) at 09:39 UTC. The stable `/a2a` endpoint is now anonymous and returns the fixed dated replay; an invalid task fails closed. This VPS transport is separate from the dated managed-runtime proof.
 
 ## 15 minutes
 
@@ -78,7 +78,7 @@ For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining 
 
 **NOT CLAIMED:** stock-token purchase, real purchase ALLOW, passing funded SPYon swap simulation, predictive alpha, paid B402 seller, Agentic Wallet, paid inference/explanation, the complete self-funding loop or original same-process continuity. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
 
-The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The 120-second v2 is public and the founder confirmed DevEx submission. The final submission SHA/tag, project-form confirmation and scheduled fallback verification remain pending.
+The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The 120-second v2 is public and the founder confirmed DevEx submission. Fallback verification passed. The final SHA/tag is recorded separately; project-form submission remains reserved for the founder.
 
 ### Dated external-reference limits
 

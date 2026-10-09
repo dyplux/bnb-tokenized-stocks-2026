@@ -1,10 +1,13 @@
 # Tokenized Stocks submission
 
+**9 October 09:39 UTC operational checkpoint:** The final managed capture passed at 09:37 UTC. The stable endpoint switched to VPS fallback and passed independent anonymous card, canonical receipt and invalid-task checks. The testnet identity still points to the same card. [Dated switch proof](docs/judge/studio/fallback-switch-2026-10-09.json). Old scheduler entries below retain their earlier state. No stock trade, payment or identity write occurred.
+
+
 **9 October 2026 additive checkpoint:** [Official Wallet Skills read-only invocation](docs/submission/wallet-skills-evidence-2026-10-09.md) now has a reviewed live packet and deterministic NEED_HUMAN receipt. Public API reads used no wallet or credential. At 08:11 UTC, a [dated wallet-free recovery](docs/submission/provider-recovery-2026-10-09.json) returned the canonical receipt, but explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. The founder has reported DevEx submission. Project submission and final tag remain pending. No stock-token purchase or complete self-funding loop is claimed.
 
 **8 October 2026 checkpoint:** The [console](https://praeva.dyplux.com/console/) is accessible. Dated Studio evidence establishes a managed fixed replay, ERC-8004 Agent ID 2574 on chain 97, and one 1 U mainnet x402 settlement. Authenticated provider ledger evidence attributes USD 1 account credit to that transaction. One founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and semantics are unknown. The original payment runtime exited through OOM, so same-process continuity isn't proven. [Current claims](docs/submission/claims-2026-10-08.md), [compact Studio proof](docs/submission/agent-studio-evidence.md).
 
-The 120-second v2 is published and DevEx is founder-confirmed submitted. Project-form confirmation, actual fallback switch verification and the final SHA/tag remain pending. The managed trial expires 9 October at 18:48:44 UTC. Current summaries below dated 6 October or earlier retain their original operational state.
+The 120-second v2 is published and DevEx is founder-confirmed submitted. Project-form confirmation and the final SHA/tag remain pending; actual fallback verification passed. The managed trial expires 9 October at 18:48:44 UTC. Current summaries below dated 6 October or earlier retain their original operational state.
 
 ## Historical operational entries
 

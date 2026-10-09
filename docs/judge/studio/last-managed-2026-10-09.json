@@ -1,0 +1,25 @@
+{
+  "classification": "LAST_MANAGED_READONLY_CAPTURE_BEFORE_EARLY_FALLBACK",
+  "started_at": "2026-10-09T09:37:57.124Z",
+  "completed_at": "2026-10-09T09:37:59.539Z",
+  "agent_id": "01M4BW95DTJJWXVMVXW88PJYQ3",
+  "card_revision": "1.0.1",
+  "card_declared_oauth": true,
+  "request_id": "01d69b90-4c1b-4269-a44b-7cba8a89aa62",
+  "task_id": "6236ed3e-de28-49c1-8add-a77b107548ca",
+  "http_status": 200,
+  "response_sha256": "be4a8692621fc2408e9023efec0b2b8b9b248dda69e763ac2d93d525e493f97d",
+  "receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+  "decision": "NEED_HUMAN",
+  "reason_codes": [
+    "INDEPENDENT_REFERENCE_TIME_UNKNOWN",
+    "ISSUER_UNVERIFIED",
+    "MARKET_STATE_UNKNOWN",
+    "SIMULATION_UNVERIFIED",
+    "USER_ELIGIBILITY_UNKNOWN"
+  ],
+  "policy_version": "0.6.0",
+  "wallet_signatures": 0,
+  "payment": 0,
+  "chain_transactions": 0
+}

@@ -30,7 +30,7 @@ A separate one-shot mainnet proof autonomously initiated one x402 top-up. Exactl
 
 The HTTP payment wait timed out; the original runtime later exited through OOM, so same-process continuity isn't proven. On 8 October, one founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and the allocation semantics are unknown. A [dated wallet-free recovery](docs/submission/provider-recovery-2026-10-09.json) on 9 October at 08:11 UTC returned the canonical receipt, but its explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. Paid inference and full self-funding remain unproven. [Compact dated Studio proof](docs/submission/agent-studio-evidence.md) and [current claim buckets](docs/submission/claims-2026-10-08.md).
 
-The managed trial expires **9 October 2026, 18:48:44 UTC**. Its requests require OAuth. The console serves the captured proof without credentials; a separately labelled VPS fallback has its own parity evidence. Root verifies the scheduled switch and stable card through judging.
+The managed trial expires **9 October 2026, 18:48:44 UTC**. Its [last managed request](docs/judge/studio/last-managed-2026-10-09.json) was captured before the [verified early switch to VPS fallback](docs/judge/studio/fallback-switch-2026-10-09.json) at 09:39 UTC. The stable Agent Card and `/a2a` endpoint now work without login. The endpoint serves the fixed dated replay; it doesn't fetch fresh market evidence or claim managed infrastructure. The console remains accessible without credentials.
 
 ## Download and open the console
 
