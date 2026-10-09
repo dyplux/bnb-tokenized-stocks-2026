@@ -12,7 +12,7 @@ Open the [assessment console](https://praeva.dyplux.com/console/). Select **Obse
 
 ## 3 minutes
 
-[Watch the published 63-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4). The original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains the public fallback. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
+[Watch the current 120-second founder-selected evidence film](https://praeva.dyplux.com/media/praeva-bnb-hack-final-v2.mp4). The historical [63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) and original [60-second film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remain preserved. The observed cases are dated read-only API decisions. No purchase was signed or broadcast.
 
 ```mermaid
 flowchart LR
@@ -43,7 +43,7 @@ Four actionable DevEx findings: [undocumented `offhours`](docs/devex/repros/2026
 
 Open the [compact Studio evidence guide](docs/submission/agent-studio-evidence.md). It links ERC-8004 Agent ID **2574 on chain 97**, the [stable card](https://agent.praeva.dyplux.com/.well-known/agent-card.json), three dated managed requests, receipt parity and the [one 1 U x402 settlement](https://bscscan.com/tx/0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b).
 
-Authenticated provider evidence attributed **USD 1 account credit** to that same transaction. API key credit and usage remain zero; allocation and paid inference haven't occurred. The original runtime's HTTP wait aborted and it later exited through OOM. Its verdict and receipt remained unchanged, with explanation authority `NONE`.
+Authenticated provider evidence attributed **USD 1 account credit** to that same transaction. On 8 October, one founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and the semantics are unknown. The original runtime's HTTP wait aborted and it later exited through OOM, so same-process continuity isn't proven. A new wallet-free recovery at 08:11 UTC on 9 October returned the canonical receipt, but explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. Paid inference and full self-funding remain unproven.
 
 The managed trial expires **9 October 18:48:44 UTC** and currently declares OAuth for requests. The stored console case needs no credentials. A separate VPS fallback has its own backend label and parity proof; verify the actual scheduled switch and active stable card through judging.
 
@@ -72,13 +72,13 @@ For a downloaded receipt JSON, remove `receipt_sha256`, serialize the remaining 
 
 **PROVEN:** signed RWA/Trading reads, fixed-block multiplier, observed NEED_HUMAN/DENY, testnet identity, dated managed replay/parity, one autonomous x402 settlement and provider account credit.
 
-**PARTIAL:** the self-funding sequence reached provider account credit; API key credit and usage remain zero.
+**PARTIAL:** settlement and account credit are proven. A separate allocation reported USD 1 key credit; the new wallet-free recovery returned no paid explanation. The complete self-funding loop remains unproven.
 
 **SYNTHETIC:** ALLOW and corporate-action regression fixtures.
 
 **NOT CLAIMED:** stock-token purchase, real purchase ALLOW, passing funded SPYon swap simulation, predictive alpha, paid B402 seller, Agentic Wallet, paid inference/explanation, the complete self-funding loop or original same-process continuity. The [Monday benchmark](experiments/EXP-RWA-004/monday-findings.md) remains SAFETY_ONLY.
 
-The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The final submission SHA/tag, approved replacement video and genuine form confirmations remain pending.
+The original 5 October research claim set stays frozen. New deployment and credit-payment evidence is dated separately. The 120-second v2 is public and the founder confirmed DevEx submission. The final submission SHA/tag, project-form confirmation and scheduled fallback verification remain pending.
 
 ### Dated external-reference limits
 
@@ -90,7 +90,7 @@ A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a fi
 
 Covenant / StockGuard overlap exists. Praeva's strongest distinction in this build is evidence sufficiency, provenance, freshness and authorization prerequisites before a separate signer. The receipt doesn't cryptographically enforce that signer's behavior or certify universal tokenized-stock safety.
 
-Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The separate Studio chain stops at USD 1 provider account credit, before API key allocation.
+Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The linked 8 October Studio package records the chain through USD 1 provider account credit. The later allocation and unsuccessful 9 October recovery are dated separately above.
 
 ## Wallet Skills dated addition, 9 October
 

@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-09T08:39:15.272070+00:00",
+  "scope": "DATED_OPERATOR_RECONCILIATION_NOT_A_PAYMENT_ORIGINAL_CONTINUITY_PROOF",
+  "allocation": {
+    "date": "2026-10-08",
+    "dispatches": 1,
+    "account_usd_before": 1,
+    "account_usd_after": 1,
+    "key_credit_usd_before": 0,
+    "key_credit_usd_after": 1,
+    "classification": "AMBIGUOUS_POSTCONDITION",
+    "account_semantics": "UNKNOWN",
+    "new_payment": false
+  },
+  "wallet_free_recovery": {
+    "date": "2026-10-09T08:11:08Z",
+    "assessment_dispatches": 1,
+    "receipt_sha256": "63c918049dc88ab90faef38f9b749be3993884989ec38bb253f5c2b887ae54db",
+    "deterministic_parity": "PASS",
+    "explanation": {
+      "status": "UNAVAILABLE",
+      "authority": "NONE"
+    },
+    "model_post_count": "UNKNOWN; at most one reviewed guard",
+    "usage_before": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "cost_usd": 0
+    },
+    "usage_after": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "cost_usd": 0
+    },
+    "paid_inference": "NOT_PROVEN",
+    "retry": false,
+    "wallet_present": false,
+    "budget_enabled": false,
+    "auto_topup_enabled": false,
+    "x402_enabled": false,
+    "container_stopped": true,
+    "secret_removed": true,
+    "oom_killed": false
+  },
+  "claim_boundary": "Existing settlement and attributed deposit remain proven. No original uninterrupted continuation or complete autonomous recovered loop is claimed."
+}

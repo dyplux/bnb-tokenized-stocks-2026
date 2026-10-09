@@ -8,7 +8,7 @@ Deterministic RWA evidence and authorization review before a separate signer.
 
 **Praeva is a deterministic RWA evidence-sufficiency and authorization review immediately before a separate privileged signer.** The deterministic result is `ALLOW`, `DENY` or `NEED_HUMAN`, with reason codes and a SHA-256 receipt.
 
-**[Try the assessment console](https://praeva.dyplux.com/console/) · [Website](https://praeva.dyplux.com/) · [Stable agent card](https://agent.praeva.dyplux.com/.well-known/agent-card.json) · [Judge guide](JUDGE.md) · [Published 63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) · [GitHub Pages fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/)**
+**[Try the assessment console](https://praeva.dyplux.com/console/) · [Website](https://praeva.dyplux.com/) · [Stable agent card](https://agent.praeva.dyplux.com/.well-known/agent-card.json) · [Judge guide](JUDGE.md) · [Current 120-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final-v2.mp4) · [GitHub Pages fallback](https://dyplux.github.io/bnb-tokenized-stocks-2026/)**
 
 A stock token can still have a quote when the underlying exchange is closed. In the observed NVDAB case, an amount-specific route existed, but independent underlying-reference time, individual holder eligibility and a funded passing simulation weren't verified. Praeva returned `NEED_HUMAN`. A second observed request exceeded its 20 USDT mandate and returned `DENY`. [View both receipts](docs/submission/safety-judge-run.md). The green `ALLOW` is a synthetic policy fixture.
 
@@ -19,7 +19,7 @@ The current product reviews one proposed NVDAB or NVDAon purchase on BNB Chain. 
 - [Assessment console](https://praeva.dyplux.com/console/): three labelled captured cases, a dated managed-runtime NVDAB `NEED_HUMAN` replay, a real historical SPYon `DENY`, and a synthetic `ALLOW` policy test. It shows proposal, evidence, ordered reasons and receipt without a wallet or API credential.
 
 - [Primary website](https://praeva.dyplux.com): current destination for the observed, dated `NEED_HUMAN` and mandate-bound `DENY` cases, a clearly marked synthetic `ALLOW` policy fixture, source times, reason codes, receipt downloads. The fallback also exposes its system status. It makes no live signed API request. The [GitHub Pages judge page](https://dyplux.github.io/bnb-tokenized-stocks-2026/) remains available as fallback.
-- [Published 63-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4): the published 6 October film; the final submission replacement remains subject to separate review. The [original 60-second two-case film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4) remains available as fallback and documents its historical capture boundary. No trade was signed.
+- [Current 120-second founder-selected video](https://praeva.dyplux.com/media/praeva-bnb-hack-final-v2.mp4): the current deployed variant. The [historical 63-second film](https://praeva.dyplux.com/media/praeva-bnb-hack-final.mp4) remains preserved, as does the [original 60-second two-case film](https://dyplux.github.io/bnb-tokenized-stocks-2026/media/execution-safety-judge-demo.mp4). No trade was signed.
 - [Judge instructions](docs/submission/safety-judge-run.md): run a fresh signed check with your own Binance Web3 API credentials, then try a mandate denial. The public page also works without credentials.
 
 ## Agent Studio proof, 7 and 8 October 2026
@@ -28,7 +28,7 @@ ERC-8004 Agent ID **2574** is registered on **BNB Chain testnet, chain 97**, wit
 
 A separate one-shot mainnet proof autonomously initiated one x402 top-up. Exactly **1 U** settled in [transaction `0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b`](https://bscscan.com/tx/0xb0344256c2807a7ce5d888738048bf74d326bd816b007f6df0a06004506b415b). One quote, one EIP-3009 payment signature and one paid dispatch occurred, with no economic retry. Authenticated provider evidence later attributed **USD 1 account credit** to the same transaction.
 
-The HTTP payment wait timed out; the original runtime later exited through OOM. API key credit and usage remain zero. Allocation, paid inference, paid explanation and the complete self-funding loop aren't claimed. The deterministic verdict and receipt stayed unchanged, and spending switches and VPS secrets were removed. [Compact dated Studio proof](docs/submission/agent-studio-evidence.md) and [current claim buckets](docs/submission/claims-2026-10-08.md).
+The HTTP payment wait timed out; the original runtime later exited through OOM, so same-process continuity isn't proven. On 8 October, one founder-authorized allocation changed key `0` to `1`; the account still showed `1`, and the allocation semantics are unknown. A [dated wallet-free recovery](docs/submission/provider-recovery-2026-10-09.json) on 9 October at 08:11 UTC returned the canonical receipt, but its explanation was unavailable, usage was `0` before and after, no retry occurred, and secrets were removed. Paid inference and full self-funding remain unproven. [Compact dated Studio proof](docs/submission/agent-studio-evidence.md) and [current claim buckets](docs/submission/claims-2026-10-08.md).
 
 The managed trial expires **9 October 2026, 18:48:44 UTC**. Its requests require OAuth. The console serves the captured proof without credentials; a separately labelled VPS fallback has its own parity evidence. Root verifies the scheduled switch and stable card through judging.
 
@@ -48,6 +48,8 @@ The dated example works without credentials. For a fresh signed check, create yo
 Open `http://127.0.0.1:8001`. Choose NVDAB or NVDAon, enter 10 to 1,000 USDT, set maximum spend and price impact, and select **Review action**. The localhost service limits requests to four per minute. It doesn't connect a wallet, sign or broadcast. The read-only quote uses a temporary generated address, so route availability doesn't establish a particular holder's access or exact-wallet execution. The screen shows the contract, evidence times, policy decision and a downloadable receipt. [Full clean-start steps](docs/submission/safety-judge-run.md).
 
 The same read-only decision is available to a local agent through `scripts/safety_agent_tool.py`. It accepts one JSON object on stdin with `provider`, `notional_usdt`, `max_notional_usdt` and `max_price_impact_percent`, then returns one JSON result. This adapter runs locally over stdin/stdout. The separate Agent Studio runtime serves the fixed dated replay described above. Binance Agentic Wallet remains unclaimed. A later [official read-only Wallet Skills proof](docs/submission/wallet-skills-evidence-2026-10-09.md) is dated 9 October; it preserves unresolved evidence and the same kernel. [Integration boundary](docs/product/agentic-wallet-integration-gate.md).
+
+For a local agent prompt, stdin/stdout example and offline receipt check, see [Use Praeva with an AI agent](docs/product/use-praeva-with-an-ai-agent.md). This is a local tool path, not a native MCP integration.
 
 ```sh
 printf '%s\n' '{"provider":"bstock","notional_usdt":"10","max_notional_usdt":"10","max_price_impact_percent":"0.5"}' | python3 scripts/safety_agent_tool.py
@@ -84,7 +86,7 @@ A route can exist while authority to sign remains unproven. `NEED_HUMAN` is a fi
 
 Covenant / StockGuard overlap exists. Praeva's strongest distinction in this build is evidence sufficiency, provenance, freshness and authorization prerequisites before a separate signer. The receipt doesn't cryptographically enforce that signer's behavior or certify universal tokenized-stock safety.
 
-Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The separate Studio chain stops at USD 1 provider account credit, before API key allocation.
+Follow the [dated proof matrix](docs/submission/proof-matrix-2026-10-08.md): proposed action, route exists, evidence checked, evidence missing, NEED_HUMAN, receipt, verification. The linked 8 October Studio package records the chain through USD 1 provider account credit. The later allocation and unsuccessful 9 October recovery are dated separately above.
 
 ## Verify captured receipts offline
 
